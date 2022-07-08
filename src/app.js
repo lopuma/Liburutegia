@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   cert: fs.readFileSync('liburudenda-selfsigned.crt'),
 //   key: fs.readFileSync('liburudenda-selfsigned.key')
 // }, app).listen(app.get('port'), () => {
-//   console.log('Server is in port', app.get('port'));
+//   console.log('Server is running in port', app.get('port'));
 // });
 
 app.listen(app.get('port'), () => {
