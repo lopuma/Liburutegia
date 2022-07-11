@@ -13,7 +13,9 @@ router.post('/login', async (req, res) => {
 router.get('/', async (req, res) => {
     const books = await pool.query('SELECT * from books')
     console.log(books)
-    res.render('links/books', { books });
+    const hola = "lopuma"
+    const user = "lopuma"
+    res.render('links/dashboard', { books, user });
 });
 
 module.exports = router;
