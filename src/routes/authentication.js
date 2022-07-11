@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 // SHARK
-router.get('/sharks', async (req, res) => {
-    res.render('auth/sharks');
+router.get('/login', async (req, res) => {
+    res.render('links/login');
 });
   
 module.exports = router;

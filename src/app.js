@@ -37,11 +37,14 @@ app.use((req, res, next) =>{
   next()
 });
 
+//3- Invocamos a dotenv
+const dotenv = require('dotenv');
+dotenv.config({ path: './env/.env'});
+
 // Routers
 app.use(require('./routes/index'));
 app.use(require('./routes/authentication'));
 app.use('/links', require('./routes/links'));
-
 
 // Public 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -53,6 +56,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // }, app).listen(app.get('port'), () => {
 //   console.log('Server is running in port', app.get('port'));
 // });
+// 8 - Invocamos a la conexion de la DB
+const { database } = require('./keys');
+
+// const connection = require('../database/db.js');
 
 app.listen(app.get('port'), () => {
   console.log('Server is in port', app.get('port'));
