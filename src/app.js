@@ -44,7 +44,7 @@ dotenv.config({ path: './env/.env'});
 // Routers
 app.use(require('./routes/index'));
 app.use(require('./routes/authentication'));
-app.use('/links', require('./routes/links'));
+app.use('/dashboard', require('./routes/dashboard'));
 
 // Public 
 app.use(express.static(path.join(__dirname, 'public')));

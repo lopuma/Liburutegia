@@ -7,7 +7,7 @@ const pool = require('../database');
 
 router.post('/login', async (req, res) => {
     const email = req.body.email;
-    res.redirect('/links');
+    res.redirect('/dashboard');
 });
 
 router.get('/', async (req, res) => {
