@@ -1,9 +1,9 @@
 
     <br>
 
-    <div class="login-form jumbotron">
-        <h1>Login</h1>
-        <form action="/dashboard/login" method="POST">
+    <div class="register-form jumbotron">
+        <h1>Form LOGIN</h1>
+        <form action="/auth" method="POST">
             <div class="form-group">
                 <input type="email" class="form-control" name="email" placeholder="Email" autofocus required>
             </div>	
@@ -11,8 +11,21 @@
                 <input type="password" class="form-control" name="pass" placeholder="Password" required>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-login btn-block" value="Login">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-success ">Login</button>
             </div>
         </form>
 	</div>
     <br>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+   {{#each alerta}}
+    {{!-- Swal.fire({
+      title:{{alertTitle}},
+      text:{{alertMessage}},
+      icon:{{alertIcon }},
+      showConfirmButton: {{showConfirmButton}},
+      timer: {{timer}}
+    }).then(()=>{
+      window.location=/{{ruta}}
+    }) --}}
+    {{/each}}

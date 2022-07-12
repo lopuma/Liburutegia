@@ -9,30 +9,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
-        {{#if user}}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-          Links
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/links">All Books</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/links/booking">Add A Booking</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/partners">Partners</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/partners">Logout</a>
-        </li>
-        {{else}}
-        <li class="nav-item">
-          <a class="nav-link" href="/login">SignIn</a>
-        </li>
-        {{/if}}
-      </ul>
+        {{#if name}}
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Books</a>
+            </li>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard-partners" id="partners">Partners</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard-bookings">Bookings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/partners">Logout</a>
+            </li>
+            {{else}}
+            <li class="nav-item">
+              <a class="nav-link" href="/login">SignIn</a>
+            </li>
+            {{/if}}
+       </ul>
     </div>
   </div>
 </nav>
