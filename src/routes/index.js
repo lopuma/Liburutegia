@@ -8,12 +8,10 @@ router.get('/', async (req, res) =>{
     console.log("------", logueado)
     if(req.session.loggedin){
         const books = await connection.query('SELECT * from books')
-        const user = "lopuma"
         res.render('links/dashboard-books', {
         login: true,
         name: req.session.name,
         books, 
-        user
       });
     }else{
         res.render('index',{

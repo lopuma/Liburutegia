@@ -76,8 +76,8 @@ app.use(require('./routes/auth'));
 app.use('/dashboard', require('./routes/dashboard'));
 
 app.get('/dashboard-partners', async (req, res) => {
-  const user = "lopuma"
-  res.render('links/dashboard-partners', { user });
+  const name = req.session.name;
+  res.render('links/dashboard-partners', { name });
 });
 
 //11 - Metodo para la autenticacion
