@@ -80,6 +80,11 @@ app.get('/dashboard-partners', async (req, res) => {
   res.render('links/dashboard-partners', { name });
 });
 
+app.post('/login', async (req, res)=> {
+	res.render('links/login');
+});
+
+
 //11 - Metodo para la autenticacion
 app.post('/auth', async (req, res)=> {
 	const email = req.body.email;
@@ -87,14 +92,12 @@ app.post('/auth', async (req, res)=> {
   //let passwordHash = await bcrypt.hash(pass, 8);
 	if (email && pass) {
 		connection.query('SELECT * FROM users WHERE email = ?', [email], async (error, results, fields)=> {
-			if( results.length == 0) {    
-				res.render('/login');
+			if( results.length == 0 || pass != results[0].pass ) {    
+				res.redirect('/login');
 				} else {         
 				//creamos una var de session y le asignamos true si INICIO SESSION 
-        console.log("///////////////", results[0].firtname)     
 				req.session.loggedin = true;                
 				req.session.name = results[0].firtname;
-        console.log("*-----------------------------*", req.session.name)
         const alerta = {
 					alert: true,
 					alertTitle: "Conexión exitosa",
