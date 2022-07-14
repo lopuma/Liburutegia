@@ -3,7 +3,7 @@ const express = require('express');
 const { link } = require('fs');
 const { createPool } = require('mysql');
 const router = express.Router();
-const connection = require('../database');
+const connection = require('../../database/db');
 const session = require('express-session')
 
 router.get('/', async (req, res) => {

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--  Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>  
+
+    <style>
+    .table thead, .table tfoot{
+        background-color: #455a64;
+        color:azure;
+    }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID BOOKING</th>
+                                    <th>ID BOOK</th>
+                                    <th>TITLE</th>
+                                    <th>DNI</th>
+                                    <th>FIRT NAME</th>
+                                    <th>LAST NAME</th>
+                                    <th>RESERVATION DATE</th>
+                                    <th>DATE OF DELIVERY</th>
+                                </tr>
+                            </thead>
+                            <tbody>                    
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                </table> 
+            </div>
+        </div>
+    </div>
+     
+   <div class="container">
+    <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary">
+            Total: <span id="total" class="badge badge-light"></span>
+            </button>    
+        </div>
+    </div>
+   </div>     
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <script>
+    $(document).ready(function(){
+            var tabla = $("#example").DataTable({
+                ajax: 'api/bookings',
+                columns: [
+                    { data: 'id_booking' },
+                    { 
+                        data: 'id_book',
+                        render: function (data, type) {
+                            if (type === 'display') {
+                                let color = '';
+                                if (data == 100001) {
+                                    color = 'red';
+                                }else {
+                                    color = "black";
+                                }
+                                return '<span style="color:' + color + '">' + data + '</span>'                        
+                            }
+                        },
+                    },
+                    { data: 'titulo' },
+                    { data: 'dni' },
+                    { data: 'nombre' },
+                    { data: 'apellidos' },
+                    { data: 'fecha_reserva' },
+                    { data: 'fecha_entrega' }
+                ]
+           });
+
+        //1era forma para sum()
+        //var tot = tabla.column(5).data().sum();
+        //$("#total").text(tot);
+    });
+    </script>
+</body>
+</html>
