@@ -1,34 +1,54 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <i class="fas fa-book"></i> Library San Miguel
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+  <div class="hamburger" id="btn-menu">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+
+  <div class="navbar">
+    <div class="titleNav" id="title-nav"><a href="/">Library San Miguel</a></div>
+    <div class="nav-links" id="navbarNav">
+      <ul class="links">
         {{#if name}}
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard">Books</a>
-            </li>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard-partners" id="partners">Partners</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard-bookings">Bookings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/partners">Logout</a>
-            </li>
-            {{else}}
-            <li class="nav-item">
-              <a class="nav-link" href="/login">SignIn</a>
-            </li>
-            {{/if}}
-       </ul>
+        <li class="nav-item">
+          <a class="nav-links" href="books">Books</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-links" href="partners" id="partners">Partners</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-links" href="bookings">Bookings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-links" href="/logout">Logout</a>
+        </li>
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-links" href="/login">SignIn</a>
+        </li>
+        {{/if}}
+      </ul>
     </div>
   </div>
 </nav>
+
+<script>
+  const btn = document.querySelector("#btn-menu");
+  const menu = document.querySelector("#sidemenu");
+  const bd = document.querySelector("#body-expanded");
+  btn.addEventListener('click', e => {
+    menu.classList.toggle("menu-expanded");
+    menu.classList.toggle("menu-collapsed");
+    //$('#title-nav').css('display', 'none');
+    //        titleNav.classList.toggle("titleNav");
+    //      titleNav.classList.toggle("titleNavFalse");
+    document.querySelector('body').classList.toggle('body-expanded');
+    //$('#title-nav').css('display', 'block');
+
+    if ($('#title-nav').css('visibility') != 'hidden') {
+      $('#title-nav').css('visibility', 'hidden');
+    } else {
+      $('#title-nav').css('visibility', 'visible');
+    }
+
+  });
+</script>

@@ -10,20 +10,18 @@ router.post('/auth', async (req, res)=> {
     if (email && pass) {
         connection.query('SELECT * FROM users WHERE email = ?', [email], async (error, results, fields)=> {
             if( results.length == 0 || await pass != results[0].pass ) {    
-                // Swal.fire({
-                //     title: 'Error!',
-                //     text: 'Do you want to continue',
-                //     icon: 'error',
-                //     confirmButtonText: 'Cool'
-                //   });
-                  console.log("no ets logueado")
-                  req.session.loggedin = false;
-                  res.redirect('/login');
+                    console.log("*----------------------------------------*")
+                    req.session.loggedin = false;
+                    nameUser = ''
+                    login = false
+                    res.render("index.html")
+                    //res.redirect('/workspace/login'); // redireciona al formulario de logueo
+                    console.log("*----------------------------------------*")
                 } else {         
-                //creamos una var de session y le asignamos true si INICIO SESSION 
-                req.session.loggedin = true;                
-                req.session.name = results[0].firtname;
-                res.redirect('/dashboard');        			
+                    //creamos una var de session y le asignamos true si INICIO SESSION 
+                    req.session.loggedin = true;                
+                    req.session.name = results[0].firtname;
+                    res.redirect('../workspace/books');        			
             }			
             res.end();
         });
@@ -36,25 +34,22 @@ router.post('/auth', async (req, res)=> {
 // SINGIN
 router.get('/login', async (req, res) =>{
     const logueado = req.session.loggedin;
-    let url = '/api/books'
+    console.log("---------------->> logueado a ", logueado)
+    let url = 'api/books'
     if(logueado){
         const books = await url;
-        res.render('links/dashboard-books', {
+        res.render('workspace/dashboard-books', {
         login: true,
-        name: req.session.name,
+        nameUser: req.session.name,
         books, 
       });
     }else{
-        res.render('links/login',{
+        res.render('workspace/login',{
             login: false,
-            name: ''
+            nameUser: ''
         });
     }
   });
-
-router.post('/login', async (req, res) => {
-    res.redirect('/dashboard');
-});
 
 // SIGNUP
 // router.get("/signup", renderSignUp);

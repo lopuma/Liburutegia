@@ -5,15 +5,11 @@ const session = require('express-session');
 
 router.get('/', async (req, res) =>{
     const logueado = req.session.loggedin;
-    let url = '/api/books'
+    let url = 'api/books'
     console.log(logueado);
     if(logueado){
         const books = await url;
-        res.render('links/dashboard-books', {
-        login: true,
-        name: req.session.name,
-        books, 
-      });
+        res.redirect('../workspace/books');
     }else{
         res.render('index',{
             login: false,

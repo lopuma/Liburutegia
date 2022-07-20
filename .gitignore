@@ -2,3 +2,6 @@ node_modules/
 liburudenda-selfsigned.*
 docs/
 env/
+.gitignore
+docker-compose.yml
+.mysql-data/

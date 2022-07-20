@@ -1,0 +1,12 @@
+<div class="container">
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2 style="color: blue;">Books</h2>
+    {{#if name}}
+    <h2 style="color: gray;">Welcome <span class="badge badge-success">{{name}}</span></h2>
+    {{/if}}
+  </div>
+  <div class="row shadow-lg p-2 mb-2">
+    {{> books}}
+  </div>
+</div>

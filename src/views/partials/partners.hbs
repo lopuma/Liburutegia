@@ -1,53 +1,157 @@
-<body>
-<script src="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet"></script>/>
-<div class="grid-container" style="background-color: white;">
-    <div class="container p-4">
-        <div class="row">
-        <button id="addRow">Add new row</button>
-<table id="example" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-    </table>
+<div class="container-fluid">
+    <button id="btnCrear" class="btn btn-dark mb-4">ADD New Partner</button>
+</div>
+<table id="bookingsTable" class="table table-striped" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th scope="col" colspan="8" class="bg-indigo-900 text-white"
+                style="background-color: #0048CD;   border-top-left-radius: 10px; border-top-right-radius: 10px; border: 0px">
+                List of Partners
+            </th>
+        </tr>
+        <tr class="bg-table-tr">
+            <th>ID</th>
+            <th>DNI</th>
+            <th>NAME</th>
+            <th>LAST NAME</th>
+            <th>DIRECTION</th>
+            <th>PHONE</th>
+            <th>E-MAIL</th>
+            <th>ACTIONS</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+        <tr class="bg-table-tr">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+
+
+<!--Modal para CRUD-->
+
+<div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+            </div>
+            <form id="formu">
+                <div class="modal-body">
+                    <input id="dni" hidden>
+
+                    <label for="" class="col-form-label">ID</label>
+                    <input type="text" class="form-control" id="id_partner">
+
+                    <label for="" class="col-form-label">NAME</label>
+                    <input type="text" class="form-control" id="name">
+
+                    <label for="" class="col-form-label">LAST NAME</label>
+                    <input id="lastname" type="text" step="0.01" class="form-control">
+
+                    <label for="" class="col-form-label">DIRECTION</label>
+                    <input id="direction" type="text" class="form-control">
+
+                    <label for="" class="col-form-label">PHONE</label>
+                    <input id="phone" type="text" class="form-control">
+
+                    <label for="" class="col-form-label">E-MAIL</label>
+                    <input id="email" type="text" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="btnGuardar" class="btn btn-dark">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+
 <script>
-$(document).ready(function () {
-    $('#example').DataTable({
-        ajax: 'api/objects',
-        columns: [
-            { data: 'name' },
-            { data: 'position' },
-            { data: 'office' },
-            { data: 'extn' },
-            { data: 'start_date' },
-            { data: 'salary' },
-        ]
+    // MOSTRAR DATOS
+    $(document).ready(function () {
+        var tabla = $("#bookingsTable").DataTable({
+            ajax: '/api/partners',
+            columns: [
+                { data: 'id_partner' },
+                { data: 'dni' },
+                { data: 'nombre' },
+                { data: 'apellidos' },
+                { data: 'direccion' },
+                { data: 'telefono' },
+                { data: 'email' },
+                {
+                    defaultContent: `<div class="ui buttons">
+                            <button class="btnEdit ui yellow button active" href="#edit" title="Edit booking"><i class="edit outline icon"></i></button>
+                            <div class="or" data-text="or"></div>
+                            <button class="btnDelete ui red button" href="#delete" title="Delete booking"><i class="delete outline icon"></i></button>
+                            </div>`
+                }
+            ]
+        });
     });
-});
+    //EDITAR        
+    $(document).on("click", ".btnEdit", function () {
+        console.log("editar")
+        opcion = 'edit';
+        fila = $(this).closest("tr");
+        id_partner = fila.find('td:eq(0)').text();
+        dni = fila.find('td:eq(1)').text();
+        name = fila.find('td:eq(2)').text();
+        lastname = fila.find('td:eq(3)').text();
+        direction = fila.find('td:eq(4)').text();
+        phone = fila.find('td:eq(5)').text();
+        email = fila.find('td:eq(6)').text();
+        $("#id_partner").val(id_partner);
+        $("#dni").val(dni);
+        $("#name").val(name);
+        $("#lastname").val(lastname);
+        $("#direction").val(direction);
+        $("#phone").val(phone);
+        $("#email").val(email);
+        $(".modal-header").css("background-color", "#7303c0");
+        $(".modal-header").css("color", "white");
+        $(".modal-title").text("Edit Partner");
+        $('#modalCRUD').modal('show');
+    });
+    //submit para el CREAR y EDITAR
+    $('#formu').submit(function (e) {
+        e.preventDefault();
+        url = "/api/partners/"
+        id_partner = $.trim($('#id_partner').val());
+        console.log("-************** id_partner ", id_partner)
+        dni = $.trim($('#dni').val());
+        name = $.trim($('#name').val());
+        lastname = $.trim($('#lastname').val());
+        direction = $.trim($('#direction').val());
+        phone = $.trim($('#phone').val());
+        email = $.trim($('#email').val());
+        if (opcion == 'edit') {
+            $.ajax({
+                url: url + id_partner,
+                method: 'put',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id_partner: id_partner, dni: dni, name: name, lastname: lastname, direction: direction, phone: phone, email: email
+                }
+                )
+            });
+            $(document).ajaxStop(function () {
+                location.reload(true);
+            });
+        }
+        $('#modalCRUD').modal('hide');
+    });
 </script>
-
-
-
-
 </body>
