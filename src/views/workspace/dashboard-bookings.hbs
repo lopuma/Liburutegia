@@ -1,11 +1,76 @@
-<div class="container">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h2 style="color: blue;">Bookings</h2>
-    {{#if name}}
-    <h2 style="color: gray;">Welcome <span class="badge badge-success">{{name}}</span></h2>
-    {{/if}}
+<body>
+  <div class="container" id="container-form">
+    <div
+      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom">
+      <h2 style="color: blue;">Bookings</h2>
+      {{#if nameUser}}
+      <h2 style="color: gray;">Welcome <span class="badge badge-success">{{nameUser}}</span></h2>
+      {{/if}}
+    </div>
+    <div class="row">
+      <div class="col">
+        {{> bookings}}
+      </div>
+    </div>
   </div>
-  <div class="row shadow-lg p-2 mb-2">
-    {{> bookings}}
-  </div>
-</div>
+  <script>
+    // MOSTRAR DATOS
+    $(document).ready(function () {
+      var tabla = $("#table-bookings").DataTable({
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'responsive': true,
+        "scrollCollapse": true,
+        "order": [[0, "desc"]],
+        "ajax": '/api/bookings',
+        columns: [
+          { data: 'id_booking' },
+          { data: 'id_book' },
+          { data: 'titulo' },
+          { data: 'dni' },
+          { data: 'nombre' },
+          { data: 'apellidos' },
+          { 
+            data: 'fecha_entrega',
+            render : function(data, type){
+              console.log(data)
+              var fecha = new Date(data);
+              return fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+            }
+          },
+          {
+            defaultContent: `<div class="ui buttons">
+                        <button type="button"  class="btnEdit ui yellow button active" data-toggle="modal" data-target="#modalBOOKING" href="#edit" title="Edit booking"><i class="edit outline icon"></i></button>
+                        <div class="or" data-text="or"></div><button class="btnDelete ui red button" href="#delete" title="Delete booking"><i class="delete outline icon"></i></button></div>`
+          }
+        ]
+      });
+    });
+    //EDITAR        
+    $(document).on("click", ".btnEdit", function () {
+      console.log("FUNCIONA---")
+      opcion = 'edit';
+      fila = $(this).closest("tr");
+      id_booking = fila.find('td:eq(0)').text();
+      id_book = fila.find('td:eq(1)').text();
+      title_book = fila.find('td:eq(2)').text();
+      dni = fila.find('td:eq(3)').text();
+      firtname = fila.find('td:eq(4)').text();
+      lastname = fila.find('td:eq(5)').text();
+      deliver_date = fila.find('td:eq(6)').text();
+      $("#id_booking").val(id_booking);
+      $("#id_book").val(id_book);
+      $("#title_book").val(title_book);
+      $("#dni").val(dni);
+      $("#firtname").val(firtname);
+      $("#lastname").val(lastname);
+      $("#deliver_date").val(deliver_date);
+      $(".modal-header").css("background-color", "#7303c0");
+      $(".modal-header").css("color", "white");
+      $(".modal-title").text("Edit Booking");
+    });
+ 
+  </script>
+
+</body>

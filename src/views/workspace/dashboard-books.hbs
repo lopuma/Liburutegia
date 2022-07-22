@@ -1,12 +1,125 @@
-<div class="container">
+<body>
+  <div class="container " id="container-form">
+    <fieldset>
+        <legend id="lengedBook"><span class="titleBook"><h2>Books</h2></span><span class="userLogging">{{#if nameUser}}
+      <h2 style="color: gray;">Welcome <span class="badge badge-success">{{nameUser}}</span></h2>
+      {{/if}}</span></legend>
+      <div class="row">
+        <div class="col">
+          {{> books}}
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</body>
 
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h2 style="color: blue;">Books</h2>
-    {{#if name}}
-    <h2 style="color: gray;">Welcome <span class="badge badge-success">{{name}}</span></h2>
-    {{/if}}
-  </div>
-  <div class="row shadow-lg p-2 mb-2">
-    {{> books}}
-  </div>
-</div>
+<script>
+  function confirmar(id_book) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Are you sure you want to delete the book!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted! Book ' + id_book,
+          'Your book has been deleted.',
+          'success',
+          window.location = '../workspace/partners'
+        )
+      }
+    })
+  };
+  $(document).ready(function () {
+    var tabla = $("#table-books").DataTable({
+      'searching': true,
+      'ordering': true,
+      'info': true,
+      'responsive': true,
+      "scrollCollapse": true,
+      "order": [[0, "desc"]],
+      'ajax': '/api/books',
+      columns: [
+        { data: 'id_book' },
+        { data: 'titulo' },
+        { data: 'autor' },
+        { data: 'tipo' },
+        { data: 'idioma' },
+        { data: 'fecha_compra' },
+        { data: 'reservado' },
+        {
+          defaultContent: `
+                    <div class="ui buttons">
+                      <button id="btnEditBook" type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#modalCRUD" href="#edit" title="Edit book"><i class="fa-regular fa-pen-to-square"></i></button>
+                      <div class="or" data-text="or">                          
+                    </div>
+                      <button id="btnDeleteBook" class="btn btn-outline-danger" href="#delete" title="Delete book"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>`
+        }
+      ],
+
+    });
+  });
+
+  //EDITAR        
+  $(document).on("click", "#btnEditBook", function () {
+    console.log("FUNCIONA")
+    opcion = 'edit';
+    fila = $(this).closest("tr");
+    id_book = fila.find('td:eq(0)').text();
+    title_book = fila.find('td:eq(1)').text();
+    author = fila.find('td:eq(2)').text();
+    type = fila.find('td:eq(3)').text();
+    language = fila.find('td:eq(4)').text();
+    $("#id_book").val(id_book);
+    $("#title_book").val(title_book);
+    $("#author").val(author);
+    $("#type").val(type);
+    $("#language").val(language);
+    $(".modal-header").css("background-color", "#7303c0");
+    $(".modal-header").css("color", "white");
+    $(".modal-title").text("Edit Book");
+  });
+
+  $(document).on("click", "#btnDeleteBook", function () {
+    console.log("FUNCIONA")
+    opcion = 'delete';
+    fila = $(this).closest("tr");
+    id_book = fila.find('td:eq(0)').text();
+    $("#id_book").val(id_book);
+    console.log("EL IDE A ELIMINAR ES : " + id_book)
+    confirmar(id_book);
+  });
+  //submit para el CREAR y EDITAR
+
+  $('#formu').submit(function (e) {
+    e.preventDefault();
+    url = "/api/books/"
+    id_book = $.trim($('#id_book').val());
+    console.log("ID BOOK ", id_book)
+    title_book = $.trim($('#title_book').val());
+    author = $.trim($('#author').val());
+    type = $.trim($('#type').val());
+    language = $.trim($('#language').val());
+    if (opcion == 'edit') {
+      console.log("EDITAR");
+      $.ajax({
+        url: url + id_book,
+        method: 'put',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          id_book: id_book, title_book: title_book, author: author, type: type, language: language
+        }
+        )
+      });
+      $(document).ajaxStop(function () {
+        location.reload(true);
+      });
+    }
+    $('#modalCRUD').modal('hide');
+  });
+</script>

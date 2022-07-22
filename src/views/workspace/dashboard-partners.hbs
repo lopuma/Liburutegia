@@ -1,11 +1,95 @@
-<div class="container">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h2 style="color: blue;">Partners</h2>
-    {{#if name}}
-    <h2 style="color: gray;">Welcome <span class="badge badge-success">{{name}}</span></h2>
-    {{/if}}
+<body>
+  <div class="container" id="container-form">
+    <div
+      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom">
+      <h2 style="color: blue;">Partners</h2>
+      {{#if nameUser}}
+      <h2 style="color: gray;">Welcome <span class="badge badge-success">{{nameUser}}</span></h2>
+      {{/if}}
+    </div>
+    <div class="row">
+      <div class="col">
+        {{> partners}}
+      </div>
+    </div>
   </div>
-  <div class="row shadow-lg p-2 mb-2">
-    {{>partners}}
-  </div>
-</div>
+
+  <script>
+    // MOSTRAR DATOS
+    $(document).ready(function () {
+      var tabla = $("#table-partners").DataTable({
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'responsive': true,
+        "scrollCollapse": true,
+        "order": [[0, "desc"]],
+        'ajax': '/api/partners',
+        columns: [
+          { data: 'id_partner' },
+          { data: 'dni' },
+          { data: 'nombre' },
+          { data: 'apellidos' },
+          { data: 'direccion' },
+          { data: 'telefono' },
+          { data: 'email' },
+          {
+                    defaultContent: `<div class="ui buttons">
+                        <button type="button"  class="btnEdit ui yellow button active" data-toggle="modal" data-target="#modalCRUD" href="#edit" title="Edit partner"><i class="edit outline icon"></i></button>
+                        <div class="or" data-text="or"></div><button class="btnDelete ui red button" href="#delete" title="Delete booking"><i class="delete outline icon"></i></button></div>`
+                }
+        ]
+      });
+    });
+    //EDITAR        
+    $(document).on("click", ".btnEdit", function () {
+      console.log("FUNCIONA")
+      opcion = 'edit';
+      fila = $(this).closest("tr");
+      id_partner = fila.find('td:eq(0)').text();
+      dni = fila.find('td:eq(1)').text();
+      firtname = fila.find('td:eq(2)').text();
+      lastname = fila.find('td:eq(3)').text();
+      direction = fila.find('td:eq(4)').text();
+      phone = fila.find('td:eq(5)').text();
+      email = fila.find('td:eq(6)').text();
+      $("#id_partner").val(id_partner);
+      $("#dni").val(dni);
+      $("#firtname").val(firtname);
+      $("#lastname").val(lastname);
+      $("#direction").val(direction);
+      $("#phone").val(phone);
+      $("#email").val(email);
+      $(".modal-header").css("background-color", "#7303c0");
+      $(".modal-header").css("color", "white");
+      $(".modal-title").text("Edit Partner");
+    });
+    //submit para el CREAR y EDITAR
+    $('#formu').submit(function (e) {
+      e.preventDefault();
+      url = "/api/partners/"
+      id_partner = $.trim($('#id_partner').val());
+      dni = $.trim($('#dni').val());
+      firtname = $.trim($('#firtname').val());
+      lastname = $.trim($('#lastname').val());
+      direction = $.trim($('#direction').val());
+      phone = $.trim($('#phone').val());
+      email = $.trim($('#email').val());
+      if (opcion == 'edit') {
+        $.ajax({
+          url: url + id_partner,
+          method: 'put',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            id_partner: id_partner, dni: dni, firtname: firtname, lastname: lastname, direction: direction, phone: phone, email: email
+          }
+          )
+        });
+        $(document).ajaxStop(function () {
+          location.reload(true);
+        });
+      }
+      $('#modalCRUD').modal('hide');
+    });
+  </script>
+</body>

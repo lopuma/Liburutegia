@@ -1,14 +1,13 @@
 <div class="container-fluid">
-    <button id="btnCrear" class="btn btn-dark mb-4">ADD New Book</button>
-    <table id="booksTable" class="table table-striped" class="display" style="width:100%">
+    <a class="btn btn-outline-primary mt-4 mb-4" style="font-size: 15px;"><i class="fa-solid fa-circle-plus"></i><span style="margin: 10px; font-weight: bold;">New Book</span></a>
+    <table id="table-books" class="display responsive nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th scope="col" colspan="8" class="bg-indigo-900 text-white"
-                    style="background-color: #0048CD;   border-top-left-radius: 10px; border-top-right-radius: 10px; border: 0px">
-                    List of books
+                <th scope="col" colspan="8" id="titleScope">
+                    List of Books
                 </th>
             </tr>
-            <tr class="bg-table-tr">
+            <tr>
                 <th>ID</th>
                 <th>TITLE</th>
                 <th>AUTHOR</th>
@@ -22,44 +21,42 @@
         <tbody>
         </tbody>
         <tfoot>
-            <tr class="bg-table-tr">
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>AUTHOR</th>
+                <th>TYPE</th>
+                <th>LANGUAGE</th>
+                <th>AVAILABLE</th>
+                <th>AVAILABLE</th>
+                <th>ACTIONS</th>
             </tr>
         </tfoot>
     </table>
 </div>
 
 <!--Modal para CRUD-->
-
-<div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <h5 class="modal-title" id="bookModalLabel"></h5>
             </div>
             <form id="formu">
                 <div class="modal-body">
                     <input id="id_book" hidden>
 
                     <label for="" class="col-form-label">Title:</label>
-                    <input type="text" class="form-control" id="titulo">
+                    <input type="text" class="form-control" id="title_book">
 
                     <label for="" class="col-form-label">Author:</label>
-                    <input type="text" class="form-control" id="autor">
+                    <input type="text" class="form-control" id="author">
 
                     <label for="" class="col-form-label">Type</label>
-                    <input id="tipo" type="text" step="0.01" class="form-control">
+                    <input id="type" type="text" step="0.01" class="form-control">
 
-                    <label for="" class="col-form-label">Lenguage</label>
-                    <input id="idioma" type="text" class="form-control">
+                    <label for="" class="col-form-label">Language</label>
+                    <input id="language" type="text" class="form-control">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -69,84 +66,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        var tabla = $("#booksTable").DataTable({
-            'searching': true,
-            'ordering': true,
-            'info': true,
-            'responsive': true,
-            "scrollCollapse": true,
-            "order": [[0, "desc"]],
-            ajax: '/api/books',
-            columns: [
-                { data: 'id_book' },
-                { data: 'titulo' },
-                { data: 'autor' },
-                { data: 'tipo' },
-                { data: 'idioma' },
-                { data: 'fecha_compra' },
-                { data: 'reservado' },
-                {
-                    defaultContent: `<div class="ui buttons">
-                        <button class="btnEdit ui yellow button active" href="#edit" title="Edit booking"><i class="edit outline icon"></i></button>
-                        <div class="or" data-text="or"></div>
-                        <button class="btnDelete ui red button" href="#delete" title="Delete booking"><i class="delete outline icon"></i></button>
-                        </div>`
-                }
-            ],
-
-        });
-    });
-
-    //EDITAR        
-    $(document).on("click", ".btnEdit", function () {
-        opcion = 'edit';
-        fila = $(this).closest("tr");
-        id_book = fila.find('td:eq(0)').text();
-        titulo = fila.find('td:eq(1)').text();
-        autor = fila.find('td:eq(2)').text();
-        tipo = fila.find('td:eq(3)').text();
-        idioma = fila.find('td:eq(4)').text();
-        $("#id_book").val(id_book);
-        $("#titulo").val(titulo);
-        $("#autor").val(autor);
-        $("#tipo").val(tipo);
-        $("#idioma").val(idioma);
-        $(".modal-header").css("background-color", "#7303c0");
-        $(".modal-header").css("color", "white");
-        $(".modal-title").text("Edit Book");
-        $('#modalCRUD').modal('show');
-    });
-    //submit para el CREAR y EDITAR
-    $('#formu').submit(function (e) {
-        e.preventDefault();
-        url = "api/books/"
-        id_book = $.trim($('#id_book').val());
-        console.log("ID BOOK ", id_book)
-        titulo = $.trim($('#titulo').val());
-        autor = $.trim($('#autor').val());
-        tipo = $.trim($('#tipo').val());
-        if (opcion == 'edit') {
-            console.log("EDITAR");
-            $.ajax({
-                url: url + id_book,
-                method: 'put',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    id_book: id_book, titulo: titulo, autor: autor, tipo: tipo, idioma: idioma
-                }
-                )
-            });
-            $(document).ajaxStop(function () {
-                location.reload(true);
-            });
-        }
-        $('#modalCRUD').modal('hide');
-    });
-
-</script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

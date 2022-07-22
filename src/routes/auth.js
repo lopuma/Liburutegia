@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const connection = require('../../database/db')
-const Swal = require('sweetalert2')
 
 router.post('/auth', async (req, res)=> {
     const email = req.body.email;
@@ -10,13 +9,9 @@ router.post('/auth', async (req, res)=> {
     if (email && pass) {
         connection.query('SELECT * FROM users WHERE email = ?', [email], async (error, results, fields)=> {
             if( results.length == 0 || await pass != results[0].pass ) {    
-                    console.log("*----------------------------------------*")
-                    req.session.loggedin = false;
-                    nameUser = ''
-                    login = false
-                    res.render("index.html")
-                    //res.redirect('/workspace/login'); // redireciona al formulario de logueo
-                    console.log("*----------------------------------------*")
+                req.session.loggedin = false;                
+                req.session.name = "";    
+                res.redirect('/login');
                 } else {         
                     //creamos una var de session y le asignamos true si INICIO SESSION 
                     req.session.loggedin = true;                
@@ -34,17 +29,14 @@ router.post('/auth', async (req, res)=> {
 // SINGIN
 router.get('/login', async (req, res) =>{
     const logueado = req.session.loggedin;
-    console.log("---------------->> logueado a ", logueado)
-    let url = 'api/books'
+    const nameUser = req.session.name;
     if(logueado){
-        const books = await url;
         res.render('workspace/dashboard-books', {
         login: true,
-        nameUser: req.session.name,
-        books, 
+        nameUser,
       });
     }else{
-        res.render('workspace/login',{
+        res.render('../controllers/login',{
             login: false,
             nameUser: ''
         });

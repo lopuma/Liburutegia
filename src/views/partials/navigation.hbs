@@ -7,16 +7,16 @@
     <div class="titleNav" id="title-nav"><a href="/">Library San Miguel</a></div>
     <div class="nav-links" id="navbarNav">
       <ul class="links">
-        {{#if name}}
+        {{#if nameUser}}
         <li class="nav-item">
-          <a class="nav-links" href="books">Books</a>
+          <a class="nav-links" href="../workspace/books">Books</a>
         </li>
         </li>
         <li class="nav-item">
-          <a class="nav-links" href="partners" id="partners">Partners</a>
+          <a class="nav-links" href="../workspace/partners" id="partners">Partners</a>
         </li>
         <li class="nav-item">
-          <a class="nav-links" href="bookings">Bookings</a>
+          <a class="nav-links" href="../workspace/bookings">Bookings</a>
         </li>
         <li class="nav-item">
           <a class="nav-links" href="/logout">Logout</a>
@@ -35,6 +35,7 @@
   const btn = document.querySelector("#btn-menu");
   const menu = document.querySelector("#sidemenu");
   const bd = document.querySelector("#body-expanded");
+  const container =  document.querySelector("#container-form");
   btn.addEventListener('click', e => {
     menu.classList.toggle("menu-expanded");
     menu.classList.toggle("menu-collapsed");
@@ -46,8 +47,10 @@
 
     if ($('#title-nav').css('visibility') != 'hidden') {
       $('#title-nav').css('visibility', 'hidden');
+      $('#container-form').css('margin-left', '0');
     } else {
       $('#title-nav').css('visibility', 'visible');
+      $('#container-form').css('margin-left', '100px');
     }
 
   });

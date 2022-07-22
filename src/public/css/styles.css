@@ -1,21 +1,25 @@
-:root{
-  --background-form : #0048CD;
-  --color-text-form : white;
+:root {
+  --background-form: #0048CD;
+  --color-text-form: white;
+}
+
+* {
+  margin: 0;
 }
 
 .jumbotron {
-    width: 90%;
-    max-width: 90%;
-    background: var(--background-form);
-    color: var(--color-text-form);
-    text-align: center;
-    margin: 0 0 0 6em;
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.411), 0 15px 12px rgba(0,0,0,0.22); 
-  }
+  width: 90%;
+  max-width: 90%;
+  background: var(--background-form);
+  color: var(--color-text-form);
+  text-align: center;
+  margin: 0 0 0 6em;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.411), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
 
-  /* PARA REGISTRO Y LOGIN */ 
+/* PARA REGISTRO Y LOGIN */
 
-.base-form{
+.base-form {
   width: 400px;
   max-width: auto;
   padding: 00px 20px 60px 20px;
@@ -24,7 +28,7 @@
   text-align: center;
   margin: auto;
   border-radius: 10px;
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.411), 0 15px 12px rgba(0,0,0,0.22); 
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.411), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 .base-form h1 {
@@ -33,20 +37,16 @@
   font-size: 26px;
   padding: 20px 0;
 }
+
 .base-form input[type="email"],
 .base-form input[type="password"] {
   width: 100%;
   padding: 20px;
   border-radius: 5px;
   border: 3px solid #8e97ecb4;
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
-
-/* DATA TABLE */
-.container .container-fluid{
-  overflow: hidden;
-}
 
 div.dataTables_wrapper div.dataTables_length label {
   font-weight: normal;
@@ -63,18 +63,70 @@ div.dataTables_info {
 }
 
 div.dataTables_wrapper div.dataTables_filter label {
-    font-weight: normal;
-    white-space: nowrap; 
-    text-align: left;
-    color: #5c5700;
-    align-items: center;
-  }
+  font-weight: normal;
+  white-space: nowrap;
+  text-align: left;
+  color: #5c5700;
+  align-items: center;
+}
 
-  div.dataTables_wrapper input[type="search"]{
-    padding: 10px;
-    align-items: center;
-    border-radius: 3px;
-    border: 2px solid #5c5700;
-    box-sizing:border-box;  
-    margin-bottom: 10px;
-  }
+div.dataTables_wrapper input[type="search"] {
+  padding: 10px;
+  align-items: center;
+  border-radius: 3px;
+  border: 2px solid #5c5700;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#container-form {
+  margin-left: 100px;
+  margin-top: 20px;
+  padding: 0;
+  border: 0;
+}
+
+div.row{
+  padding: 0;
+  border: 0;
+}
+
+div.col{
+  padding: 0;
+  border: 0;
+}
+
+
+/* ESTILO PARA LA LEGEND */
+fieldset {
+	background-color: rgba(223, 193, 247, 0.5);
+	border-radius: 4px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: 2px 2px 10px;
+
+}
+
+#lengedBook {
+  display: flex;
+  justify-content: space-between;
+	background-color: rgb(190, 206, 226);
+	border: 1px solid rgb(67, 61, 150);
+	border-radius: 4px;
+  font-size: 25px;
+	font-weight: bold;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+/* PARA LOS TITULO DE CADA TABLA */
+#titleScope{
+  background-color: #015f85;   
+  border-top-left-radius: 10px; 
+  border-top-right-radius: 10px;
+  border: 0px; 
+  text-align: center;
+  font-size: 20px;
+  color: rgb(250, 249, 249);
+}
