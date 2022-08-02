@@ -1,11 +1,11 @@
 <div class="container-fluid">
-    <button id="btnCrear" class="btn btn-dark mb-4">ADD New Book</button>
+    <a id="btnNew" class="btn btn-outline-primary mt-4 mb-4"><i class="fa-solid fa-circle-plus"></i><span>New
+            Booking</span></a>
     <table id="table-bookings" class="display responsive nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th scope="col" colspan="9" class="bg-indigo-900 text-white"
-                    style="background-color: #0048CD;   border-top-left-radius: 10px; border-top-right-radius: 10px; border: 0px">
-                    List of Books
+                <th scope="col" colspan="9" id="titleScope">
+                    List of Bookings
                 </th>
             </tr>
             <tr>
@@ -13,9 +13,9 @@
                 <th>BOOK ID</th>
                 <th>BOOK TITLE</th>
                 <th>PARTNER DNI</th>
-                <th>NAME</th>
-                <th>LASTNAME</th>
-                <th>DELIVER DATE <br>('DD/MM/YYY')</th>
+                <th>PARTNER NAME</th>
+                <th>PARTNER LASTNAME</th>
+                <th>DELIVER DATE <span id="dateTip">(YYYY-MM-DD)</span></th>
                 <th>ACTIONS</th>
             </tr>
         </thead>
@@ -25,18 +25,18 @@
             <tr>
                 <th>RESERVATION ID</th>
                 <th>BOOK ID</th>
-                <th>TITLE</th>
+                <th>BOOK TITLE</th>
                 <th>PARTNER DNI</th>
                 <th>NAME</th>
                 <th>LASTNAME</th>
-                <th>DELIVER DATE</th>
+                <th>DELIVER DATE <span id="dateTip">(YYYY-MM-DD)</span></th>
                 <th>ACTIONS</th>
             </tr>
         </tfoot>
     </table>
 </div>
 <!--Modal para CRUD-->
-<div id="modalBOOKING" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBOOKINGLabel"
+<div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBOOKINGLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

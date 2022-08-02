@@ -1,6 +1,6 @@
-<div class="container-fluid">
-    <a class="btn btn-outline-primary mt-4 mb-4" style="font-size: 15px;"><i class="fa-solid fa-circle-plus"></i><span style="margin: 10px; font-weight: bold;">New Book</span></a>
-    <table id="table-books" class="display responsive nowrap" cellspacing="0" width="100%">
+<div  class="container-form">
+    <a id="btnNewBook" class="btn btn-outline-primary mt-4 mb-4"><i class="fa-solid fa-circle-plus"></i><span>New Book {{msg}}</span></a>
+    <table id="example" class="display responsive nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th scope="col" colspan="8" id="titleScope">
@@ -8,12 +8,12 @@
                 </th>
             </tr>
             <tr>
-                <th>ID</th>
+                <th>BOOK ID</th>
                 <th>TITLE</th>
                 <th>AUTHOR</th>
                 <th>TYPE</th>
                 <th>LANGUAGE</th>
-                <th>AVAILABLE</th>
+                <th>PURCHASE DATE <span id="dateTip">(YYYY-MM-DD)</span></th>
                 <th>AVAILABLE</th>
                 <th>ACTIONS</th>
             </tr>
@@ -21,7 +21,7 @@
         <tbody>
         </tbody>
         <tfoot>
-            <tr>
+            <tr id="bg-tr-table">
                 <th>ID</th>
                 <th>TITLE</th>
                 <th>AUTHOR</th>
@@ -46,9 +46,9 @@
                 <div class="modal-body">
                     <input id="id_book" hidden>
 
-                    <label for="" class="col-form-label">Title:</label>
+                    <label for="" class="col-form-label" >Title:</label>
                     <input type="text" class="form-control" id="title_book">
-
+                    <label for="" id="lTitle"></label>
                     <label for="" class="col-form-label">Author:</label>
                     <input type="text" class="form-control" id="author">
 

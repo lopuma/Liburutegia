@@ -1,10 +1,10 @@
 <div class="container-fluid">
-    <button id="btnCrear" class="btn btn-dark mb-4">ADD New Partner</button>
+    <a id="btnNew" class="btn btn-outline-primary mt-4 mb-4"><i class="fa-solid fa-circle-plus"></i><span>New
+            Partner</span></a>
     <table id="table-partners" class="display responsive nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th scope="col" colspan="8" class="bg-indigo-900 text-white"
-                    style="background-color: #0048CD;   border-top-left-radius: 10px; border-top-right-radius: 10px; border: 0px">
+                <th scope="col" colspan="8" id="titleScope">
                     List of Partners
                 </th>
             </tr>
@@ -36,46 +36,42 @@
     </table>
 </div>
 
-    <!--Modal para CRUD-->
+<!--Modal para CRUD-->
 
-    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                </div>
-                <form id="formu">
-                    <div class="modal-body">
-                        <label for="" class="col-form-label">ID</label>
-                        <input type="text" class="form-control" id="id_partner">
-
-                        <label for="" class="col-form-label">DNI</label>
-                        <input type="text" class="form-control" id="dni" placeholder="Readonly input here…" readonly>
-
-                        <label for="" class="col-form-label">NAME</label>
-                        <input type="text" class="form-control" id="firtname">
-
-                        <label for="" class="col-form-label">LAST NAME</label>
-                        <input id="lastname" type="text" step="0.01" class="form-control">
-
-                        <label for="" class="col-form-label">DIRECTION</label>
-                        <input id="direction" type="text" class="form-control">
-
-                        <label for="" class="col-form-label">PHONE</label>
-                        <input id="phone" type="text" class="form-control">
-
-                        <label for="" class="col-form-label">E-MAIL</label>
-                        <input id="email" type="text" class="form-control">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" id="btnGuardar" class="btn btn-dark">Save</button>
-                    </div>
-                </form>
+<div id="modalPARTNER" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalPARTNERLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPARTNERLabel"></h5>
             </div>
+            <form id="formu">
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="id_partner" hidden>
+
+                    <label for="" class="col-form-label">DNI</label>
+                    <input type="text" class="form-control" id="dni" placeholder="Readonly input here…" readonly>
+
+                    <label for="" class="col-form-label">NAME</label>
+                    <input type="text" class="form-control" id="firtname">
+
+                    <label for="" class="col-form-label">LAST NAME</label>
+                    <input id="lastname" type="text" step="0.01" class="form-control">
+
+                    <label for="" class="col-form-label">DIRECTION</label>
+                    <input id="direction" type="text" class="form-control">
+
+                    <label for="" class="col-form-label">PHONE</label>
+                    <input id="phone" type="text" class="form-control">
+
+                    <label for="" class="col-form-label">E-MAIL</label>
+                    <input id="email" type="text" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="btnGuardar" class="btn btn-dark">Save</button>
+                </div>
+            </form>
         </div>
     </div>
-
-
-    
+</div>

@@ -1,0 +1,20 @@
+{{#if success_msg}}
+  <div id="alertLogin" class="alert alert-message alert-success alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">Well done!</h4>
+    {{success_msg}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{{/if}}
+
+{{#if error_msg}}
+  <div id="alertNotLogin" class="alert alert-message alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert-headers">
+      <h4 class="alert-heading">Something went wrong.</h4>
+    </div>
+    <hr>
+    {{error_msg}}
+    <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{{/if}}

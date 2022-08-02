@@ -11,7 +11,8 @@
   },
   "scripts": {
     "test": "echo \"Error\"",
-    "dev": "nodemon src/app.js"
+    "dev": "set NODE_ENV=development&& nodemon src/app.js",
+    "prod": "set NODE_ENV=production&& nodemon src/app.js"
   },
   "keywords": [
     "nodejs",
@@ -20,10 +21,12 @@
   ],
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
     "connect-flash": "^0.1.1",
     "dotenv": "^16.0.1",
     "express": "^4.16.4",
     "express-handlebars": "^6.0.6",
+    "express-myconnection": "^1.0.4",
     "express-mysql-session": "^2.1.8",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.2",
@@ -34,7 +37,6 @@
     "mysql": "^2.18.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "sweetalert2": "^11.4.22",
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {

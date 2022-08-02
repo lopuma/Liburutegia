@@ -1,0 +1,124 @@
+<!-- login.component.hbs -->
+
+<body>
+  <div class="login-container" id="login-container">
+    <input type="checkbox" id="flip">
+    <div class="cover">
+      <div class="front">
+        <img src=".../../../../resources/img/frontImg.jpg" alt="">
+        <div class="text">
+          <span class="text-1">Every new friend is a <br> new adventure</span>
+          <span class="text-2">Let`s get connected</span>
+        </div>
+      </div>
+      <div class="back">
+        <img class="backImg" src=".../../../../resources/img/backImg.jpg" alt="">
+        <div class="text">
+          <span class="text-1">Completed miles of journey <br> with one step</span>
+          <span class="text-2">Let`s get started</span>
+        </div>
+      </div>
+    </div>
+
+    <form action="/auth" method="post" id="formLogin">
+      <div class="form-content">
+        <div class="login-form">
+          <div class="title-login">Login</div>
+          <div class="input-boxes">
+            <div class="input-box">
+              <i id="icon-logo" class="fa-solid fa-envelope"></i>
+              <input id="email" type="email" name="email" placeholder="Enter your email" autocomplete="email"
+                required="required" autofocus />
+            </div>
+            <div class="input-box">
+              <i id="icon-logo" class="fa-solid fa-key"></i>
+              <input id="password" type="password" name="password" placeholder="Enter your password"
+                autocomplete="password" required="required" />
+              <i id="icon-eye" class="fa-solid fa-eye"></i>
+            </div>
+            <div class="text sing-up-text"><label for="flip">Forgot password?</label></a></div>
+            <div class="button input-box">
+              <input id="btnLogin" type="submit" value='LOG IN' />
+            </div>
+          </div>
+        </div>
+        {{> messages}}
+      </div>
+    </form>
+
+    <form action="#" method="post" id="formReset">
+      <div class="form-content-f">
+        <div class="forgot-form">
+          <div class="title-forgot">Reset Your Password</div>
+          <div class="input-boxes">
+            <div class="input-box">
+              <i id="icon-logo" class="fa-solid fa-envelope"></i>
+              <input id="emailReset" type="email" name="emailReset" placeholder="Enter your email" autocomplete="email"
+                required="required" autofocus />
+            </div>
+            <div class="input-box">
+              <i id="icon-logo" class="fa-solid fa-key"></i>
+              <input id="newPassword" type="password" name="newPassword" placeholder="Enter new password"
+                autocomplete="new-password" required="required" />
+              <i id="icon-eye-new" class="fa-solid fa-eye"></i>
+            </div>
+            <div class="input-box">
+              <i id="icon-logo" class="fa-solid fa-key"></i>
+              <input id="repeatPassword" type="password" name="repeatPassword" placeholder="Repear new password"
+                autocomplete="current-password" required="required" />
+              <i id="icon-eye-repeat" class="fa-solid fa-eye"></i>
+            </div>
+            <div class="text sing-up-text"><label for="flip">Login?</label></div>
+            <div class="button input-box">
+              <input id="btnReset" type="submit" value='RESET PASSWORD' />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+{{#if alert}}
+<script>
+  Swal.fire({
+    title: '{{alertTitle}}',
+    text: '{{alertMessage}}',
+    icon: '{{alertIcon}}',
+    showConfirmButton: true,
+    timer: 1500,
+    showCancelButton: false,
+    confirmButtonColor: '#3085d6',
+    confirmButtonText: 'let`s go there!'
+  }).then(() => {
+    window.location = 'workspace/books'
+  });
+  //const alertNotLogin = document.querySelector("#alertNotLogin");
+  // const btnCloseAlert = document.querySelector('#btnCloseAlert');
+  //const loginContainer = document.querySelector(".login-container");
+
+  //  if (alertNotLogin) {
+  // loginContainer.style.marginTop = '20px';
+  //btnCloseAlert.addEventListener('click', () => {
+  //    loginContainer.style.marginTop = '100px';
+  //  });
+  // };
+  // $('#formLogin').submit(function (e) {
+  // e.preventDefault();
+  //  window.setTimeout(function (e) {
+  //    $("#alertNotLogin").fadeTo(1500, 0).slideDown((1000, 0), function () {
+  //      $(this).remove();
+  //loginContainer.style.marginTop = '100px';
+  //   });
+  //  }, 3000);
+  // });
+
+
+</script>
+{{/if}}
+
+<script>
+  $("#alertNotLogin").fadeTo(2000, 500).slideUp(500, function () {
+    $("#alertSI").slideUp(500);
+  });
+
+</script>
