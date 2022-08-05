@@ -18,3 +18,15 @@
     </button>
   </div>
 {{/if}}
+
+{{#if error_msg_exist}}
+  <div id="alertNotLogin" class="alert alert-message alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert-headers">
+      <h4 class="alert-heading">Something went wrong.</h4>
+    </div>
+    <hr>
+    {{error_msg_exist}}
+    <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{{/if}}

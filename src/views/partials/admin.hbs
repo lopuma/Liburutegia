@@ -1,0 +1,63 @@
+<div class="cards-container">
+    {{#each users}}
+    <div class="card-height">
+    <div class="cards" id='{{this.id_book}}' onmouseenter="enterUser(this)" onmouseleave="leaveUser(this)">
+        {{!-- <input type="checkbox" id="flip-card"> --}}
+        <div class="card-head"><span>00000{{this.id_book}}</span></div>
+        <div class="card-body">
+            <div class="card-body-main">
+                <div class="title">
+                    <span>Email :</span>
+                </div>
+                <div class="text">
+                    <span>{{this.title}}</span>
+                </div>
+            </div>
+
+            <div class="card-body-main">
+                <div class="title">
+                    <span>Firstname :</span>
+                </div>
+                <div class="text">
+                    <span>{{this.author}}</span>
+                </div>
+            </div>
+
+            <div class="card-body-main">
+                <div class="title">
+                    <span>Lastname :</span>
+                </div>
+                <div class="text">
+                    <span>{{this.type}}</span>
+                </div>
+            </div>
+            <div class="card-body-main">
+                <div class="title">
+                    <span>Rol :</span>
+                </div>
+                <div class="text">
+                    <span>{{this.language}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-buttons" id="card-button{{this.id_book}}">
+            <div class="card-buttons-main" for="flip-card">
+                <button class="btnCardEdit" id="btnCardEdit" value="{{this.id_book}}" onclick="editUser(this)"
+                    title="Edit User">
+                    <i class="fa-solid fa-user-pen"></i>
+                </button>
+                <button class="btnCardDelete" id="btnCardDelete" value="{{this.id_book}}" onclick="deleteUser(this)"
+                    title="Delete User">
+                    <i class="fa-solid fa-user-minus"></i>
+                </button>
+                <button class="btnCardReset" id="btnCardReset" value="{{this.id_book}}" onclick="resetUser(this)"
+                    title="Reset password User">
+                    <i class="fa-solid fa-unlock-keyhole"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{/each}}
+</div>
+

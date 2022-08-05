@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Roboto&display=swap');
+.main-container .admin-container {
+  padding: 20px;
+  margin: 100px 0 0 50px;
+  border-radius: var(--size-border-radius-forms);
+  overflow: hidden;
+  height: auto;
+  width: 90%;
+  max-width: 90%;
+  box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
+    -4px -4px 5px var(--color-background-shadow-top-admin);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-container fieldset {
+  width: 100%;
+  color: #fff;
+  border: 1px solid var(--background-forms-admin);
+  border-radius: var(--size-border-radius-fieldset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+.admin-container fieldset legend {
+  background: var(--background-forms-admin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  border-radius: 5px;
+  padding: 15px;
+  color : var(--color-forms-admin);
+}
+
+.admin-container legend .titleField {
+  flex: 50%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-flow: row wrap;
+  padding: 5px 0;
+}
+
+.admin-container legend .nameUser {
+  flex: 50%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-flow: row wrap;
+  padding: 5px 0;
+}
+.admin-container fieldset .titleField span {
+  font-weight: 600;
+}
+
+.admin-container fieldset .nameUser span {
+  font-weight: 200;
+}
+
+/*  ESTILOS PARA CONTENIDO DE FIELDSET*/
+.admin-container fieldset .cards-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+  margin: auto;
+  overflow: hidden;
+}
+
+.cards-container .card-height{
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+.cards-container .card-height .cards{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  width: 300px;
+  height: auto;
+  border: solid 1px black;
+  border-radius: var(--size-border-radius-cards);
+  overflow: hidden;
+  transition-property: transform, height, box-shadow;
+  transition-duration: 1s;
+  transition-timing-function: linear;
+  /* transition-delay: 1s; */
+  padding: 10px;
+  margin: 10px 0px;
+  box-shadow: 5px 5px 10px var(--color-background-shadow-botton);
+}
+
+.cards-container .cards:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 12px 16px var(--color-background-shadow-top-admin);
+}
+
+
+
+.cards-container .cards .card-head {
+  border: solid 1px black;
+  background: var(--background-forms-admin-head);
+  color: var(--color-forms-admin-head);
+  width: 100%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  border-radius: var(--size-border-radius-cards-head);
+  padding: 10px 0;
+}
+
+.cards-container .cards .card-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.cards-container .cards .card-body .card-body-main{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-flow: row nowrap;
+}
+.card-body .card-body-main .title {
+  width: 100%;
+  height: auto;
+  flex: 40%;
+  margin: 10px 0;
+  word-break : break-all;
+}
+
+.card-body .card-body-main .title span{
+  font-weight: 600;
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+  color: black;
+}
+
+.card-body .card-body-main .text {
+  flex: 60%;
+  width: 100%;
+  height: auto;
+  margin: 10px 0;
+  word-break : break-all;
+}
+
+.card-body .card-body-main .text span{
+  font-weight: 400;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  color: black;
+}
+
+.cards .card-buttons{
+  width: 100%;
+  padding: 10px 0;
+  display: none;
+}
+
+
+.card-buttons .card-buttons-main{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+}
+
+.card-buttons .card-buttons-main button{
+  border: solid 1px var(--background-forms-admin-head);
+  border-radius: 3px;
+  text-align: center;
+  width: 40px;
+  height: auto;
+  padding: 0;
+}
+.card-buttons .card-buttons-main button i{
+  font-size: 17px;
+  color: var(--background-forms-admin-head);
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+}
+
+/* .cards #flip-card:checked ~ .card-buttons{
+  display: block;
+} */
+
+
+@media (max-width: 700px) {
+  .main-container .admin-container {
+    margin: 100px 0 0 0;
+  }
+}

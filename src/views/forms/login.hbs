@@ -5,22 +5,22 @@
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <img src=".../../../../resources/img/frontImg.jpg" alt="">
-        <div class="text">
+        <img src=".../../../../resources/img/login.jpg" alt="">
+        {{!-- <div class="text">
           <span class="text-1">Every new friend is a <br> new adventure</span>
           <span class="text-2">Let`s get connected</span>
-        </div>
+        </div> --}}
       </div>
       <div class="back">
-        <img class="backImg" src=".../../../../resources/img/backImg.jpg" alt="">
-        <div class="text">
-          <span class="text-1">Completed miles of journey <br> with one step</span>
-          <span class="text-2">Let`s get started</span>
-        </div>
+        <img class="backImg" src=".../../../../resources/img/reset.jpg" alt="">
+        {{!-- <div class="text"> --}}
+          {{!-- <span class="text-1">Completed miles of journey <br> with one step</span> --}}
+          {{!-- <span class="text-2">Let`s get started</span> --}}
+        {{!-- </div> --}}
       </div>
     </div>
 
-    <form action="/auth" method="post" id="formLogin">
+    <form action="/auth" method="POST" id="formLogin">
       <div class="form-content">
         <div class="login-form">
           <div class="title-login">Login</div>
@@ -47,7 +47,7 @@
     </form>
 
     <form action="#" method="post" id="formReset">
-      <div class="form-content-f">
+      <div class="form-content-reset">
         <div class="forgot-form">
           <div class="title-forgot">Reset Your Password</div>
           <div class="input-boxes">
@@ -76,7 +76,9 @@
         </div>
       </div>
     </form>
+
   </div>
+
 </body>
 {{#if alert}}
 <script>
@@ -90,7 +92,7 @@
     confirmButtonColor: '#3085d6',
     confirmButtonText: 'let`s go there!'
   }).then(() => {
-    window.location = 'workspace/books'
+    window.location = '{{ruta}}'
   });
   //const alertNotLogin = document.querySelector("#alertNotLogin");
   // const btnCloseAlert = document.querySelector('#btnCloseAlert');

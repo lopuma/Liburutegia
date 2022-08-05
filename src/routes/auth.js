@@ -1,20 +1,21 @@
-const { text } = require("express");
+// const { text } = require("express");
 const express = require("express");
-const { data } = require("jquery");
+// const { data } = require("jquery");
 const router = express.Router();
 const connection = require("../../database/db");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const bscryptjs = require("bcryptjs");
 const flash = require("connect-flash");
+const { response } = require("express");
 
 router.post("/auth", async (req, res) => {
   const logueado = req.session.loggedin;
   const nameUser = req.session.name;
   if (logueado) {
+    login = true, nameUser;
     res.redirect("workspace/books");
   } else {
     let body = req.body;
-    console.log(body);
     if (body) {
       //let reqDataValue = JSON.parse(JSON.stringify(body));
       email = body.email;
@@ -25,11 +26,12 @@ router.post("/auth", async (req, res) => {
     if (email && pass) {
       sql = "SELECT * FROM users WHERE email = ?";
       connection.query(sql, [email], async (error, results) => {
-        if (
-          results.length == 0 ||
-          !await bscryptjs.compare(pass, results[0].pass)
-        ) {
-          console.log("error");
+        // if (
+        //   results.length == 0 ) {
+          if (
+            results.length == 0 ||
+            !await bscryptjs.compare(pass, results[0].pass)
+          ) {
           req.flash("error_msg", "These credentials do not match our records.");
           res.send(
             {
@@ -39,8 +41,16 @@ router.post("/auth", async (req, res) => {
           );
         } else {
           req.session.loggedin = true;
-          req.session.name = results[0].firtname;
-          console.log("success");
+          req.session.name = results[0].firstname;
+          rol = results[0].rol;
+          if (rol == 'admin' || rol == 'Admin'){
+            req.session.rol = rol;
+            login = true;
+            ruta = "workspace/admin";
+          } else{
+            req.session.rol = "";
+            ruta = "workspace/books";
+          }
           res.render("../views/forms/login", {
             Success: results[0].email,
             alert: true,
@@ -48,7 +58,7 @@ router.post("/auth", async (req, res) => {
             alertMessage: "!Login Success",
             alertIcon: "success",
             timer: 2500,
-            ruta: ""
+            ruta
           });
         }
       });
@@ -74,7 +84,7 @@ router.post("/auth", async (req, res) => {
   //   res.send({Success: results[0].email});
 
   //req.session.loggedin = true;
-  //req.session.name = results[0].firtname;
+  //req.session.name = results[0].firstname;
   //req.flash('messages', 'Flash is back!');
   //return res.status(500).json({
   //     ok: false,
@@ -99,7 +109,7 @@ router.post("/auth", async (req, res) => {
 //             } else {
 //                 creamos una var de session y le asignamos true si INICIO SESSION
 //                 req.session.loggedin = true;
-//                 req.session.name = results[0].firtname;
+//                 req.session.name = results[0].firstname;
 //                 res.status(200).send({status: 0, message: "Messages available"});                    // res.redirect('../workspace/books');
 //                 res.end();
 //                 res.redirect('/',)
@@ -121,10 +131,9 @@ router.get("/login", async (req, res) => {
   const logueado = req.session.loggedin;
   const nameUser = req.session.name;
   if (logueado) {
-    res.render("workspace/dashboard-books", {
-      login: true,
-      nameUser
-    });
+    login: true;
+    nameUser;
+    res.redirect("workspace/books");
   } else {
     res.status(200);
     res.render("../views/forms/login", {
@@ -140,54 +149,82 @@ router.get("/login", async (req, res) => {
 router.get("/register", (req, res) => {
   const logueado = req.session.loggedin;
   const nameUser = req.session.name;
-  if (logueado) {
-    res.render("workspace/dashboard-books", {
+  const userRol = req.session.rol;
+  const error_msg_exist = req.flash("error_msg_exist");
+  console.log("error", error_msg_exist);
+
+  if(logueado && userRol){
+    res.render("../views/forms/register",{
       login: true,
-      nameUser
+      nameUser,
+      userRol,
+      error_msg_exist
     });
-  } else {
-    res.render("../views/forms/register", {
-      login: false,
-      nameUser: ""
-    });
+  }else {
+    login = true, nameUser, userRol;
+    return res.redirect('/');
   }
 });
 
 router.post("/register", async (req, res) => {
-  const email = req.body.email;
-  const firtname = req.body.firtname;
-  const lastname = req.body.lastname;
-  const rol = req.body.rol;
-  const pass = req.body.pass;
+  const { email, firstname, lastname, rol, pass } = req.body;
   const _ss = 0;
-  console.log("REGISTRE : >>>> ", pass);
   let passwordHash = await bscryptjs.hash(pass, 8);
-  connection.query(
-    "INSERT INTO users SET ?",
-    {
-      email: email,
-      firtname: firtname,
-      lastname: lastname,
-      rol: rol,
-      pass: passwordHash,
-      _ss: _ss
-    },
-    async (error, results) => {
-      if (error) {
-        return console.log(error);
-      }
-      req.flash("info", "Flash is back!");
-      res.redirect("workspace/admin");
+  sqlUser = "SELECT * FROM users WHERE email = ?";
+  connection.query(sqlUser, [email], async (error, resul) => {
+    if (error) {
+      return res.status(400).send({ error_msg: error });
     }
-  );
+    if (resul.length == 0) {
+      sqlInsert = "INSERT INTO users SET ?";
+      connection.query(
+        sqlInsert,
+        {
+          email,
+          firstname,
+          lastname,
+          rol,
+          pass: passwordHash,
+          _ss
+        },
+        async (error, results) => {
+          if (error) {
+            return res.status(400).send({ error_msg: error });
+          }
+          respuesta = {
+            error: false,
+            cod: 200,
+            success_msg: "user created",
+            data: results
+          };
+          return res.send(respuesta, res.redirect("workspace/admin"));
+          // res.status(200).send({
+          //   success_msg: "User creado con existo",
+          //   data:results
+          // },res.redirect("workspace/admin"),res.end()
+          // );
+        }
+      );
+    } else {
+      req.flash("error_msg_exist", "Email already exists.");
+      res.status(304).send(
+        {
+          error_msg_exist: "Email already exists."
+        },
+        res.redirect("/register")
+      );
+    }
+  });
 });
+
 // SIGNUP
 // router.get("/signup", renderSignUp);
 // router.post("/signup", signUp);
 
 // LOGOUTH
 router.get("/logout", async (req, res) => {
-  req.send("cerrado");
+  req.session.destroy();
+  res.redirect("/");
 });
 
 module.exports = router;

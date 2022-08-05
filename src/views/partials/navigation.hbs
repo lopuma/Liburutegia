@@ -22,6 +22,11 @@
         <li class="nav-item">
           <a class="nav-links" href="../workspace/bookings">Bookings</a>
         </li>
+        {{#if userRol}}
+        <li class="nav-item">
+          <a class="nav-links" href="/register">Record</a>
+        </li>
+        {{/if}}
         <li class="nav-item">
           <a class="nav-links" href="/logout">Logout</a>
         </li>

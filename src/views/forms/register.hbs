@@ -1,24 +1,80 @@
 <body>
-    <div class="register-form">
-		<h1>Form Registration</h1>
-		<form action="/register" method="POST">
-        <label for="user">Email</label>
-                <input type="email" name="email" required tabindex="1" autofocus>            
-            <label for="user">FirtName</label>
-                <input type="text" name="firtname" required tabindex="2">            
-            <label for="user">LastName</label>
-                <input type="text" name="lastname" required tabindex="3">
-            
-            <label for="rol">Rol</label>                          
-            <select id="rol" name="rol" class="select-css" tabindex="4">
-                <option value="admin" selected>Admin</option>
-                <option value="data entry">Data Entry</option>                    
-            </select>
-             <br> 
-            <label for="pass">Password</label>
-			    <input type="password" name="pass" required tabindex="5">
-            <div style="display: inline;">             
-            <a href="/" class="btn-cancel">Cancel</a><input type="submit" class="btn-save" value="Save">           
+    <div class="register-container" id="register-container">
+        {{> messages}}
+
+        <form action="/register" method="post" id="formRegister" name="formRegister">
+            <div class="form-content-register">
+                <div class="register-form">
+                    <div class="title-register">Register user</div>
+                    <div class="input-boxes">
+                        <div class="input-box">
+                            <i id="iconEmail" class="fa-solid fa-envelope"></i>
+                            {{!-- <label for="user">Email</label> --}}
+                            <input id="email" type="email" name="email" placeholder="Enter your email" tabindex="1"
+                                required autofocus>
+                        </div>
+                        <div class="input-box">
+                            <i id="iconFirtname" class="fa-solid fa-user"></i>
+                            {{!-- <label for="user">FirtName</label> --}}
+                            <input id="firstname" type="text" name="firstname" placeholder="Enter Firt Name" required
+                                tabindex="2">
+                        </div>
+                        <div class="input-box">
+                            <i id="iconLastname" class="fa-solid fa-user"></i>
+                            {{!-- <label for="user">LastName</label> --}}
+                            <input id="lastname" type="text" name="lastname" placeholder="Enter Last Name" required
+                                tabindex="3">
+
+                        </div>
+
+                        <div class="input-box">
+                            <i id="iconPass" class="fa-solid fa-key"></i>
+                            {{!-- <label for="pass">Password</label> --}}
+                            <input id="pass" type="password" name="pass" placeholder="Create a password" required
+                                tabindex="4">
+                            <i id="icon-eye-rPassword" class="fa-solid fa-eye"></i>
+                        </div>
+                        <div class="formulario__grupo" id="grupo__password">
+                            <div class="error-box">
+                                <p class="formulario__input-error">The verification password does not match.</p>
+                            </div>
+                        </div>
+
+                        <div class="input-box">
+                            <i id="iconPassRepeat" class="fa-solid fa-key"></i>
+                            {{!-- <label for="pass">Password</label> --}}
+                            <input id="passRepeat" type="password" name="passRepeat" placeholder="Repeat password"
+                                required tabindex="5">
+                            <i id="icon-eye-rRepeat" class="fa-solid fa-eye"></i>
+                        </div>
+                        <div class="formulario__grupo" id="grupo__password2">
+                            <div class="error-box">
+                                <p class="formulario__input-error">The verification password does not match.</p>
+                            </div>
+                        </div>
+                        <label for="rol">Select a Rol for User</label>
+
+                    </div>
+                    <div class="input-box-select">
+                        <i id="iconRol" class="fa-solid fa-building"></i>
+                        <select id="rol" name="rol" class="select-css" tabindex="6">
+                            <option value="admin" selected>Admin</option>
+                            <option value="data entry">Data Entry</option>
+                        </select>
+                    </div>
+                    <div class="button-box">
+                        <div class="button-cancel input-box">
+                            <input id="btnCancel" type="submit" value='CANCEL' tabindex="7" />
+                        </div>
+                        <div class="button-accept input-box">
+                            <input id="btnAccept" type="submit" value='ACCEPT' tabindex="8" />
+                        </div>
+                    </div>
+                </div>
             </div>
-		</form>		
-	</div>
+    </div>
+    </form>
+    </div>
+</body>
+
+<script src="scripts/register.js"></script>

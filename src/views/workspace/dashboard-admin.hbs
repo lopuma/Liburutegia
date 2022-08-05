@@ -1,15 +1,111 @@
 <body>
-  <div class="index-container">
+  <div class="admin-container">
     <fieldset>
-      <legend id="lengedBooking">
-        <div><span id="tipWelcome">Welcome</span><span id="tipName" class="badge badge-success">{{nuevoUser}}</span>
+      <legend id="lengedAdmin">
+        <div class="titleField">
+          <span>Admin Dashboard</span>
         </div>
+        {{#if login}}
+        <div class="nameUser">
+          <span>Hi, Welcome </span>
+          <span id="tipName" class="badge badge-success">{{nameUser}}</span>
+        </div>
+        {{/if}}
       </legend>
-      <div class="row">
-        <div class="col">
-          <h1>{{ msg }}</h1>
-        </div>
-      </div>
+      {{> admin }}
     </fieldset>
-  </div>
-  </body>
+</body>
+<script>
+
+  const card = document.querySelectorAll(".cards");
+
+  function enterUser(comp) {
+    let id = comp.id;
+    for (var i = 0; i < card.length; i++) {
+      var item = card[i];
+      if (item.id == id) {
+        $(`#card-button${item.id}`).fadeIn(1000);
+       // $('.cards').fadeIn(1000, function() {
+        ///  $(`#card-button${item.id}`).fadeIn(1000);
+       // });
+        
+        return;
+      }
+    }
+  }
+
+  function leaveUser(comp) {
+    let id = comp.id;
+    for (var i = 0; i < card.length; i++) {
+      var item = card[i];
+      if (item.id == id) {
+        //$(`#card-button${item.id}`).fadeOut(500);
+        $(`#card-button${item.id}`).fadeOut(100);
+        return;
+      }
+    }
+  }
+  //const card = document.getElementsByClassName("card-container");
+  //const btnEdit = $(document).find(".btnCardEdit");
+  //const targets = $(document).find(".cards");
+  //const card = document.querySelectorAll(".cards");
+  //console.log(card)
+  //card.addEventListener('mouseenter', () =>{
+  //console.log("Entre 1")
+  //});
+
+  // targets.on("mouseenter", function () {
+  // /  $(".card-buttons").show();
+
+  // });
+  //targets.on("mouseleave", function () {
+  //   $(".card-buttons").hide();
+  // });
+
+  function editUser(comp) {
+    let id = comp.value;
+    console.log(id);
+  }
+  function deleteUser(comp) {
+    let id = comp.value;
+    console.log(id);
+  }
+  function resetUser(comp) {
+    let id = comp.value;
+    console.log(id);
+  }
+  // targets.on('mouseenter', () => {
+  //   console.log("Entre 1")
+  // });
+
+  // targets.on('mouseenter', () => {
+  //    console.log("mouseleave")
+  //btnEdit.classList.replace("btnCardEditShow", "btnCardEdit");
+  // });
+  //  targets.addEventListener('mouseenter', () =>{
+  // console.log("Entre 1")
+  // });
+
+  // targets.addEventListener('mouseleave', () =>{
+  //   console.log("Sali")
+  // });
+
+
+  // Manejador para mouseenter
+  //const showDetalles = (event) => {
+    //$(event.currentTarget).find('.divDetalles').css({
+      //"display": "flex",
+      //"left": `${event.clientX + 20}px`,
+      //"top": `${event.clientY + 20}px`,
+      //"color": 'red'
+    //});
+ // }
+
+  // manejador para mouseleave
+  //const hideDetalles = (event) => {
+    //$(event.currentTarget).find('.divDetalles').css({ "display": "none" });
+ // }
+
+ // $('#cards').hover(showDetalles, hideDetalles);
+
+</script>

@@ -33,6 +33,8 @@ const dotenv = require('dotenv').config({ path: './env/.env' });
 app.use('/resources', express.static('public'))
 app.use('/resources', express.static(__dirname + '/public'));
 
+app.use('/scripts', express.static(__dirname + '/public/js'));
+
 // 5 - Establecer Motor de plantilla
 app.engine('.hbs', exphbs.engine({
 	defaultLayout: 'main', //PARTES DE LA APP { FOOTER, BODY, HEAD}

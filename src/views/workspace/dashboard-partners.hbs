@@ -1,20 +1,21 @@
 <body>
-  <div class="container" id="container-form">
+  <div class="partners-container">
     <fieldset>
-      <legend id="lengedPartner">
-        <span class="titlePartner">Partners</span>
-        {{#if nameUser}}
-        <div><span id="tipWelcome">Welcome</span><span id="tipName" class="badge badge-success">{{nameUser}}</span>
+      <legend id="lengedAdmin">
+        <div class="welcom">
+          <span id="tipWelcome">Partners Dashboard</span>
+        </div>
+        {{#if login}}
+        <div class="nameUser">
+          <span>Hi, Welcome </span>
+          <span id="tipName" class="badge badge-success">{{nameUser}}</span>
         </div>
         {{/if}}
       </legend>
-      <div class="row">
-        <div class="col">
-          {{> partners}}
-        </div>
-      </div>
+      <h1>{{ msg_success }}</h1>
     </fieldset>
   </div>
+</body>
 
   <script>
     // MOSTRAR DATOS
@@ -55,14 +56,14 @@
       fila = $(this).closest("tr");
       id_partner = fila.find('td:eq(0)').text();
       dni = fila.find('td:eq(1)').text();
-      firtname = fila.find('td:eq(2)').text();
+      firstname = fila.find('td:eq(2)').text();
       lastname = fila.find('td:eq(3)').text();
       direction = fila.find('td:eq(4)').text();
       phone = fila.find('td:eq(5)').text();
       email = fila.find('td:eq(6)').text();
       $("#id_partner").val(id_partner);
       $("#dni").val(dni);
-      $("#firtname").val(firtname);
+      $("#firstname").val(firstname);
       $("#lastname").val(lastname);
       $("#direction").val(direction);
       $("#phone").val(phone);
@@ -106,7 +107,7 @@
       url = "/api/partners/"
       id_partner = $.trim($('#id_partner').val());
       dni = $.trim($('#dni').val());
-      firtname = $.trim($('#firtname').val());
+      firstname = $.trim($('#firstname').val());
       lastname = $.trim($('#lastname').val());
       direction = $.trim($('#direction').val());
       phone = $.trim($('#phone').val());
@@ -117,7 +118,7 @@
           method: 'put',
           contentType: 'application/json',
           data: JSON.stringify({
-            id_partner: id_partner, dni: dni, firtname: firtname, lastname: lastname, direction: direction, phone: phone, email: email
+            id_partner: id_partner, dni: dni, firstname: firstname, lastname: lastname, direction: direction, phone: phone, email: email
           }
           )
         });

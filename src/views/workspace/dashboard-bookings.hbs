@@ -1,20 +1,21 @@
 <body>
-  <div id="container-form">
+  <div class="bookings-container">
     <fieldset>
-      <legend id="lengedBooking">
-        <span class="titleBooking">Bookings</span>
-        {{#if nameUser}}
-        <div><span id="tipWelcome">Welcome</span><span id="tipName" class="badge badge-success">{{nameUser}}</span>
+      <legend id="lengedAdmin">
+        <div class="welcom">
+          <span id="tipWelcome">Bookings Dashboard</span>
+        </div>
+        {{#if login}}
+        <div class="nameUser">
+          <span>Hi, Welcome </span>
+          <span id="tipName" class="badge badge-success">{{nameUser}}</span>
         </div>
         {{/if}}
       </legend>
-      <div class="row">
-        <div class="col">
-          {{> bookings}}
-        </div>
-      </div>
+      <h1>{{ msg_success }}</h1>
     </fieldset>
   </div>
+</body>
   <script>
     // MOSTRAR DATOS
     $(document).ready(function (e) {
@@ -32,7 +33,7 @@
         columns: [
           { data: 'id_booking' },
           { data: 'id_book' },
-          { data: 'titulo' },
+          { data: 'title' },
           { data: 'dni' },
           { data: 'nombre' },
           { data: 'apellidos' },
@@ -64,14 +65,14 @@
       id_book = fila_booking.find('td:eq(1)').text();
       title_book = fila_booking.find('td:eq(2)').text();
       dni = fila_booking.find('td:eq(3)').text();
-      firtname = fila_booking.find('td:eq(4)').text();
+      firstname = fila_booking.find('td:eq(4)').text();
       lastname = fila_booking.find('td:eq(5)').text();
       deliver_date = fila_booking.find('td:eq(6)').text();
       $("#id_booking").val(id_booking);
       $("#id_book").val(id_book);
       $("#title_book").val(title_book);
       $("#dni").val(dni);
-      $("#firtname").val(firtname);
+      $("#firstname").val(firstname);
       $("#lastname").val(lastname);
       $("#deliver_date").val(deliver_date);
       $(".modal-header").css("background-color", "#7303c0");
