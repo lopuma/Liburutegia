@@ -2,9 +2,10 @@ const router = require('express').Router()
 const connection = require('../../../database/db');
 
 router.get('/books', async (req, res) => {
-	connection.query('SELECT * FROM books', function (error, results) {
-		if(error){
-			return console.log(error)
+	connection.query('SELECT * FROM books', function (err, results) {
+		if(err){
+			console.error(err);
+			return res.status(404).send(err);
 		}
 		res.send(results)
 	});

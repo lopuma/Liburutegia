@@ -1,63 +1,41 @@
-<div class="cards-container">
+<div class="container-cards">
     {{#each users}}
-    <div class="card-height">
-    <div class="cards" id='{{this.id_book}}' onmouseenter="enterUser(this)" onmouseleave="leaveUser(this)">
-        {{!-- <input type="checkbox" id="flip-card"> --}}
-        <div class="card-head"><span>00000{{this.id_book}}</span></div>
-        <div class="card-body">
-            <div class="card-body-main">
-                <div class="title">
-                    <span>Email :</span>
-                </div>
-                <div class="text">
-                    <span>{{this.title}}</span>
-                </div>
+    {{!-- <div class="cards" id='{{this.id}}' onmouseenter="enterUser(this)" onmouseleave="leaveUser(this)"> --}}
+        <div class="cards" id='{{this.id}}'>
+            <div class="imgBx">
+                {{!-- <img src=".../../../../resources/img/user.png"> --}}
+                <div class="card-head"><span>00000{{this.id}}</span></div>
             </div>
-
-            <div class="card-body-main">
-                <div class="title">
-                    <span>Firstname :</span>
-                </div>
-                <div class="text">
-                    <span>{{this.author}}</span>
-                </div>
-            </div>
-
-            <div class="card-body-main">
-                <div class="title">
-                    <span>Lastname :</span>
-                </div>
-                <div class="text">
-                    <span>{{this.type}}</span>
-                </div>
-            </div>
-            <div class="card-body-main">
-                <div class="title">
-                    <span>Rol :</span>
-                </div>
-                <div class="text">
-                    <span>{{this.language}}</span>
+            <div class="card-content">
+                <div class="card-details">
+                    <h2>{{this.firstname}}<br><span>{{this.rol}}</span></h2>
+                    <div class="data">
+                        <h3>Lastname: </h3><span>{{this.lastname}}</span>
+                    </div>
+                    <div class="data">
+                        <h3>Email: </h3><span>{{this.email}}</span>
+                    </div>
+                    <div class="card-actionBtn" id="card-button{{this.id}}">
+                        <div class="card-actionBtn-main">
+                            <button class="btnCardEdit" id="btnCardEdit" value="{{this.id}}" onclick="editUser(this)"
+                                title="Edit User" style="--i:#56CCF2; --j:#2F80ED">
+                                <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
+                                <span class="title">Edit</span>
+                            </button>
+                            <button class="btnCardDelete" id="btnCardDelete" value="{{this.id}}"
+                                onclick="deleteUser(this)" title="Delete User" style="--i:#D9534F; --j:#F32424">
+                                <span class="icon"><i class="fa-solid fa-user-minus"></i></span>
+                                <span class="title">Delete</span>
+                            </button>
+                            <button class="btnCardReset" id="btnCardReset" value="{{this.id}}" onclick="resetUser(this)"
+                                title="Reset password User" style="--i:#FF9966; --j:#FF5E62">
+                                <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
+                                <span class="title">Reset Password</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card-buttons" id="card-button{{this.id_book}}">
-            <div class="card-buttons-main" for="flip-card">
-                <button class="btnCardEdit" id="btnCardEdit" value="{{this.id_book}}" onclick="editUser(this)"
-                    title="Edit User">
-                    <i class="fa-solid fa-user-pen"></i>
-                </button>
-                <button class="btnCardDelete" id="btnCardDelete" value="{{this.id_book}}" onclick="deleteUser(this)"
-                    title="Delete User">
-                    <i class="fa-solid fa-user-minus"></i>
-                </button>
-                <button class="btnCardReset" id="btnCardReset" value="{{this.id_book}}" onclick="resetUser(this)"
-                    title="Reset password User">
-                    <i class="fa-solid fa-unlock-keyhole"></i>
-                </button>
-            </div>
-        </div>
+        {{/each}}
     </div>
-    </div>
-    {{/each}}
-</div>
-

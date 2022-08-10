@@ -1,72 +1,42 @@
 <body>
-<nav class="navbar-expand-lg navbar-dark bg-dark">
-  <div class="hamburger" id="btn-menu">
-    <i class="fa-solid fa-bars"></i>
-  </div>
-
-  <div class="navbar">
-    <div class="hamburger2" id="btn-menu2">
+  <nav class="navbar-expand-lg navbar-dark bg-dark">
+    <div class="hamburger" id="btn-menu">
       <i class="fa-solid fa-bars"></i>
     </div>
-    <div class="titleNav" id="title-nav"><a href="/">Library San Miguel</a></div>
-    <div class="nav-links" id="navbarNav">
-      <ul class="links">
-        {{#if nameUser}}
-        <li class="nav-item">
-          <a id="btnBooks" type="button" class="nav-links" href="../workspace/books">Books</a>
-        </li>
-        </li>
-        <li class="nav-item">
-          <a class="nav-links" href="../workspace/partners" id="partners">Partners</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-links" href="../workspace/bookings">Bookings</a>
-        </li>
-        {{#if userRol}}
-        <li class="nav-item">
-          <a class="nav-links" href="/register">Record</a>
-        </li>
-        {{/if}}
-        <li class="nav-item">
-          <a class="nav-links" href="/logout">Logout</a>
-        </li>
-        {{else}}
-        <li class="nav-item">
-          <a class="nav-links" href="/login">Sign In</a>
-        </li>
-        {{/if}}
-      </ul>
+
+    <div class="navbar">
+      <div class="hamburger2" id="btn-menu2">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <div class="titleNav" id="title-nav"><a href="/">Library San Miguel</a></div>
+      <div class="nav-links" id="navbarNav">
+        <ul class="links">
+          {{#if nameUser}}
+          <li class="nav-item">
+            <a id="btnBooks" type="button" class="nav-links" href="../workspace/books">Books</a>
+          </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-links" href="../workspace/partners" id="partners">Partners</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-links" href="../workspace/bookings">Bookings</a>
+          </li>
+          {{#if userRol}}
+          <li class="nav-item">
+            <a class="nav-links" href="/register">Record</a>
+          </li>
+          {{/if}}
+          <li class="nav-item">
+            <a class="nav-links" href="/logout">Logout</a>
+          </li>
+          {{else}}
+          <li class="nav-item">
+            <a class="nav-links" href="/login">Sign In</a>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 </body>
-<script>
-  const section = document.querySelector("#main-section")
-  const btn = document.querySelector("#btn-menu");
-  const menu = document.querySelector("#sidemenu");
-  const bd = document.querySelector("#body-expanded");
-  const container = document.querySelector("#container-form");
-
-
-  btn.addEventListener('click', e => {
-    console.log("CLICK")
-    menu.classList.toggle("menu-expanded");
-    menu.classList.toggle("menu-collapsed");
-    //$('#title-nav').css('display', 'none');
-    //        titleNav.classList.toggle("titleNav");
-    //      titleNav.classList.toggle("titleNavFalse");
-    document.querySelector('body').classList.toggle('body-expanded');
-    //$('#title-nav').css('display', 'block');
-
-    const expanded = menu.classList.contains("menu-expanded");
-    const colapsed = menu.classList.contains("menu-collapsed");
-
-    if (expanded){
-      $('#login-container').css("margin", "0px");
-      $('#main-section').css("margin", "70px 10px 70px 10px");
-    } else if (colapsed){
-      $('#login-container').css("margin", "0px");
-      $('#main-section').css("margin", "70px 10px 70px 60px");
-    }
-  });
-</script>

@@ -39,11 +39,11 @@ router.get("/admin", async (req, res) => {
   const nameUser = req.session.name;
   const logueado = req.session.loggedin;
   const userRol = req.session.rol;
-  sql = "SELECT * FROM books";
+  sql = "SELECT * FROM users";
   if (logueado && userRol) {
     connection.query(sql, function(error, results) {
       if (error) {
-        return console.log(error);
+        return res.send(error);
       }
       const users = results;
       console.log(users);

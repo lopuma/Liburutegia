@@ -14,98 +14,38 @@
       </legend>
       {{> admin }}
     </fieldset>
-</body>
-<script>
+    <script>
+     // const cardDetails = document.querySelectorAll(".card-details");
+ // const card = document.querySelectorAll(".cards")
 
-  const card = document.querySelectorAll(".cards");
 
-  function enterUser(comp) {
-    let id = comp.id;
-    for (var i = 0; i < card.length; i++) {
-      var item = card[i];
-      if (item.id == id) {
-        $(`#card-button${item.id}`).fadeIn(1000);
-       // $('.cards').fadeIn(1000, function() {
+ // function enterUser(comp) {
+  //  let id = comp.id;
+   // for (var i = 0; i < card.length; i++) {
+   //   var item = card[i];
+    //  if (item.id == id) {
+        //  (`#card-button${item.id}`).fadeIn(2000);
+
+        //console.log(cardDetails);
+        // $('.cards').fadeIn(1000, function() {
         ///  $(`#card-button${item.id}`).fadeIn(1000);
-       // });
-        
-        return;
-      }
-    }
-  }
+        // });
 
-  function leaveUser(comp) {
-    let id = comp.id;
-    for (var i = 0; i < card.length; i++) {
-      var item = card[i];
-      if (item.id == id) {
-        //$(`#card-button${item.id}`).fadeOut(500);
-        $(`#card-button${item.id}`).fadeOut(100);
-        return;
-      }
-    }
-  }
-  //const card = document.getElementsByClassName("card-container");
-  //const btnEdit = $(document).find(".btnCardEdit");
-  //const targets = $(document).find(".cards");
-  //const card = document.querySelectorAll(".cards");
-  //console.log(card)
-  //card.addEventListener('mouseenter', () =>{
-  //console.log("Entre 1")
-  //});
-
-  // targets.on("mouseenter", function () {
-  // /  $(".card-buttons").show();
-
-  // });
-  //targets.on("mouseleave", function () {
-  //   $(".card-buttons").hide();
-  // });
-
-  function editUser(comp) {
-    let id = comp.value;
-    console.log(id);
-  }
-  function deleteUser(comp) {
-    let id = comp.value;
-    console.log(id);
-  }
-  function resetUser(comp) {
-    let id = comp.value;
-    console.log(id);
-  }
-  // targets.on('mouseenter', () => {
-  //   console.log("Entre 1")
-  // });
-
-  // targets.on('mouseenter', () => {
-  //    console.log("mouseleave")
-  //btnEdit.classList.replace("btnCardEditShow", "btnCardEdit");
-  // });
-  //  targets.addEventListener('mouseenter', () =>{
-  // console.log("Entre 1")
-  // });
-
-  // targets.addEventListener('mouseleave', () =>{
-  //   console.log("Sali")
-  // });
-
-
-  // Manejador para mouseenter
-  //const showDetalles = (event) => {
-    //$(event.currentTarget).find('.divDetalles').css({
-      //"display": "flex",
-      //"left": `${event.clientX + 20}px`,
-      //"top": `${event.clientY + 20}px`,
-      //"color": 'red'
-    //});
+     //   return;
+     // }
+   // }
  // }
 
-  // manejador para mouseleave
-  //const hideDetalles = (event) => {
-    //$(event.currentTarget).find('.divDetalles').css({ "display": "none" });
- // }
-
- // $('#cards').hover(showDetalles, hideDetalles);
-
-</script>
+//  function leaveUser(comp) {
+  //  let id = comp.id;
+   // for (var i = 0; i < card.length; i++) {
+    //  var item = card[i];
+    //  if (item.id == id) {
+        //$(`#card-button${item.id}`).fadeOut(1000);
+        //$(`#card-button${item.id}`).fadeOut(700);
+    //    return;
+   //   }
+   // }
+  //}
+    </script>
+</body>

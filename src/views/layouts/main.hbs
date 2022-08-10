@@ -17,6 +17,7 @@
   <link href="../resources/css/books.css" rel="stylesheet">
   <link href="../resources/css/bookings.css" rel="stylesheet">
   <link href="../resources/css/partners.css" rel="stylesheet">
+  <link href="../resources/css/index.css" rel="stylesheet">
 
   <link rel="shortcut icon" href="#">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -68,21 +69,122 @@
 
 
   <div class="main-container">
-    {{> sideMenu}}
-
-    {{> navigation}}
-  
-    {{{body}}}
+    <header>
+      {{> navigation}}
+    </header>
+    <aside>
+      {{> sideMenu}}
+    </aside>
+    <article>
+      {{{body}}}
+    </article>
+    <footer>
+      {{> footer}}
+    </footer>
   </div>
-
-
-  <footer>
-    {{> footer}}
-  </footer>
-
-
-
 </body>
 
+<script>
+
+
+  //const card = document.getElementsByClassName("card-container");
+  //const btnEdit = $(document).find(".btnCardEdit");
+  //const targets = $(document).find(".cards");
+  //const card = document.querySelectorAll(".cards");
+  //console.log(card)
+  //card.addEventListener('mouseenter', () =>{
+  //console.log("Entre 1")
+  //});
+
+  // targets.on("mouseenter", function () {
+  // /  $(".card-actionBtn").show();
+
+  // });
+  //targets.on("mouseleave", function () {
+  //   $(".card-actionBtn").hide();
+  // });
+
+  function editUser(comp) {
+    let id = comp.value;
+    console.log(id);
+  }
+  function deleteUser(comp) {
+    let id = comp.value;
+    console.log(id);
+  }
+  function resetUser(comp) {
+    let id = comp.value;
+    console.log(id);
+  }
+  // targets.on('mouseenter', () => {
+  //   console.log("Entre 1")
+  // });
+
+  // targets.on('mouseenter', () => {
+  //    console.log("mouseleave")
+  //btnEdit.classList.replace("btnCardEditShow", "btnCardEdit");
+  // });
+  //  targets.addEventListener('mouseenter', () =>{
+  // console.log("Entre 1")
+  // });
+
+  // targets.addEventListener('mouseleave', () =>{
+  //   console.log("Sali")
+  // });
+
+
+  // Manejador para mouseenter
+  //const showDetalles = (event) => {
+  //$(event.currentTarget).find('.divDetalles').css({
+  //"display": "flex",
+  //"left": `${event.clientX + 20}px`,
+  //"top": `${event.clientY + 20}px`,
+  //"color": 'red'
+  //});
+  // }
+
+  // manejador para mouseleave
+  //const hideDetalles = (event) => {
+  //$(event.currentTarget).find('.divDetalles').css({ "display": "none" });
+  // }
+
+  // $('#cards').hover(showDetalles, hideDetalles);
+
+
+  const section = document.querySelector("#main-section")
+  const btn = document.querySelector("#btn-menu");
+  const menu = document.querySelector("#sidemenu");
+  const bd = document.querySelector("#body-expanded");
+  const container = document.querySelector("#container-form");
+
+
+  btn.addEventListener('click', e => {
+    console.log("CLICK")
+    menu.classList.toggle("menu-expanded");
+    menu.classList.toggle("menu-collapsed");
+    //$('#title-nav').css('display', 'none');
+    //        titleNav.classList.toggle("titleNav");
+    //      titleNav.classList.toggle("titleNavFalse");
+    document.querySelector('body').classList.toggle('body-expanded');
+    //$('#title-nav').css('display', 'block');
+
+    const expanded = menu.classList.contains("menu-expanded");
+    const colapsed = menu.classList.contains("menu-collapsed");
+
+    if (expanded) {
+      $('#login-container').css("margin", "0px");
+      //$('.admin-container').css("margin", "100px 0 0 0");
+      $('#main-section').css("margin", "70px 10px 70px 10px");
+      $(".main-container").css("grid-template-columns", "0 auto")
+    } else if (colapsed) {
+      $('#login-container').css("margin", "0px");
+      // $('.admin-container').css("margin", "100px 0 0 70px");
+      $(".main-container").css("grid-template-columns", "50px auto")
+
+      $('#main-section').css("margin", "70px 10px 70px 60px");
+    }
+  });
+
+</script>
 
 </html>
