@@ -1,61 +1,182 @@
-/* Googlefont Poppins CDN Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-nav{
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff&display=swap');
+/*  Código de nuestro menu */
+.Header {
+  width: 100%;
+  background-color: var(--bgcolor);
+  padding: 1em;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: fixed;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
-  height: 70px;
-  box-shadow: 0 1px 2px rgba(250, 239, 239, 0.2);
-  z-index: 99;
-  overflow: hidden;
+  height: 80px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-nav .navbar{
-  overflow: hidden;
-  font-size: 30px;
-  text-decoration: none;
-  font-weight: 500;
-  width: 100%;
-  height: 100%; 
-}
-
-
-nav .navbar #title-nav a{
-  text-decoration: none;
-  color: var(--color-text-forms);
-}
-
-nav #btn-menu{
-  font-size: 20px;
-  color: var(--color-text-forms);
-}
-
-nav .navbar .nav-links{
-  line-height: 70px;
-  height: 100%;
-}
-nav .navbar .links{
-  display: flex;
-}
-nav .navbar .links li{
-  position: relative;
+/* LOGO */
+.Header-logo{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  list-style: none;
-  padding: 0 14px;
 }
-nav .navbar .links li a{
-  height: 100%;
-  text-decoration: none;
-  white-space: nowrap;
-  color: var(--color-text-forms);
-  font-size: 15px;
-  font-weight: 500;
+
+.Header-button--sidemenu{
+  margin: 0 0.5em;
+  font-size: 2em;
+}
+
+.Header-i--sidemenu {
+  fill: white;
+}
+
+.Header-h1--logo{
+  margin: 0 1em;
+  font-family: 'DynaPuff', cursive;
+  font-weight: 400;
+  font-size: 2em;
+}
+
+.Header-a--logo{
+  color: #fff;
+}
+
+/* BTN TOGGLE */
+.Header-button--toggle {
+  display: none;
+  cursor: pointer;
+}
+
+.Header-i--toggle {
+  margin: 0 0.5em;
+  font-size: 2em;
+}
+
+/* NAV */
+.Header-ul {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+          text-transform: uppercase;
+          width: max-content;
+}
+
+.Header-li {
+  margin: 0 1em;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+}
+
+.Header-a{
+  color: #fff;
+}
+
+.Header-a-link {
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.Header-a-link:hover,
+.Header-a-link--active {
+  background-color: #034574;
+  transition: 0.5s ease;
+}
+
+@media screen and (max-width: 480px) {
+  .Header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .Header-logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+  }
+
+  .Header-h1--logo{
+    margin: 0 0.5em;
+    font-family: 'DynaPuff', cursive;
+    font-weight: 400;
+    font-size: 1.5em;
+
+  }
+
+  .Header-i--toggle {
+    margin: 0 0.5em;
+    font-size: 1.5em;
+  }
+
+  .Header-nav {
+    width: 100%;
+    opacity: 0;
+    height: 0vh;
+    pointer-events: none;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+
+
+  .Header-li {
+    margin: 0.5em 0;
+  }
+
+  .Header-button--toggle {
+    display: block;
+  }
+
+
+  .Header-nav__isActive {
+    opacity: 1;
+    height: 50vh;
+    pointer-events: auto;
+    background: var(--bgcolor);
+  }
+
+  .Header-button--sidemenu{
+    display: none;
+  }
+
+  .Header-ul {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }

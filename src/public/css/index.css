@@ -1,46 +1,55 @@
-.main-container .index-container {
-    padding: 20px;
-    margin: 50px 0;
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    color: var(--background-forms);
-    border-radius: 20px;
-    /* background-color: var(--background-forms); */
-    background-image: url('../img/index.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    background-position: center;
-    background-size: contain;
+.main-container article .index-container {
+  padding: 20px;
+  margin: 100px 40px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  border-radius: 20px;
+  /* background-color: var(--background-forms); */
+  background-image: url('../img/index.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  background-position: center;
+  background-size: contain;
+  height: 500px;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
+    -4px -4px 5px var(--color-background-shadow-top);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  color: var(--background-forms);
+}
+
+.main-container article .index-container .btn-index {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.main-container article .index-container div a {
+  border: solid 1px aquamarine;
+  color: #ffffff;
+  background-color: var(--background-forms);
+  transition-property: color, box-shadow, background, transform;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+}
+
+.main-container article .index-container div a:hover {
+  color: #000000;
+  box-shadow: 0px 4px 8px aquamarine, -0px -4px 8px aquamarine;
+  background: #99ce62;
+  transform: translateY(-5px);
+}
+
+@media all and (max-width: 480px) {
+  .main-container article .index-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 400px;
-    width: 90%;
-    max-width: 90%;
-    box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
-      -4px -4px 5px var(--color-background-shadow-top);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
   }
-  
-  .main-container .index-container .btn-index {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-  }
-  
-  .main-container .index-container div a {
-    border-style: solid;
-    border-color: aquamarine;
-    border-width: 1px;
-    color: #ffffff;
-    background-color: var(--background-forms);
-    transition: all 0.3s ease;
-  }
-  
-  .main-container .index-container div a:hover {
-    color: #000000;
-    box-shadow: 1px 1px 5px aquamarine, -1px -1px 5px aquamarine;
-    background-color: #99ce62;
-  }
-  
+}

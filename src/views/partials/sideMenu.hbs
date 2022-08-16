@@ -1,85 +1,80 @@
-<body>
-    <div id="sidemenu" class="menu-collapsed">
-        <div id="header">
-            <div id="title"><span><a href="/">Library San Miguel</a></span></div>
-        </div>
-        {{#if nameUser}}
+<div id="sidemenu" class="menu-collapsed">
 
-        <div id="profile">
-            <div id="name"><span>{{ nameUser }}</span></div>
+    {{#if nameUser}}
 
+    <div id="profile">
+        <div id="name"><span>{{ nameUser }}</span></div>
+    </div>
+    <div class="item separator"></div>
+    <div id="menu-items">
+        <div class="item">
+            <a href="/" title="HOME">
+                <div class="icon"><img><i class="fa-solid fa-house"></i></div>
+                <div class="title"><span>Home</span></div>
+            </a>
         </div>
-
-        <div id="menu-items">
-            <div class="item">
-                <a href="/" title="HOME">
-                    <div class="icon"><img><i class="fa-solid fa-house"></i></div>
-                    <div class="title"><span>Home</span></div>
-                </a>
-            </div>
-            {{#if userRol}}
-            <div class="item separator"></div>
-            <div class="item">
-                <a href="../workspace/admin" title="USER MANAGER">
-                    <div class="icon"><img><i class="fa-solid fa-gear"></i></div>
-                    <div class="title"><span>User Manager</span></div>
-                </a>
-            </div>
-            {{/if}}
-            <div class="item separator"></div>
-            <div class="item">
-                <a href="../workspace/books" title="BOOK">
-                    <div class="icon"><img><i class="fa-solid fa-book"></i></div>
-                    <div class="title"><span>Books</span></div>
-                </a>
-            </div>
-            <div class="item separator"></div>
-            <div class="item">
-                <a href="../workspace/bookings" title="BOOKINGS">
-                    <div class="icon"><img><i class="fa-solid fa-calendar-check"></i></div>
-                    <div class="title"><span>Bookings</span></div>
-                </a>
-            </div>
-            <div class="item separator"></div>
-            <div class="item">
-                <a href="../workspace/partners" title="PARTNERS">
-                    <div class="icon"><img><i class="fa-solid fa-people-group"></i></div>
-                    <div class="title"><span>Partners</span></div>
-                </a>
-            </div>
-            <div class="item separator"></div>
-            <div class="item">
-                <a href="#" title="TO PRINT">
-                    <div class="icon"><img><i class="fa-solid fa-print"></i></div>
-                    <div class="title"><span>Print</span></div>
-                </a>
-            </div>
-            <div class="item separator"></div>
-            <div class="item">
-                <a href="/logout" title="LOGOUT">
-                    <div class="icon"><img><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-                    <div class="title"><span>Logout</span></div>
-                </a>
-            </div>
-            <div class="item separator"></div>
-        </div>
-        {{else}}
-        <br>
-        <div id="menu-items">
-            <div class="item">
-                <a href="/" title="HOME">
-                    <div class="icon"><img><i class="fa-solid fa-house"></i></div>
-                    <div class="title"><span>Home</span></div>
-                </a>
-            </div>
-            <div class="item separator"></div>
-            <div class="item">
-                <a href="/login" title="SINGIN">
-                    <div class="icon"><img><i class="fa-solid fa-right-to-bracket"></i></div>
-                    <div class="title"><span>Sign In</span></div>
-                </a>
-            </div>
+        {{#if userRol}}
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="../workspace/admin" title="USER MANAGER">
+                <div class="icon"><img><i class="fa-solid fa-gear"></i></div>
+                <div class="title"><span>User Manager</span></div>
+            </a>
         </div>
         {{/if}}
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="../workspace/books" title="BOOK">
+                <div class="icon"><img><i class="fa-solid fa-book"></i></div>
+                <div class="title"><span>Books</span></div>
+            </a>
+        </div>
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="../workspace/bookings" title="BOOKINGS">
+                <div class="icon"><img><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="title"><span>Bookings</span></div>
+            </a>
+        </div>
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="../workspace/partners" title="PARTNERS">
+                <div class="icon"><img><i class="fa-solid fa-people-group"></i></div>
+                <div class="title"><span>Partners</span></div>
+            </a>
+        </div>
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="#" title="TO PRINT">
+                <div class="icon"><img><i class="fa-solid fa-print"></i></div>
+                <div class="title"><span>Print</span></div>
+            </a>
+        </div>
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="/logout" title="LOGOUT">
+                <div class="icon"><img><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                <div class="title"><span>Logout</span></div>
+            </a>
+        </div>
+        <div class="item separator"></div>
     </div>
-</body>
+    {{else}}
+    <div id="menu-items">
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="/" title="HOME">
+                <div class="icon"><img><i class="fa-solid fa-house"></i></div>
+                <div class="title"><span>Home</span></div>
+            </a>
+        </div>
+        <div class="item separator"></div>
+        <div class="item">
+            <a href="/login" title="SINGIN">
+                <div class="icon"><img><i class="fa-solid fa-right-to-bracket"></i></div>
+                <div class="title"><span>Sign In</span></div>
+            </a>
+        </div>
+    </div>
+    {{/if}}
+</div>

@@ -1,42 +1,28 @@
-<body>
-  <nav class="navbar-expand-lg navbar-dark bg-dark">
-    <div class="hamburger" id="btn-menu">
-      <i class="fa-solid fa-bars"></i>
-    </div>
+<div class="Header-logo">
+  <button class="Header-button--sidemenu" id="btnSidemenu">
+    <i class="Header-i--sidemenu fa-solid fa-bars"></i>
+  </button>
+  <h1 class="Header-h1--logo">
+    <a href="/" class="Header-a--logo">Library San Miguel</a>
+  </h1>
+</div>
 
-    <div class="navbar">
-      <div class="hamburger2" id="btn-menu2">
-        <i class="fa-solid fa-bars"></i>
-      </div>
-      <div class="titleNav" id="title-nav"><a href="/">Library San Miguel</a></div>
-      <div class="nav-links" id="navbarNav">
-        <ul class="links">
-          {{#if nameUser}}
-          <li class="nav-item">
-            <a id="btnBooks" type="button" class="nav-links" href="../workspace/books">Books</a>
-          </li>
-          </li>
-          <li class="nav-item">
-            <a class="nav-links" href="../workspace/partners" id="partners">Partners</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-links" href="../workspace/bookings">Bookings</a>
-          </li>
-          {{#if userRol}}
-          <li class="nav-item">
-            <a class="nav-links" href="/register">Record</a>
-          </li>
-          {{/if}}
-          <li class="nav-item">
-            <a class="nav-links" href="/logout">Logout</a>
-          </li>
-          {{else}}
-          <li class="nav-item">
-            <a class="nav-links" href="/login">Sign In</a>
-          </li>
-          {{/if}}
-        </ul>
-      </div>
-    </div>
-  </nav>
-</body>
+<button class="Header-button--toggle" id="btnToggle">
+    <i class="Header-i--toggle fa-solid fa-bars"></i>
+</button>
+
+<nav class="Header-nav" id="navBar">
+  <ul class="Header-ul">
+    {{#if login}}
+    <li class="Header-li"><a class="Header-a Header-a-link" href="../workspace/books">Books</a></li>
+    <li class="Header-li"><a class="Header-a Header-a-link" href="../workspace/partners" id="partners">Partners</a></li>
+    <li class="Header-li"><a class="Header-a Header-a-link" href="../workspace/bookings">Bookings</a></li>
+    {{#if userRol}}
+    <li class="Header-li"><a class="Header-a Header-a-link" href="/register">Record</a></li>
+    <li class="Header-li"><a class="Header-a Header-a-link Header-a-link--active" href="/logout">Logout</a></li>
+    {{/if}}
+    {{else}}
+    <li class="Header-li"><a href="/login" class="Header-a Header-a-link Header-a-link--active">Sign In</a></li>
+    {{/if}}
+  </ul>
+</nav>
