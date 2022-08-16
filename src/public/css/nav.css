@@ -154,7 +154,7 @@
     opacity: 1;
     height: 50vh;
     pointer-events: auto;
-    background: blue;
+    background: var(--bgcolor);
     top: 80px;
   }
 
