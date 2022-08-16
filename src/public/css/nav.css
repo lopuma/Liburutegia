@@ -117,6 +117,7 @@
   }
 
   .Header-nav {
+    margin-top: 39px;
     width: 100%;
     opacity: 0;
     height: 0vh;
