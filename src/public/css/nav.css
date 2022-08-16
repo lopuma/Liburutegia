@@ -61,6 +61,7 @@
 }
 
 /* NAV */
+
 .Header-ul {
   margin: 0;
   display: -webkit-box;
@@ -102,25 +103,12 @@
 }
 
 @media screen and (max-width: 480px) {
-  .Header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .Header-logo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: column nowrap;
-  }
 
   .Header-h1--logo{
     margin: 0 0.5em;
     font-family: 'DynaPuff', cursive;
     font-weight: 400;
     font-size: 1.5em;
-
   }
 
   .Header-i--toggle {
@@ -161,12 +149,12 @@
     display: block;
   }
 
-
   .Header-nav__isActive {
     opacity: 1;
     height: 50vh;
     pointer-events: auto;
-    background: var(--bgcolor);
+    background: blue;
+    top: 80px;
   }
 
   .Header-button--sidemenu{
