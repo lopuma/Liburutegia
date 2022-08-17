@@ -10,7 +10,7 @@
   display: flex;
   position: fixed;
   z-index: 2;
-  height: 20vh;
+  height: 80px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-flow: row wrap;
