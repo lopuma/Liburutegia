@@ -1,6 +1,6 @@
 /* CONTENEDOR DE LOGIN*/
-.register-container,
-.login-container {
+.main-container article .register-container,
+.main-container article .login-container {
     position: relative;
     margin-top: 100px;
     max-width: 70%;
@@ -14,7 +14,7 @@
     perspective: 2700px;
 }
 
-.login-container .cover {
+.main-container article .login-container .cover {
     position: absolute;
     top: 0;
     left: 50%;
@@ -30,7 +30,7 @@
 
 }
 
-.login-container #flip:checked~.cover {
+.main-container article .login-container #flip:checked~.cover {
     transform: rotateY(-180deg);
     -ms-transform: rotateY(-180deg);
     /* IE 9 */
@@ -45,8 +45,8 @@
 
 }
 
-.login-container .cover .front,
-.login-container .cover .back {
+.main-container article .login-container .cover .front,
+.main-container article .login-container .cover .back {
     position: absolute;
     top: 0;
     left: 0;
@@ -67,8 +67,8 @@
     /* Opera */
 }
 
-.login-container .cover::before,
-.login-container .cover::after {
+.main-container article .login-container .cover::before,
+.main-container article .login-container .cover::after {
     content: '';
     position: absolute;
     height: 100%;
@@ -81,7 +81,7 @@
     z-index: 12;
 }
 
-.login-container .cover::after {
+.main-container article .login-container .cover::after {
     opacity: 0.3;
     transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
@@ -96,7 +96,7 @@
     -webkit-backface-visibility: hidden;
 }
 
-.login-container .cover img {
+.main-container article .login-container .cover img {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -109,7 +109,7 @@
 }
 
 
-.login-container .cover .text {
+.main-container article .login-container .cover .text {
     position: absolute;
     z-index: 130;
     height: 100%;
@@ -134,32 +134,32 @@
     font-weight: 500;
 }
 
-.register-container form,
-.login-container form {
+.main-container article .register-container form,
+.main-container article .login-container form {
     height: 100%;
     width: 100%;
 }
 
-.register-container form {
+.main-container article .register-container form {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-flow: row wrap;
 }
 
-.login-container {
+.main-container article .login-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* .login-container .form-content {
+/* .main-container article .login-container .form-content {
   display: flex;
   align-items: center;
   justify-content: start;
 }
 
-.login-container .form-content-reset {
+.main-container article .login-container .form-content-reset {
   display: flex;
   align-items: center;
   justify-content: start;
@@ -430,7 +430,7 @@ form .form-content .sing-up-text {
     margin-top: 25px;
 }
 
-.login-container #flip {
+.main-container article .login-container #flip {
     display: none;
 }
 
@@ -492,16 +492,16 @@ form .form-content .sing-up-text {
         display: none;
     }
 
-    .register-container {
+    .main-container article .register-container {
         padding: 0;
     }
 
 
-    .login-container .cover {
+    .main-container article .login-container .cover {
         display: none;
     }
 
-    .login-container {
+    .main-container article .login-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -517,14 +517,14 @@ form .form-content .sing-up-text {
         display: none;
     }
 
-    .login-container #flip:checked~form .form-content-reset .forgot-form {
+    .main-container article .login-container #flip:checked~form .form-content-reset .forgot-form {
         display: block;
         width: 100%;
         margin-left: 0;
         margin-right: 25px;
     }
 
-    .login-container #flip:checked~form .form-content .login-form {
+    .main-container article .login-container #flip:checked~form .form-content .login-form {
         display: none;
     }
 

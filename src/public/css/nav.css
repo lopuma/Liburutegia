@@ -9,6 +9,7 @@
   display: -ms-flexbox;
   display: flex;
   position: fixed;
+  z-index: 2;
   height: 80px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
@@ -102,7 +103,9 @@
   transition: 0.5s ease;
 }
 
-@media screen and (max-width: 480px) {
+/* Móviles en vertical
+   ------------------------------------------------------------------------- */
+@media all and (max-width: 480px) {
 
   .Header-h1--logo{
     margin: 0 0.5em;
@@ -117,7 +120,7 @@
   }
 
   .Header-nav {
-    margin-top: 39px;
+    margin-top: 40px;
     width: 100%;
     opacity: 0;
     height: 0vh;
@@ -155,7 +158,6 @@
     height: 50vh;
     pointer-events: auto;
     background: var(--bgcolor);
-    top: 80px;
   }
 
   .Header-button--sidemenu{
@@ -168,4 +170,59 @@
         -ms-flex-direction: column;
             flex-direction: column;
   }
+
+  .Header-button--sidemenu{
+    display: none;
+  }
 }
+
+/* Móviles en horizontal o tablets en vertical
+   ------------------------------------------------------------------------- */
+@media all and (max-width: 767px) {
+   
+  .Header-nav {
+    margin-top: 30px;
+    width: 100%;
+    opacity: 0;
+    height: 0vh;
+    pointer-events: none;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+
+
+  .Header-nav__isActive {
+    opacity: 1;
+    height: 50vh;
+    pointer-events: auto;
+    /* background: var(--bgcolor); */
+    background: blueviolet;
+  }
+
+  .Header-button--toggle {
+    display: block;
+  }
+
+  .Header-button--sidemenu{
+    display: none;
+  }
+ }
+
+ /* @media (min-width: 768px){ 
+
+} */
