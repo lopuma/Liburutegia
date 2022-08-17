@@ -447,11 +447,7 @@ form .form-content .sing-up-text {
 
 
 /* @media (min-width: 768px) and (max-width: 1199px) {  */
-@media (min-width: 768px) {
-
-    .hamburger2 {
-        display: none;
-    }
+@media (min-width: 800px) {
 
     .form-content-register {
         width: 100%;
@@ -461,18 +457,9 @@ form .form-content .sing-up-text {
 
 /* Móviles en horizontal o tablets en vertical
      ------------------------------------------------------------------------- */
-@media all and (max-width: 767px) {
+/* @media all and (max-width: 800px) {
 
-    #sidemenu {
-        display: none;
-    }
-
-    .hamburger {
-        display: none;
-    }
-
-
-}
+} */
 
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
