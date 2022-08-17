@@ -1,16 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff&display=swap');
 /*  Código de nuestro menu */
 .Header {
+  height: var(--size-height-element);
+  min-height: var(--size-height-element);
   width: 100%;
   background-color: var(--bgcolor);
-  padding: 1em;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   position: fixed;
   z-index: 2;
-  height: 80px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-flow: row wrap;
@@ -27,42 +26,59 @@
 .Header-logo{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex: 25%;
 }
 
 .Header-button--sidemenu{
   margin: 0 0.5em;
-  font-size: 2em;
-}
-
-.Header-i--sidemenu {
-  fill: white;
+  font-size: 2rem;
 }
 
 .Header-h1--logo{
-  margin: 0 1em;
+  margin: 0 0.5em;
+  font-size: 2rem;
   font-family: 'DynaPuff', cursive;
   font-weight: 400;
-  font-size: 2em;
+  cursor: pointer;
 }
 
 .Header-a--logo{
+  color: #fff;
+  text-transform: uppercase; /* TRANSFORMA A MAYUSCULAS */
+}
+
+.Header-a--logo:hover{
   color: #fff;
 }
 
 /* BTN TOGGLE */
 .Header-button--toggle {
-  display: none;
-  cursor: pointer;
-}
-
-.Header-i--toggle {
   margin: 0 0.5em;
-  font-size: 2em;
+  font-size: 2rem;
+  display: none;
 }
 
 /* NAV */
 
+.Header-nav{
+  flex: 70%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+          text-transform: uppercase;
+          width: max-content;
+}
 .Header-ul {
   margin: 0;
   display: -webkit-box;
@@ -80,10 +96,11 @@
           align-items: center;
           text-transform: uppercase;
           width: max-content;
+  font-size: 100%;
 }
 
 .Header-li {
-  margin: 0 1em;
+  margin: 0 20px;
   font-weight: 600;
   font-family: 'Roboto', sans-serif;
 }
@@ -93,14 +110,15 @@
 }
 
 .Header-a-link {
-  padding: 10px 15px;
+  padding: 2vh 2vw;
   border-radius: 5px;
+  transition: 0.5s ease;
 }
 
 .Header-a-link:hover,
 .Header-a-link--active {
-  background-color: #034574;
-  transition: 0.5s ease;
+  background-color: #ffffff;
+  color: #000;
 }
 
 /* Móviles en vertical
@@ -111,12 +129,12 @@
     margin: 0 0.5em;
     font-family: 'DynaPuff', cursive;
     font-weight: 400;
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 
   .Header-i--toggle {
     margin: 0 0.5em;
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 
   .Header-nav {

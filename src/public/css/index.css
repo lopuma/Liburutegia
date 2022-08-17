@@ -1,6 +1,8 @@
 .main-container article .index-container {
   padding: 20px;
-  margin: 100px 40px;
+  position: relative;
+  top: var(--size-height-element);
+  margin: 3em 3em;
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   border-radius: 20px;
