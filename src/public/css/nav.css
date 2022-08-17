@@ -10,7 +10,7 @@
   display: flex;
   position: fixed;
   z-index: 2;
-  height: 80px;
+  height: 20vh;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-flow: row wrap;
@@ -178,8 +178,8 @@
 
 /* Móviles en horizontal o tablets en vertical
    ------------------------------------------------------------------------- */
-@media all and (max-width: 800px) {
-   
+@media all and (max-width: 768px) {
+
   .Header-nav {
     margin-top: 30px;
     width: 100%;
