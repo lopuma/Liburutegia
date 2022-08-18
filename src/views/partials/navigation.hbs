@@ -8,21 +8,29 @@
 </div>
 
 <button class="Header-button--toggle" id="btnToggle">
-    <i class="Header-i--toggle fa-solid fa-bars"></i>
+  <i class="Header-i--toggle fa-solid fa-bars"></i>
 </button>
 
 <nav class="Header-nav" id="navBar">
   <ul class="Header-ul">
-    {{#if login}}
-    <li class="Header-li"><a class="Header-a Header-a-link" href="../workspace/books">Books</a></li>
-    <li class="Header-li"><a class="Header-a Header-a-link" href="../workspace/partners" id="partners">Partners</a></li>
-    <li class="Header-li"><a class="Header-a Header-a-link" href="../workspace/bookings">Bookings</a></li>
-    {{#if userRol}}
+    {{!-- {{#if login}} --}}
+    <li class="Header-li dropdown">
+      <a class="Header-a Header-a-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Dashboard
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+        <a class="Header-dropdown Header-a-link" href="../workspace/books">Books</a>
+        <a class="Header-dropdown Header-a-link" href="../workspace/partners" id="partners">Partners</a>
+        <a class="Header-dropdown Header-a-link" href="../workspace/bookings">Bookings</a>
+      </div>
+    </li>
+    {{!-- {{#if userRol}} --}}
     <li class="Header-li"><a class="Header-a Header-a-link" href="/register">Record</a></li>
+    {{!-- {{/if}}
     <li class="Header-li"><a class="Header-a Header-a-link Header-a-link--active" href="/logout">Logout</a></li>
-    {{/if}}
-    {{else}}
+    {{else}} --}}
     <li class="Header-li"><a href="/login" class="Header-a Header-a-link Header-a-link--active">Login</a></li>
-    {{/if}}
+    {{!-- {{/if}} --}}
   </ul>
 </nav>

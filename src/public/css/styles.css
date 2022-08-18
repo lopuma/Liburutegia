@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Poppins&family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Roboto:wght@400;500;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
 :root {
   --background-forms: #474668;
 
@@ -60,7 +59,7 @@
   --size-border-radius-cards: 5px;
   --size-border-radius-cards-head: 5px;
 
-  --size-height-element : 15vh;
+  --size-height-element : 80px;
 }
 
 .main-container{
@@ -68,6 +67,9 @@
   grid-template-columns: 50px auto;
   grid-template-rows: repeat(3, auto);
   /* gap: 10px; */
+}
+body{
+  font-family: 'Montserrat', sans-serif;
 }
 
 .main-container > *{

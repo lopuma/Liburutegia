@@ -1,0 +1,220 @@
+/*  Código de nuestro menu */
+.Header {
+  height: var(--size-height-element);
+  min-height: var(--size-height-element);
+  width: 100%;
+  background-color: var(--bgcolor);
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  z-index: 2;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+/* LOGO */
+.Header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* flex: 40%; */
+}
+
+.Header-button--sidemenu {
+  margin: 0 0.5em;
+  font-size: 2rem;
+}
+
+.Header-h1--logo {
+  margin: 0 0.5em;
+  font-size: 2rem;
+  font-family: 'DynaPuff', cursive;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.Header-a--logo {
+  color: #fff;
+  text-transform: uppercase;
+  /* TRANSFORMA A MAYUSCULAS */
+}
+
+.Header-a--logo:hover {
+  color: #fff;
+}
+
+/* BTN TOGGLE */
+.Header-button--toggle {
+  margin: 0 0.5em;
+  font-size: 2rem;
+  display: none;
+}
+
+/* NAV */
+
+.Header-nav {
+  /* flex: 60%; */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.Header-ul {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.Header-li {
+  margin: 0 10px;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+}
+
+.Header-a {
+  color: #fff;
+}
+
+.Header-a-link {
+  padding: 2vh 2vw;
+  border-radius: 5px;
+  transition: 0.5s ease;
+}
+
+.Header-a-link:hover,
+.Header-a-link--active {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.show.dropdown .dropdown-toggle::after {
+  transform: translateY(3px);
+}
+
+/* Móviles en vertical
+   ------------------------------------------------------------------------- */
+@media all and (max-width: 480px) {
+
+  .Header-nav {
+    position: relative;
+    top: var(calc(--size-height-element / 2));
+    transition: all 0.5s ease;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Header-ul {
+    flex-direction: column;
+  }
+}
+
+/* Móviles en horizontal o tablets en vertical
+   ------------------------------------------------------------------------- */
+@media all and (max-width: 768px) {
+
+  .Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .Header-logo {
+    height: var(--size-height-element);
+  }
+
+  .Header-button--toggle {
+    height: var(--size-height-element);
+  }
+
+  .Header-nav {
+    width: 100%;
+    opacity: 0;
+    height: 0vh;
+    pointer-events: none;
+    overflow: hidden;
+    overflow-y: auto;
+    position: relative;
+    top: var(calc(--size-height-element / 2));
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+
+  .Header-nav__isActive {
+    opacity: 1;
+    height: 30vh;
+    pointer-events: auto;
+    /* background: var(--bgcolor); */
+    background: blueviolet;
+  }
+
+  .Header-button--toggle {
+    display: block;
+  }
+
+  .Header-button--sidemenu {
+    display: none;
+  }
+
+  .Header-i--toggle {
+    margin: 0 0.5em;
+  }
+
+
+  .Header-li {
+    margin: 0.5em 0;
+  }
+}
+
+/* @media (min-width: 768px){ 
+
+} */
