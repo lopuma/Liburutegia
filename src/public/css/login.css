@@ -447,19 +447,19 @@ form .form-content .sing-up-text {
 
 
 /* @media (min-width: 768px) and (max-width: 1199px) {  */
-/* @media (min-width: 800px) {
+/* @media (min-width: 768) {
 
 } */
 
 /* Móviles en horizontal o tablets en vertical
      ------------------------------------------------------------------------- */
-/* @media all and (max-width: 800px) {
+/* @media all and (max-width: 768) {
 
 } */
 
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
-@media all and (max-width: 800px) {
+@media all and (max-width: 768) {
 
     .main-container article .register-container {
         padding: 0;

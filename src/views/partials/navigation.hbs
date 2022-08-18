@@ -13,7 +13,7 @@
 
 <nav class="Header-nav" id="navBar">
   <ul class="Header-ul">
-    {{!-- {{#if login}} --}}
+    {{#if login}}
     <li class="Header-li dropdown">
       <a class="Header-a Header-a-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -25,12 +25,12 @@
         <a class="Header-dropdown Header-a-link" href="../workspace/bookings">Bookings</a>
       </div>
     </li>
-    {{!-- {{#if userRol}} --}}
+    {{#if userRol}}
     <li class="Header-li"><a class="Header-a Header-a-link" href="/register">Record</a></li>
-    {{!-- {{/if}}
+    {{/if}}
     <li class="Header-li"><a class="Header-a Header-a-link Header-a-link--active" href="/logout">Logout</a></li>
-    {{else}} --}}
+    {{else}}
     <li class="Header-li"><a href="/login" class="Header-a Header-a-link Header-a-link--active">Login</a></li>
-    {{!-- {{/if}} --}}
+    {{/if}}
   </ul>
 </nav>

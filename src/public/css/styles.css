@@ -91,7 +91,7 @@ header, footer{
  
 /* Móviles en horizontal o tablets en vertical
    ------------------------------------------------------------------------- */
-@media all and (max-width: 800px) { 
+@media all and (max-width: 768px) { 
 
   .main-container{
     display: grid;
