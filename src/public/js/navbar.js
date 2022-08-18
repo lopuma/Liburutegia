@@ -1,24 +1,30 @@
-const drop = document.querySelector('.dropdown');
 
-/**
- * Al pasar el raton me habre el menu contextual
- */
-drop.addEventListener('mouseenter', () => {
-    $this = '.dropdown';
-    $($this).addClass('show');
-    $($this).find('.dropdown-toggle').attr("aria-expanded", "true");
-    $($this).find('.dropdown-menu').addClass('show');
-})
+try{
 
-/**
- * Al pasar el raton me cierra el menu contextual
- */
-drop.addEventListener('mouseleave', () => {
-    $this = '.dropdown';
-    $($this).removeClass('show');
-    $($this).find('.dropdown-toggle').attr("aria-expanded", "false");
-    $($this).find('.dropdown-menu').removeClass('show');
-})
+    const drop = document.querySelector('.dropdown');
+
+    /**
+     * Al pasar el raton me habre el menu contextual
+     */
+    drop.addEventListener('mouseenter', () => {
+        $this = '.dropdown';
+        $($this).addClass('show');
+        $($this).find('.dropdown-toggle').attr("aria-expanded", "true");
+        $($this).find('.dropdown-menu').addClass('show');
+    })
+    
+    /**
+     * Al pasar el raton me cierra el menu contextual
+     */
+    drop.addEventListener('mouseleave', () => {
+        $this = '.dropdown';
+        $($this).removeClass('show');
+        $($this).find('.dropdown-toggle').attr("aria-expanded", "false");
+        $($this).find('.dropdown-menu').removeClass('show');
+    })
+    
+}
+catch{}
 
 const btnToggle = document.querySelector('#btnToggle');
 const navBar = document.querySelector('#navBar');
