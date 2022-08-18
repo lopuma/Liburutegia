@@ -2,8 +2,9 @@
 .main-container article .register-container,
 .main-container article .login-container {
     position: relative;
-    margin-top: 100px;
-    max-width: 70%;
+    top: var(--size-height-element);
+    margin: 50px 40px;
+    min-width: 80%;
     width: 70%;
     /* height: 400px; */
     background-color: #ffffff;

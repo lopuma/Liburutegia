@@ -2,7 +2,7 @@
   padding: 20px;
   position: relative;
   top: var(--size-height-element);
-  margin: 3em 3em;
+  margin: 50px 40px;
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   border-radius: 20px;
@@ -15,7 +15,7 @@
   overflow: hidden;
   height: 500px;
   width: 100%;
-  max-width: 100%;
+  min-width: 90%;
   box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
     -4px -4px 5px var(--color-background-shadow-top);
   display: flex;

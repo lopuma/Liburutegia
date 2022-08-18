@@ -57,7 +57,7 @@ router.post("/auth", async (req, res) => {
             alertTitle: "Conexion Success",
             alertMessage: "!Login Success",
             alertIcon: "success",
-            timer: 2500,
+            timer: 2000,
             ruta
           });
         }
