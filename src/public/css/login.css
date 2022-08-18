@@ -459,7 +459,7 @@ form .form-content .sing-up-text {
 
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
-@media all and (max-width: 768) {
+@media all and (max-width: 768px) {
 
     .main-container article .register-container {
         padding: 0;
