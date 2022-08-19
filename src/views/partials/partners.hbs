@@ -1,36 +1,29 @@
 <div class="container-fluid">
     <a id="btnNew" class="btn btn-outline-primary mt-4 mb-4"><i class="fa-solid fa-circle-plus"></i><span>New
             Partner</span></a>
-    <table id="table-partners" class="display responsive nowrap" cellspacing="0" width="100%">
+<table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th scope="col" colspan="8" id="titleScope">
-                    List of Partners
-                </th>
-            </tr>
-            <tr>
-                <th>ID</th>
-                <th>DNI</th>
-                <th>NAME</th>
-                <th>LAST NAME</th>
-                <th>DIRECTION</th>
-                <th>PHONE</th>
-                <th>E-MAIL</th>
-                <th>ACTIONS</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+                <th>Salary</th>
+                <th>Salary</th>
             </tr>
         </thead>
-        <tbody>
-        </tbody>
         <tfoot>
             <tr>
-                <th>ID</th>
-                <th>DNI</th>
-                <th>NAME</th>
-                <th>LAST NAME</th>
-                <th>DIRECTION</th>
-                <th>PHONE</th>
-                <th>E-MAIL</th>
-                <th>ACTIONS</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+                <th>Salary</th>
+                <th>Salary</th>
             </tr>
         </tfoot>
     </table>
@@ -75,3 +68,117 @@
         </div>
     </div>
 </div>
+
+<script>
+        // MOSTRAR DATOS
+  $(document).ready(function (e) {
+    $('#example').DataTable({
+      'searching': true,
+      'ordering': true,
+      'info': true,
+      'responsive': true,
+      "order": [[0, "desc"]],
+      "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
+      "pageLength": 5,
+      'ajax': '../resources/js/objects.txt',
+       'deferRender': true,
+      columns: [
+          { data: 'id_partner' },
+          { data: 'dni' },
+          { data: 'nombre' },
+          { data: 'apellidos' },
+          { data: 'direccion',
+         // visible: false, 
+          },
+          { data: 'telefono' },
+           { data: 'email' },
+          {
+            defaultContent: `
+                    <div class="ui buttons">
+                      <button id="btnEditPartner" type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#modalPARTNER" title="Edit partner"><i class="fa-regular fa-pen-to-square"></i></button>
+                      <div class="or" style="z-index:0;" data-text="or">                          
+                    </div>
+                      <button id="btnDeleteBook" class="btn btn-outline-danger" title="Delete book"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>`
+          }
+      ]
+    });
+  });
+
+   //EDITAR        
+    $(document).on("click", "#btnEditPartner", function () {
+      opcion = 'edit';
+      fila = $(this).closest("tr");
+      id_partner = fila.find('td:eq(0)').text();
+      dni = fila.find('td:eq(1)').text();
+      firstname = fila.find('td:eq(2)').text();
+      lastname = fila.find('td:eq(3)').text();
+      direction = fila.find('td:eq(4)').text();
+      phone = fila.find('td:eq(5)').text();
+      email = fila.find('td:eq(6)').text();
+      $("#id_partner").val(id_partner);
+      $("#dni").val(dni);
+      $("#firstname").val(firstname);
+      $("#lastname").val(lastname);
+      $("#direction").val(direction);
+      $("#phone").val(phone);
+      $("#email").val(email);
+      $(".modal-header").css("background-color", "#7303c0");
+      $(".modal-header").css("color", "white");
+      $(".modal-title").text("Edit Partner");
+    });
+    //DELETE
+    $(document).on("click", "#btnDeleteBook", function () {
+      fila = $(this).closest("tr");
+      id_partner = fila.find('td:eq(0)').text();
+      dni = fila.find('td:eq(1)').text();
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "Are you sure you want to delete the PARTNER!",
+        icon: 'warning',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted! Partner for DNI ' + dni,
+            'Your partner has been deleted.',
+            'success',
+          ).then((result) => {
+            window.location = '../workspace/partners';
+          });
+        }
+      });
+    });
+    //submit para el CREAR y EDITAR
+    $('#formu').submit(function (e) {
+      e.preventDefault();
+      opcion = "edit"
+      url = "/api/partners/"
+      id_partner = $.trim($('#id_partner').val());
+      dni = $.trim($('#dni').val());
+      firstname = $.trim($('#firstname').val());
+      lastname = $.trim($('#lastname').val());
+      direction = $.trim($('#direction').val());
+      phone = $.trim($('#phone').val());
+      email = $.trim($('#email').val());
+      if (opcion == 'edit') {
+        $.ajax({
+          url: url + id_partner,
+          method: 'put',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            id_partner: id_partner, dni: dni, firstname: firstname, lastname: lastname, direction: direction, phone: phone, email: email
+          }
+          )
+        });
+        $(document).ajaxStop(function () {
+          location.reload(true);
+        });
+      }
+      $('#modalPARTNER').hide();
+    });
+</script>

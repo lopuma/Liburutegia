@@ -46,12 +46,19 @@ router.get("/admin", async (req, res) => {
         return res.send(error);
       }
       const users = results;
-      console.log(users);
+      let existData = ""
+      if (users != ""){
+        existData = true
+      }else{
+        existData = false
+      }
+      console.log(existData);
       res.render("workspace/dashboard-admin", {
         login: true,
         nameUser,
         userRol,
-        users
+        users,
+        existData
       });
     });
   } else {

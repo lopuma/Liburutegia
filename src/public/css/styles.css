@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Poppins&family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Montserrat:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&family=Oswald:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+
 :root {
   --background-forms: #474668;
 
@@ -17,16 +18,16 @@
 
   /* COLORES EMCABEZADO FIELSET */
   /* - FORM ADMIN */
-  --background-forms-bookings: rgb(124, 25, 108);
-  --color-forms-bookings: #ffffff;
+  --background-forms-booking: rgb(124, 25, 108);
+  --color-forms-booking: #ffffff;
 
   /* - FORM ADMIN */
-  --background-forms-books: rgb(58, 76, 156);
-  --color-forms-books: #ffffff;
+  --background-forms-book: rgb(58, 76, 156);
+  --color-forms-book: #ffffff;
   /* - FORM ADMIN */
 
-  --background-forms-partners: rgb(206, 157, 22);
-  --color-forms-partners: #ffffff;
+  --background-forms-partner: rgb(206, 157, 22);
+  --color-forms-partner: #ffffff;
 
   /* - FORM ADMIN */
   --background-forms-admin: #A10035;
@@ -37,29 +38,36 @@
   --background-forms-admin-head: #3FA796;
   --color-forms-admin-head: #FEC260;
 
-  --background-forms-books-head:  rgb(58, 76, 156);
-  --color-forms-books-head: #ffffff;
+  --background-forms-book-head:  rgb(58, 76, 156);
+  --color-forms-book-head: #ffffff;
 
-  --background-forms-bookings-head:rgb(124, 25, 108);
-  --color-forms-bookings-head: 3ffffff;
+  --background-forms-booking-head:rgb(124, 25, 108);
+  --color-forms-booking-head: 3ffffff;
 
-  --background-forms-partners-head: rgb(206, 157, 22);
-  --color-forms-partners-head: #ffffff;
+  --background-forms-partner-head: rgb(206, 157, 22);
+  --color-forms-partner-head: #ffffff;
 
   /* COLORES PARA SOMNRA SUPERIOR */
   --color-background-shadow-top: #4578d6cc;
   --color-background-shadow-top-admin: var(--background-forms-admin-head);
-  --color-background-shadow-top-books: var(--background-forms-admin-head);
-  --color-background-shadow-top-partners: var(--background-forms-admin-head);
-  --color-background-shadow-top-bookings: var(--background-forms-admin-head);
+  --color-background-shadow-top-book: var(--background-forms-admin-head);
+  --color-background-shadow-top-partner: var(--background-forms-admin-head);
+  --color-background-shadow-top-booking: var(--background-forms-admin-head);
 
-  /* RADIUS BORDER PARA LOS FORMS [admin, books, bookings, partners]*/
+  /* RADIUS BORDER PARA LOS FORMS [admin, book, booking, partner]*/
   --size-border-radius-forms: 8px;
   --size-border-radius-fieldset: 5px;
   --size-border-radius-cards: 5px;
   --size-border-radius-cards-head: 5px;
 
   --size-height-element : 80px;
+
+  /* FUENTES */
+  --font-family-legend: 'Oswald', sans-serif;
+
+  /* MARGENES */
+  --margin-forms: 30px 30px
+
 }
 
 .main-container{

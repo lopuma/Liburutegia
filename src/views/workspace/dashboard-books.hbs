@@ -1,21 +1,16 @@
-<body>
-  <div class="books-container">
-    <fieldset>
-      <legend id="lengedAdmin">
-        <div class="welcom">
-          <span id="tipWelcome">Book Dashboard</span>
-        </div>
-        {{#if login}}
-        <div class="nameUser">
-          <span>Hi, Welcome </span>
-          <span id="tipName" class="badge badge-success">{{nameUser}}</span>
-        </div>
-        {{/if}}
-      </legend>
-      <h1>{{ msg_success }}</h1>
-    </fieldset>
-  </div>
-</body>
+<div class="Book-container">
+  <fieldset class="Book-fieldset">
+    <legend class="Book-legend" id="lengedBook">
+      <span class="Book-span">Book Dashboard</span>
+      {{#if login}}
+      <div class="Book-Username">
+        <span class="Book-Username-greeting">Hi, Welcome </span>
+        <span id="tipName" class="Book-Username-name">{{nameUser}}</span>
+      </div>
+      {{/if}}
+    </legend>
+      {{> books }}
+  </fieldset>
 
 
 <script>

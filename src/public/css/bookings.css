@@ -1,67 +1,75 @@
+.Booking-container {
+  position: relative;
+  top: var(--size-height-element);
+  padding: 20px;
+  margin: 50px 20px;
+  border-radius: var(--size-border-radius-forms);
+  overflow: hidden;
+  width: 100%;
+  min-width: 90%;
+  height: auto;
+  box-shadow: 2px 4px 8px var(--color-background-shadow-botton),
+    -2px -2px 16px var(--background-forms-bookings);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
 
-.main-container .bookings-container {
+.Booking-fieldset  {
+  width: 100%;
+  min-height: 600px;
+  color: #fff;
+  border: 1px solid var(--background-forms-bookings);
+  border-radius: var(--size-border-radius-fieldset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+}
 
-    padding: 20px;
-    margin: 100px 0 0 50px;
-    font-family: 'Poppins';
-    font-size: 18px;
-    color: var(--color-text-forms);
-    border-radius: var(--size-border-radius);
-    overflow: hidden;
-    height: 500px;
-    width: 90%;
-    max-width: 90%;
-    box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
-      -4px -4px 5px var(--color-background-shadow-top);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+.Booking-legend {
+  background: var(--background-forms-bookings);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  border-radius: 5px;
+  padding: 15px;
+  color: var(--color-forms-bookings);
+  font-family: var(--font-family-legend);
+  font-weight: 400;
+  letter-spacing: 3px;
+}
 
-  .bookings-container fieldset{
-    width: 100%;
-    color: #fff;
-    border: 1px solid var(--background-forms-bookings);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: row wrap;
-  }
-  .bookings-container fieldset #tipWelcome{
-    font-weight: 600;
-  }
+.Booking-span {
+  font-weight: 600;
+  flex: 40%;
+}
 
-  .bookings-container fieldset legend {
-    background-color:  var(--background-forms-bookings);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: row wrap;
-    border-radius: 5px;
-    padding: 15px;
-  }
-  .bookings-container legend .welcom{
-    flex: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    flex-flow: row wrap;    
-  }
-  .bookings-container legend .nameUser{
-    flex: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    flex-flow: row wrap;
-  }
-  .nameUser span{
-    margin: 0px 5px 0 5px;
-  }
+.Booking-Username {
+  flex: 60%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-flow: row wrap;
+  padding: 5px 0;
+}
 
-  @media (max-width: 700px) {
-    .main-container .bookings-container {
-      margin: 100px 0 0 0;
-    }
-  }
+.Username-greeting {
+  font-weight: 200;
+  margin: 0 10px;
+}
+
+
+.Username-name {
+  font-weight: 200;
+  background: #224B0C;
+  padding: 8px 12px;
+  color: #C1D5A4;
+  border-radius: 5px;
+  margin: 0 10px;
+  text-transform: uppercase;
+}

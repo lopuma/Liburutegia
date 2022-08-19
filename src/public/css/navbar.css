@@ -103,8 +103,10 @@
 
 .Header-li {
   margin: 0 10px;
-  font-weight: 600;
-  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 6px;
 }
 
 .Header-a {
@@ -153,7 +155,7 @@
 }
 
 .Header-a-link--select:hover{
-  margin: 0 5px;
+  /* margin: 0 5px; */
   background: #76BA99;
 }
 
@@ -249,11 +251,6 @@
 
   .Header-i--toggle {
     margin: 0 0.5em;
-  }
-
-
-  .Header-li {
-    margin: 0.5em 0;
   }
 
   .Header-button--toggle:focus:not(:focus-visible){

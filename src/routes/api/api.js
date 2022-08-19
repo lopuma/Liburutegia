@@ -9,19 +9,16 @@ router.get('/books', async (req, res) => {
 		}
 		res.send(results)
 	});
-	// var data = JSON.stringify({
-	// 	"data": books
-	// });
 });
 
-
-
 router.get('/partners', async (req, res) => {
-	const partners = await connection.query('SELECT * FROM partners')
-	var data = JSON.stringify({
-		"data": partners
+	connection.query('SELECT * FROM partners', function (err, results) {
+		if(err){
+			console.error(err);
+			return res.status(404).send(err);
+		}
+		res.send(results)
 	});
-	res.send(data);
 });
 
 router.get('/bookings', async (req, res) => {

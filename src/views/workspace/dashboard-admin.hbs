@@ -1,51 +1,17 @@
-<body>
-  <div class="admin-container">
-    <fieldset>
-      <legend id="lengedAdmin">
-        <div class="titleField">
-          <span>Admin Dashboard</span>
-        </div>
-        {{#if login}}
-        <div class="nameUser">
-          <span>Hi, Welcome </span>
-          <span id="tipName" class="badge badge-success">{{nameUser}}</span>
-        </div>
-        {{/if}}
-      </legend>
+<div class="Admin-container">
+  <fieldset class="Admin-fieldset">
+    <legend class="Admin-legend" id="lengedAdmin">
+      <span class="Admin-span">Admin Dashboard</span>
+      {{#if login}}
+      <div class="Admin-Username">
+        <span class="Admin-Username-greeting">Hi, Welcome </span>
+        <span id="tipName" class="Admin-Username-name">{{nameUser}}</span>
+      </div>
+      {{/if}}
+    </legend>
+    {{#if existData}}
       {{> admin }}
-    </fieldset>
-    <script>
-     // const cardDetails = document.querySelectorAll(".card-details");
- // const card = document.querySelectorAll(".cards")
-
-
- // function enterUser(comp) {
-  //  let id = comp.id;
-   // for (var i = 0; i < card.length; i++) {
-   //   var item = card[i];
-    //  if (item.id == id) {
-        //  (`#card-button${item.id}`).fadeIn(2000);
-
-        //console.log(cardDetails);
-        // $('.cards').fadeIn(1000, function() {
-        ///  $(`#card-button${item.id}`).fadeIn(1000);
-        // });
-
-     //   return;
-     // }
-   // }
- // }
-
-//  function leaveUser(comp) {
-  //  let id = comp.id;
-   // for (var i = 0; i < card.length; i++) {
-    //  var item = card[i];
-    //  if (item.id == id) {
-        //$(`#card-button${item.id}`).fadeOut(1000);
-        //$(`#card-button${item.id}`).fadeOut(700);
-    //    return;
-   //   }
-   // }
-  //}
-    </script>
-</body>
+    {{else}}  
+      <h1 style="color: #000;">No hay data</h1>
+    {{/if}}
+  </fieldset>
