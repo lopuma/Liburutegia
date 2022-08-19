@@ -78,8 +78,8 @@ router.get("/partners", async (req, res) => {
       userRol
     });
   } else {
-    login: false, nameUser, userRol;
-    res.render("../views/forms/login");
+    (login = false), nameUser, userRol;
+    res.redirect("/login");
   }
 });
 

@@ -9,105 +9,105 @@
       </div>
       {{/if}}
     </legend>
-      {{> books }}
+    {{> books }}
   </fieldset>
 
 
-<script>
+  <script>
 
-  async function mostrar(id_book) {
-    console.log("ID ES " + id_book);
-    console.log("FUNCIONA")
-    opcion = 'edit';
-    var id_book = id_book;
-    var url = '/api/books/' + id_book;
-    //      async function leerDatos() {
-    let respuesta = await fetch(url);
-    let datos = await respuesta.json();
-    for (let elemento of datos) {
-      console.log(elemento.id_book);
-      console.log(elemento.title);
-      console.log(elemento.author);
-      $("#id_book").val(elemento.id_book);
-      $("#title_book").val(elemento.title);
-      $("#author").val(elemento.author);
-      $("#type").val(elemento.type);
-      $("#language").val(elemento.language);
-      $(".modal-header").css("background-color", "#7303c0");
-      $(".modal-header").css("color", "white");
-      $(".modal-title").text("Edit Book");
+    async function mostrar(id_book) {
+      console.log("ID ES " + id_book);
+      console.log("FUNCIONA")
+      opcion = 'edit';
+      var id_book = id_book;
+      var url = '/api/books/' + id_book;
+      //      async function leerDatos() {
+      let respuesta = await fetch(url);
+      let datos = await respuesta.json();
+      for (let elemento of datos) {
+        console.log(elemento.id_book);
+        console.log(elemento.title);
+        console.log(elemento.author);
+        $("#id_book").val(elemento.id_book);
+        $("#title_book").val(elemento.title);
+        $("#author").val(elemento.author);
+        $("#type").val(elemento.type);
+        $("#language").val(elemento.language);
+        $(".modal-header").css("background-color", "#7303c0");
+        $(".modal-header").css("color", "white");
+        $(".modal-title").text("Edit Book");
+      };
+
+
+      // };
+      //leerDatos();
+      // var datos = new FormData();
+      //  datos.append('id_book', id_book)
+      //  $.ajax({
+      ///     method: 'POST',
+      //    url: '/api/books/'+id_book,
+      //    dataType: 'json',
+      //    data: {id_book:'id_book'},
+      //    success : function(res){
+      //      alert(res.id_book);
+      //  }
+      //  });
+      // id_book = fila_book.find('td:eq(0)').text();
+      //title_book = fila_book.find('td:eq(1)').text();
+      //author = fila_book.find('td:eq(2)').text();
+      // type = fila_book.find('td:eq(3)').text();
+      // language = fila_book.find('td:eq(4)').text();
+
+
     };
 
+    function deleteBook(id_book) {
+      id_book = id_book;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "Are you sure you want to delete the BOOK!",
+        icon: 'warning',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted! Book ' + id_book,
+            'Your book has been deleted.',
+            'success'
+            //window.location = '../workspace/partners',
+          ).then((result) => {
+            console.log(result);
+          });
+        }
+      });
+    };
 
-    // };
-    //leerDatos();
-    // var datos = new FormData();
-    //  datos.append('id_book', id_book)
-    //  $.ajax({
-    ///     method: 'POST',
-    //    url: '/api/books/'+id_book,
-    //    dataType: 'json',
-    //    data: {id_book:'id_book'},
-    //    success : function(res){
-    //      alert(res.id_book);
-    //  }
-    //  });
-    // id_book = fila_book.find('td:eq(0)').text();
-    //title_book = fila_book.find('td:eq(1)').text();
-    //author = fila_book.find('td:eq(2)').text();
-    // type = fila_book.find('td:eq(3)').text();
-    // language = fila_book.find('td:eq(4)').text();
-
-
-  };
-
-  function deleteBook(id_book) {
-    id_book = id_book;
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "Are you sure you want to delete the BOOK!",
-      icon: 'warning',
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted! Book ' + id_book,
-          'Your book has been deleted.',
-          'success'
-          //window.location = '../workspace/partners',
-        ).then((result) => {
-          console.log(result);
-        });
-      }
-    });
-  };
-
-  $(document).ready(function (e) {
-    $('#example').DataTable({
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'responsive': true,
-      "order": [[0, "desc"]],
-      "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-      "pageLength": 5,
-      'ajax': '/api/books',
-      columns: [
+    $(document).ready(function (e) {
+      $('#example').DataTable({
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'responsive': true,
+        "order": [[0, "desc"]],
+        "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
+        "pageLength": 5,
+        'ajax': '/api/books/',
+        columns: [
         { data: 'id_book' },
         { data: 'title' },
         { data: 'author' },
         { data: 'type' },
         { data: 'language' },
-        { data: 'fecha_compra' },
-        { data: 'reservado' },
-        {
-          data: null,
-          render: function (data, type) {
-            return `
+        { data: 'purchase_date' },
+        { data: 'reserved' },
+          {
+            data: null,
+            render: function (data, type) {
+              return `
                       <div class="ui buttons">
                         <button id="btnEditBook" onClick=mostrar(`+ data.id_book + `) type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#modalCRUD" href="#edit" title="Edit book"><i class="fa-regular fa-pen-to-square"></i></button>
                         <div class="or" data-text="or">                          
@@ -115,44 +115,44 @@
                         <button id="btnDeleteBook" onClick=deleteBook(`+ data.id_book + `) class="btn btn-outline-danger" title="Delete book"><i class="fa-solid fa-trash-can"></i></button>
                       </div>
                       `
+            }
           }
-        }
-      ]
+        ]
+      });
     });
-  });
 
 
 
-  $('#formu').submit(function (e) {
-    url = "/api/books/"
-    id_book = $.trim($('#id_book').val());
-    title_book = $.trim($('#title_book').val());
-    author = $.trim($('#author').val());
-    type = $.trim($('#type').val());
-    language = $.trim($('#language').val());
-    if (title_book == '') {
-      $("#lTitle").html("<span>ERROR</span>");
-      $("#title").focus();
-      return false;
-    } else {
-      if (opcion == 'edit') {
-        console.log("EDITAR");
-        $.ajax({
-          url: url + id_book,
-          method: 'put',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            id_book: id_book, title_book: title_book, author: author, type: type, language: language
-          }
-          )
-        });
-        $(document).ajaxStop(function () {
-          location.reload(true);
-        });
-      }
-      $('#modalCRUD').hide();
-    };
-  });
+    $('#formu').submit(function (e) {
+      url = "/api/books/"
+      id_book = $.trim($('#id_book').val());
+      title_book = $.trim($('#title_book').val());
+      author = $.trim($('#author').val());
+      type = $.trim($('#type').val());
+      language = $.trim($('#language').val());
+      if (title_book == '') {
+        $("#lTitle").html("<span>ERROR</span>");
+        $("#title").focus();
+        return false;
+      } else {
+        if (opcion == 'edit') {
+          console.log("EDITAR");
+          $.ajax({
+            url: url + id_book,
+            method: 'put',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              id_book: id_book, title_book: title_book, author: author, type: type, language: language
+            }
+            )
+          });
+          $(document).ajaxStop(function () {
+            location.reload(true);
+          });
+        }
+        $('#modalCRUD').hide();
+      };
+    });
 
-</script>
-</body>
+  </script>
+  </body>

@@ -1,8 +1,7 @@
 .Book-container {
   position: relative;
-  top: var(--size-height-element);
+  top: calc(var(--size-height-element) + 50px);
   padding: 20px;
-  margin: var(--margin-forms);
   border-radius: var(--size-border-radius-forms);
   overflow: hidden;
   width: 100%;
@@ -27,6 +26,7 @@
   align-items: center;
   justify-content: center;
   flex-flow: row wrap;
+
 }
 
 .Book-legend {
