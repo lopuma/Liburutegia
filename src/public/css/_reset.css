@@ -1,28 +1,4 @@
 @charset "UTF-8";
-/* 
-  Reset CSS 
-  Youtube 👉 https://www.youtube.com/watch?v=Foieq2jTajE 
-  Github  👉 https://github.com/eduardofierropro/Reset-CSS
-*/
-:root {
-  --negro: #393939;
-  --tipo-principal: Helvetica, Arial, sans-serif;
-  --tipo-secundaria: Verdana;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --negro: #ececec;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  * {
-    -webkit-animation: none !important;
-    animation: none !important;
-    -webkit-transition: none !important;
-    transition: none !important;
-  }
-}
 * {
   margin: 0;
   padding: 0;
@@ -49,8 +25,6 @@ a {
   font-size: inherit;
 }
 
-
-
 p a {
   display: inline;
 }
@@ -59,16 +33,14 @@ li {
   list-style-type: none;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+
 
 h1, h2, h3, h4, h5, h6, p, span, a, strong, blockquote, i, b, u, em {
   font-size: 1em;
   font-weight: inherit;
   font-style: inherit;
   text-decoration: none;
-  /* color: inherit; */
+  color: inherit; 
 }
 
 blockquote:before, blockquote:after, q:before, q:after {
@@ -84,6 +56,10 @@ blockquote:before, blockquote:after, q:before, q:after {
 ::selection {
   background-color: var(--negro);
   color: var(--blanco);
+}
+
+*:hover {
+  text-decoration: none;
 }
 
 form, input, textarea, select, button, label {
@@ -110,10 +86,18 @@ svg {
   fill: currentColor;
 }
 
-body {
+html {
+  scroll-behavior: smooth;
+  background-color: #fff;
   min-height: 100vh;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
   font-size: 100%;
-  font-family: var(--tipo-principal);
+  font-family: var(--letra-principal);
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

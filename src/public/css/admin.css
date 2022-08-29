@@ -1,25 +1,34 @@
 .Admin-container {
-  position: relative;
-  top: var(--size-height-element);
+  /* position: relative; */
   padding: 20px;
-  margin: var(--margin-forms);
   border-radius: var(--size-border-radius-forms);
   overflow: hidden;
   width: 100%;
-  max-width: 100%;
-  height: auto;
-  box-shadow: 2px 4px 8px var(--color-background-shadow-botton),
-  -2px -2px 16px var(--background-forms-admin);
+  height: 100%;
+  position: relative;
+  color: rgb(0, 0, 0);
+  /* border-radius: 10px 10px 0px 0px; */
+  /* padding-top: 20px; */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  /* border-radius: 0px 0px 10px 10px; */
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
+  padding-top: 4px;
+  padding-bottom: 20px;
+
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  margin: 120px 5% 80px 5%;
 }
 
 .Admin-fieldset  {
   width: 100%;
-  min-height: 30vh;
+  /* min-height: 30vh; */
   color: #fff;
   border: 1px solid var(--background-forms-admin);
   border-radius: var(--size-border-radius-fieldset);
@@ -27,6 +36,8 @@
   align-items: center;
   justify-content: center;
   flex-flow: row wrap;
+  padding: 0px 30px;
+  margin: 20px 0;
 }
 
 .Admin-legend {
@@ -36,11 +47,12 @@
   justify-content: space-between;
   flex-flow: row wrap;
   border-radius: 5px;
-  padding: 15px;
+  padding: 10px 0;
   color: var(--color-forms-admin);
   font-family: var(--font-family-legend);
   font-weight: 400;
   letter-spacing: 3px;
+  margin: 0;
 }
 
 .Admin-span {
@@ -110,8 +122,8 @@
   background: #fff;
   /* border: solid 1px var(--color-background-shadow-botton); */
   border-radius: 10px;
-  box-shadow: 4px 4px 8px var(--color-background-shadow-botton),
-    -4px -4px 8px var(--color-background-shadow-top-admin);
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
+
     transition-property: height, box-shadow;
   transition-duration: 0.7s;
   transition-timing-function: ease-in-out; 
@@ -429,42 +441,6 @@
  
 /* Móviles en vertical
    ------------------------------------------------------------------------- */
-@media (max-width: 480px) { 
-
-  .container-cards .cards {
-    position: relative;
-    width: 300px;
-    height: 150px;
-    /* border: solid 1px var(--color-background-shadow-botton); */
-    border-radius: 10px;
-    box-shadow: 1px 2px 8px var(--color-background-shadow-botton),
-      -2px -2px 8px var(--color-background-shadow-top-admin);
-    transition-property: height, box-shadow;
-    /* transition-duration: 0.7s; */
-    margin: 40px 10px;
-  }
-
-  .container-cards .cards:hover {
-    height: 300px;
-    box-shadow: 4px 10px 16px var(--color-background-shadow-botton),
-      -4px -10px 16px var(--color-background-shadow-top-admin);
-  }
-
-  .container-cards .cards .imgBx {
-    position: absolute;
-    left: 50%;
-    top: -25px;
-    transform: translateX(-50%);
-    width: 180px;
-    height: 40px;
-    /* border: solid 1px var(--color-background-shadow-botton); */
-    border-radius: 10px;
-    box-shadow: 0 12px 16px var(--color-background-shadow-botton);
-    overflow: hidden;
-    transition-property: width, height;
-    /* transition-duration: 0.7s; */
-
-  }
 
   .container-cards .cards:hover .imgBx {
     width: 200px;
@@ -483,4 +459,60 @@
   .card-actionBtn .card-actionBtn-main button span i {
     font-size: 13px;
   }
- }
+
+  @media (max-width: 950px) { 
+    .Admin-container {
+      width: 90%;
+      margin: 120px 0;
+    }
+  }
+  @media (max-width: 480px) { 
+    .container-cards .cards {
+      position: relative;
+      width: 300px;
+      height: 150px;
+      border-radius: 10px;
+  
+      transition-property: height, box-shadow;
+      /* transition-duration: 0.7s; */
+      margin: 40px 10px;
+    }
+  
+    .container-cards .cards:hover {
+      height: 300px;
+  
+    }
+  
+    .container-cards .cards .imgBx {
+      position: absolute;
+      left: 50%;
+      top: -25px;
+      transform: translateX(-50%);
+      width: 180px;
+      height: 40px;
+      /* border: solid 1px var(--color-background-shadow-botton); */
+      border-radius: 10px;
+      overflow: hidden;
+      transition-property: width, height;
+      /* transition-duration: 0.7s; */
+  
+    }
+  
+    .container-cards .cards:hover .imgBx {
+      width: 200px;
+      height: 60px;
+      font-size: 1.6em;
+    }
+    
+  
+    .container-cards .cards .card-content .card-details{
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+      transform: translateY(180px);
+    }
+  
+    .card-actionBtn .card-actionBtn-main button span i {
+      font-size: 13px;
+    }
+   }

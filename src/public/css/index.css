@@ -1,57 +1,100 @@
-.main-container article .index-container {
+.Index-container {
   padding: 20px;
-  position: relative;
-  top: var(--size-height-element);
-  margin: 50px 40px;
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
-  border-radius: 20px;
-  /* background-color: var(--background-forms); */
+  border-radius: var(--size-border-radius-forms);
   background-image: url('../img/index.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  color: var(--background-forms);
   overflow: hidden;
   height: 500px;
-  width: 100%;
-  min-width: 90%;
-  box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
-    -4px -4px 5px var(--color-background-shadow-top);
+  min-height: 400px;
+  margin: 120px 10% 80px 13%;
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
+
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  color: var(--background-forms);
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.main-container article .index-container .btn-index {
+.Index-title {
+  flex: 50%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  margin-right: 40%;
+  color: #483838;
+} 
+
+.Index-button {
+  flex: 50%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
-.main-container article .index-container div a {
-  border: solid 1px aquamarine;
-  color: #ffffff;
-  background-color: var(--background-forms);
-  transition-property: color, box-shadow, background, transform;
+.Index-button--a{
+  width: 200px;
+  height: 70px;
+  border-radius: var(--size-border-radius-button);
+  border: solid 1px #483838;
+  background-color: #42855B;
+  color: var(--blanco);
+  transition-property: all;
   transition-duration: 0.5s;
   transition-timing-function: ease;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
 }
 
-.main-container article .index-container div a:hover {
-  color: #000000;
-  box-shadow: 0px 4px 8px aquamarine, -0px -4px 8px aquamarine;
-  background: #99ce62;
-  transform: translateY(-5px);
+.Index-button--a:hover {
+  border: solid 2px #D2D79F;
+  background: #90B77D;
+  color: #483838;
+  /* transform: translateY(-5px); */
+  text-decoration: none;
+  box-shadow: 0px 4px 10px #483838, -0px -4px 10px #483838;
 }
 
-@media all and (max-width: 480px) {
-  .main-container article .index-container {
+@media all and (max-width: 950px) {
+  /* .Index-container {
+    height: 500px;
+    margin: 120px 20px 80px 20px;
+    text-decoration: none;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 400px;
+    flex-flow: column wrap;
+  } */
+  .Index-container {
+    width: 90%;
+    margin: 120px 0;
+  }
+  .Index-title{
+    padding: 0;
+    margin: 0;
   }
 }
+
+@media screen and (min-width: var(--maxWidth)) {
+  .Index-container{
+    height: 700px;
+  }
+
+  .Index-button--a{
+    width: 200px;
+    height: 80px;
+    font-size: 20px;
+  }
+}
+
+

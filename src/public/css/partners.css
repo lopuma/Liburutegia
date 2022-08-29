@@ -1,19 +1,18 @@
 .Partner-container {
-  position: relative;
-  top: var(--size-height-element);
+  /* position: relative; */
   padding: 20px;
-  margin: var(--margin-forms);
   border-radius: var(--size-border-radius-forms);
   overflow: hidden;
-  width: 90vw;
-  height: auto;
+  width: 100%;
+  height: 100%;
   box-shadow: 2px 4px 8px var(--color-background-shadow-botton),
-  -2px -2px 16px var(--background-forms-partner);
+  -2px -2px 16px var(--background-forms-book);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  margin: 120px 5% 80px 8%;
 }
 
 .Partner-fieldset  {
@@ -131,7 +130,8 @@
   height: 3em;
   font-size: 14px;
 }
-@media (max-width: 480px) { 
+/* DESCO */
+/* @media (max-width: 480px) { 
 
   .dataTables_filter{
     width: 100%;
@@ -140,4 +140,4 @@
     
       width: 100%;
   }
-}
+} */

@@ -1,12 +1,10 @@
 .Book-container {
-  position: relative;
-  top: calc(var(--size-height-element) + 50px);
+  /* position: relative; */
   padding: 20px;
   border-radius: var(--size-border-radius-forms);
   overflow: hidden;
   width: 100%;
-  max-width: 100%;
-  height: auto;
+  height: 100%;
   box-shadow: 2px 4px 8px var(--color-background-shadow-botton),
   -2px -2px 16px var(--background-forms-book);
   display: flex;
@@ -14,19 +12,20 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  margin: 120px 5% 80px 8%;
 }
 
 .Book-fieldset  {
   width: 100%;
-  min-height: 30vh;
-  color: #fff;
+  height: 100%;
+  /* color: #fff; */
   border: 1px solid var(--background-forms-book);
   border-radius: var(--size-border-radius-fieldset);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-flow: row wrap;
-
+  padding: 10px 0;
 }
 
 .Book-legend {
@@ -50,7 +49,7 @@
 
 .Book-Username {
   flex: 60%;
-  width: auto;
+  /* width: auto; */
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -74,6 +73,20 @@
   text-transform: uppercase;
 }
 
-.container-form{
-  color: black;
+@media all and (max-width: 480px) {
+  .row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+  } 
+  .row .pagination{
+    width: 100%;
+  }
+  /* .row .col-md-7 .pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+  } */
 }

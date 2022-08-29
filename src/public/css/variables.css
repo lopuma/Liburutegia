@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Montserrat:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&family=Oswald:wght@400;700&family=Open+Sans:wght@300;400&family=Poppins&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  /* ALL */
+  --maxWidth: 1600px;
+  --colour-button-success: #76BA99;
+  --colour-button-unsuccess: #C21010;
+  
+
+  /* BODY */
+  --letra-principal: 'Montserrat', sans-serif;
+  --blanco: #fff;
+  --negro: #393939;
+
+
+  /* NAVIGATION */
+  --bgcolor-menu: #433F40;
+  --size-height-navBar: 100px;
+  --size-element: calc(var(--size-height-navBar) - 40px);
+  --colour3-boxShadow: #876445;
+  --colour-lineSelected: #dbcf20;
+
+
+  --background-forms: #474668;
+  --bg-scope-table: #013d55;
+  --color-text-forms: white;
+  --color-bg-th-table: #f1ed9bc9;
+  --color-text-th-table: #000000;
+  --color-sub-text: rgb(117, 117, 117);
+  --color-txt-btn: rgba(0, 0, 0, 0.89);
+  --color-border: rgb(67, 61, 150);
+  --size-txt-welcome: 15px;
+  --color-background-shadow-botton: #18191abe;
+  /* COLORES EMCABEZADO FIELSET */
+  /* - FORM ADMIN */
+  --background-forms-booking: rgb(124, 25, 108);
+  --color-forms-booking: #ffffff;
+
+  /* - FORM ADMIN */
+  --background-forms-book: rgb(58, 76, 156);
+  --color-forms-book: #ffffff;
+  /* - FORM ADMIN */
+
+  --background-forms-partner: rgb(206, 157, 22);
+  --color-forms-partner: #ffffff;
+
+  /* - FORM ADMIN */
+  --background-forms-admin: #A10035;
+  --color-forms-admin: #ffffff;
+  /* --------------------------------------------------------------- */
+
+  /* COLOR  FONDO TITULO TARJETAS */
+  --background-forms-admin-head: #3FA796;
+  --color-forms-admin-head: #FEC260;
+
+  --background-forms-book-head: rgb(58, 76, 156);
+  --color-forms-book-head: #ffffff;
+
+  --background-forms-booking-head: rgb(124, 25, 108);
+  --color-forms-booking-head: 3ffffff;
+
+  --background-forms-partner-head: rgb(206, 157, 22);
+  --color-forms-partner-head: #ffffff;
+
+  /* COLORES PARA SOMNRA SUPERIOR */
+  --color-background-shadow-top: #18191abe;
+  --color-background-shadow-top-admin: var(--background-forms-admin-head);
+  --color-background-shadow-top-book: var(--background-forms-admin-head);
+  --color-background-shadow-top-partner: var(--background-forms-admin-head);
+  --color-background-shadow-top-booking: var(--background-forms-admin-head);
+
+  /* RADIUS BORDER */
+  --size-border-radius-forms: 8px;
+  --size-border-radius-fieldset: 5px;
+  --size-border-radius-cards: 5px;
+  --size-border-radius-cards-head: 5px;
+  --size-border-radius-button: 10px;
+
+
+  /* FUENTES */
+  --font-family-legend: 'Oswald', sans-serif;
+
+  /* MARGENES */
+  --margin-forms: 30px 30px;
+  --width: 250px;
+  --padding: 10px;
+  --hovercolor: rgba(99, 99, 99, 0.836);
+  --width-collapsed: 50px;
+}
+
+.Header {
+  grid-area: header;
+}
+
+.Aside {
+  grid-area: menu;
+}
+
+.Main {
+  grid-area: main;
+}
+
+.Footer {
+  grid-area: footer;
+}
+
+
+.Body {
+  position: relative;
+  padding-bottom: 3em;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+  font-family: var(--letra-principal);
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.Layout-container {
+  display: grid;
+  grid-template-columns: var(--width-collapsed) auto;
+  grid-template-areas:
+    'header header'
+    'menu main'
+    'footer footer';
+  gap: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column wrap;
+  /* max-width: var(--maxWidth); */
+  /* height: 100vh; */
+}
+
+.Layout-container>div {
+  text-align: center;
+}
+
+.Main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: center;
+  max-width: var(--maxWidth);
+}
+
+@media screen and (max-width: 950px) {
+  .Layout-container {
+    grid-template-columns: 1fr;
+    gap: 0em;
+    display: flex;
+    flex-direction: column;
+  }
+}

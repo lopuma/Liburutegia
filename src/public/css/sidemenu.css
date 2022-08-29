@@ -1,74 +1,30 @@
-:root{
-    --width: 250px;
-    --padding: 10px;
-    --bgcolor: rgb(52, 52, 52);
-    --hovercolor: rgba(99, 99, 99, 0.836);
-    --width-collapsed: 50px;
-  }
-  
+
   .body-expanded{
-    margin-left: calc(var(--width) - var(--width-collapsed));
+    margin-right: calc(var(--width) - var(--width-collapsed) );
   }
-  
-  .main-container{
-    color: rgb(255, 255, 255);
-  }
-  
-  #sidemenu{
-    background-color: var(--bgcolor);
-    color: #fff;
-    position: fixed;
-    /* width: 100%; */
+  .Aside{
     height: 100%;
-    left: 0;
-    top: var(--size-height-element);
-  }
-  
-  #sidemenu a{
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1em;
-    
-  }
-  
-  #sidemenu #header{
-    height: 100%;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    border-bottom: solid 1px var(--hovercolor);
-    background-color: #d9643a;
-  
-  }
-  
-  #sidemenu #header #title{
-    box-sizing: border-box; 
-    /* Border box hace que los elementos mantengan su tamaño y se usa precisamente para que el box model no se rompa.*/
-    overflow: hidden;
-  }
-  
-  #sidemenu #header #title span{
-    color: rgb(255, 255, 255);
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    font-size: 23px;
-    cursor: pointer;
-  
   }
 
-  #sidemenu #profile{
+  .Sidemenu{
+    position: fixed;
+    z-index: 2;
+    top:var(--size-height-navBar);
+    background: var(--bgcolor-menu);
+    height: 100%;
+  }
+  
+  .Sidemenu-a{
+    color: #fff;
+    text-decoration: none;   
+  }
+
+  .Sidemenu-profile{
     border-bottom: solid 1px var(--hovercolor);
     text-align: center;
   }
   
-  /* #sidemenu #profile #photo{
-    box-sizing: border-box;
-    padding: var(--padding);
-    margin: 0 auto;
-  } */
-  
-  #sidemenu #profile #name{
+  .Sidemenu-name--profile{
     font-size: 24px;
     padding: var(--padding) 0;
     overflow: hidden;
@@ -78,50 +34,68 @@
     margin: 10px 0;
   }
   
-  #sidemenu #menu-items{
+  .Sidemenu-container--items{
     overflow: hidden;
+    width: 100%;
   }
   
-  #sidemenu #menu-items .item{
-    width: var(--width);
+  .Sidemenu-item{
+    width: 100%;
     margin: 10px 0;
-
+    height: 50px;
+    position: relative;
   }
   
-  #sidemenu #menu-items .item .icon{
+  .Sidemenu--isFocus::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: white;
+    opacity: 0;
+    text-decoration: none;
+  }
+  
+  .Sidemenu--isSelected::after {
+    opacity: 0.8;
+  }
+
+  .Sidemenu-icon--item{
     display: inline-block;
   }
   
-  #sidemenu #menu-items .item .icon,
-  #sidemenu #menu-items .item .title{
+  .Sidemenu-icon--item,
+  .Sidemenu-title--item{
     font-size: 14px;
     vertical-align: middle;
     overflow: hidden;
     display: inline-block;
   }
   
-  #sidemenu #menu-items .item a{
+  .Sidemenu-a{
     display: block;
   }
   
-  #sidemenu #menu-items .item a:hover{
+  .Sidemenu-a:hover{
     background: var(--hovercolor);
     border-radius: 7px;
     transition: all 0.5s ease;
   }
   
   
-  #sidemenu #menu-items .item .icon {
+  .Sidemenu-icon--item {
     box-sizing: border-box;
     padding: var(--padding);
     width: var(--width-collapsed);
   }
   
-  #sidemenu #menu-items .item .title {
+  .Sidemenu-title--item {
     padding: var(--padding) 0;
   }
   
-  #sidemenu #menu-items .item.separator{
+  .Sidemenu-separator{
     height: 1px;
     border-bottom: solid 1px var(--hovercolor);
     margin: 0;
@@ -130,50 +104,54 @@
   .menu-expanded{
     width: var(--width);
     box-shadow: 0 0 10px rgb(0,0,0,0.5);
-    overflow-y: auto;
+    /* overflow-y: auto;
+    overflow: auto; */
+    top: var(--size-height-navBar);
   }
 
-  .menu-expanded .item{
+  .menu-expanded .Sidemenu-item{
     padding: 0 20px;
     margin: 10px 0;
+    text-align: left;
   }
 
-  .menu-expanded .item.separator{
+  .menu-expanded .Sidemenu-separator{
     margin: 0;
     padding: 0;
   }
   
-  .menu-expanded #header #title {
-    display: inline-block;
-    width: calc(100% - 50px);
-    margin-right: -5px;
-    padding: var(--padding);
-  }
-  
-  .menu-expanded #header #title span{
-    width: calc(var(--width) - var(--width-collapsed) - 5px);
-    overflow: hidden;
-  }
-  
-  .menu-expanded #profile #name{
+  .menu-expanded .Sidemenu-name--profile{
     width: 100%;
   }
   
   .menu-collapsed{
     width: var(--width-collapsed);
+    overflow-y: auto;
+    overflow: auto;
   }
   
-  .menu-collapsed #header #title{
-    width: 0;
-    height: 0;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .menu-collapsed #profile #name{
+  .menu-collapsed .Sidemenu-name--profile{
     display: none;
   }
   
-  .menu-collapsed .item{
-    width: 100px;
+  .menu-collapsed .Sidemenu-item{
+    width: 100%;
+  }
+  .menu-collapsed .Sidemenu-title--item{
+    display: none;
+  }
+  @media (max-width: 950px){
+    .Aside .Sidemenu {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .Main{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-flow: column wrap;
+      align-items: center;
+    }
   }

@@ -2,9 +2,7 @@
   <button class="Header-button--sidemenu" id="btnSidemenu">
     <i class="fa-solid fa-bars"></i>
   </button>
-  <h1 class="Header-h1--logo">
-    <a href="/" class="Header-a--logo">Library San Miguel</a>
-  </h1>
+  <a href="/" class="Header-a--logo"><img src=".../../../../resources/img/SANMIGUEL.png" alt=""></a>
 </div>
 
 <button class="Header-button--toggle" id="btnToggle">
@@ -14,23 +12,27 @@
 <nav class="Header-nav" id="navBar">
   <ul class="Header-ul">
     {{#if login}}
-    <li class="Header-li dropdown">
-      <a class="Header-a Header-a-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Dashboard
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-        <a class="Header-dropdown Header-a-link Header-a-link--select" href="../workspace/books">Books</a>
-        <a class="Header-dropdown Header-a-link Header-a-link--select" href="../workspace/partners" id="partners">Partners</a>
-        <a class="Header-dropdown Header-a-link Header-a-link--select" href="../workspace/bookings">Bookings</a>
-      </div>
-    </li>
     {{#if userRol}}
-    <li class="Header-li"><a class="Header-a Header-a-link" href="/register">Record</a></li>
+    <li class="Header-li"><a class="Header-a Header-a--select Header-a--toogle is-disabled isFocus "
+        href="../workspace/admin" id="btnAdmin">
+        User Manager
+      </a></li>
     {{/if}}
-    <li class="Header-li"><a class="Header-a Header-a-link Header-a-link--activeLogout" href="/logout">Logout</a></li>
+    <li class="Header-li"><a class="Header-a Header-a--isActive Header-a--toogle is-disabled isFocus "
+        href="../workspace/books" id="btnBook">Books</a></li>
+    <li class="Header-li"><a class="Header-a Header-a--select Header-a--toogle is-disabled isFocus "
+        href="../workspace/partners" id="btnPartner">Partners</a></li>
+    <li class="Header-li"><a class="Header-a Header-a--select Header-a--toogle is-disabled isFocus "
+        href="../workspace/bookings" id="btnBooking">Bookings</a></li>
+
+
+    {{#if userRol}}
+    <li class="Header-li"><a class="Header-a Header-a--toogle Header-a--isSelect isFocus " href="/register"
+        id="btnRecord">Record</a></li>
+    {{/if}}
+    <li class="Header-li"><a class="Header-a Header-a--activeLogout" href="/logout">Logout</a></li>
     {{else}}
-    <li class="Header-li"><a href="/login" class="Header-a Header-a-link Header-a-link--activeLogin">Login</a></li>
+    <li class="Header-li"><a href="/login" class="Header-a Header-a--activeLogin">Login</a></li>
     {{/if}}
   </ul>
 </nav>

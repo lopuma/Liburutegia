@@ -1,78 +1,78 @@
-<div id="sidemenu" class="menu-collapsed">
+<div class="Sidemenu menu-collapsed" id="sidemenu">
 
     {{#if nameUser}}
 
-    <div id="profile">
-        <div id="name"><span>{{ nameUser }}</span></div>
+    <div class="Sidemenu-profile">
+        <div class="Sidemenu-name--profile"><span>{{ nameUser }}</span></div>
     </div>
-    <div class="item separator"></div>
-    <div id="menu-items">
-        <div class="item">
-            <a href="/" title="HOME">
-                <div class="icon"><img><i class="fa-solid fa-house"></i></div>
-                <div class="title"><span>Home</span></div>
+    <div class="Sidemenu-separator"></div>
+    <div class="Sidemenu-container--items">
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="/" title="HOME">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-house"></i></div>
+                <div class="Sidemenu-title--item"><span>Home</span></div>
             </a>
         </div>
         {{#if userRol}}
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="../workspace/admin" title="USER MANAGER">
-                <div class="icon"><img><i class="fa-solid fa-gear"></i></div>
-                <div class="title"><span>User Manager</span></div>
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a Sidemenu--isFocus " href="../workspace/admin" title="USER MANAGER" id="btnAdminSidemenu">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-gear"></i></div>
+                <div class="Sidemenu-title--item" ><span >User Manager</span></div>
             </a>
         </div>
         {{/if}}
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="../workspace/books" title="BOOK">
-                <div class="icon"><img><i class="fa-solid fa-book"></i></div>
-                <div class="title"><span>Books</span></div>
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="../workspace/books" title="BOOK">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-book"></i></div>
+                <div class="Sidemenu-title--item"><span>Books</span></div>
             </a>
         </div>
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="../workspace/bookings" title="BOOKINGS">
-                <div class="icon"><img><i class="fa-solid fa-calendar-check"></i></div>
-                <div class="title"><span>Bookings</span></div>
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="../workspace/bookings" title="BOOKINGS">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="Sidemenu-title--item"><span>Bookings</span></div>
             </a>
         </div>
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="../workspace/partners" title="PARTNERS">
-                <div class="icon"><img><i class="fa-solid fa-people-group"></i></div>
-                <div class="title"><span>Partners</span></div>
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="../workspace/partners" title="PARTNERS">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-people-group"></i></div>
+                <div class="Sidemenu-title--item"><span>Partners</span></div>
             </a>
         </div>
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="#" title="TO PRINT">
-                <div class="icon"><img><i class="fa-solid fa-print"></i></div>
-                <div class="title"><span>Print</span></div>
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="#" title="TO PRINT">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-print"></i></div>
+                <div class="Sidemenu-title--item"><span>Print</span></div>
             </a>
         </div>
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="/logout" title="LOGOUT">
-                <div class="icon"><img><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-                <div class="title"><span>Logout</span></div>
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="/logout" title="LOGOUT">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                <div class="Sidemenu-title--item"><span>Logout</span></div>
             </a>
         </div>
-        <div class="item separator"></div>
+        <div class="Sidemenu-separator"></div>
     </div>
     {{else}}
-    <div id="menu-items">
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="/" title="HOME">
-                <div class="icon"><img><i class="fa-solid fa-house"></i></div>
-                <div class="title"><span>Home</span></div>
+    <div class="Sidemenu-container--items">
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="/" title="HOME">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-house"></i></div>
+                <div class="Sidemenu-title--item"><span>Home</span></div>
             </a>
         </div>
-        <div class="item separator"></div>
-        <div class="item">
-            <a href="/login" title="SINGIN">
-                <div class="icon"><img><i class="fa-solid fa-right-to-bracket"></i></div>
-                <div class="title"><span>Login</span></div>
+        <div class="Sidemenu-separator"></div>
+        <div class="Sidemenu-item">
+            <a class="Sidemenu-a" href="/login" title="SINGIN">
+                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-right-to-bracket"></i></div>
+                <div class="Sidemenu-title--item"><span>Login</span></div>
             </a>
         </div>
     </div>

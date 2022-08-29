@@ -1,27 +1,23 @@
 /* CONTENEDOR DE LOGIN*/
-.main-container article .register-container,
-.main-container article .login-container {
+.register-container,
+.login-container {
     position: relative;
-    top: var(--size-height-element);
-    margin: 50px 40px;
-    min-width: 80%;
-    width: 70%;
-    /* height: 400px; */
+    margin: 120px 10% 80px 13%;
+    width: 100%;
+    height: 500px;
     background-color: #ffffff;
     padding: 40px 30px;
     border-radius: var(--size-border-radius-forms);
-    box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
-        -4px -4px 5px var(--color-background-shadow-top);
+    box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
+
     perspective: 2700px;
 }
 
-.main-container article .login-container .cover {
+.login-container .cover {
     position: absolute;
     top: 0;
     left: 50%;
     border-radius: var(--size-border-radius-forms);
-    box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
-        -4px -4px 5px var(--color-background-shadow-top);
     height: 100%;
     width: 50%;
     z-index: 98;
@@ -31,7 +27,7 @@
 
 }
 
-.main-container article .login-container #flip:checked~.cover {
+.login-container #flip:checked~.cover {
     transform: rotateY(-180deg);
     -ms-transform: rotateY(-180deg);
     /* IE 9 */
@@ -46,8 +42,8 @@
 
 }
 
-.main-container article .login-container .cover .front,
-.main-container article .login-container .cover .back {
+.login-container .cover .front,
+.login-container .cover .back {
     position: absolute;
     top: 0;
     left: 0;
@@ -68,21 +64,21 @@
     /* Opera */
 }
 
-.main-container article .login-container .cover::before,
-.main-container article .login-container .cover::after {
+.login-container .cover::before,
+.login-container .cover::after {
     content: '';
     position: absolute;
     height: 100%;
     width: 100%;
     border-radius: var(--size-border-radius-forms);
-    box-shadow: 5px 5px 10px var(--color-background-shadow-botton),
-        -4px -4px 5px var(--color-background-shadow-top);
+
     background: var(--background-forms);
     opacity: 0.5;
     z-index: 12;
+    left: 0;
 }
 
-.main-container article .login-container .cover::after {
+.login-container .cover::after {
     opacity: 0.3;
     transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
@@ -97,7 +93,7 @@
     -webkit-backface-visibility: hidden;
 }
 
-.main-container article .login-container .cover img {
+.login-container .cover img {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -110,7 +106,7 @@
 }
 
 
-.main-container article .login-container .cover .text {
+.login-container .cover .text {
     position: absolute;
     z-index: 130;
     height: 100%;
@@ -135,32 +131,32 @@
     font-weight: 500;
 }
 
-.main-container article .register-container form,
-.main-container article .login-container form {
+.register-container form,
+.login-container form {
     height: 100%;
     width: 100%;
 }
 
-.main-container article .register-container form {
+.register-container form {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-flow: row wrap;
 }
 
-.main-container article .login-container {
+.login-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* .main-container article .login-container .form-content {
+/* .login-container .form-content {
   display: flex;
   align-items: center;
   justify-content: start;
 }
 
-.main-container article .login-container .form-content-reset {
+.login-container .form-content-reset {
   display: flex;
   align-items: center;
   justify-content: start;
@@ -193,6 +189,8 @@ form .form-content-reset .title-forgot {
     font-size: 24px;
     font-weight: 500;
     color: #333;
+    display: flex;
+    justify-content: start;
 }
 
 form .form-content-register .title-register::before,
@@ -431,7 +429,7 @@ form .form-content .sing-up-text {
     margin-top: 25px;
 }
 
-.main-container article .login-container #flip {
+.login-container #flip {
     display: none;
 }
 
@@ -446,37 +444,29 @@ form .form-content .sing-up-text {
     color: brown;
 }
 
-
-/* @media (min-width: 768px) and (max-width: 1199px) {  */
-/* @media (min-width: 768) {
-
-} */
-
-/* Móviles en horizontal o tablets en vertical
-     ------------------------------------------------------------------------- */
-/* @media all and (max-width: 768) {
-
-} */
-
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
-@media all and (max-width: 768px) {
+@media all and (max-width: 950px) {
 
-    .main-container article .register-container {
+    .register-container {
         padding: 0;
     }
 
 
-    .main-container article .login-container .cover {
+    .login-container .cover {
         display: none;
     }
 
-    .main-container article .login-container {
+    .login-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        margin: 120px 0;
+        width: 90%;
+
+        height: 100%;
     }
 
     form .form-content .login-form {
@@ -487,14 +477,14 @@ form .form-content .sing-up-text {
         display: none;
     }
 
-    .main-container article .login-container #flip:checked~form .form-content-reset .forgot-form {
+    .login-container #flip:checked~form .form-content-reset .forgot-form {
         display: block;
         width: 100%;
         margin-left: 0;
         margin-right: 25px;
     }
 
-    .main-container article .login-container #flip:checked~form .form-content .login-form {
+    .login-container #flip:checked~form .form-content .login-form {
         display: none;
     }
 
@@ -503,3 +493,4 @@ form .form-content .sing-up-text {
         margin: 0;
     }
 }
+  
