@@ -1,36 +1,3 @@
-try {
-
-  const drop = document.querySelector('.dropdown');
-
-  /**
-   * Al pasar el raton me habre el menu contextual
-   */
-  drop.addEventListener('mouseenter', () => {
-    $this = '.dropdown';
-    $($this).addClass('show');
-    $($this).find('.dropdown-toggle').attr("aria-expanded", "true");
-    $($this).find('.dropdown-menu').addClass('show');
-  })
-
-  /**
-   * Al pasar el raton me cierra el menu contextual
-   */
-  drop.addEventListener('mouseleave', () => {
-    $this = '.dropdown';
-    $($this).removeClass('show');
-    $($this).find('.dropdown-toggle').attr("aria-expanded", "false");
-    $($this).find('.dropdown-menu').removeClass('show');
-  })
-
-} catch { }
-
-let activeItemBooking = false;
-
-console.log(activeItemBooking)
-if (activeItemBooking) {
-  console.log("activo")
-}
-
 const btnBook = document.getElementById('btnBook');
 const btnBooking = document.getElementById('btnBooking');
 const btnPartner = document.getElementById('btnPartner');
@@ -45,7 +12,6 @@ function onLoad() {
 
     // BOOKS
     if ($('#stateBooks').val() === '') { // 
-      console.log('cargado')
       btnBook.classList.add('isSelected');
 
     } else {
@@ -54,7 +20,6 @@ function onLoad() {
 
     // BOOKINGS
     if ($('#stateBookings').val() === '') { // 
-      console.log('cargado')
       btnBooking.classList.add('isSelected');
     } else {
       btnBooking.classList.remove('isSelected');
@@ -63,7 +28,6 @@ function onLoad() {
     
     // ADMIN
     if ($('#stateAdmin').val() === '') { // 
-      console.log('cargado')
       btnAdmin.classList.add('isSelected');
       btnAdminSidemenu.classList.add('Sidemenu--isSelected');
       
@@ -81,9 +45,7 @@ function onLoad() {
 
     //PARTNERS
     if ($('#statePartner').val() === '') { // 
-      console.log('cargado')
       btnPartner.classList.add('isSelected');
-    
     } else {
       btnPartner.classList.remove('isSelected');
     }
@@ -91,37 +53,30 @@ function onLoad() {
   } catch { }
 }
 
+// Mostrar MENU en modo responsive
 const btnToggle = document.querySelector('#btnToggle');
 const navBar = document.querySelector('#navBar');
-
 btnToggle.addEventListener('click', function () {
   navBar.classList.toggle('Header-nav__isActive');
 });
 
-
+// Expandir Side Menu
 const btnSidemenu = document.querySelector("#btnSidemenu");
 const sideMenu = document.querySelector(".Sidemenu");
 const Aside = document.querySelector(".Aside");
-var active = false;
 btnSidemenu.addEventListener("click", () => {
-
   // document.querySelector('.Footer').classList.toggle('body-expanded');
   // document.querySelector('.Main').classList.toggle('body-expanded');
   Aside.classList.toggle("menu-expanded");
   Aside.classList.toggle("menu-collapsed");
   sideMenu.classList.toggle("menu-expanded");
   sideMenu.classList.toggle("menu-collapsed");
-
-
 });
 
-
+// Desaparecer y aparecer el MENU
 let ubicacionPrincipal = window.pageYOffset;
-console.log(ubicacionPrincipal);
 window.onscroll = function () {
-  console.log(ubicacionPrincipal);
   let Desplazamiento_Actual = window.pageYOffset;
-  console.log(Desplazamiento_Actual);
 
   if (ubicacionPrincipal >= Desplazamiento_Actual) {
     document.getElementById('navbar').style.top = '0';

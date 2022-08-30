@@ -22,6 +22,7 @@
   height: var(--size-height-navBar);
   min-height: var(--size-height-navBar);
   color: var(--blanco);
+  box-shadow: 0 0 10px rgb(0,0,0,0.5);
 }
 
 /* LOGO */
@@ -120,22 +121,20 @@
   align-items: center;
   text-transform: uppercase;
   height: 100%;
+  margin: 0;
+  margin-right: 20px;
 }
 
 .Header-li {
-  margin: 0 20px;
-  text-decoration: none;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px 0;
+  margin: 0 20px;
 }
 
 .Header-a {
-  color: #fff;
-  padding: 20px 17px;
+  color: var(--blanco);
   border-radius: 8px;
   transition-property: background-color, color;
   transition-duration: 0.5s;
@@ -144,7 +143,8 @@
   font-weight: 700;
   font-family: 'Nunito Sans', sans-serif;
   letter-spacing: 5px;
-  text-decoration: none;
+  padding: 10px 20px;
+  text-align: center;
   position: relative;
 }
 
@@ -283,7 +283,7 @@
   .Header-li {
     padding: 0;
     height: var(--size-element);
-    margin: 0;
+    margin: 10px 0;
     width: 100%;
   }
 
