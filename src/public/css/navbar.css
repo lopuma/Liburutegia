@@ -131,11 +131,12 @@
   align-items: center;
   text-align: center;
   margin: 0 20px;
+
 }
 
 .Header-a {
   color: var(--blanco);
-  border-radius: 8px;
+  border-radius: var(--size-border-radius-button);
   transition-property: background-color, color;
   transition-duration: 0.5s;
   transition-timing-function: ease;
@@ -281,22 +282,18 @@
   .Header-ul {
     display: flex;
     flex-direction: column;
+    margin: 0;
   }
 
   .Header-li {
-    padding: 0;
+    /* padding: 20px 0; */
     height: var(--size-element);
     margin: 10px 0;
     width: 100%;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  .Header-a{
-    height: var(--size-element);
-    width: 100%;
-  }
-
-  .Header-a--activeLogin{
-    margin-top: var(--size-element);
   }
   
   .Header-nav__isActive {
