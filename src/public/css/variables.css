@@ -4,6 +4,7 @@
   /* ALL */
   --maxWidth: 1600px;
   --colour-button-success: #76BA99;
+  --colour-button-successHigh: #6de9ad48;
   --colour-button-unsuccess: #C21010;
   
 
@@ -50,8 +51,8 @@
   /* --------------------------------------------------------------- */
 
   /* COLOR  FONDO TITULO TARJETAS */
-  --background-forms-admin-head: #3FA796;
-  --color-forms-admin-head: #FEC260;
+  --background-forms-admin-head: #ffffff;
+  --color-forms-admin-head: #000000;
 
   --background-forms-book-head: rgb(58, 76, 156);
   --color-forms-book-head: #ffffff;

@@ -24,7 +24,6 @@
     transition: all 1s;
     transform-origin: left;
     transform-style: preserve-3d;
-
 }
 
 .login-container #flip:checked~.cover {
@@ -71,15 +70,14 @@
     height: 100%;
     width: 100%;
     border-radius: var(--size-border-radius-forms);
-
     background: var(--background-forms);
-    opacity: 0.5;
+    opacity: 0.1;
     z-index: 12;
     left: 0;
 }
 
 .login-container .cover::after {
-    opacity: 0.3;
+    opacity: 0.1;
     transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
     /* IE 9 */

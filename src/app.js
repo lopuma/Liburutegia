@@ -1,14 +1,10 @@
 const express = require('express');
-const myconnection = require('express-myconnection');
 const morgan = require('morgan');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const validator = require('express-validator');
 const passport = require('passport');
 const flash = require('connect-flash');
 const bodyParser = require('body-parser');
-const fs = require("fs");
-const https = require("https")
 
 // Iniciar express
 const app = express();
@@ -41,7 +37,7 @@ app.engine('.hbs', exphbs.engine({
 	layoutsDir: path.join(app.get('views'), 'layouts'),
 	partialsDir: path.join(app.get('views'), 'partials'), // REUTILIZAR CODIGO EN LAS VISTAS
 	extname: '.hbs',
-	helpers: require('./lib/handlebars') // EJECUTAR FUNCIONES
+	//helpers: require('./lib/handlebars') // EJECUTAR FUNCIONES
 }))
 app.set('view engine', '.hbs'); // EJECUTAR NUESTRO MOTOR HBS
 

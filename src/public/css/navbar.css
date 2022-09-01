@@ -197,14 +197,16 @@
   background-color: var(--colour-button-success);
   height: 100%;
   border: 1px solid #fff;
-  transition: all 0.5s ease;
+  color: var(--blanco);
+  transition-property: color, background-color, box-shadow;
+  transition-duration: 00.5s;
+  transition-timing-function: ease-in-out;
   color: var(--colour3-boxShadow);
 }
 
 .Header-a--activeLogin:hover{
   color: var(--blanco);
-  border: 1px solid #fff;
-  background: var(--colour-button-success);
+  background-color: var(--colour-button-success);
   box-shadow: 0px 2px 8px var(--colour-button-success), -0px -2px 8px var(--colour3-boxShadow);
 }
 
@@ -214,13 +216,14 @@
   color: var(--blanco);
   height: 100%;
   border: 1px solid #fff;
-  transition: all 0.5s ease;
+  transition-property: background-color, box-shadow;
+  transition-duration: 00.5s;
+  transition-timing-function: ease-in-out;
 }
 
 .Header-a--activeLogout:hover{
   background-color: var(--colour-button-unsuccess);
-  box-shadow: 0px 2px 8px var(--colour-button-success), -0px -2px 8px var(--colour3-boxShadow);
-  text-decoration: none;
+  box-shadow: 0px 2px 8px var(--colour-button-unsuccess), -0px -2px 8px var(--colour3-boxShadow);
 }
 
 /*  TRIBUTO PARA DESACTIVAR BOTONES */
