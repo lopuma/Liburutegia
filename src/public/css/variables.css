@@ -16,10 +16,12 @@
 
   /* NAVIGATION */
   --bgcolor-menu: #433F40;
-  --size-height-navBar: 100px;
+  --size-height-navBar: 80px;
   --size-element: calc(var(--size-height-navBar) - 40px);
   --colour3-boxShadow: #876445;
   --colour-lineSelected: #dbcf20;
+  --size-font-menu: 16px;
+  --size-font-menu-button: 24px;
 
 
   --background-forms: #474668;
