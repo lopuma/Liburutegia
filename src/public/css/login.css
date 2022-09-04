@@ -2,14 +2,14 @@
 .register-container,
 .login-container {
     position: relative;
-    margin: 120px 10% 80px 13%;
-    width: 100%;
+    width: 80%;
     height: 500px;
+    min-height: 400px;
+    margin: 120px auto 70px auto;
     background-color: #ffffff;
     padding: 40px 30px;
     border-radius: var(--size-border-radius-forms);
     box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
-
     perspective: 2700px;
 }
 
@@ -457,14 +457,12 @@ form .form-content .sing-up-text {
 
     .login-container {
         display: flex;
-        flex-direction: column;
+        flex-flow: column nowrap;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
-        margin: 120px 0;
         width: 90%;
-
-        height: 100%;
+        margin-right: 0;
+        margin-left: 0;
     }
 
     form .form-content .login-form {

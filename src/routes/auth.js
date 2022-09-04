@@ -1,12 +1,8 @@
-// const { text } = require("express");
 const express = require("express");
-// const { data } = require("jquery");
 const router = express.Router();
 const connection = require("../../database/db");
-// const bodyParser = require("body-parser");
 const bscryptjs = require("bcryptjs");
 const flash = require("connect-flash");
-const { response } = require("express");
 
 router.post("/auth", async (req, res) => {
   const logueado = req.session.loggedin;

@@ -9,8 +9,14 @@ const bodyParser = require('body-parser');
 // Iniciar express
 const app = express();
 
+//3- Invocamos a dotenv
+require('dotenv').config({
+    path: path.resolve(__dirname, '../env/.env')
+});
+
+console.log(process.env.NODE_ENV)
 // Configuraciones
-app.set('port', process.env.PORT || 3000 );
+const PORT = process.env.PORT || 3000;
 app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares - mostrar las peticiones por consola
@@ -21,13 +27,11 @@ app.use((req, res, next) => {
 	next();
 });
 
-//3- Invocamos a dotenv
-const dotenv = require('dotenv').config({ path: './env/.env' });
-
 
 //4 - Recursos Publicos
 app.use('/resources', express.static('public'))
 app.use('/resources', express.static(__dirname + '/public'));
+console.log('');
 
 app.use('/scripts', express.static(__dirname + '/public/js'));
 
@@ -54,6 +58,7 @@ const bscryptjs = require('bcryptjs');
 
 // 7 - Variables de SSESSION
 const session = require('express-session');
+const { patch } = require('./routes/index');
 const MySQLStore = require('express-mysql-session')(session);
 
 app.use(session({
@@ -63,17 +68,14 @@ app.use(session({
 }));
 
 // 8 - Invocamos a la conexion de la DB
-const connection = require('../database/db');
-const { env } = require('process');
-const { application } = require('express');
-
+// const connection = require('../database/db');
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Starting the server
-app.listen(app.get('port'), () => {
-	console.log('Server is in port ', app.get('port'), `http://localhost:${app.get('port')}`);
+app.listen(PORT, () => {
+	console.log(`Server is in port , ${PORT}`, `http://localhost:${PORT}`);
 });
 
 // 9 - Routers
@@ -85,8 +87,7 @@ app.use('/workspace', require('./routes/workspace'));
 app.use('/api', require('./routes/api/api')); // API
 
 app.get('/flash', function(req, res){
-	// Set a flash message by passing the key, followed by the value, to req.flash().
-	req.flash('info', 'Flash is back!')
+	// Configure un mensaje flash pasando la clave, seguida del valor, a req.flash().	req.flash('info', 'Flash is back!')
 	res.redirect('/login');
   });
 

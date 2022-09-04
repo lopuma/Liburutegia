@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Montserrat:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&family=Oswald:wght@400;700&family=Open+Sans:wght@300;400&family=Poppins&family=Roboto:wght@400;500;700&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap');
+
 :root {
   /* ALL */
   --maxWidth: 1600px;
@@ -9,7 +11,7 @@
   
 
   /* BODY */
-  --letra-principal: 'Montserrat', sans-serif;
+  --letra-principal: 'Karla', sans-serif;
   --blanco: #fff;
   --negro: #393939;
 
@@ -77,7 +79,7 @@
   --size-border-radius-fieldset: 5px;
   --size-border-radius-cards: 5px;
   --size-border-radius-cards-head: 5px;
-  --size-border-radius-button: 10px;
+  --size-border-radius-button: 8px;
 
 
   /* FUENTES */
