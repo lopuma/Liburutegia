@@ -8,7 +8,7 @@
   --colour-button-success: #76BA99;
   --colour-button-successHigh: #6de9ad48;
   --colour-button-unsuccess: #C21010;
-  
+  --box-shadow-forms: rgb(255, 255, 255) 0px 0px 8px, rgba(0, 0, 0, 0.8) 0px 0px 8px;  
 
   /* BODY */
   --letra-principal: 'Karla', sans-serif;
@@ -25,8 +25,9 @@
   --size-font-menu: 16px;
   --size-font-menu-button: 24px;
 
-
-  --background-forms: #474668;
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+ --background-forms: #474668;
   --bg-scope-table: #013d55;
   --color-text-forms: white;
   --color-bg-th-table: #f1ed9bc9;

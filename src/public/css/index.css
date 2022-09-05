@@ -9,7 +9,7 @@
   height: 500px;
   min-height: 400px;
   margin: 120px auto 70px auto;
-  box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
+  box-shadow: var(--box-shadow-forms);
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -95,6 +95,7 @@
   width: 100%;
   height: auto;
   overflow: hidden;
+  filter: drop-shadow(8px 8px 4px var(--colour-button-success));
 }
 
 
@@ -104,14 +105,15 @@
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-      background-image: url('../img/index.png');
+      background-image: url('../img/index-movil.svg');
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
       width: 90%;
       margin-right: 0;
       margin-left: 0;
-  }
+      /* filter: drop-shadow(8px 8px 4px var(--colour-button-success)); */
+    }
 
   .Index-text{
     height: 100%;
