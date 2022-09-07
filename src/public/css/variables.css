@@ -8,7 +8,8 @@
   --colour-button-success: #76BA99;
   --colour-button-successHigh: #6de9ad48;
   --colour-button-unsuccess: #C21010;
-  --box-shadow-forms: rgb(255, 255, 255) 0px 0px 8px, rgba(0, 0, 0, 0.8) 0px 0px 8px;  
+  --box-shadow-forms: rgb(255, 255, 255) 0px 0px 8px, rgba(0, 0, 0, 0.8) 0px 0px 8px;
+  --opacity-cover: 0.2;
 
   /* BODY */
   --letra-principal: 'Karla', sans-serif;

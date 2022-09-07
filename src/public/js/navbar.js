@@ -165,18 +165,20 @@ function menuBtnChange() {
 
 // </ ---- Desaparecer y aparecer el MENU ---->
 let ubicacionPrincipal = window.pageYOffset;
+
 window.onscroll = function () {
   let Desplazamiento_Actual = window.pageYOffset;
 
   if (ubicacionPrincipal >= Desplazamiento_Actual) {
-    document.getElementById('navbar').style.top = '0';
+    document.getElementById('navbar').style.top = '0px';
     document.getElementById('navBar').style.top = 'var(--size-height-navBar)';
     document.getElementById('sidemenu').style.top = 'var(--size-height-navBar)';
   } else {
     document.getElementById('navbar').style.top = '-100px';
-    document.getElementById('navBar').style.top = '0';
+    document.getElementById('navBar').style.top = '0px';
     document.getElementById('sidemenu').style.top = '0px';
   }
+  ubicacionPrincipal = Desplazamiento_Actual;
 }
 
 window.onresize = menuBtnChange();

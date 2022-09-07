@@ -14,7 +14,7 @@
   -ms-flex-align: center;
   align-items: center;
   position: fixed;
-  z-index: 2;
+  z-index: 99;
   top: 0;
   background-color: var(--bgcolor-menu);
   width: 100%;
