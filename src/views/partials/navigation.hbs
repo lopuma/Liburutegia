@@ -2,7 +2,7 @@
   <button class="Header-button--sidemenu" id="btnSidemenu">
     <i id="fa-bars" data-original="fa-solid fa-bars" class="fa-solid fa-bars"></i>
   </button>
-  <a href="/" class="Header-a--logo"><img src=".../../../../resources/img/SANMIGUEL.png" alt=""></a>
+  <a href="/" class="Header-a--logo"><img loading="lazy" src="resources/img/logo.svg" alt="SanMiguel Logo" width="100%" height="100%"></img></a>
 </div>
 
 <button class="Header-button--toggle" id="btnToggle">
@@ -13,21 +13,21 @@
   <ul class="Header-ul">
     {{#if login}}
     {{#if userRol}}
-    <li class="Header-li"><a class="Header-a Header-a--select Header-a--toogle is-disabled isFocus "
+    <li class="Header-li"><a class="Header-a  Header-a--toogle isDisabled isFocus"
         href="../workspace/admin" id="btnAdmin">
         User Manager
       </a></li>
     {{/if}}
-    <li class="Header-li"><a class="Header-a Header-a--isActive Header-a--toogle is-disabled isFocus "
+    <li class="Header-li"><a class="Header-a Header-a--toogle isDisabled isFocus"
         href="../workspace/books" id="btnBook">Books</a></li>
-    <li class="Header-li"><a class="Header-a Header-a--select Header-a--toogle is-disabled isFocus "
+    <li class="Header-li"><a class="Header-a  Header-a--toogle isDisabled isFocus"
         href="../workspace/partners" id="btnPartner">Partners</a></li>
-    <li class="Header-li"><a class="Header-a Header-a--select Header-a--toogle is-disabled isFocus "
+    <li class="Header-li"><a class="Header-a  Header-a--toogle isDisabled isFocus"
         href="../workspace/bookings" id="btnBooking">Bookings</a></li>
 
 
     {{#if userRol}}
-    <li class="Header-li"><a class="Header-a Header-a--toogle Header-a--isSelect isFocus " href="/register"
+    <li class="Header-li"><a class="Header-a Header-a--toogle isFocus" href="/register"
         id="btnRecord">Record</a></li>
     {{/if}}
     <li class="Header-li"><a class="Header-a Header-a--activeLogout" href="/logout">Logout</a></li>

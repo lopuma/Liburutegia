@@ -1,28 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=DynaPuff&family=Montserrat:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&family=Oswald:wght@400;700&family=Open+Sans:wght@300;400&family=Poppins&family=Roboto:wght@400;500;700&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap');
+
 :root {
   /* ALL */
   --maxWidth: 1600px;
   --colour-button-success: #76BA99;
   --colour-button-successHigh: #6de9ad48;
   --colour-button-unsuccess: #C21010;
-  
+  --box-shadow-forms: rgb(255, 255, 255) 0px 0px 8px, rgba(0, 0, 0, 0.8) 0px 0px 8px;
+  --opacity-cover: 0.2;
 
   /* BODY */
-  --letra-principal: 'Montserrat', sans-serif;
+  --letra-principal: 'Karla', sans-serif;
   --blanco: #fff;
   --negro: #393939;
 
 
   /* NAVIGATION */
   --bgcolor-menu: #433F40;
-  --size-height-navBar: 100px;
+  --size-height-navBar: 80px;
   --size-element: calc(var(--size-height-navBar) - 40px);
   --colour3-boxShadow: #876445;
   --colour-lineSelected: #dbcf20;
+  --size-font-menu: 16px;
+  --size-font-menu-button: 24px;
 
-
-  --background-forms: #474668;
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+ --background-forms: #474668;
   --bg-scope-table: #013d55;
   --color-text-forms: white;
   --color-bg-th-table: #f1ed9bc9;
@@ -75,7 +81,7 @@
   --size-border-radius-fieldset: 5px;
   --size-border-radius-cards: 5px;
   --size-border-radius-cards-head: 5px;
-  --size-border-radius-button: 10px;
+  --size-border-radius-button: 8px;
 
 
   /* FUENTES */

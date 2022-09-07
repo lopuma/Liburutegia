@@ -14,7 +14,7 @@
   -ms-flex-align: center;
   align-items: center;
   position: fixed;
-  z-index: 2;
+  z-index: 99;
   top: 0;
   background-color: var(--bgcolor-menu);
   width: 100%;
@@ -33,6 +33,7 @@
   justify-content: center;
   padding: 0;
   height: 100%;
+  margin: 0 auto;
 }
 
 /* BOTON PARA EXPANDIR SIDEMENU*/
@@ -44,12 +45,13 @@
   justify-content: center;
   align-items: center;
   padding: 0;
-  margin: 0 10px;
+  margin: 0 auto;
   vertical-align: middle;
 }
 
 .Header-button--sidemenu i{
-  font-size: 1.5em;
+  font-size: var(--size-font-menu-button);
+  font-weight: bold;
 }
 
 .Header-button--sidemenu:hover{
@@ -65,14 +67,14 @@
 /*  LOGO */
 .Header-a--logo {
   height: 100%;
-  /* margin: 0 10px; */
+  margin: 0 10px;
 }
 
 .Header-a--logo img{
   width: 220px;
   height: 100%;
   margin: 0;
-  padding: 10px;
+  padding: 0;
 }
 
 /* BTN TOGGLE */
@@ -84,13 +86,13 @@
   justify-content: center;
   align-items: center;
   padding: 0;
-  margin: 0 20px;
+  margin: 0 auto;
   vertical-align: middle;
   display: none;
 }
 
 .Header-button--toggle i{
-  font-size: 1.5em;
+  font-size: var(--size-font-menu-button);
 }
 
 .Header-button--toggle:hover{
@@ -101,55 +103,42 @@
 
 /* NAV */
 .Header-nav {
-  text-transform: uppercase;
   height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .Header-ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
   justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  text-transform: uppercase;
-  height: 100%;
   margin: 0;
-  margin-right: 20px;
 }
 
 .Header-li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 0 20px;
+  margin: 0 10px;
+  text-transform: uppercase;
+  width: max-content;
 }
 
 .Header-a {
   color: var(--blanco);
-  border-radius: 8px;
+  border-radius: var(--size-border-radius-button);
   transition-property: background-color, color;
   transition-duration: 0.5s;
   transition-timing-function: ease;
-  font-size: 16px;
+  font-size: var(--size-font-menu);
   font-weight: 700;
   font-family: 'Nunito Sans', sans-serif;
   letter-spacing: 5px;
-  padding: 10px 20px;
   text-align: center;
+  padding: 10px 15px;
   position: relative;
 }
 
-.Header-a:hover,
-.Header-a--isActive:hover{
+.Header-a:hover{
   background-color: transparent;
   color: var(--colour-button-success);
   text-decoration: none;
@@ -193,9 +182,7 @@
 }
 
 .Header-a--activeLogin{
-  width: 100%;
   background-color: var(--colour-button-success);
-  height: 100%;
   border: 1px solid #fff;
   color: var(--blanco);
   transition-property: color, background-color, box-shadow;
@@ -211,11 +198,9 @@
 }
 
 .Header-a--activeLogout{
-  width: 100%;
   background-color: var(--colour-button-unsuccess);
   color: var(--blanco);
-  height: 100%;
-  border: 1px solid #fff;
+  border: 1px solid #fff;  
   transition-property: background-color, box-shadow;
   transition-duration: 00.5s;
   transition-timing-function: ease-in-out;
@@ -227,86 +212,92 @@
 }
 
 /*  TRIBUTO PARA DESACTIVAR BOTONES */
-.is-disabled{
+.isDisabled{
   display: none;
 }
 
 /* Móviles en horizontal o tablets en vertical
    ------------------------------------------------------------------------- */
-@media all and (max-width: 950px) {
-  .is-disabled{
-    display: block;
-  }
-
-  .Header-button--sidemenu {
-    display: none;
-  }
-
-  .Header-button--toggle {
-    display: block;
-  }
+   @media all and (max-width: 950px) {
+    .isDisabled{
+      display: block;
+    }
   
-  .Header-button--toggle:focus:not(:focus-visible){
-    outline: none;
-  }
-
-  .Header-nav {
-    border-top: solid 3px var(--colour-button-success);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column nowrap;
-    flex-flow: column wrap;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: flex-start;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    position: fixed;
-    left: 0;
-    top: var(--size-height-navBar);
-    width: 100%;
-    align-items: center;
-    background-color: var(--bgcolor-menu);
-    height: 100%;
-    overflow-y: auto;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-
-  .Header-ul {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .Header-li {
-    padding: 0;
-    height: var(--size-element);
-    margin: 10px 0;
-    width: 100%;
-  }
-
-  .Header-a{
-    height: var(--size-element);
-    width: 100%;
-  }
-
-  .Header-a--activeLogin{
-    margin-top: var(--size-element);
-  }
+    .Header-button--sidemenu {
+      display: none;
+    }
   
-  .Header-nav__isActive {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .Header-a--logo{
-    margin: 0;
-  }
+    .Header-button--toggle {
+      display: block;
+    }
+    
+    .Header-button--toggle:focus:not(:focus-visible){
+      outline: none;
+    }
   
-}
+    .Header-nav {
+      border-top: solid 3px var(--colour-button-success);
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+      flex-flow: column wrap;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: flex-start;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      position: fixed;
+      left: 0;
+      top: var(--size-height-navBar);
+      width: 100%;
+      align-items: center;
+      background-color: var(--bgcolor-menu);
+      height: 100%;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+  
+    .Header-ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+  
+    .Header-li {
+      margin: 15px 0;
+    }
+
+    .Header-a {
+      padding: 15px;
+    }
+    
+
+    .Header-nav__isActive {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .Header-logo {
+      margin: 0;
+    }
+  
+    .Header-a--logo{
+      margin: 0; 
+      width: 100%;
+      height: 100%;
+    }
+
+    .Header-button--toggle{
+      margin: 0 20px;
+    }
+    
+  }
 

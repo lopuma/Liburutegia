@@ -1,28 +1,20 @@
-<!-- login.component.hbs -->
+<!-- Login.component.hbs -->
 
-  <div class="login-container" id="stateLogin">
+  <div class="Login-container" id="stateLogin">
     <input type="checkbox" id="flip">
-    <div class="cover">
-      <div class="front">
-        <img src=".../../../../resources/img/front.png" alt="">
-        {{!-- <div class="text">
-          <span class="text-1">Every new friend is a <br> new adventure</span>
-          <span class="text-2">Let`s get connected</span>
-        </div> --}}
+    <div class="Login-cover">
+      <div class="Login-front">
+        <img class="Login-img" loading="lazy" src="resources/img/front.svg" alt="">
       </div>
-      <div class="back">
-        <img class="backImg" src=".../../../../resources/img/back.png" alt="">
-        {{!-- <div class="text"> --}}
-          {{!-- <span class="text-1">Completed miles of journey <br> with one step</span> --}}
-          {{!-- <span class="text-2">Let`s get started</span> --}}
-        {{!-- </div> --}}
+      <div class="Login-back">
+        <img class="Login-img" loading="lazy" src="resources/img/back.svg" alt="">
       </div>
     </div>
 
     <form action="/auth" method="POST" id="formLogin">
       <div class="form-content">
-        <div class="login-form">
-          <div class="title-login">Login</div>
+        <div class="Login-form">
+          <div class="title-Login">Login</div>
           <div class="input-boxes">
             <div class="input-box">
               <i id="icon-logo" class="fa-solid fa-envelope"></i>
@@ -92,33 +84,5 @@
   }).then(() => {
     window.location = '{{ruta}}'
   });
-  //const alertNotLogin = document.querySelector("#alertNotLogin");
-  // const btnCloseAlert = document.querySelector('#btnCloseAlert');
-  //const loginContainer = document.querySelector(".login-container");
-
-  //  if (alertNotLogin) {
-  // loginContainer.style.marginTop = '20px';
-  //btnCloseAlert.addEventListener('click', () => {
-  //    loginContainer.style.marginTop = '100px';
-  //  });
-  // };
-  // $('#formLogin').submit(function (e) {
-  // e.preventDefault();
-  //  window.setTimeout(function (e) {
-  //    $("#alertNotLogin").fadeTo(1500, 0).slideDown((1000, 0), function () {
-  //      $(this).remove();
-  //loginContainer.style.marginTop = '100px';
-  //   });
-  //  }, 3000);
-  // });
-
-
 </script>
 {{/if}}
-
-<script>
-  $("#alertNotLogin").fadeTo(2000, 500).slideUp(500, function () {
-    $("#alertSI").slideUp(500);
-  });
-
-</script>

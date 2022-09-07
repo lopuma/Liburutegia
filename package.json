@@ -11,8 +11,9 @@
   },
   "scripts": {
     "test": "echo \"Error\"",
-    "dev": "set NODE_ENV=development&& nodemon src/app.js",
-    "prod": "set NODE_ENV=production&& nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "deve": "set NODE_ENV=development && nodemon src/app.js",
+    "prod": "set NODE_ENV=production && nodemon src/app.js"
   },
   "keywords": [
     "nodejs",

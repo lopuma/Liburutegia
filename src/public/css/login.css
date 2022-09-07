@@ -1,19 +1,19 @@
 /* CONTENEDOR DE LOGIN*/
 .register-container,
-.login-container {
+.Login-container {
     position: relative;
-    margin: 120px 10% 80px 13%;
-    width: 100%;
+    width: 80%;
     height: 500px;
-    background-color: #ffffff;
+    min-height: 500px;
+    margin: 120px auto 70px auto;
     padding: 40px 30px;
     border-radius: var(--size-border-radius-forms);
-    box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
-
-    perspective: 2700px;
+    box-shadow: var(--box-shadow-forms);
+    background-color: var(--blanco);
+    color: var(--negro);
 }
 
-.login-container .cover {
+.Login-cover {
     position: absolute;
     top: 0;
     left: 50%;
@@ -26,7 +26,7 @@
     transform-style: preserve-3d;
 }
 
-.login-container #flip:checked~.cover {
+.Login-container #flip:checked~.Login-cover {
     transform: rotateY(-180deg);
     -ms-transform: rotateY(-180deg);
     /* IE 9 */
@@ -38,11 +38,10 @@
     /* Opera */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-
 }
 
-.login-container .cover .front,
-.login-container .cover .back {
+.Login-front,
+.Login-back {
     position: absolute;
     top: 0;
     left: 0;
@@ -51,7 +50,7 @@
     overflow: hidden;
 }
 
-.cover .back {
+.Login-back {
     transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
     /* IE 9 */
@@ -63,21 +62,21 @@
     /* Opera */
 }
 
-.login-container .cover::before,
-.login-container .cover::after {
+.Login-cover::before,
+.Login-cover::after {
     content: '';
     position: absolute;
     height: 100%;
     width: 100%;
     border-radius: var(--size-border-radius-forms);
     background: var(--background-forms);
-    opacity: 0.1;
+    opacity: var(--opacity-cover);
     z-index: 12;
     left: 0;
 }
 
-.login-container .cover::after {
-    opacity: 0.1;
+.Login-cover::after {
+    opacity: var(--opacity-cover);
     transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
     /* IE 9 */
@@ -91,46 +90,19 @@
     -webkit-backface-visibility: hidden;
 }
 
-.login-container .cover img {
+.Login-img {
     position: absolute;
     height: 100%;
     width: 100%;
     object-fit: cover;
     overflow: hidden;
     border-radius: var(--size-border-radius-forms);
-
     z-index: 10;
-    background: #fff;
-}
-
-
-.login-container .cover .text {
-    position: absolute;
-    z-index: 130;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.cover .text .text-1,
-.cover .text .text-2 {
-    font-size: 26px;
-    font-weight: 600;
-    color: rgb(12, 1, 1);
-    text-align: center;
-    justify-content: flex-start;
-}
-
-.cover .text .text-2 {
-    font-size: 15px;
-    font-weight: 500;
+    background: var(--blanco);
 }
 
 .register-container form,
-.login-container form {
+.Login-container form {
     height: 100%;
     width: 100%;
 }
@@ -142,26 +114,26 @@
     flex-flow: row wrap;
 }
 
-.login-container {
+.Login-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* .login-container .form-content {
+/* .Login-container .form-content {
   display: flex;
   align-items: center;
   justify-content: start;
 }
 
-.login-container .form-content-reset {
+.Login-container .form-content-reset {
   display: flex;
   align-items: center;
   justify-content: start;
   position: relative;
 } */
 
-.form-content .login-form {
+.form-content .Login-form {
     width: calc(100% / 1 - 25px);
 }
 
@@ -181,7 +153,7 @@
 }
 
 form .form-content-register .title-register,
-form .form-content .title-login,
+form .form-content .title-Login,
 form .form-content-reset .title-forgot {
     position: relative;
     font-size: 24px;
@@ -193,7 +165,7 @@ form .form-content-reset .title-forgot {
 
 form .form-content-register .title-register::before,
 form .form-content-reset .title-forgot::before,
-form .form-content .title-login::before {
+form .form-content .title-Login::before {
     content: '';
     position: absolute;
     left: 0px;
@@ -398,7 +370,7 @@ form .form-content .button input {
     font-family: 'Roboto', sans-serif;
 }
 
-form .form-content .login-form .input-boxes .button input:hover {
+form .form-content .Login-form .input-boxes .button input:hover {
     color: #000000;
 
     box-shadow: 1px 1px 5px aquamarine, -1px -1px 5px aquamarine;
@@ -419,15 +391,15 @@ form .form-content .button input:hover {
     background-color: #99ce62;
 }
 
-/* form .form-content-reset .login-text, */
+/* form .form-content-reset .Login-text, */
 form .form-content-reset .sing-up-text,
-/* form .form-content .login-text, */
+/* form .form-content .Login-text, */
 form .form-content .sing-up-text {
     text-align: center;
     margin-top: 25px;
 }
 
-.login-container #flip {
+.Login-container #flip {
     display: none;
 }
 
@@ -451,23 +423,21 @@ form .form-content .sing-up-text {
     }
 
 
-    .login-container .cover {
+    .Login-cover {
         display: none;
     }
 
-    .login-container {
+    .Login-container {
         display: flex;
-        flex-direction: column;
+        flex-flow: column nowrap;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
-        margin: 120px 0;
         width: 90%;
-
-        height: 100%;
+        margin-right: 0;
+        margin-left: 0;
     }
 
-    form .form-content .login-form {
+    form .form-content .Login-form {
         margin-right: 25px;
     }
 
@@ -475,14 +445,14 @@ form .form-content .sing-up-text {
         display: none;
     }
 
-    .login-container #flip:checked~form .form-content-reset .forgot-form {
+    .Login-container #flip:checked~form .form-content-reset .forgot-form {
         display: block;
         width: 100%;
         margin-left: 0;
         margin-right: 25px;
     }
 
-    .login-container #flip:checked~form .form-content .login-form {
+    .Login-container #flip:checked~form .form-content .Login-form {
         display: none;
     }
 
