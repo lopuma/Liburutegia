@@ -6,9 +6,9 @@
   color: var(--background-forms);
   overflow: hidden;
   width: 80%;
-  height: 500px;
-  min-height: 400px;
-  margin: 120px auto 70px auto;
+  height: var(--heigth-forms);
+  min-height: var(--heigth-forms);
+  margin: var(--margin-top-forms) auto 70px auto;
   /* box-shadow: var(--box-shadow-forms); */
   display: flex;
   flex-flow: row wrap;
@@ -124,47 +124,23 @@
 
 @media screen and (max-width: 950px) {
   .Index-container{
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-      background-image: url('../img/index-movil.svg');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      width: 90%;
-      margin-right: 0;
-      margin-left: 0;
-      /* filter: drop-shadow(8px 8px 4px var(--colour-button-success)); */
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    width: 90%;
+    height: auto;
     }
 
-  .Index-text{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-  }
+    .Index-text{
+      text-align: center;
+    }
 
-  .Index-h1{
-    flex: 80%;
-    margin: auto 0; 
-    letter-spacing: 5px;
-    text-align: center;
-    font-size: 30px;
-  }
+    .Index-h1{
+      text-align: center;
+      padding: 10px 0;
+    }
 
-  .Index-p{
-    display: none;
-  }
-
-  .Index-a{
-    margin: auto 0;
-  }
-
-  .Index-img{
-    display: none;
-  }
+    .Index-p{
+      text-align: center;
+      padding: 10px 0;
+    }
 }
