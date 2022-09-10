@@ -479,9 +479,8 @@ form .form-content .sing-up-text {
         flex-flow: column nowrap;
         align-items: center;
         justify-content: center;
-        width: 90%;
-        margin-right: 0;
-        margin-left: 0;
+        width: 100%;
+        margin: var(--size-height-navBar) auto 60px auto;
     }
 
     form .form-content .Login-form {
