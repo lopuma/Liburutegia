@@ -128,7 +128,7 @@
     flex-wrap: nowrap;
     width: 90%;
     height: auto;
-    margin: var(--margin-top-forms-movil) auto 60px auto;
+    margin: var(--size-height-navBar) auto 60px auto;
     }
 
     .Index-text{
