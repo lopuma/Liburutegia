@@ -133,11 +133,15 @@ observerToggle.observe(j);
 /* Mostrar y Ocultar cover al desplegar menu */
 function Cover() {
   if (Aside.classList.contains("menu-expanded")) {
-    mainCover.style.display = "block";
+    mainCover.style.visibility = "visible";
+    mainCover.classList.toggle('isShow');
+
   }
 
   if (Aside.classList.contains("menu-collapsed")) {
-    mainCover.style.display = "none";
+    mainCover.style.visibility = "hidden";
+    mainCover.classList.toggle('isShow');
+
   }
 }
 
@@ -151,7 +155,7 @@ function showCloseCover(act, actFunct, Funct){
     act = true;
     console.log("act ", act)
     addClassSideMenu();
-    // Cover();
+    Cover();
     console.log("actfunc", actFunct);
     if(actFunct){
       Funct();
@@ -186,7 +190,6 @@ mainCover.addEventListener('click', () => {
 btnSidemenu.addEventListener("click", () => {
   clickInterSide = true;
   showCloseCover(clickInterSide, actInterSide, menuBtnChangeSide);
-  mainCover.classList.toggle('isShow');
 });
 
 btnToggle.addEventListener('click', function () {
