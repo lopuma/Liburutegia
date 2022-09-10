@@ -5,7 +5,7 @@
     height: var(--heigth-forms);
     min-height: var(--heigth-forms);
     margin: var(--margin-top-forms) auto 70px auto;
-    padding: 40px 30px;
+    padding: 20px;
     color: inherit;
     background-color: inherit;
     display: flex;
@@ -40,15 +40,19 @@
     /* Opera */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+
 }
 
 .Login-container #flip:checked~.Login-form_reset{
     visibility: visible;
     animation: img-anim 0.8s ease;
+    margin-left: 20px;
 }
 
 .Login-container #flip:checked~.Login-form__auth{
     animation: img-anim 0.8s ease;
+    margin: 0;
+    margin-right: 40px;
 
 }
 
@@ -118,6 +122,7 @@
     box-shadow: var(--box-shadow-forms);
     border-radius: var(--size-border-radius-forms);
     padding: 20px;
+    margin: 0;
 }
 
 .register-container form {
@@ -150,17 +155,6 @@
 #formReset{
     margin: 0 20px;
     background-color: var(--blanco);
-}
-
-.form-content .Login-form {
-    width: calc(100% / 1 - 25px);
-}
-
-.form-content-reset .forgot-form {
-    width: calc(100% / 1 - 25px);
-    margin-left: 25px;
-    margin-right: 10px;
-
 }
 
 .form-content-register {
@@ -441,10 +435,12 @@ form .form-content .sing-up-text {
 
 .Login-form_reset{
     visibility: hidden;
+    margin: 0;
 }
   
 .Login-form__auth {
     animation: text-anim 0.8s ease;
+    margin: 0;
   }
 
 /* // Animation */
@@ -483,9 +479,6 @@ form .form-content .sing-up-text {
         margin: var(--size-height-navBar) auto 60px auto;
     }
 
-    form .form-content .Login-form {
-        margin-right: 25px;
-    }
 
     form .form-content-reset .forgot-form {
         display: none;
@@ -518,6 +511,10 @@ form .form-content .sing-up-text {
 
     .Login-container #flip:checked~ #formLogin {
         display: none;
+    }
+
+    .Login-form__auth{
+        margin: 0;
     }
 }
 

@@ -124,12 +124,14 @@
 
 @media screen and (max-width: 950px) {
   .Index-container{
-    flex-direction: column-reverse;
-    flex-wrap: nowrap;
-    width: 90%;
+    display: flex;
+    flex-flow: column-reverse nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
     height: auto;
     margin: var(--size-height-navBar) auto 60px auto;
-    }
+}
 
     .Index-text{
       text-align: center;
