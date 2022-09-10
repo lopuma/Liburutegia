@@ -147,3 +147,10 @@
       padding: 10px 0;
     }
 }
+
+@media screen and (max-width: 950px) {
+  .Index-container{
+    padding: 40px 0;
+
+  }
+}
