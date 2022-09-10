@@ -151,6 +151,6 @@
 @media screen and (max-width: 950px) {
   .Index-container{
     padding: 60px 0;
-    margin: var(--size-height-navBar) auto 80px auto;
+    margin: var(--size-height-navBar) auto 50px auto;
   }
 }
