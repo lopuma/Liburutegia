@@ -479,7 +479,7 @@ form .form-content .sing-up-text {
         flex-flow: column nowrap;
         align-items: center;
         justify-content: center;
-        width: 100%;
+        width: 80%;
         margin: var(--size-height-navBar) auto 60px auto;
     }
 
@@ -520,4 +520,9 @@ form .form-content .sing-up-text {
         display: none;
     }
 }
-  
+
+@media all and (max-width: 500px) {
+    .Login-container {
+        width: 100%;
+    }
+}
