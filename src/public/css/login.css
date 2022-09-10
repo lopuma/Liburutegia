@@ -1,29 +1,31 @@
 /* CONTENEDOR DE LOGIN*/
 .register-container,
 .Login-container {
-    position: relative;
-    width: 80%;
-    height: 500px;
-    min-height: 500px;
-    margin: 120px auto 70px auto;
+    width: var(--width-forms);
+    height: var(--heigth-forms);
+    min-height: var(--heigth-forms);
+    margin: var(--margin-top-forms) auto 70px auto;
     padding: 40px 30px;
-    border-radius: var(--size-border-radius-forms);
-    box-shadow: var(--box-shadow-forms);
-    background-color: var(--blanco);
-    color: var(--negro);
+    color: inherit;
+    background-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
 }
 
 .Login-cover {
     position: absolute;
     top: 0;
     left: 50%;
-    border-radius: var(--size-border-radius-forms);
     height: 100%;
     width: 50%;
-    z-index: 98;
+    z-index: 20;
     transition: all 1s;
     transform-origin: left;
     transform-style: preserve-3d;
+    background-color: inherit;
+    margin-left: 10px;
 }
 
 .Login-container #flip:checked~.Login-cover {
@@ -40,6 +42,16 @@
     -webkit-backface-visibility: hidden;
 }
 
+.Login-container #flip:checked~.Login-form_reset{
+    visibility: visible;
+    animation: img-anim 0.8s ease;
+}
+
+.Login-container #flip:checked~.Login-form__auth{
+    animation: img-anim 0.8s ease;
+
+}
+
 .Login-front,
 .Login-back {
     position: absolute;
@@ -48,6 +60,7 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
+    background-color: inherit;
 }
 
 .Login-back {
@@ -62,7 +75,7 @@
     /* Opera */
 }
 
-.Login-cover::before,
+/* .Login-cover::before,
 .Login-cover::after {
     content: '';
     position: absolute;
@@ -73,22 +86,18 @@
     opacity: var(--opacity-cover);
     z-index: 12;
     left: 0;
-}
+} */
 
-.Login-cover::after {
+/* .Login-cover::after {
     opacity: var(--opacity-cover);
     transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
-    /* IE 9 */
     -moz-transform: rotateY(180deg);
-    /* Firefox */
     -webkit-transform: rotateY(180deg);
-    /* Safari and Chrome */
     -o-transform: rotateY(180deg);
-    /* Opera */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-}
+} */
 
 .Login-img {
     position: absolute;
@@ -98,13 +107,17 @@
     overflow: hidden;
     border-radius: var(--size-border-radius-forms);
     z-index: 10;
-    background: var(--blanco);
+    background-color: inherit;
 }
+
 
 .register-container form,
 .Login-container form {
     height: 100%;
     width: 100%;
+    box-shadow: var(--box-shadow-forms);
+    border-radius: var(--size-border-radius-forms);
+    padding: 20px;
 }
 
 .register-container form {
@@ -114,11 +127,7 @@
     flex-flow: row wrap;
 }
 
-.Login-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+
 
 /* .Login-container .form-content {
   display: flex;
@@ -133,6 +142,16 @@
   position: relative;
 } */
 
+#formLogin{
+    margin: 0 20px;
+    background-color: var(--blanco);
+}
+
+#formReset{
+    margin: 0 20px;
+    background-color: var(--blanco);
+}
+
 .form-content .Login-form {
     width: calc(100% / 1 - 25px);
 }
@@ -140,11 +159,14 @@
 .form-content-reset .forgot-form {
     width: calc(100% / 1 - 25px);
     margin-left: 25px;
+    margin-right: 10px;
+
 }
 
 .form-content-register {
     width: 80%;
     padding: 20px;
+    margin-right: 50px;
 }
 
 .form-content-register form .register-form {
@@ -172,7 +194,7 @@ form .form-content .title-Login::before {
     bottom: -5px;
     height: 3px;
     width: 25px;
-    background: var(--background-forms);
+    background: inherit;
 }
 
 form .form-content-register .input-boxes,
@@ -229,13 +251,13 @@ form .form-content .input-box {
 .form-content-reset .input-box input:valid,
 .form-content .input-box input:focus,
 .form-content .input-box input:valid {
-    border-color: var(--background-forms);
+    border-color: inherit;
 }
 
 .form-content-register .input-box i,
 .form-content-reset .input-box i,
 .form-content .input-box i {
-    color: var(--background-forms);
+    color: inherit;
     font-size: 17px;
 }
 
@@ -259,7 +281,7 @@ form .form-content .input-box {
 
 .form-content-register .input-box-select i {
     margin: 0 10px;
-    color: var(--background-forms);
+    color: inherit;
     font-size: 17px;
 }
 
@@ -279,7 +301,7 @@ form .form-content .input-box {
 .form-content-register .input-box-select select,
 option {
     color: white;
-    background-color: var(--background-forms);
+    background-color: inherit;
 }
 
 .form-content-register .input-box #icon-eye-rPassword:hover,
@@ -413,7 +435,32 @@ form .form-content .sing-up-text {
     display: block;
     color: brown;
 }
+.Login-cover {
+    animation: img-anim 0.8s ease;
+  }
 
+.Login-form_reset{
+    visibility: hidden;
+}
+  
+.Login-form__auth {
+    animation: text-anim 0.8s ease;
+  }
+
+/* // Animation */
+@keyframes text-anim {
+    0% {
+      opacity: 0;
+      transform: translateX(-30%);
+    }
+  }
+  
+  @keyframes img-anim {
+    0% {
+      opacity: 0;
+      transform: translateX(30%);
+    }
+  }
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
 @media all and (max-width: 950px) {
@@ -459,6 +506,19 @@ form .form-content .sing-up-text {
     .form-content-register {
         width: 100%;
         margin: 0;
+    }
+
+    #formReset{
+        display: none;
+    }
+
+    .Login-container #flip:checked~ #formReset {
+        display: block;
+    }
+
+
+    .Login-container #flip:checked~ #formLogin {
+        display: none;
     }
 }
   

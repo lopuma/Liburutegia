@@ -9,7 +9,7 @@
   height: 500px;
   min-height: 400px;
   margin: 120px auto 70px auto;
-  box-shadow: var(--box-shadow-forms);
+  /* box-shadow: var(--box-shadow-forms); */
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -89,6 +89,29 @@
   display: flex;
   align-items: center;
   justify-content: stretch;
+}
+
+.Index-img {
+  animation: img-anim 0.8s ease;
+}
+
+.Index-text {
+  animation: text-anim 0.8s ease;
+}
+
+/* // Animation */
+@keyframes text-anim {
+  0% {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+}
+
+@keyframes img-anim {
+  0% {
+    opacity: 0;
+    transform: translateX(30%);
+  }
 }
 
 .Index-img img {

@@ -1,7 +1,9 @@
 <!-- Login.component.hbs -->
 
   <div class="Login-container" id="stateLogin">
+    
     <input type="checkbox" id="flip">
+    
     <div class="Login-cover">
       <div class="Login-front">
         <img class="Login-img" loading="lazy" src="resources/img/front.svg" alt="">
@@ -11,7 +13,7 @@
       </div>
     </div>
 
-    <form action="/auth" method="POST" id="formLogin">
+    <form class="Login-form__auth" action="/auth" method="POST" id="formLogin" >
       <div class="form-content">
         <div class="Login-form">
           <div class="title-Login">Login</div>
@@ -37,7 +39,7 @@
       </div>
     </form>
 
-    <form action="#" method="post" id="formReset">
+    <form class="Login-form_reset" action="/reset" method="post" id="formReset">
       <div class="form-content-reset">
         <div class="forgot-form">
           <div class="title-forgot">Reset Your Password</div>

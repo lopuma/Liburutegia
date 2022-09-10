@@ -16,13 +16,15 @@
   position: fixed;
   z-index: 99;
   top: 0;
-  background-color: var(--bgcolor-menu);
+  background-color: var(--background-forms);
   width: 100%;
-  max-width: var(--maxWidth);
+  /* max-width: var(--maxWidth); */
+  /* margin: 0 auto; */
   height: var(--size-height-navBar);
   min-height: var(--size-height-navBar);
-  color: var(--blanco);
-  box-shadow: 0 0 10px rgb(0,0,0,0.5);
+  color: var(--color-menu);
+  box-shadow: 0 0 15px #0000001a;
+  padding: 0 16px;
 }
 
 /* LOGO */
@@ -30,15 +32,13 @@
   display: flex;
   text-align: center;
   align-items: center;
-  justify-content: center;
-  padding: 0;
+  justify-content: flex-start;
   height: 100%;
-  margin: 0 auto;
 }
 
 /* BOTON PARA EXPANDIR SIDEMENU*/
 .Header-button--sidemenu {
-  color: var(--blanco);
+  color: inherit;
   height: var(--size-element);
   width: var(--size-element);
   display: flex;
@@ -68,6 +68,7 @@
 .Header-a--logo {
   height: 100%;
   margin: 0 10px;
+  fill: var(--color-menu);
 }
 
 .Header-a--logo img{
@@ -75,11 +76,12 @@
   height: 100%;
   margin: 0;
   padding: 0;
+  fill: var(--color-menu);
 }
 
 /* BTN TOGGLE */
 .Header-button--toggle {
-  color: var(--blanco);
+  color: inherit;
   height: var(--size-element);
   width: var(--size-element);
   display: flex;
@@ -105,9 +107,8 @@
 .Header-nav {
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  margin: 0 auto;
 }
 
 .Header-ul {
@@ -124,7 +125,7 @@
 }
 
 .Header-a {
-  color: var(--blanco);
+  color: inherit;
   border-radius: var(--size-border-radius-button);
   transition-property: background-color, color;
   transition-duration: 0.5s;
@@ -134,7 +135,7 @@
   font-family: 'Nunito Sans', sans-serif;
   letter-spacing: 5px;
   text-align: center;
-  padding: 10px 15px;
+  padding: 0.5em 1em;
   position: relative;
 }
 
@@ -184,7 +185,6 @@
 .Header-a--activeLogin{
   background-color: var(--colour-button-success);
   border: 1px solid #fff;
-  color: var(--blanco);
   transition-property: color, background-color, box-shadow;
   transition-duration: 00.5s;
   transition-timing-function: ease-in-out;
@@ -253,9 +253,9 @@
       position: fixed;
       left: 0;
       top: var(--size-height-navBar);
-      width: 100%;
+      width: 70%;
       align-items: center;
-      background-color: var(--bgcolor-menu);
+      background-color: inherit;
       height: 100%;
       overflow-y: auto;
       opacity: 0;
@@ -279,7 +279,6 @@
       padding: 15px;
     }
     
-
     .Header-nav__isActive {
       opacity: 1;
       pointer-events: auto;

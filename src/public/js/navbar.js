@@ -95,18 +95,12 @@ function onLoad() {
 // </ ---- Mostrar MENU en modo responsive ---->
 const btnToggle = document.querySelector('#btnToggle');
 const navBar = document.querySelector('#navBar');
-btnToggle.addEventListener('click', function () {
-  navBar.classList.toggle('Header-nav__isActive');
-  clickInterBar = true;
-  if(actInterBar){
-    menuBtnChange();
-  }
-});
 
 // </ ---- Expandir Side Menu ---->
 const btnSidemenu = document.getElementById("btnSidemenu");
 const sideMenu = document.querySelector(".Sidemenu");
 const Aside = document.querySelector(".Aside");
+const mainCover = document.querySelector(".Main-cover");
 
 var i = document.getElementById('fa-bars');
 var j = document.getElementById('fa-bars--toggle');
@@ -115,6 +109,7 @@ let clickInterSide = false;
 let actInterBar = false;
 let clickInterBar = false
 
+/* Intersection Observer, btnTogle / btnSidemenu */
 const callback = (entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -135,26 +130,46 @@ const callbackToogle = (entries) => {
 const observerToggle = new IntersectionObserver(callbackToogle);
 observerToggle.observe(j);
 
-btnSidemenu.addEventListener("click", () => {
+/* Mostrar y Ocultar cover al desplegar menu */
+function Cover() {
+  if (Aside.classList.contains("menu-expanded")) {
+    mainCover.style.display = "block";
+  }
+
+  if (Aside.classList.contains("menu-collapsed")) {
+    mainCover.style.display = "none";
+  }
+}
+
+function addClassSideMenu() {
   Aside.classList.toggle("menu-expanded");
   Aside.classList.toggle("menu-collapsed");
-  sideMenu.classList.toggle("menu-expanded");
-  sideMenu.classList.toggle("menu-collapsed");
-  clickInterSide = true;
-  if(actInterSide){
-    menuBtnChangeSide();
-  }
-});
+}
 
-// following are the code to change sidebar button(optional)
+function showCloseCover(act, actFunct, Funct){
+  console.log("act ", act)
+    act = true;
+    console.log("act ", act)
+    addClassSideMenu();
+    // Cover();
+    console.log("actfunc", actFunct);
+    if(actFunct){
+      Funct();
+   }
+};
+
+// siguiente es el código para cambiar el botón de la barra lateral
 function menuBtnChangeSide() {
+  console.log(clickInterSide);
   if(clickInterSide){
     try {
       i.className = i.classList.contains('fa-bars') ? 'fa-solid fa-bars-staggered' : i.getAttribute('data-original');
     } catch { }
   }
 }
+
 function menuBtnChange() {
+  console.log("LLmamada a la funcin", clickInterBar)
   if(clickInterBar){
   try {
     j.className = j.classList.contains('fa-bars') ? 'fa-solid fa-bars-staggered' : j.getAttribute('data-original');
@@ -162,8 +177,26 @@ function menuBtnChange() {
 }
 }
 
+mainCover.addEventListener('click', () => {
+  navBar.classList.toggle('Header-nav__isActive');
+  showCloseCover(clickInterSide, actInterSide, menuBtnChangeSide);
+  menuBtnChange();
+});
 
-// </ ---- Desaparecer y aparecer el MENU ---->
+btnSidemenu.addEventListener("click", () => {
+  clickInterSide = true;
+  showCloseCover(clickInterSide, actInterSide, menuBtnChangeSide);
+  mainCover.classList.toggle('isShow');
+});
+
+btnToggle.addEventListener('click', function () {
+  navBar.classList.toggle('Header-nav__isActive');
+  clickInterBar = true;
+  showCloseCover(clickInterBar, actInterBar, menuBtnChange);
+});
+
+
+// </ ---- Desaparecer y aparecer el MENU BAR ---->
 let ubicacionPrincipal = window.pageYOffset;
 
 window.onscroll = function () {

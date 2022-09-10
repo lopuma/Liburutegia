@@ -5,6 +5,9 @@
 :root {
   /* ALL */
   --maxWidth: 1600px;
+  --heigth-forms: 600px;
+  --width-forms: 80%;
+  --margin-top-forms : 130px;
   --colour-button-success: #76BA99;
   --colour-button-successHigh: #6de9ad48;
   --colour-button-unsuccess: #C21010;
@@ -18,7 +21,7 @@
 
 
   /* NAVIGATION */
-  --bgcolor-menu: #433F40;
+  --color-menu: #000;
   --size-height-navBar: 80px;
   --size-element: calc(var(--size-height-navBar) - 40px);
   --colour3-boxShadow: #876445;
@@ -26,9 +29,13 @@
   --size-font-menu: 16px;
   --size-font-menu-button: 24px;
 
+  /* SIDEMENU */
+  --size-width-sidemenu: 280px;
+  --size-width-sidemenu-collapsed: 50px;
+
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
- --background-forms: #474668;
+  --background-forms: #f6f0e6;
   --bg-scope-table: #013d55;
   --color-text-forms: white;
   --color-bg-th-table: #f1ed9bc9;
@@ -89,10 +96,8 @@
 
   /* MARGENES */
   --margin-forms: 30px 30px;
-  --width: 250px;
   --padding: 10px;
   --hovercolor: rgba(99, 99, 99, 0.836);
-  --width-collapsed: 50px;
 }
 
 .Header {
@@ -105,6 +110,7 @@
 
 .Main {
   grid-area: main;
+  background-color: var(--background-forms);
 }
 
 .Footer {
@@ -123,11 +129,12 @@
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-forms);
 }
 
 .Layout-container {
   display: grid;
-  grid-template-columns: var(--width-collapsed) auto;
+  grid-template-columns: var(--size-width-sidemenu-collapsed) auto;
   grid-template-areas:
     'header header'
     'menu main'
@@ -153,6 +160,25 @@
   flex-flow: row nowrap;
   align-items: center;
   max-width: var(--maxWidth);
+}
+
+.Main-cover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 98;  
+  opacity: 0.4;
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+  transition-property: background-color,visibility; 
+  visibility: hidden;
+}
+
+.Main-cover.isShow{
+  background-color: rgb(41, 41, 41);
+  visibility: visible;
 }
 
 @media screen and (max-width: 950px) {

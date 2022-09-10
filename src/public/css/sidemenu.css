@@ -1,21 +1,26 @@
 
-  .body-expanded{
-    margin-right: calc(var(--width) - var(--width-collapsed) );
-  }
+
   .Aside{
     height: 100%;
+    display: none;
   }
 
   .Sidemenu{
     position: fixed;
-    z-index: 2;
+    z-index: 99;
     top:var(--size-height-navBar);
-    background: var(--bgcolor-menu);
+    left: 0;
+    background: var(--blanco);
     height: 100%;
+    color: var(--color-menu);
+    box-shadow: 0 0 10px rgb(0,0,0,0.5);
+    width: var(--size-width-sidemenu);
+
   }
+
   
   .Sidemenu-a{
-    color: #fff;
+    color: inherit;
     text-decoration: none;   
   }
 
@@ -72,7 +77,7 @@
     vertical-align: middle;
     overflow: hidden;
     display: inline-block;
-    color: var(--blanco);
+    color: inherit;
     text-decoration: none;
     font-size: 15px;
     font-weight: 700;
@@ -94,7 +99,7 @@
   .Sidemenu-icon--item {
     box-sizing: border-box;
     padding: var(--padding);
-    width: var(--width-collapsed);
+    width: var(--size-width-sidemenu-collapsed);
   }
   
   .Sidemenu-title--item {
@@ -108,15 +113,13 @@
   }
   
   .menu-expanded{
-    width: var(--width);
-    box-shadow: 0 0 10px rgb(0,0,0,0.5);
-    /* overflow-y: auto;
-    overflow: auto; */
+    display: block;
     top: var(--size-height-navBar);
   }
 
+
   .menu-expanded .Sidemenu-title--item span{
-    color: #fff;
+    color: inherit;
     opacity: 1;
   }
 
@@ -147,7 +150,8 @@
   }
   
   .menu-collapsed{
-    width: var(--width-collapsed);
+    visibility:hidden;
+    width: var(--size-width-sidemenu-collapsed);
     overflow-y: auto;
     overflow: auto;
   }
