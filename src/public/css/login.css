@@ -1,6 +1,5 @@
 /* CONTENEDOR DE LOGIN*/
-.register-container,
-.Login-container {
+.Authentication {
     width: var(--width-forms);
     height: var(--heigth-forms);
     min-height: var(--heigth-forms);
@@ -14,11 +13,25 @@
     position: relative;
 }
 
-.Login-cover {
+.Forgot {
+    width: var(--width-forms);
+    height: auto;
+    min-height: var(--heigth-forms);
+    margin: var(--margin-top-forms) auto 70px auto;
+    padding: 20px;
+    color: inherit;
+    background-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+
+.Auth-cover {
     position: absolute;
     top: 0;
     left: 50%;
-    height: 100%;
+    height: var(--heigth-forms);
     width: 50%;
     z-index: 20;
     transition: all 1s;
@@ -28,7 +41,7 @@
     margin-left: 10px;
 }
 
-.Login-container #flip:checked~.Login-cover {
+.Authentication #flip:checked~.Auth-cover {
     transform: rotateY(-180deg);
     -ms-transform: rotateY(-180deg);
     /* IE 9 */
@@ -43,31 +56,31 @@
 
 }
 
-.Login-container #flip:checked~.Login-form_reset{
+.Authentication #flip:checked~.Reset {
     visibility: visible;
     animation: img-anim 0.8s ease;
     margin-left: 20px;
 }
 
-.Login-container #flip:checked~.Login-form__auth{
+.Authentication #flip:checked~.Login {
     animation: img-anim 0.8s ease;
     margin: 0;
     margin-right: 40px;
 
 }
 
-.Login-front,
-.Login-back {
+.Auth-cover--front,
+.Auth-cover--back {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
+    height: inherit;
     width: 100%;
     overflow: hidden;
     background-color: inherit;
 }
 
-.Login-back {
+.Auth-cover--back {
     transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
     /* IE 9 */
@@ -79,31 +92,7 @@
     /* Opera */
 }
 
-/* .Login-cover::before,
-.Login-cover::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: var(--size-border-radius-forms);
-    background: var(--background-forms);
-    opacity: var(--opacity-cover);
-    z-index: 12;
-    left: 0;
-} */
-
-/* .Login-cover::after {
-    opacity: var(--opacity-cover);
-    transform: rotateY(180deg);
-    -ms-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    -o-transform: rotateY(180deg);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-} */
-
-.Login-img {
+.Auth-img {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -114,143 +103,109 @@
     background-color: inherit;
 }
 
-
-.register-container form,
-.Login-container form {
-    height: 100%;
+.Register,
+.Login,
+.Reset {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    height: auto;
     width: 100%;
     box-shadow: var(--box-shadow-forms);
     border-radius: var(--size-border-radius-forms);
     padding: 20px;
     margin: 0;
-}
-
-.register-container form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: row wrap;
-}
-
-
-
-/* .Login-container .form-content {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-}
-
-.Login-container .form-content-reset {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  position: relative;
-} */
-
-#formLogin{
-    margin: 0 20px;
     background-color: var(--blanco);
+    overflow: hidden;
 }
 
-#formReset{
-    margin: 0 20px;
-    background-color: var(--blanco);
+.Register-content {
+    width: 60%;
+    height: auto;
+    overflow: hidden;
 }
 
-.form-content-register {
-    width: 80%;
-    padding: 20px;
-    margin-right: 50px;
+.Login-content,
+.Reset-content {
+    width: 100%;
 }
 
-.form-content-register form .register-form {
-    margin-left: 25px;
-    margin-right: 25px;
-}
-
-form .form-content-register .title-register,
-form .form-content .title-Login,
-form .form-content-reset .title-forgot {
+.Register-title,
+.Login-title,
+.Reset-title {
     position: relative;
     font-size: 24px;
     font-weight: 500;
-    color: #333;
+    color: inherit;
+    padding: 0 20px;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
+    margin-top: 10px;
 }
 
-form .form-content-register .title-register::before,
-form .form-content-reset .title-forgot::before,
-form .form-content .title-Login::before {
+.Reset-title::before,
+.Register-title::before,
+.Login-title::before {
     content: '';
     position: absolute;
-    left: 0px;
+    left: 0x;
     bottom: -5px;
     height: 3px;
     width: 25px;
-    background: inherit;
+    background: gold;
 }
 
-form .form-content-register .input-boxes,
-form .form-content-reset .input-boxes,
-form .form-content .input-boxes {
+.Input-boxes {
     margin-top: 30px;
+    width: 100%;
+    padding: 20px;
+    align-items: center;
+    overflow: hidden;
+
 }
 
-form .form-content-register .input-box {
+.Input-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 50px;
+    height: 60px;
     width: 100%;
-    margin: 20px 0 5px 0;
+    margin: 20px 0;
 }
 
-form .form-content-register .input-box .formulario__grupo {
+
+
+.Input-error {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 50px;
     width: 100%;
-}
-
-form .form-content-reset .input-box,
-form .form-content .input-box {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    width: 100%;
-    margin: 10px 0;
     position: relative;
+    display: none;
 }
 
-.form-content-register .input-box input,
-.form-content-reset .input-box input,
-.form-content .input-box input {
+.Box-input {
     height: 100%;
     width: 100%;
     outline: none;
     border: none;
-    padding: 0 30px;
+    padding: 0 10px;
+    margin: 0 20px;
     font-size: 16px;
     font-weight: 500;
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
-.form-content-register .input-box input:focus,
-.form-content-register .input-box input:valid,
-.form-content-reset .input-box input:focus,
-.form-content-reset .input-box input:valid,
-.form-content .input-box input:focus,
-.form-content .input-box input:valid {
+.Box-input:focus,
+.Box-input:valid {
     border-color: inherit;
 }
 
-.form-content-register .input-box i,
-.form-content-reset .input-box i,
-.form-content .input-box i {
+.Box-i {
     color: inherit;
     font-size: 17px;
 }
@@ -259,218 +214,229 @@ form .form-content .input-box {
     font-size: 25px;
 }
 
-.form-content-register .input-boxes label {
+.Box-label {
     margin-top: 30px;
-    color: #000000;
-    font-weight: 600;
-    font-size: 20px;
-}
-
-.form-content-register .input-box-select {
-    display: flex;
-    align-items: center;
-    flex-flow: row;
-    margin: 10px 0;
-}
-
-.form-content-register .input-box-select i {
-    margin: 0 10px;
     color: inherit;
+    font-weight: 600;
     font-size: 17px;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
 }
 
-.form-content-register .input-box-select select {
-    background: transparent;
-    border-radius: 5px;
-    font-size: 17px;
-    height: 50px;
-    padding: 5px;
-    width: 550px;
+/* Pertenece al REGISTRO */
+.Input-select{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 
-.form-content-register .input-box-select select:focus {
+.Select-label {
+    font-size: inherit;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    width: 50%;
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 2px;}
+
+.Select-rol {
+    background: #FCE38A;
+    border-radius: var(--size-border-radius-button);
+    font-size: inherit;
+    text-align: center;
+    padding: 10px;
+    width: 50%;
+    color: #000000;
+    font-weight: 400;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 5px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.Select-rol:hover{
+    background-color: #FCE38A;
+    box-shadow: 0px 2px 8px gold, -0px -2px 8px goldenrod
+}
+
+.Select-rol:focus {
     outline: none;
 }
 
-.form-content-register .input-box-select select,
-option {
-    color: white;
-    background-color: inherit;
-}
-
-.form-content-register .input-box #icon-eye-rPassword:hover,
-.form-content-register .input-box #icon-eye-rRepeat:hover,
-.form-content-reset .input-box #icon-eye-new:hover,
-.form-content-reset .input-box #icon-eye-repeat:hover,
-.form-content .input-box #icon-eye:hover {
+.Select-option {
+    color: #000000;
+    background-color: #EAFFD0;
     cursor: pointer;
+
 }
 
-form .form-content-reset .text form .form-content .text {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-}
-
-form .form-content-reset .text label,
-form .form-content .text label {
-    text-decoration: none;
-}
-
-form .form-content-reset .text label:hover,
-form .form-content .text label:hover {
-    text-decoration: underline;
+.Box-i:hover {
     cursor: pointer;
+    /* color: #3abb78; */
 }
 
-form .form-content-register .button-box {
+.Input-button {
     width: 100%;
     display: flex;
     align-items: center;
+    text-align: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    padding: 20px;
+    margin: 20px 0;
 }
 
-form .form-content-register .button-box .button-cancel,
-form .form-content-register .button-box .button-accept {
-    color: #ffffff;
-    width: calc(100% / 2 - 20px);
-    border-radius: 6px;
-}
-
-form .form-content-reset .button,
-form .form-content .button {
-    margin-top: 40px;
-    color: #ffffff;
-    width: 100%;
-    border-radius: 6px;
-}
-
-form .form-content-register .button-cancel input {
-    border-style: solid;
-    border-color: aquamarine;
-    border-width: 1px;
-    border-radius: 6px;
-    padding: 0;
-    color: #ffffff;
-    background: #3a67bb;
-    cursor: pointer;
-}
-
-form .form-content-register .button-accept input,
-form .form-content-reset .button input {
-    border-style: solid;
-    border-color: aquamarine;
-    border-width: 1px;
-    border-radius: 6px;
-    padding: 0;
-    color: #ffffff;
-    background: #3abb78;
+.Button-cancel {
+    border-radius: var(--size-border-radius-button);
+    padding: 10px;
+    color: var(--blanco);
+    background-color: var(--colour-button-unsuccess);
+    border: 1px solid #fff;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 600;
-    font-family: 'Roboto', sans-serif;
-}
-
-form .form-content .button input {
-    border-style: solid;
-    border-color: aquamarine;
-    border-width: 1px;
-    border-radius: 6px;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #ffffff;
-    background: #3a67bb;
-    font-weight: 600;
-    font-family: 'Roboto', sans-serif;
-}
-
-form .form-content .Login-form .input-boxes .button input:hover {
-    color: #000000;
-
-    box-shadow: 1px 1px 5px aquamarine, -1px -1px 5px aquamarine;
-    background-color: #6284ce;
-}
-
-form .form-content-register .button-cancel input:hover {
-    color: #000000;
-    box-shadow: 1px 1px 5px aquamarine, -1px -1px 5px aquamarine;
-    background-color: #6284ce;
-}
-
-form .form-content-register .button-accept input:hover,
-form .form-content-reset .button input:hover,
-form .form-content .button input:hover {
-    color: #000000;
-    box-shadow: 1px 1px 5px aquamarine, -1px -1px 5px aquamarine;
-    background-color: #99ce62;
-}
-
-/* form .form-content-reset .Login-text, */
-form .form-content-reset .sing-up-text,
-/* form .form-content .Login-text, */
-form .form-content .sing-up-text {
+    font-size: var(--size-font-button);
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 5px;
     text-align: center;
-    margin-top: 25px;
+    align-items: center;
+    width: 40%;
+  transition-property: background-color, box-shadow;
+  transition-duration: 00.5s;
+  transition-timing-function: ease-in-out;
 }
 
-.Login-container #flip {
+.Button-accept {
+    border-radius: var(--size-border-radius-button);
+    padding: 10px;
+    color: inherit;
+    background-color: var(--colour-button-success);
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--size-font-button);
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 5px;
+    text-align: center;
+    width: 40%;
+    transition-property: color, background-color, box-shadow;
+    transition-duration: 00.5s;
+    transition-timing-function: ease-in-out;
+    color: var(--colour3-boxShadow);
+}
+
+.Reset-button {
+    border-radius: var(--size-border-radius-button);
+    padding: 10px;
+    color: var(--blanco);
+    background-color: var(--colour-button-unsuccess);
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--size-font-button);
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 5px;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+}
+
+.Login-button {
+    border-radius: var(--size-border-radius-button);
+    padding: 10px;
+    color: inherit;
+    background-color: var(--colour-button-success);
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: var(--size-font-button);
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 5px;
+    text-align: center;
+    width: 100%;
+    transition-property: color, background-color, box-shadow;
+    transition-duration: 00.5s;
+    transition-timing-function: ease-in-out;
+    color: var(--colour3-boxShadow);
+}
+
+.Button-cancel:hover {
+    background-color: var(--colour-button-unsuccess);
+    box-shadow: 0px 2px 8px var(--colour-button-unsuccess), -0px -2px 8px var(--colour3-boxShadow);
+}
+
+.Button-accept:hover,
+.Login-button:hover {
+    color: var(--blanco);
+    background-color: var(--colour-button-success);
+    box-shadow: 0px 2px 8px var(--colour-button-success), -0px -2px 8px var(--colour3-boxShadow);
+}
+
+
+.Authentication #flip {
     display: none;
 }
 
-.error-box .formulario__input-error {
+.Error-p {
     font-size: 12px;
     margin-bottom: 0;
     display: none;
 }
 
-.error-box .formulario__input-error-activo {
+.Error-p__isActivo {
     display: block;
     color: brown;
 }
-.Login-cover {
-    animation: img-anim 0.8s ease;
-  }
 
-.Login-form_reset{
-    visibility: hidden;
-    margin: 0;
+.Auth-cover {
+    animation: img-anim 0.8s ease;
 }
-  
-.Login-form__auth {
+
+.Reset {
+    visibility: hidden;
+}
+
+.Login {
     animation: text-anim 0.8s ease;
-    margin: 0;
-  }
+}
 
 /* // Animation */
 @keyframes text-anim {
     0% {
-      opacity: 0;
-      transform: translateX(-30%);
+        opacity: 0;
+        transform: translateX(-30%);
     }
-  }
-  
-  @keyframes img-anim {
+}
+
+@keyframes img-anim {
     0% {
-      opacity: 0;
-      transform: translateX(30%);
+        opacity: 0;
+        transform: translateX(30%);
     }
-  }
+}
+
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
 @media all and (max-width: 950px) {
-
-    .register-container {
+    .Forgot {
         padding: 0;
     }
 
-
-    .Login-cover {
+    .Auth-cover {
         display: none;
     }
 
-    .Login-container {
+    .Authentication {
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
@@ -479,47 +445,42 @@ form .form-content .sing-up-text {
         margin: var(--size-height-navBar) auto 60px auto;
     }
 
-
-    form .form-content-reset .forgot-form {
+    .Authentication #flip:checked~.Login-content {
         display: none;
     }
 
-    .Login-container #flip:checked~form .form-content-reset .forgot-form {
-        display: block;
-        width: 100%;
-        margin-left: 0;
-        margin-right: 25px;
-    }
-
-    .Login-container #flip:checked~form .form-content .Login-form {
-        display: none;
-    }
-
-    .form-content-register {
+    .Register-content {
         width: 100%;
         margin: 0;
     }
 
-    #formReset{
+    #formReset {
         display: none;
     }
 
-    .Login-container #flip:checked~ #formReset {
+    .Authentication #flip:checked~#formReset {
         display: block;
     }
 
-
-    .Login-container #flip:checked~ #formLogin {
+    .Authentication #flip:checked~.Login {
         display: none;
     }
 
-    .Login-form__auth{
+    .Login {
         margin: 0;
+    }
+
+    .Select-label{
+        width: 100%;
     }
 }
 
 @media all and (max-width: 500px) {
-    .Login-container {
+    .Forgot{
+        width: 90%;
+    }
+
+    .Authentication {
         width: 100%;
     }
 }

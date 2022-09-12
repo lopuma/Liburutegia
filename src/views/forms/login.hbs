@@ -1,73 +1,75 @@
 <!-- Login.component.hbs -->
 
-  <div class="Login-container" id="stateLogin">
+  <div class="Authentication" id="stateLogin">
     
     <input type="checkbox" id="flip">
     
-    <div class="Login-cover">
-      <div class="Login-front">
-        <img class="Login-img" loading="lazy" src="resources/img/front.svg" alt="">
+    <div class="Auth-cover">
+      <div class="Auth-cover--front">
+        <img class="Auth-img" loading="lazy" src="../resources/img/front.svg" alt="">
       </div>
-      <div class="Login-back">
-        <img class="Login-img" loading="lazy" src="resources/img/back.svg" alt="">
+      <div class="Auth-cover--back">
+        <img class="Auth-img" loading="lazy" src="../resources/img/back.svg" alt="">
       </div>
     </div>
 
-    <form class="Login-form__auth" action="/auth" method="POST" id="formLogin" >
-      <div class="form-content">
-        <div class="Login-form">
-          <div class="title-Login">Login</div>
-          <div class="input-boxes">
-            <div class="input-box">
-              <i id="icon-logo" class="fa-solid fa-envelope"></i>
-              <input id="email" type="email" name="email" placeholder="Enter your email" autocomplete="email"
-                required="required" autofocus />
-            </div>
-            <div class="input-box">
-              <i id="icon-logo" class="fa-solid fa-key"></i>
-              <input id="password" type="password" name="password" placeholder="Enter your password"
-                autocomplete="password" required="required" />
-              <i id="icon-eye" class="fa-solid fa-eye"></i>
-            </div>
-            <div class="text sing-up-text"><label for="flip">Forgot password?</label></a></div>
-            <div class="button input-box">
-              <input id="btnLogin" type="submit" value='LOG IN' />
-            </div>
+    <form class="Login" action="/auth" method="POST" id="formLogin" >
+      {{!-- <div class="form-content"> --}}
+        <div class="Login-content">
+            <div class="Login-title">Login</div>
+            <div class="Input-boxes">
+              <div class="Input-box">
+                <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
+                <input  class="Box-input"  id="email" type="email" name="email" placeholder="Enter your email" autocomplete="email"
+                  required="required" autofocus />
+              </div>
+              <div class="Input-box">
+                <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+                <input  class="Box-input"  id="password" type="password" name="password" placeholder="Enter your password"
+                  autocomplete="password" required="required" />
+                <i id="icon-eye" class="Box-i fa-solid fa-eye"></i>
+              </div>
+              <div class="Input-box">
+                <label class="Box-label" for="flip">Forgot password?</label>
+              </div>
+              <div class="Input-box">
+                <input  class="Login-button"  id="btnLogin" type="submit" value='LOG IN' />
+              </div>
           </div>
         </div>
         {{> messages}}
-      </div>
+      {{!-- </div> --}}
     </form>
 
-    <form class="Login-form_reset" action="/reset" method="post" id="formReset">
-      <div class="form-content-reset">
-        <div class="forgot-form">
-          <div class="title-forgot">Reset Your Password</div>
-          <div class="input-boxes">
-            <div class="input-box">
-              <i id="icon-logo" class="fa-solid fa-envelope"></i>
-              <input id="emailReset" type="email" name="emailReset" placeholder="Enter your email" autocomplete="email"
+    <form class="Reset" action="/reset" method="post" id="formReset">
+        <div class="Reset-content">
+          <div class="Reset-title">Reset Your Password</div>
+          <div class="Input-boxes">
+            <div class="Input-box">
+              <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
+              <input class="Box-input" id="emailReset" type="email" name="emailReset" placeholder="Enter your email" autocomplete="email"
                 required="required" autofocus />
             </div>
-            <div class="input-box">
-              <i id="icon-logo" class="fa-solid fa-key"></i>
-              <input id="newPassword" type="password" name="newPassword" placeholder="Enter new password"
+            <div class="Input-box">
+              <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+              <input class="Box-input" id="newPassword" type="password" name="newPassword" placeholder="Enter new password"
                 autocomplete="new-password" required="required" />
-              <i id="icon-eye-new" class="fa-solid fa-eye"></i>
+              <i id="icon-eye-new" class="Box-i fa-solid fa-eye"></i>
             </div>
-            <div class="input-box">
-              <i id="icon-logo" class="fa-solid fa-key"></i>
-              <input id="repeatPassword" type="password" name="repeatPassword" placeholder="Repear new password"
+            <div class="Input-box">
+              <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+              <input class="Box-input" id="repeatPassword" type="password" name="repeatPassword" placeholder="Repear new password"
                 autocomplete="current-password" required="required" />
-              <i id="icon-eye-repeat" class="fa-solid fa-eye"></i>
+              <i id="icon-eye-repeat" class="Box-i fa-solid fa-eye"></i>
             </div>
-            <div class="text sing-up-text"><label for="flip">Login?</label></div>
-            <div class="button input-box">
-              <input id="btnReset" type="submit" value='RESET PASSWORD' />
+            <div class="Input-box">
+              <label class="Box-label" for="flip">Login?</label>
+            </div>
+            <div class="Input-box">
+              <input class="Reset-button" id="btnReset" type="submit" value='RESET PASSWORD' />
             </div>
           </div>
         </div>
-      </div>
     </form>
 
   </div>

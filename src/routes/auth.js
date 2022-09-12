@@ -18,9 +18,10 @@ router.post("/auth", async (req, res) => {
       pass = body.password;
     }
     let passwordHashing = await bscryptjs.hash(pass, 8);
-    console.log(passwordHashing);
+    console.log(email, pass)
     if (email && pass) {
       sql = "SELECT * FROM users WHERE email = ?";
+      console.log("conect ", connection)
       connection.query(sql, [email], async (error, results) => {
         // if (
         //   results.length == 0 ) {
