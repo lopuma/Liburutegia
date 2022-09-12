@@ -1,6 +1,7 @@
 /* CONTENEDOR DE LOGIN*/
+.Singin,
 .Authentication {
-    width: var(--width-forms);
+    width: var(--width-auth-forms);
     height: var(--heigth-forms);
     min-height: var(--heigth-forms);
     margin: var(--margin-top-forms) auto 70px auto;
@@ -13,18 +14,10 @@
     position: relative;
 }
 
-.Forgot {
-    width: var(--width-forms);
+/* REGISTRAR usuario */
+.Singin {
+    width: var(--width-singin-forms);
     height: auto;
-    min-height: var(--heigth-forms);
-    margin: var(--margin-top-forms) auto 70px auto;
-    padding: 20px;
-    color: inherit;
-    background-color: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: column nowrap;
 }
 
 .Auth-cover {
@@ -430,17 +423,16 @@
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
 @media all and (max-width: 950px) {
-    .Forgot {
-        padding: 0;
-    }
+
 
     .Auth-cover {
         display: none;
     }
 
+    .Singin,
     .Authentication {
         display: flex;
-        flex-flow: column nowrap;
+        flex-flow: column wrap;
         align-items: center;
         justify-content: center;
         width: 80%;
@@ -448,7 +440,11 @@
         margin: var(--size-height-navBar) auto 60px auto;
     }
 
-    .Authentication #flip:checked~.Login-content {
+    .Singin{
+        margin: var(--margin-top-forms) auto 80px auto;
+    }
+
+    .Authentication #flip:checked~.Login {
         display: none;
     }
 
@@ -457,13 +453,15 @@
         margin: 0;
     }
 
-    #formReset {
+    .Reset {
         display: none;
     }
 
+
+
     .Authentication #flip:checked~.Reset {
         display: block;
-        margin-left: 0px;
+        margin: 50px 0 0 0;
     }
 
     .Authentication #flip:checked~.Login {
@@ -480,16 +478,12 @@
 }
 
 @media all and (max-width: 500px) {
-    .Forgot{
-        width: 90%;
-        margin: 0;
-    }
-
-    .Reset{
-        margin: 50px 0 0 0; 
-    }
 
     .Authentication {
+        width: 100%;
+    }
+
+    .Singin {
         width: 100%;
     }
 }

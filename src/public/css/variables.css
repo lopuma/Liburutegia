@@ -6,7 +6,6 @@
   /* ALL */
   --maxWidth: 1600px;
   --heigth-forms: 600px;
-  --width-forms: 80%;
   --margin-top-forms : 130px;
   --colour-button-success: #76BA99;
   --colour-button-successHigh: #6de9ad48;
@@ -33,6 +32,12 @@
   /* SIDEMENU */
   --size-width-sidemenu: 280px;
   --size-width-sidemenu-collapsed: 50px;
+
+  /* FORM AUTH*/
+  --width-auth-forms: 80%;
+
+    /* FORM SINGIN*/
+  --width-singin-forms: 80%;
 
 /* ------------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------------ */
