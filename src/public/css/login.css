@@ -38,7 +38,6 @@
     transform-origin: left;
     transform-style: preserve-3d;
     background-color: inherit;
-    margin-left: 10px;
 }
 
 .Authentication #flip:checked~.Auth-cover {
@@ -59,14 +58,13 @@
 .Authentication #flip:checked~.Reset {
     visibility: visible;
     animation: img-anim 0.8s ease;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 
 .Authentication #flip:checked~.Login {
     animation: img-anim 0.8s ease;
     margin: 0;
-    margin-right: 40px;
-
+    margin-left: 0px;
 }
 
 .Auth-cover--front,
@@ -118,6 +116,10 @@
     margin: 0;
     background-color: var(--blanco);
     overflow: hidden;
+}
+
+.Login{
+    margin-right: 40px;
 }
 
 .Register-content {
@@ -484,7 +486,7 @@
     }
 
     .Reset{
-        margin: 0;
+        margin: 50px 0 0 0; 
     }
 
     .Authentication {
