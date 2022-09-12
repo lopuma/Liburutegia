@@ -402,9 +402,9 @@
     animation: img-anim 0.8s ease;
 }
 
-.Reset {
+/* .Reset {
     visibility: hidden;
-}
+} */
 
 .Login {
     animation: text-anim 0.8s ease;
@@ -442,6 +442,7 @@
         align-items: center;
         justify-content: center;
         width: 80%;
+        padding: 0 20px;
         margin: var(--size-height-navBar) auto 60px auto;
     }
 
@@ -458,8 +459,9 @@
         display: none;
     }
 
-    .Authentication #flip:checked~#formReset {
+    .Authentication #flip:checked~.Reset {
         display: block;
+        margin-left: 0px;
     }
 
     .Authentication #flip:checked~.Login {
@@ -478,6 +480,11 @@
 @media all and (max-width: 500px) {
     .Forgot{
         width: 90%;
+        margin: 0;
+    }
+
+    .Reset{
+        margin: 0;
     }
 
     .Authentication {
