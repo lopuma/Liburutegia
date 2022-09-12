@@ -35,6 +35,8 @@
 
   /* FORM AUTH*/
   --width-auth-forms: 80%;
+  --size-height-box: 60px;
+  --size-font-icon: 17px;
 
     /* FORM SINGIN*/
   --width-singin-forms: 80%;
