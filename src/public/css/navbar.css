@@ -282,6 +282,7 @@
     .Header-nav__isActive {
       opacity: 1;
       pointer-events: auto;
+      animation: text-anim 1s ease;
     }
 
     .Header-logo {

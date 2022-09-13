@@ -173,7 +173,6 @@ function menuBtnChangeSide() {
 }
 
 function menuBtnChange() {
-  console.log("LLmamada a la funcin", clickInterBar)
   if(clickInterBar){
   try {
     j.className = j.classList.contains('fa-bars') ? 'fa-solid fa-bars-staggered' : j.getAttribute('data-original');

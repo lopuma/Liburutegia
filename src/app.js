@@ -91,6 +91,11 @@ app.get('/flash', function(req, res){
 	res.redirect('/login');
   });
 
+app.use(function (req, res) {
+	res.header('Content-Type', 'text/html; charset=utf-8')
+	res.status(404).render('../views/error_page/404')
+});
+
 // https.createServer({
 //   cert: fs.readFileSync('liburudenda-selfsigned.crt'),
 //   key: fs.readFileSync('liburudenda-selfsigned.key')

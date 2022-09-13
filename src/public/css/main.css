@@ -27,7 +27,7 @@
     width: 100%;
     z-index: 98;  
     opacity: 0.4;
-    transition-duration: 500ms;
+    transition-duration: 1s;
     transition-timing-function: ease;
     transition-property: background-color,visibility; 
     visibility: hidden;

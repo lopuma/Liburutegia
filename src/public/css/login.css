@@ -31,7 +31,7 @@
 
 .Login{
     margin-right: 40px;
-    animation: text-anim 0.8s ease;
+    animation: text-anim var(--duraction-animations) ease;
 }
 
 .Reset{
@@ -46,11 +46,11 @@
     height: 100%;
     width: 50%;
     z-index: 20;
-    transition: all 1s;
+    transition: all var(--duraction-animations);
     transform-origin: left;
     transform-style: preserve-3d;
     background-color: inherit;
-    animation: img-anim 0.8s ease;
+    animation: img-anim var(--duraction-animations) ease;
 }
 
 .Authentication #flip:checked~.Auth-cover {
@@ -90,7 +90,6 @@
     /* Opera */
 }
 
-
 .Auth-img {
     position: absolute;
     height: 100%;
@@ -104,13 +103,13 @@
 
 /* ANIMACIONES FORMS AUTH */
 .Authentication #flip:checked~.Reset {
-    animation: img-anim 0.8s ease;
+    animation: img-anim 1s ease;
     visibility: visible;
     margin-left: 40px;
 }
 
 .Authentication #flip:checked~.Login {
-    animation: img-anim 0.8s ease;
+    animation: img-anim 1s ease;
     visibility: hidden;
     margin: 0;
     margin-left: 0px;
@@ -412,6 +411,10 @@
 
         .Login {
             margin: 0;
+            animation-name: down;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+
         }
         .Reset
          {
@@ -426,7 +429,10 @@
 
         .Authentication #flip:checked~.Reset {
             display: block;
-            animation: none;
+            animation-name: up;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+
             margin: 0;
         }
 

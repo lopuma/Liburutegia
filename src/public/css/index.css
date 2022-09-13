@@ -99,20 +99,6 @@
   animation: text-anim 0.8s ease;
 }
 
-/* // Animation */
-@keyframes text-anim {
-  0% {
-    opacity: 0;
-    transform: translateX(-30%);
-  }
-}
-
-@keyframes img-anim {
-  0% {
-    opacity: 0;
-    transform: translateX(30%);
-  }
-}
 
 .Index-img img {
   width: 100%;

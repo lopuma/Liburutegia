@@ -59,6 +59,22 @@
 </head>
 
 <body class="Body">
+  {{#if error}}
+  <div class="Error">
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+    <p>Error no existe la pagina</p>
+</div>
+{{else}}
   <div class="Layout-container">
     <div class="Header" id="navbar">{{> navigation}}</div>
     <div class="Main">
@@ -68,6 +84,7 @@
     </div>
     <div class="Footer">{{> footer}} </div>
   </div>
+  {{/if}}
 </body>
 
 </html>

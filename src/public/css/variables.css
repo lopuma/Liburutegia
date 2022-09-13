@@ -37,6 +37,7 @@
   --width-auth-forms: 80%;
   --size-height-box: 60px;
   --size-font-icon: 17px;
+  --duraction-animations: 1s;
 
     /* FORM SINGIN*/
   --width-singin-forms: 80%;
@@ -106,4 +107,35 @@
   --margin-forms: 30px 30px;
   --padding: 10px;
   --hovercolor: rgba(99, 99, 99, 0.836);
+}
+
+
+/* // Animation */
+@keyframes text-anim {
+  0% {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+}
+
+
+@keyframes img-anim {
+  0% {
+    opacity: 0;
+    transform: translateX(30%);
+  }
+}
+
+@keyframes down {
+  0% {
+    opacity: 1;
+    transform: translateY(-30%);
+  }
+}
+
+@keyframes up {
+  0%{
+    opacity: 1;
+    transform:translateY(30%);
+  }
 }
