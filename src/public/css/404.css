@@ -113,10 +113,6 @@
 
 @media screen and (max-width: 500px) {
 
-    .Error-img{
-        object-fit: cover;
-    }
-
     .Error-details{
       top: 50%;
       left: 0;
