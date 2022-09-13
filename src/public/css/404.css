@@ -112,20 +112,26 @@
   }
 
 @media screen and (max-width: 500px) {
-
+    .Error-img{
+        margin-top: 80px;
+    }
     .Error-details{
-      top: 50%;
+      top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      width: 300px;
-      height: 400px;
+      margin: 0 auto;
+      width: 400px;
+      height: 250px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      flex-flow: column nowrap;
+      overflow: hidden;
     }
 
     .Error-a,
     .Error-h1,
     .Error-p{
         margin: 10px 0;
+        padding: 10px;
     }
   }
