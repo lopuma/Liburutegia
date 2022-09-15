@@ -29,10 +29,8 @@ app.use((req, res, next) => {
 
 
 //4 - Recursos Publicos
-app.use('/resources', express.static('public'))
-app.use('/resources', express.static(__dirname + '/public'));
-console.log('');
-
+app.use('/style', express.static(__dirname + '/public/css'));
+app.use('/image', express.static(__dirname + '/public/img'));
 app.use('/scripts', express.static(__dirname + '/public/js'));
 
 // 5 - Establecer Motor de plantilla

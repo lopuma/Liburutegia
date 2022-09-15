@@ -7,11 +7,13 @@
   --maxWidth: 1600px;
   --heigth-forms: 600px;
   --margin-top-forms : 130px;
-  --colour-button-success: #76BA99;
-  --colour-button-successHigh: #6de9ad48;
-  --colour-button-unsuccess: #C21010;
+  --backgroundcolor-buttons-success: #76BA99;
+  --backgroundcolor-buttons-successHigh: #6de9ad48;
+  --backgroundcolor-buttons-unsuccess: #C21010;
   --box-shadow-forms: rgb(255, 255, 255) 0px 0px 8px, rgba(0, 0, 0, 0.8) 0px 0px 8px;
-  --opacity-cover: 0.2;
+  --box-shadow-buttons-success: 0px 2px 8px var(--colour-button-success), -0px -2px 8px var(--colour3-boxShadow);
+  --box-shadow-buttons-unsuccess: 0px 2px 8px var(--backgroundcolor-buttons-unsuccess), -0px -2px 8px var(--colour3-boxShadow);
+  --size-font-button__mv: 1em;
 
   /* BODY */
   --letra-principal: 'Karla', sans-serif;
@@ -22,12 +24,15 @@
   /* NAVIGATION */
   --color-menu: #000;
   --size-height-navBar: 80px;
-  --size-element: calc(var(--size-height-navBar) - 40px);
+  --size-element: calc(var(--size-height-navBar) - 20px);
   --colour3-boxShadow: #876445;
   --colour-lineSelected: #dbcf20;
-  --size-font-menu: 16px;
-  --size-font-menu-button: 24px;
-  --size-font-button: 15px;
+  --font-family-menu: 'Nunito Sans', sans-serif;
+  --size-font-menu: 2em;
+  --size-font-menu__mv: 1.5em;
+  --size-font-menu-button: 1em;
+  --size-font-menu-button__mv: 1em;
+  --background-menu: var(--background-forms);
 
   /* SIDEMENU */
   --size-width-sidemenu: 280px;
@@ -98,6 +103,7 @@
   --size-border-radius-cards: 5px;
   --size-border-radius-cards-head: 5px;
   --size-border-radius-button: 8px;
+  --size-border-radius-menu: 8px;
 
 
   /* FUENTES */
