@@ -121,6 +121,15 @@
     flex: 50%;
     margin: 20px 0;
   }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 80%;
+    }
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -134,6 +143,16 @@
   }
   .Error-details{
     width: 80%;
+  }
+
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
   }
 
 }
