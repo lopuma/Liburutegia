@@ -178,6 +178,18 @@
     margin: 20px 0;
 }
 
+.Button-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: row wrap;
+    /* height: var(--size-height-box); */
+    width: 100%;
+    margin: 20px 0;
+    height: auto;
+    overflow: hidden;
+}
+
 .Input-error {
     display: flex;
     align-items: center;
@@ -244,7 +256,6 @@
 
 
 .Reset-button {
-    border-radius: var(--Radius-button);
     padding: 10px;
     color: var(--blanco);
     background-color: var(--backgroundcolor-buttons-unsuccess);
@@ -256,32 +267,43 @@
     font-size: var(--size-font-button);
     font-weight: 700;
     font-family: 'Nunito Sans', sans-serif;
-    letter-spacing: 5px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
+    border-radius: var(--Radius-button);
+    /* letter-spacing: 5px; */
+    width: auto;
+    /* display: flex; */
+    /* flex-flow: column nowrap; */
+    /* justify-content: center; */
+    /* text-align: center; */
+    /* align-items: center; */
+    height: auto;
+    /* overflow: hidden; */
+    white-space: normal;
+
 }
 
 .Login-button {
-    border-radius: var(--Radius-button);
     padding: 10px;
-    color: inherit;
+    color: var(--colour3-boxShadow);
     background-color: var(--backgroundcolor-buttons-success);
     border: 1px solid #fff;
     cursor: pointer;
-    font-size: var(--size-font-button);
-    font-weight: 700;
-    font-family: 'Nunito Sans', sans-serif;
-    letter-spacing: 5px;
-    text-align: center;
-    width: 100%;
     transition-property: background-color, box-shadow, color;
     transition-duration: 00.5s;
     transition-timing-function: ease;
-    color: var(--colour3-boxShadow);
+    font-size: var(--size-font-button);
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+    border-radius: var(--Radius-button);
+    /* letter-spacing: 5px; */
+    width: auto;
+    /* display: flex; */
+    /* flex-flow: column nowrap; */
+    /* justify-content: center; */
+    /* text-align: center; */
+    /* align-items: center; */
+    height: auto;
+    /* overflow: hidden; */
+    white-space: normal;
 }
 
 /* Pertenece al REGISTRO */
