@@ -1,6 +1,6 @@
 .Error{
     width: 100vw;
-    height: 600px;
+    height: 100vh;
 
     max-width: var(--maxWidth);
   }
