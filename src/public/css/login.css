@@ -257,9 +257,12 @@
     font-weight: 700;
     font-family: 'Nunito Sans', sans-serif;
     letter-spacing: 5px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     text-align: center;
     align-items: center;
-    width: 100%;
 }
 
 .Login-button {
