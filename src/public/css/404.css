@@ -1,23 +1,25 @@
-.Error{
-    width: 100vw;
-    height: 100vh;
-
-    max-width: var(--maxWidth);
-  }
-
-.Error-details{
-  position: absolute;
-  left: 80px;
-  top: 50%;
-  width: 50%;
+.Error {
+  padding: 20px;
+  width: 90%;
+  height: var(--heigth-forms);
+  max-width: var(--maxWidth);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row-reverse wrap;
+  margin: 0 auto;
+}
+.Error-svg{
+  flex: 70%;
+}
+.Error-details {
+  flex: 30%;
+  margin: auto;
   height: auto;
   border-radius: 10px;
   border: solid 2px black;
-  transform: translate(0px, -50%);
-  background-color: #FFF38C;
+  background-color: #fff38c;
   color: black;
-  overflow: hidden;
-  opacity: 0.8;
   font-family: "Courier New";
   padding: 20px;
   letter-spacing: 3px;
@@ -35,35 +37,35 @@
   overflow: hidden;
   white-space: nowrap;
   font-weight: 700;
-  font-size: 4rem;
+  font-size: 2rem;
   border-right: 0.15em solid #18bdec;
   animation: typing 3s steps(50) 0.5s infinite both, blink 1s steps(1) infinite;
   margin: 10px 0;
   float: right;
   display: flex;
   align-items: center;
-  word-break:break-all;
+  word-break: break-all;
 }
 
-  .Error-p{
-    text-align: center;
-    padding: 10px;
-    margin: 10px 0;
-    font-size: inherit;
-    font-family: inherit;
-    float: right;
-    display: flex;
-    align-items: center;
-    word-break:break-all;
-    font-size: 2rem;
-  }
+.Error-p {
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: inherit;
+  font-family: inherit;
+  float: right;
+  display: flex;
+  align-items: center;
+  word-break: break-all;
+  font-size: 1rem;
+}
 
-.Error-a{
+.Error-a {
   padding: 10px;
   margin: 10px 0;
   cursor: pointer;
   text-decoration: none;
-  background-color: #C0B236;
+  background-color: #c0b236;
   color: black;
   font-weight: bold;
   border-radius: 5px;
@@ -71,73 +73,64 @@
   float: right;
   display: flex;
   align-items: center;
-  word-break:break-all;
-  font-size: 1.5rem;
-
+  word-break: break-all;
+  font-size: 1rem;
 }
 
-.Error-a:hover{
-    background-color: #D9CB50;
-    text-decoration: none;
-    color: inherit;
+.Error-a:hover {
+  background-color: #d9cb50;
+  text-decoration: none;
+  color: inherit;
 }
 
-  @keyframes typing {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
+@keyframes typing {
+  from {
+    width: 0;
   }
-  @keyframes blink {
-    50% {
-      border-color: transparent;
-    }
+  to {
+    width: 70%;
   }
-
-.Footer{
-    display: none;
 }
-.Header{
-    display: none;
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.Footer {
+  display: none;
+}
+
+.Header {
+  display: none;
 }
 
 @media screen and (max-width: 950px) {
-
+  .Error{
+    flex-flow: column wrap;
+    height: 100%;
+  }
+  .Error-svg{
+    width: 80%;
+  }
   .Error-details{
-    left: 0;
-    right: 0;
-    margin: auto;
-    transform: translate(0px, -20%); /* ALTURA */
-    overflow: hidden;
+    width: 50%;
   }
-
-
-  .Error-h1{
-    font-size: 2.5rem;  
-  }
-
-
-  .Error-p{
-    font-size: 1rem;
-  }
-
-  .Error-a{
-    font-size: 1rem;
-  }
-
 }
 
 @media screen and (max-width: 500px) {
-
-  .Error-details{
-    width: calc(100% - 80px);
-    left: 0;
-    right: 0;
-    margin: auto;
-    transform: translate(0px, -10%);
+  .Error{
+    flex-flow: column wrap;
+    height: 100%;
   }
+
+  .Error-svg{
+    width: 100%;
+  }
+  .Error-details{
+    width: 80%;
+  }
+
 }
 /* @media screen and (max-width: 950px) {
 
