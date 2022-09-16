@@ -105,19 +105,6 @@
   display: none;
 }
 
-@media screen and (max-width: 950px) {
-  .Error{
-    flex-flow: column wrap;
-    height: 100%;
-  }
-  .Error-svg{
-    width: 80%;
-  }
-  .Error-details{
-    width: 50%;
-  }
-}
-
 @media screen and (max-width: 500px) {
   .Error{
     flex-flow: column wrap;
