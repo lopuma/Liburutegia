@@ -1,12 +1,7 @@
 .Error{
     width: 100vw;
-    height: 100vh;
-    background: url('../image/404.svg') no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: contain;
-    position: relative;
+    height: 600px;
+
     max-width: var(--maxWidth);
   }
 
@@ -109,9 +104,7 @@
 }
 
 @media screen and (max-width: 950px) {
-.Error{
-  background-color: red;
-}
+
   .Error-details{
     left: 0;
     right: 0;
