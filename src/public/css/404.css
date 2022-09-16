@@ -105,6 +105,19 @@
   display: none;
 }
 
+@media screen and (max-width: 950px) {
+  .Error{
+    flex-flow: row-reverse wrap;
+  }
+.Error-svg{
+  flex: 50%;
+}
+  .Error-details{
+    flex: 50%;
+  }
+
+}
+
 @media screen and (max-width: 500px) {
   .Error{
     flex-flow: column wrap;
