@@ -51,8 +51,6 @@ app.use(bodyParser.json());
 
 app.use(flash()); // enviar mensajes al cliente
 
-// 6 - Invocamos a bscryptjs
-const bscryptjs = require('bcryptjs');
 
 // 7 - Variables de SSESSION
 const session = require('express-session');
@@ -66,7 +64,13 @@ app.use(session({
 }));
 
 // 8 - Invocamos a la conexion de la DB
-// const connection = require('../database/db');
+// 6 - Invocamos a bscryptjs
+// const connection = require("../../database/db");
+// const bscryptjs = require("bcryptjs");
+
+// Creamos usuario inicial
+const userDef = require('../src/routes/db/userDefault')
+userDef();
 
 app.use(passport.initialize());
 app.use(passport.session());

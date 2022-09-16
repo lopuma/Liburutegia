@@ -1,16 +1,23 @@
 /* CONTENEDOR DE LOGIN*/
 .Singin,
 .Authentication {
-    width: var(--width-auth-forms);
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: var(--Radius-forms);
+    color: var(--Color-forms);
+    background-color: var(--Background-Color-forms);
+    overflow: hidden;
     height: auto;
     margin: var(--margin-top-forms) auto 70px auto;
-    padding: 20px;
-    color: inherit;
-    background-color: inherit;
+    position: relative;
+    padding: 50px 20px;
+    transition: background .3s ease-in-out;
+    width: 80%;
+    max-width: var(--Max-Width-forms);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    min-height: 100%;
 }
 
 .Register,
@@ -23,7 +30,7 @@
     height: auto;
     width: 100%;
     box-shadow: var(--box-shadow-forms);
-    border-radius: var(--size-border-radius-forms);
+    border-radius: var(--Radius-forms);
     padding: 20px;
     background-color: var(--blanco);
     overflow: hidden;
@@ -96,7 +103,7 @@
     width: 100%;
     object-fit: contain;
     overflow: hidden;
-    border-radius: var(--size-border-radius-forms);
+    border-radius: var(--Radius-forms);
     z-index: 10;
     background-color: inherit;
 }
@@ -237,7 +244,7 @@
 
 
 .Reset-button {
-    border-radius: var(--size-border-radius-button);
+    border-radius: var(--Radius-button);
     padding: 10px;
     color: var(--blanco);
     background-color: var(--backgroundcolor-buttons-unsuccess);
@@ -256,7 +263,7 @@
 }
 
 .Login-button {
-    border-radius: var(--size-border-radius-button);
+    border-radius: var(--Radius-button);
     padding: 10px;
     color: inherit;
     background-color: var(--backgroundcolor-buttons-success);
@@ -295,7 +302,7 @@
 
 .Select-rol {
     background: #FCE38A;
-    border-radius: var(--size-border-radius-button);
+    border-radius: var(--Radius-button);
     font-size: inherit;
     text-align: center;
     padding: 10px;
@@ -336,7 +343,7 @@
 }
 
 .Button-cancel {
-    border-radius: var(--size-border-radius-button);
+    border-radius: var(--Radius-button);
     padding: 10px;
     color: var(--blanco);
     background-color: var(--backgroundcolor-buttons-unsuccess);
@@ -355,7 +362,7 @@
 }
 
 .Button-accept {
-    border-radius: var(--size-border-radius-button);
+    border-radius: var(--Radius-button);
     padding: 10px;
     color: inherit;
     background-color: var(--backgroundcolor-buttons-success);
@@ -404,9 +411,8 @@
             display: flex;
             flex-flow: column wrap;
             align-items: center;
-            justify-content: center;
-            width: 80%;
-            padding: 0 20px;
+            justify-content: space-between;
+            margin: var(--size-height-navBar) auto;
         }
 
         .Login {
@@ -414,8 +420,9 @@
             animation-name: down;
             animation-duration: 1s;
             animation-fill-mode: forwards;
-
+            margin-bottom: 50px;
         }
+
         .Reset
          {
             margin: 0;
@@ -426,13 +433,12 @@
             display: none;
         }
 
-
         .Authentication #flip:checked~.Reset {
+            margin: 0;
             display: block;
             animation-name: up;
             animation-duration: 1s;
             animation-fill-mode: forwards;
-            margin: 0;
             margin-bottom: 50px;
         }
 

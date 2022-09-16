@@ -1,12 +1,12 @@
 .Book-container {
   /* position: relative; */
   padding: 20px;
-  border-radius: var(--size-border-radius-forms);
+  border-radius: var(--Radius-forms);
   overflow: hidden;
   width: 100%;
   height: 100%;
   box-shadow: 2px 4px 8px var(--color-background-shadow-botton),
-  -2px -2px 16px var(--background-forms-book);
+  -2px -2px 16px var(--Background-Color-forms-book);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -19,7 +19,7 @@
   width: 100%;
   height: 100%;
   /* color: #fff; */
-  border: 1px solid var(--background-forms-book);
+  border: 1px solid var(--Background-Color-forms-book);
   border-radius: var(--size-border-radius-fieldset);
   display: flex;
   align-items: center;
@@ -29,7 +29,7 @@
 }
 
 .Book-legend {
-  background: var(--background-forms-book);
+  background: var(--Background-Color-forms-book);
   display: flex;
   align-items: center;
   justify-content: space-between;

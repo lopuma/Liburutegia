@@ -1,11 +1,11 @@
 .Admin-container {
   /* position: relative; */
   padding: 20px;
-  border-radius: var(--size-border-radius-forms);
+  border-radius: var(--Radius-forms);
   overflow: hidden;
   width: 100%;
   height: auto;
-  min-height: var(--heigth-forms);
+  min-height: var(--Heigth-forms);
   position: relative;
   color: rgb(0, 0, 0);
   /* border-radius: 10px 10px 0px 0px; */
@@ -29,9 +29,9 @@
 
 .Admin-fieldset  {
   width: 100%;
-  min-height: var(--heigth-forms);
+  min-height: var(--Heigth-forms);
   color: #fff;
-  border: 1px solid var(--background-forms-admin);
+  border: 1px solid var(--Background-Color-forms-admin);
   border-radius: var(--size-border-radius-fieldset);
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@
 }
 
 .Admin-legend {
-  background: var(--background-forms-admin);
+  background: var(--Background-Color-forms-admin);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -193,7 +193,7 @@
   transform: translateX(-50%);
   width: 240px;
   height: 60px;
-  background: var(--background-forms-admin-head);
+  background: var(--Background-Color-forms-admin-head);
   border-radius: 5px;
   box-shadow: 0 8px 8px var(--color-background-shadow-botton);
   /* overflow: hidden; */

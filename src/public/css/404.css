@@ -1,21 +1,13 @@
-.block {
+.Block {
   position: relative;
   padding: 50px 0;
   transition: background .3s ease-in-out;
-}
-
-.block.vertical-center {
   min-height: calc(100vh - 418px);
-}
-
-.block.flex-1 {
   flex: 1;
-}
-
-.vertical-center {
-  position: relative;
+  margin-top: 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 100%;
 }
 
@@ -48,12 +40,11 @@
 }
 
 .Error-h1 {
-  text-align: center;
   overflow: hidden;
   white-space: nowrap;
   font-weight: 700;
   border-right: 0.15em solid #18bdec;
-  animation: typing 3s steps(50) 0.5s infinite both, blink 1s steps(1) infinite;
+  animation: typing 3s steps(38) 1s infinite both, blink 1s steps(1) infinite;
   float: right;
   display: flex;
   align-items: center;
@@ -61,8 +52,7 @@
 }
 
 .Error-p {
-  text-align: center;
-  font-family: inherit;
+  overflow: hidden;
   float: right;
   display: flex;
   align-items: center;
@@ -70,13 +60,12 @@
 }
 
 .Error-a {
-  padding: 10px;
+  padding: 10px 15px;
   cursor: pointer;
   text-decoration: none;
   background-color: #c0b236;
-  color: black;
-  font-weight: bold;
-  border-radius: 5px;
+  color: var(--negro);
+  border-radius: var(--Radius-button);
   border: solid 1px black;
   float: right;
   display: flex;
@@ -115,7 +104,7 @@
 
 @media screen and (max-width: 500px) {
 
-  .block{
-    width: 80%;
+  .Block{
+    width: 90%;
   }
 }
