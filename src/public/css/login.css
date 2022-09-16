@@ -432,8 +432,8 @@
             animation-name: up;
             animation-duration: 1s;
             animation-fill-mode: forwards;
-
             margin: 0;
+            margin-bottom: 30px;
         }
 
         /* Reggistros */
