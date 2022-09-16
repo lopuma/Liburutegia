@@ -5,7 +5,7 @@
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: contain;
     position: relative;
     max-width: var(--maxWidth);
   }
@@ -35,7 +35,7 @@
 }
 
 .Error-h1 {
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   overflow: hidden;
   white-space: nowrap;
@@ -52,7 +52,7 @@
 
   .Error-p{
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     margin: 10px 0;
     font-size: inherit;
     font-family: inherit;
@@ -64,7 +64,7 @@
   }
 
 .Error-a{
-  padding: 20px;
+  padding: 10px;
   margin: 10px 0;
   cursor: pointer;
   text-decoration: none;
@@ -108,6 +108,33 @@
     display: none;
 }
 
+@media screen and (max-width: 950px) {
+.Error{
+  background-color: red;
+}
+  .Error-details{
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform: translate(0px, -20%); /* ALTURA */
+    overflow: hidden;
+  }
+
+
+  .Error-h1{
+    font-size: 2.5rem;  
+  }
+
+
+  .Error-p{
+    font-size: 1rem;
+  }
+
+  .Error-a{
+    font-size: 1rem;
+  }
+
+}
 
 @media screen and (max-width: 500px) {
 
@@ -115,27 +142,8 @@
     width: calc(100% - 80px);
     left: 0;
     right: 0;
-    bottom: 0;
     margin: auto;
-    transform: translate(0px, -20%);
-  }
-
-  .Error-h1{
-    font-size: 2.5rem;
-    width: 100%;
-    margin: 20px 0;
-    
-  }
-
-
-  .Error-p{
-    font-size: 1rem;
-    margin: 20px 0;
-  }
-
-  .Error-a{
-    font-size: 1rem;
-    margin: 20px 0;
+    transform: translate(0px, -10%);
   }
 }
 /* @media screen and (max-width: 950px) {
