@@ -31,7 +31,7 @@
 }
 
 /** For mobile devices **/
-@media (max-width: 767px) {
+@media (max-width: 950px) {
     .custom-shape-divider-bottom-1663371104 svg {
         width: calc(177% + 1.6px);
         height:100px;
