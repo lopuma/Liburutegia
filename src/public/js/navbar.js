@@ -2,6 +2,7 @@
 
 // Variables MENU
 const btnBook = document.getElementById('btnBook');
+const btnHome = document.getElementById('btnHome');
 const btnBooking = document.getElementById('btnBooking');
 const btnPartner = document.getElementById('btnPartner');
 const btnAdmin = document.getElementById('btnAdmin');
@@ -22,8 +23,10 @@ function onLoad() {
   try {
     // HOME
     if ($('#stateHome').val() === '') { // 
+      btnHome.classList.add('isSelected');
       btnHomeSidemenu.classList.add('Sidemenu--isSelected');
     } else {
+      btnHome.classList.remove('isSelected');
       btnHomeSidemenu.classList.remove('Sidemenu--isSelected');
     }
   } catch { }
