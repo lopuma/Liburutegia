@@ -183,10 +183,10 @@
     align-items: center;
     justify-content: center;
     flex-flow: row wrap;
-    /* height: var(--size-height-box); */
     width: 100%;
     margin: 20px 0;
     height: auto;
+    padding: 10px;
     overflow: hidden;
 }
 
@@ -268,21 +268,12 @@
     font-weight: 700;
     font-family: 'Nunito Sans', sans-serif;
     border-radius: var(--Radius-button);
-    /* letter-spacing: 5px; */
-    width: auto;
-    /* display: flex; */
-    /* flex-flow: column nowrap; */
-    /* justify-content: center; */
-    /* text-align: center; */
-    /* align-items: center; */
-    height: auto;
-    /* overflow: hidden; */
+    letter-spacing: 3px;
     white-space: normal;
-
 }
 
 .Login-button {
-    padding: 10px;
+    padding: 10px 20px;
     color: var(--colour3-boxShadow);
     background-color: var(--backgroundcolor-buttons-success);
     border: 1px solid #fff;
@@ -294,15 +285,7 @@
     font-weight: 700;
     font-family: 'Nunito Sans', sans-serif;
     border-radius: var(--Radius-button);
-    /* letter-spacing: 5px; */
-    width: auto;
-    /* display: flex; */
-    /* flex-flow: column nowrap; */
-    /* justify-content: center; */
-    /* text-align: center; */
-    /* align-items: center; */
-    height: auto;
-    /* overflow: hidden; */
+    letter-spacing: 3px;
     white-space: normal;
 }
 
@@ -464,7 +447,6 @@
             animation-name: up;
             animation-duration: 1s;
             animation-fill-mode: forwards;
-            margin-bottom: 50px;
         }
 
         /* Reggistros */
