@@ -1,6 +1,6 @@
 node_modules/
 liburudenda-selfsigned.*
-docs/
+##docs/
 env/
 .gitignore
 docker-compose.yml

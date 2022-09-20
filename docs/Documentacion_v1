@@ -1,0 +1,262 @@
+**** BD_mysql
+
+--- Data base >> 
+        CREATE DATABASE liburutegiasanmiguel;
+
+--- Tablas:
+    
+    usuarios >>
+        CREATE TABLE users(
+            id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+            email VARCHAR(255) COLLATE utf8_spanish_ci NOT NULL UNIQUE,
+            firstname VARCHAR(100) COLLATE utf8_spanish_ci NOT NULL,
+            lastname VARCHAR(100) COLLATE utf8_spanish_ci NOT NULL,
+            rol VARCHAR(45) COLLATE utf8_spanish_ci NOT NULL,
+            pass VARCHAR(255) COLLATE utf8_spanish_ci NOT NULL
+            )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
+    
+    books >>
+        create table books(
+          -- EJEMPLO DE ID LIBRO : 100001, 100002
+          id_book BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+          titulo VARCHAR(50) COLLATE utf8_spanish_ci NOT NULL,
+          autor VARCHAR(50) COLLATE utf8_spanish_ci  NOT NULL DEFAULT 'Desconocido',
+          isbn  VARCHAR(45) COLLATE utf8_spanish_ci,
+          tipo VARCHAR(45) COLLATE utf8_spanish_ci, 
+          idioma VARCHAR(25) COLLATE utf8_spanish_ci,           
+          coleccion VARCHAR(50) COLLATE utf8_spanish_ci, 
+          fecha_compra DATE,
+          --  formato: YYYY-MM-DD, por ejemplo 2022-07-07
+          reservado BOOLEAN DEFAULT 0
+         )AUTO_INCREMENT=100000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
++--------------+-----------------+------+-----+-------------+----------------+
+| Field        | Type            | Null | Key | Default     | Extra          |
++--------------+-----------------+------+-----+-------------+----------------+
+| id_book      | bigint unsigned | NO   | PRI | NULL        | auto_increment |
+| titulo       | varchar(50)     | NO   |     | NULL        |                |
+| autor        | varchar(50)     | NO   |     | Desconocido |                |
+| iban         | varchar(45)     | YES  |     | NULL        |                |
+| tipo         | varchar(45)     | YES  |     | NULL        |                |
+| fecha_compra | date            | YES  |     | NULL        |                |
+| reservado    | tinyint(1)      | YES  |     | 0           |                |
++--------------+-----------------+------+-----+-------------+----------------+
+
+SIMULACION DE DATOS
+
+INSERT INTO books (titulo, autor, isbn, tipo, idioma, fecha_compra, reservado) VALUES ('GVP_018', 'GERALD V POST', '12', 'Accion', 'frances', '2022-07-07', 0),('GVP_019', 'KRIS V PUT', '13', 'Terror', 'frances', '2022-08-07', 0),('GVP_235', 'KARLA V GET', '15', 'Anime', 'frances', '2022-09-07', 0),('GVP_455', 'LISS V POST', '14', 'Romance', 'frances', '2022-10-07', 0);
+
++---------+---------+---------------+------------------+---------+--------------+-----------+
+| id_book | titulo  | autor         | iban             | tipo    | fecha_compra | reservado |
++---------+---------+---------------+------------------+---------+--------------+-----------+
+|  100000 | GVP_012 | GERALD V POST | ES00000000000001 | Accion  | 2022-07-07   |         0 |
+|  100001 | GVP_013 | KRIS V PUT    | ES00000000000002 | Terror  | 2022-08-07   |         0 |
+|  100002 | GVP_014 | KARLA V GET   | ES00000000000011 | Anime   | 2022-09-07   |         0 |
+|  100003 | GVP_015 | LISS V POST   | ES00000000000121 | Romance | 2022-10-07   |         0 |
++---------+---------+---------------+------------------+---------+--------------+-----------+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    socios >>
+        CREATE TABLE partners(
+            -- EJEMPLO DE ID SOCIO : S00001, S00002
+            id_partner BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            dni VARCHAR(10) COLLATE utf8_spanish_ci NOT NULL UNIQUE,            
+            escaner VARCHAR(25) COLLATE utf8_spanish_ci,
+            nombre VARCHAR(45) COLLATE utf8_spanish_ci NOT NULL,
+            apellidos VARCHAR(45) COLLATE utf8_spanish_ci NOT NULL,
+            direccion VARCHAR(45) COLLATE utf8_spanish_ci,
+            telefono INT(9) COLLATE utf8_spanish_ci NOT NULL,
+            email VARCHAR(45) COLLATE utf8_spanish_ci
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 CHECKSUM=1 COLLATE=utf8_spanish_ci DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+        CREATE INDEX identificacion ON partners (dni);
+
++------------+-----------------+------+-----+---------+----------------+
+| Field      | Type            | Null | Key | Default | Extra          |
++------------+-----------------+------+-----+---------+----------------+
+| id_partner | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+| dni        | varchar(10)     | NO   | UNI | NULL    |                |
+| nombre     | varchar(45)     | NO   |     | NULL    |                |
+| apellidos  | varchar(45)     | NO   |     | NULL    |                |
+| direccion  | varchar(45)     | YES  |     | NULL    |                |
+| telefono   | int             | NO   |     | NULL    |                |
+| email      | varchar(45)     | YES  |     | NULL    |                |
++------------+-----------------+------+-----+---------+----------------+
+
+SIMULACION DE DATOS
+
+INSERT INTO partners (dni, nombre, apellidos, direccion, telefono, email) VALUES ('0845738767', 'Leonard', 'Hofstadter', 'Woodcrest', '67412589','janetjones@yagoo.cm'),('0987786553', 'Sheldon', 'Cooper', 'Woodcrest', '654789321', 'jj@fstreet.com'),('0976736763', 'RajeshT', 'Koothrappali', 'Woodcrest', '632145789', 'rm@tstreet.com'),('0987636553', 'Leslie', 'Winkle', 'Woodcrest', '678912345', 'lwolowitz@email.me');
+
++------------+------------+---------+--------------+-----------+-----------+---------------------+
+| id_partner | dni        | nombre  | apellidos    | direccion | telefono  | email               |
++------------+------------+---------+--------------+-----------+-----------+---------------------+
+|          1 | 0845738767 | Leonard | Hofstadter   | Woodcrest |  67412589 | janetjones@yagoo.cm |
+|          2 | 0987786553 | Sheldon | Cooper       | Woodcrest | 654789321 | jj@fstreet.com      |
+|          3 | 0976736763 | RajeshT | Koothrappali | Woodcrest | 632145789 | rm@tstreet.com      |
+|          4 | 0987636553 | Leslie  | Winkle       | Woodcrest | 678912345 | lwolowitz@email.me  |
++------------+------------+---------+--------------+-----------+-----------+---------------------+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    reservas >>
+        CREATE TABLE bookings(
+            -- EJEMPLO DE ID SOCIO : R00001, R00002
+            id_booking BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+            cod_book BIGINT UNSIGNED NOT NULL,
+            dni_partner VARCHAR(10) COLLATE utf8_spanish_ci NOT NULL,
+            fecha_reserva DATE NOT NULL,
+            --  formato: YYYY-MM-DD, por ejemplo 2022-07-07
+            fecha_entrega DATE NOT NULL,
+            --  formato: YYYY-MM-DD, por ejemplo 2022-07-07
+            FOREIGN KEY (cod_book) REFERENCES books (id_book),
+            FOREIGN KEY (dni_partner) REFERENCES partners (dni)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 CHECKSUM=1 COLLATE=utf8_spanish_ci DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+        
++---------------+-----------------+------+-----+---------+----------------+
+| Field         | Type            | Null | Key | Default | Extra          |
++---------------+-----------------+------+-----+---------+----------------+
+| id_booking    | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+| cod_book      | bigint unsigned | NO   | MUL | NULL    |                |
+| dni_partner   | varchar(10)     | NO   | UNI | NULL    |                |
+| fecha_reserva | date            | NO   |     | NULL    |                |
+| fecha_entrega | date            | NO   |     | NULL    |                |
++---------------+-----------------+------+-----+---------+----------------+
+
+SIMULACION DE DATOS
+
+INSERT INTO bookings (cod_book, dni_partner, fecha_reserva, fecha_entrega) VALUES ('100001', '0987636553', '2022-07-07', '2022-08-09'), ('100003', '0987636553', '2022-07-07', '2022-08-09'), ('100002', '0987786553', '2022-07-12', '2022-09-15');
+
++------------+----------+-------------+---------------+---------------+
+| id_booking | cod_book | dni_partner | fecha_reserva | fecha_entrega |
++------------+----------+-------------+---------------+---------------+
+|          1 |   100001 | 0987636553  | 2022-07-07    | 2022-08-09    |
+|          2 |   100003 | 0987636553  | 2022-07-07    | 2022-08-09    |
+|          3 |   100002 | 0987786553  | 2022-07-12    | 2022-09-15    |
++------------+----------+-------------+---------------+---------------+
+
+
+CONSULTA RELACIONAL >>
+
+CASO 1, quiero que me muestre los datos del nombre, apellidos, fecha reserva, fecha de entrea de las reservas actuales.
+
+    SELECT r.id_booking, l.titulo, s.nombre, s.apellidos, s.dni, r.fecha_reserva, r.fecha_entrega FROM books l, bookings r, partners s WHERE l.id_book = r.cod_book AND s.dni = r.dni_partner;
+
++------------+---------+---------+-----------+------------+---------------+---------------+
+| id_booking | titulo  | nombre  | apellidos | dni        | fecha_reserva | fecha_entrega |
++------------+---------+---------+-----------+------------+---------------+---------------+
+|          1 | GVP_013 | Leslie  | Winkle    | 0987636553 | 2022-07-07    | 2022-08-09    |
+|          2 | GVP_015 | Leslie  | Winkle    | 0987636553 | 2022-07-07    | 2022-08-09    |
+|          3 | GVP_014 | Sheldon | Cooper    | 0987786553 | 2022-07-12    | 2022-09-15    |
++------------+---------+---------+-----------+------------+---------------+---------------+
+
+Como ves Leslie reservo, 2 libros el 013 y 015, y nos da la fecha de entrega.
+
+
+CASO 2, total de libros
+
+mysql> SELECT COUNT(*) Total_Libros FROM books;
++--------------+
+| Total_Libros |
++--------------+
+|            4 |
+
+
+CASO 3 , TOTAL DE SOCIOS
+
+mysql> SELECT COUNT(*) Total_Libros FROM partners;
++--------------+
+| Total_Libros |
++--------------+
+|            4 |
+
+
+CASO 4,queremos los libros que no esten reservados
+
+SELECT * FROM books WHERE reservado=0;
+
++---------+---------+---------------+------------------+--------+--------------+-----------+
+| id_book | titulo  | autor         | iban             | tipo   | fecha_compra | reservado |
++---------+---------+---------------+------------------+--------+--------------+-----------+
+|  100000 | GVP_012 | GERALD V POST | ES00000000000001 | Accion | 2022-07-07   |         0 |
++---------+---------+---------------+------------------+--------+--------------+-----------+
+
+CASO 5, libros reservados
+
+SELECT * FROM books WHERE reservado=1;
+
++---------+---------+-------------+------------------+---------+--------------+-----------+
+| id_book | titulo  | autor       | iban             | tipo    | fecha_compra | reservado |
++---------+---------+-------------+------------------+---------+--------------+-----------+
+|  100001 | GVP_013 | KRIS V PUT  | ES00000000000002 | Terror  | 2022-08-07   |         1 |
+|  100002 | GVP_014 | KARLA V GET | ES00000000000011 | Anime   | 2022-09-07   |         1 |
+|  100003 | GVP_015 | LISS V POST | ES00000000000121 | Romance | 2022-10-07   |         1 |
++---------+---------+-------------+------------------+---------+--------------+-----------+
+
+Y asi se puede realizar varias busquedas.
+
+
+ACTUALIZAR DATOS.
+
+UPDATE books SET reservado=1 WHERE id_book='100001';
+UPDATE books SET reservado=1 WHERE id_book='100003';
+UPDATE books SET reservado=1 WHERE id_book='100002';
+
+***** NODE
+
+--- Instalar modulos que necesitamos para el proyecto.
+
+    "bcryptjs": "^2.4.3",
+    // CIFRAR CONTRASEÑAS
+    "connect-flash": "^0.1.1",
+    // ENVIAR MENSAJES EN MULTIPLES VISTAS
+    "dotenv": "^16.0.1",
+    // CLAVES DE EVENTOS VIRTUALES
+    "express": "^4.16.4",
+    // FRAMEWORK PARA BACKEND
+    "express-handlebars": "^6.0.6",
+    // MOTOR DE PLANTILLA
+    "express-mysql-session": "^2.1.8",
+    // GUARDAR SESSION DATOS EN LA BBDD
+    "express-session": "^1.17.3",
+    // GUARDAR SESSION DATOS EN LA MEMORIA DEL SERVIDOR
+    "express-validator": "^6.14.2",
+    // VALIDAR DATOS DEL USUARIO
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "morgan": "^1.10.0",
+    // MUESTRA PETICIONES HTTTP
+    "mysql": "^2.18.1",
+    // BBDD
+    "passport": "^0.6.0",
+    {
+    "passport-local": "^1.0.0",
+    // AUTHENTICACION
+    "timeago.js": "^4.0.2"
+
+    // * PROJECT STRUCTURE
+    datablase/
+        - { db // conexion a mysql
+        - { keys // almacenar claves para conectar a mysql, secrets
+    .env/
+        - { .env // fichero para las claves eventuales
+    src/
+        [ lib/
+            - { handlebars.js // procesar funciones
+        [ public/
+        [ routes
+            
+        [ views
+            [ layouts
+                - { main.hbs // Archivo que contiene el contenido de la APP { head, body, footer }
+            [ partials *handlebars // CONTIENE LA PARTE QUE COMPONE EL MAIN.
+                - { bookings
+                - { books
+                - { footer
+                - { side_menu
+                - { navigation
+                - { partners
+            - { index.hbs // PAGINA DE INCIO
+        - { app.js // Archivo para arrancar el SERVIDOR
+
+--- Crear servidor local, en el puerto 3000 ---> http://localhost:3000, esta configuracion esta en src/app.js
+
