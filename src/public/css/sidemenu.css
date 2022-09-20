@@ -15,7 +15,7 @@
     color: var(--color-menu);
     box-shadow: 0 0 10px rgb(0,0,0,0.5);
     width: var(--size-width-sidemenu);
-    animation: text-anim 1s ease;
+    animation: text-anim 0.5s ease;
   }
 
   
@@ -95,7 +95,6 @@
     text-decoration: none;
   }
   
-  
   .Sidemenu-icon--item {
     box-sizing: border-box;
     padding: var(--padding);
@@ -116,8 +115,7 @@
     display: block;
     top: var(--size-height-navBar);
   }
-
-
+  
   .menu-expanded .Sidemenu-title--item span{
     color: inherit;
     opacity: 1;

@@ -1,26 +1,25 @@
 .Index-container {
+  margin: var(--margin-top-forms) auto auto auto;
   font-family: inherit;
   font-size: inherit;
   border-radius: var(--Radius-forms);
   color: var(--Color-forms);
   background-color: var(--Background-Color-forms);
   overflow: hidden;
-  height: var(--Heigth-forms);
-  margin: var(--margin-top-forms) auto 70px auto;
   position: relative;
-  padding: 50px 0;
-  transition: background .3s ease-in-out;
+  padding: 50px 20px;
+  width: 90%;
   flex: 1;
   max-width: var(--Max-Width-forms);
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 100%;
+  transition: background .3s ease-in-out;
 }
 
 .Index-text {
   flex: 40%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
@@ -41,14 +40,14 @@
   white-space: normal;
   background-clip: border-box;
   -webkit-text-fill-color: inherit;
-  margin: auto 0;
+  margin: 20px 0;
   font-family: inherit;
   width: 100%;
 }
 
 .Index-p {
   text-align: justify;
-  margin: auto 0;
+  margin: 20px 0;
   font-family: inherit;
   color: #2c3243;
   font-size: 1.5em;
@@ -58,6 +57,7 @@
 }
 
 .Index-a {
+  width: auto;
   border-radius: var(--Radius-button);
   font-size: var(--size-font-button);
   font-weight: 700;
@@ -91,16 +91,12 @@
   display: flex;
   align-items: center;
   justify-content: stretch;
-}
-
-.Index-img {
   animation: img-anim 0.8s ease;
 }
 
 .Index-text {
   animation: text-anim 0.8s ease;
 }
-
 
 .Index-img img {
   width: 100%;
@@ -115,10 +111,8 @@
     display: flex;
     flex-flow: column-reverse wrap;
     align-items: center;
-    justify-content: space-between;
-    height: auto;
-    margin: var(--size-height-navBar) auto 60px auto;
-}
+    margin: var(--margin-top-forms) auto auto auto;
+  }
 
     .Index-text{
       text-align: center;
@@ -133,7 +127,7 @@
     .Index-p{
       text-align: center;
       padding: 10px 0;
-      font-size: 1em;
+      font-size: 1.5em;
     }
 
     .Index-a{

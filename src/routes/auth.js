@@ -3,94 +3,54 @@ const router = express.Router();
 const connection = require("../../database/db");
 const bscryptjs = require("bcryptjs");
 const flash = require("connect-flash");
+const authController = require('../controller/authController');
 
-router.post("/auth", async (req, res) => {
+// ROUTER LOGIN
+router.post("/login", authController.login);
+router.get("/login", async (req, res) => {
   const logueado = req.session.loggedin;
   const nameUser = req.session.name;
+  const ruta = req.session.ruta;
   if (logueado) {
-    login = true, nameUser;
-    res.redirect("workspace/books");
+    login: true;
+    nameUser;
+    res.status(200).redirect(ruta);
   } else {
-    let body = req.body;
-    if (body) {
-      //let reqDataValue = JSON.parse(JSON.stringify(body));
-      email = body.email;
-      pass = body.password;
-    }
-    let passwordHashing = await bscryptjs.hash(pass, 8);
-    console.log(email, pass)
-    if (email && pass) {
-      sql = "SELECT * FROM users WHERE email = ?";
-      console.log("conect ", connection)
-      connection.query(sql, [email], async (error, results) => {
-        // if (
-        //   results.length == 0 ) {
-          if (
-            results.length == 0 ||
-            !await bscryptjs.compare(pass, results[0].pass)
-          ) {
-          req.flash("error_msg", "These credentials do not match our records.");
-          res.send(
-            {
-              Error: error
-            },
-            res.redirect("/login")
-          );
-        } else {
-          req.session.loggedin = true;
-          req.session.name = results[0].firstname;
-          rol = results[0].rol;
-          if (rol == 'admin' || rol == 'Admin'){
-            req.session.rol = rol;
-            login = true;
-            ruta = "workspace/admin";
-          } else{
-            req.session.rol = "";
-            ruta = "workspace/books";
-          }
-          res.render("../views/forms/login", {
-            Success: results[0].email,
-            alert: true,
-            alertTitle: "Conexion Success",
-            alertMessage: "!Login Success",
-            alertIcon: "success",
-            timer: 2000,
-            ruta
-          });
-        }
-      });
-    }
+    res.status(200).render("../views/forms/login", {
+      login: false,
+      nameUser: "",
+      error_msg: req.flash("error_msg"),
+    });
   }
-
-  // sql = 'SELECT * FROM users WHERE email = ?';
-  //  connection.query(sql, email, async (error, results, fields) => {
-  //       if( results.length == 0 || await bscryptjs.compare(passwordHashing, results[0].pass)) {
-  //          console.log("ERORR")
-  //          res.send({Error: error})
-  // req.session.loggedin = false;
-  // req.session.name = "";
-  // req.flash('error_msg', "These credentials do not match our records.")
-  // return res.status(500).json({
-  //     ok: false,
-  //     err: error
-  // },
-  // res.redirect('/login')
-  //);
-  //  }else{
-  //  console.log("SUCCES")
-  //   res.send({Success: results[0].email});
-
-  //req.session.loggedin = true;
-  //req.session.name = results[0].firstname;
-  //req.flash('messages', 'Flash is back!');
-  //return res.status(500).json({
-  //     ok: false,
-  //     err: error
-  // }, res.redirect('workspace/books'),
-  // res.end()
-  // );
-  //  };
 });
+// sql = 'SELECT * FROM users WHERE email = ?';
+//  connection.query(sql, email, async (error, results, fields) => {
+//       if( results.length == 0 || await bscryptjs.compare(passwordHashing, results[0].pass)) {
+//          console.log("ERORR")
+//          res.send({Error: error})
+// req.session.loggedin = false;
+// req.session.name = "";
+// req.flash('error_msg', "These credentials do not match our records.")
+// return res.status(500).json({
+//     ok: false,
+//     err: error
+// },
+// res.redirect('/login')
+//);
+//  }else{
+//  console.log("SUCCES")
+//   res.send({Success: results[0].email});
+
+//req.session.loggedin = true;
+//req.session.name = results[0].firstname;
+//req.flash('messages', 'Flash is back!');
+//return res.status(500).json({
+//     ok: false,
+//     err: error
+// }, res.redirect('workspace/books'),
+// res.end()
+// );
+//  };
 
 // if (email && pass) {
 //         connection.query('SELECT * FROM users WHERE email ?', async (error, results, fields) => {
@@ -123,23 +83,24 @@ router.post("/reset-password", (req, res) => {
   res.send("Recibido-RESE");
   res.end();
 });
+
 // LOG IN
-router.get("/login", async (req, res) => {
-  const logueado = req.session.loggedin;
-  const nameUser = req.session.name;
-  if (logueado) {
-    login: true;
-    nameUser;
-    res.redirect("workspace/books");
-  } else {
-    res.status(200);
-    res.render("../views/forms/login", {
-      login: false,
-      nameUser: "",
-      error_msg: req.flash("error_msg")
-    });
-  }
-});
+// router.get("/login", async (req, res) => {
+//   const logueado = req.session.loggedin;
+//   const nameUser = req.session.name;
+//   const ruta = req.session.ruta;
+//   if (logueado) {
+//     login: true;
+//     nameUser;
+//     res.status(200).redirect(ruta);
+//   } else {
+//     res.status(200).render("../views/forms/login", {
+//       login: false,
+//       nameUser: "",
+//       error_msg: req.flash("error_msg"),
+//     });
+//   }
+// });
 //   res.render('index', { messages: req.flash('info') });
 
 //REGISTER
@@ -150,14 +111,14 @@ router.get("/register", (req, res) => {
   const error_msg_exist = req.flash("error_msg_exist");
   console.log("error", error_msg_exist);
 
-  if(logueado && userRol){
-    res.render("../views/forms/register",{
+  if (logueado && userRol) {
+    res.render("../views/forms/register", {
       login: true,
       nameUser,
       userRol,
       error_msg_exist
     });
-  }else {
+  } else {
     login = true, nameUser, userRol;
     return res.redirect('/');
   }

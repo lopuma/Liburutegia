@@ -21,7 +21,7 @@
 
   /* FORMS */
   --Heigth-forms: 600px;
-  --margin-top-forms: 130px;
+  --margin-top-forms: calc(var(--size-height-navBar) + 20px);
   --box-shadow-forms: rgb(255, 255, 255) 0px 0px 8px, rgba(0, 0, 0, 0.8) 0px 0px 8px;
   --Radius-forms: 8px;
   --Background-Color-forms-admin-head: #ffffff;

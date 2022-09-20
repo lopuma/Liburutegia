@@ -3,7 +3,9 @@ const router = express.Router();
 const connection = require("../../database/db");
 const bscryptjs = require("bcryptjs");
 
-router.get('/', async (req, res) => {
+const authController = require('../controller/authController')
+
+router.get('/', authController.isAuthenticated, async (req, res, next) => {
   const nameUser = req.session.name;
   const logueado = req.session.loggedin;
   const userRol = req.session.rol;
@@ -32,7 +34,7 @@ router.get('/', async (req, res) => {
 
 
 router.post('/', (req, res) => {
-  console.log(req.body);
+  console.log("Hola");
   res.send('Data received');
 })
 

@@ -1,23 +1,23 @@
 /* CONTENEDOR DE LOGIN*/
 .Singin,
 .Authentication {
+    margin: var(--margin-top-forms) auto auto auto;
     font-family: inherit;
     font-size: inherit;
     border-radius: var(--Radius-forms);
     color: var(--Color-forms);
     background-color: var(--Background-Color-forms);
     overflow: hidden;
-    height: auto;
-    margin: var(--margin-top-forms) auto 70px auto;
     position: relative;
     padding: 50px 20px;
-    transition: background .3s ease-in-out;
-    width: 80%;
+    width: 90%;
+    flex: 1;
     max-width: var(--Max-Width-forms);
+    height: var(--Heigth-forms);
+    min-height: var(--Heigth-forms);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    min-height: 100%;
+    transition: background .3s ease-in-out;
 }
 
 .Register,
@@ -131,7 +131,8 @@
 
 .Register-content {
     width: 60%;
-    overflow: hidden;
+    height: auto;
+    /* overflow: hidden; */
 }
 
 
@@ -175,7 +176,7 @@
     justify-content: space-between;
     height: var(--size-height-box);
     width: 100%;
-    margin: 20px 0;
+    margin: 40px 0;
 }
 
 .Button-box {
