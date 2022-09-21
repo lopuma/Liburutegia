@@ -2,6 +2,7 @@
 
 APP para el control de libro de la sociedad : ' San Miguel'
 
+![This is an image](http://localhost:3000/image/APPLiburutegia.png)
 
 ## ** Primero clonar el repositorio. **
 
