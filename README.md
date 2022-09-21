@@ -2,7 +2,7 @@
 
 APP para el control de libro de la sociedad : ' San Miguel'
 
-![This is an image](http://localhost:3000/image/APPLiburutegia.png)
+![This is an image](https://github.com/lopuma/Liburudenda/blob/master/src/public/img/APPLiburutegia.png)
 
 ## ** Primero clonar el repositorio. **
 
