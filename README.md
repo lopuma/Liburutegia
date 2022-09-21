@@ -3,22 +3,21 @@
 APP para el control de libro de la sociedad : ' San Miguel'
 
 
-** Primero clonar el repositorio. **
+## ** Primero clonar el repositorio. **
 
 
 `git clone https://github.com/lopuma/Liburudenda.git`
 
 
-** Segundo Instalaciones de los siguientes. **
+## ** Segundo Instalaciones de los siguientes Servicios Necesarios. **
 
-# Servicios Necesarios.
 
-## Sistema operativo: Ubuntu 22
+###### Sistema operativo: Ubuntu 22
     
 ```console
 sudo apt update
 ```
-## MySql
+###### MySql
 
 ```console
 sudo apt install mysql-server
@@ -27,7 +26,7 @@ sudo apt install mysql-server
 ```console   
 sudo systemctl status mysql
 ```
-## NODE
+###### NODE
 ```console
 sudo apt install nodejs
 ```
@@ -35,7 +34,7 @@ sudo apt install nodejs
 ```console
 node --version
 ```
-## NPM
+###### NPM
 ```console
 sudo apt install npm
 ```
