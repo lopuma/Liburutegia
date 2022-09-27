@@ -3,8 +3,8 @@
   font-family: inherit;
   font-size: inherit;
   border-radius: var(--Radius-forms);
-  color: var(--Color-forms);
-  background-color: var(--Background-Color-forms);
+  color: inherit;
+  background-color: inherit;
   overflow: hidden;
   position: relative;
   padding: 50px 20px;
@@ -27,6 +27,7 @@
   padding: 20px;
   margin: auto 0;
   color: inherit;
+  background-color: inherit;
 }
 
 .Index-h1 {
@@ -49,7 +50,7 @@
   text-align: justify;
   margin: 20px 0;
   font-family: inherit;
-  color: #2c3243;
+  color: inherit;
   font-size: 1.5em;
   line-height: 28px;
   font-weight: 300;
@@ -65,12 +66,12 @@
   letter-spacing: 4px;
   text-align: center;
   padding: 15px 10px;
-  background-color: var(--backgroundcolor-buttons-success);
+  background-color: var(--Success);
   border: 1px solid var(--negro);
   transition-property: color, background-color, box-shadow, border;
   transition-duration: 00.5s;
   transition-timing-function: ease-in-out;
-  color: var(--colour3-boxShadow);
+  color: var(--Brown);
   margin: 20px 0;
   text-transform: uppercase;
 }
@@ -79,8 +80,8 @@
   text-decoration: none;
   border: 1px solid var(--blanco);
   color: var(--negro);
-  background-color: var(--backgroundcolor-buttons-success);
-  box-shadow: 0px 2px 8px var(--backgroundcolor-buttons-success), -0px -2px 8px var(--colour3-boxShadow);
+  background-color: var(--Success);
+  box-shadow: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
 }
 
 .Index-img {
@@ -92,6 +93,7 @@
   align-items: center;
   justify-content: stretch;
   animation: img-anim 0.8s ease;
+  background-color: inherit;
 }
 
 .Index-text {
@@ -102,7 +104,7 @@
   width: 100%;
   height: auto;
   overflow: hidden;
-  filter: drop-shadow(8px 8px 4px var(--backgroundcolor-buttons-success));
+  filter: drop-shadow(8px 8px 4px var(--Success));
 }
 
 

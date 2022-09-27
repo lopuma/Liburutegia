@@ -21,8 +21,8 @@
         create table books(
           -- EJEMPLO DE ID LIBRO : 100001, 100002
           id_book BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-          titulo VARCHAR(50) COLLATE utf8_spanish_ci NOT NULL,
-          autor VARCHAR(50) COLLATE utf8_spanish_ci  NOT NULL DEFAULT 'Desconocido',
+          title VARCHAR(50) COLLATE utf8_spanish_ci NOT NULL,
+          author VARCHAR(50) COLLATE utf8_spanish_ci  NOT NULL DEFAULT 'Desconocido',
           isbn  VARCHAR(45) COLLATE utf8_spanish_ci,
           tipo VARCHAR(45) COLLATE utf8_spanish_ci, 
           idioma VARCHAR(25) COLLATE utf8_spanish_ci,           
@@ -32,24 +32,31 @@
           reservado BOOLEAN DEFAULT 0
          )AUTO_INCREMENT=100000 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-+--------------+-----------------+------+-----+-------------+----------------+
-| Field        | Type            | Null | Key | Default     | Extra          |
-+--------------+-----------------+------+-----+-------------+----------------+
-| id_book      | bigint unsigned | NO   | PRI | NULL        | auto_increment |
-| titulo       | varchar(50)     | NO   |     | NULL        |                |
-| autor        | varchar(50)     | NO   |     | Desconocido |                |
-| iban         | varchar(45)     | YES  |     | NULL        |                |
-| tipo         | varchar(45)     | YES  |     | NULL        |                |
-| fecha_compra | date            | YES  |     | NULL        |                |
-| reservado    | tinyint(1)      | YES  |     | 0           |                |
-+--------------+-----------------+------+-----+-------------+----------------+
++---------------+--------------+------+-----+-------------+----------------+
+| Field         | Type         | Null | Key | Default     | Extra          |
++---------------+--------------+------+-----+-------------+----------------+
+| id_book       | int unsigned | NO   | PRI | NULL        | auto_increment |
+| title         | varchar(50)  | NO   |     | NULL        |                |
+| author        | varchar(50)  | NO   |     | Desconocido |                |
+| isbn          | int          | YES  |     | NULL        |                |
+| type          | varchar(45)  | YES  |     | NULL        |                |
+| language      | varchar(25)  | YES  |     | NULL        |                |
+| collection    | varchar(50)  | YES  |     | NULL        |                |
+| purchase_date | date         | YES  |     | NULL        |                |
+| reserved      | tinyint(1)   | YES  |     | 0           |                |
+| comment       | varchar(800) | NO   |     | NULL        |                |
+| num_votes     | int unsigned | NO   |     | 0           |                |
+| total_score   | int unsigned | NO   |     | 0           |                |
+| rating        | decimal(8,2) | NO   |     | 0.00        |                |
++---------------+--------------+------+-----+-------------+----------------+
+
 
 SIMULACION DE DATOS
 
-INSERT INTO books (titulo, autor, isbn, tipo, idioma, fecha_compra, reservado) VALUES ('GVP_018', 'GERALD V POST', '12', 'Accion', 'frances', '2022-07-07', 0),('GVP_019', 'KRIS V PUT', '13', 'Terror', 'frances', '2022-08-07', 0),('GVP_235', 'KARLA V GET', '15', 'Anime', 'frances', '2022-09-07', 0),('GVP_455', 'LISS V POST', '14', 'Romance', 'frances', '2022-10-07', 0);
+INSERT INTO books (title, author) VALUES ('Titulo1', 'Autor1');
 
 +---------+---------+---------------+------------------+---------+--------------+-----------+
-| id_book | titulo  | autor         | iban             | tipo    | fecha_compra | reservado |
+| id_book | title  | author         | iban             | tipo    | fecha_compra | reservado |
 +---------+---------+---------------+------------------+---------+--------------+-----------+
 |  100000 | GVP_012 | GERALD V POST | ES00000000000001 | Accion  | 2022-07-07   |         0 |
 |  100001 | GVP_013 | KRIS V PUT    | ES00000000000002 | Terror  | 2022-08-07   |         0 |
@@ -139,10 +146,10 @@ CONSULTA RELACIONAL >>
 
 CASO 1, quiero que me muestre los datos del nombre, apellidos, fecha reserva, fecha de entrea de las reservas actuales.
 
-    SELECT r.id_booking, l.titulo, s.nombre, s.apellidos, s.dni, r.fecha_reserva, r.fecha_entrega FROM books l, bookings r, partners s WHERE l.id_book = r.cod_book AND s.dni = r.dni_partner;
+    SELECT r.id_booking, l.title, s.nombre, s.apellidos, s.dni, r.fecha_reserva, r.fecha_entrega FROM books l, bookings r, partners s WHERE l.id_book = r.cod_book AND s.dni = r.dni_partner;
 
 +------------+---------+---------+-----------+------------+---------------+---------------+
-| id_booking | titulo  | nombre  | apellidos | dni        | fecha_reserva | fecha_entrega |
+| id_booking | title  | nombre  | apellidos | dni        | fecha_reserva | fecha_entrega |
 +------------+---------+---------+-----------+------------+---------------+---------------+
 |          1 | GVP_013 | Leslie  | Winkle    | 0987636553 | 2022-07-07    | 2022-08-09    |
 |          2 | GVP_015 | Leslie  | Winkle    | 0987636553 | 2022-07-07    | 2022-08-09    |
@@ -175,7 +182,7 @@ CASO 4,queremos los libros que no esten reservados
 SELECT * FROM books WHERE reservado=0;
 
 +---------+---------+---------------+------------------+--------+--------------+-----------+
-| id_book | titulo  | autor         | iban             | tipo   | fecha_compra | reservado |
+| id_book | title  | author         | iban             | tipo   | fecha_compra | reservado |
 +---------+---------+---------------+------------------+--------+--------------+-----------+
 |  100000 | GVP_012 | GERALD V POST | ES00000000000001 | Accion | 2022-07-07   |         0 |
 +---------+---------+---------------+------------------+--------+--------------+-----------+
@@ -185,7 +192,7 @@ CASO 5, libros reservados
 SELECT * FROM books WHERE reservado=1;
 
 +---------+---------+-------------+------------------+---------+--------------+-----------+
-| id_book | titulo  | autor       | iban             | tipo    | fecha_compra | reservado |
+| id_book | title  | author       | iban             | tipo    | fecha_compra | reservado |
 +---------+---------+-------------+------------------+---------+--------------+-----------+
 |  100001 | GVP_013 | KRIS V PUT  | ES00000000000002 | Terror  | 2022-08-07   |         1 |
 |  100002 | GVP_014 | KARLA V GET | ES00000000000011 | Anime   | 2022-09-07   |         1 |

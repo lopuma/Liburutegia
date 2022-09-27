@@ -1,3 +1,46 @@
+.Body {
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+  font-family: var(--letra-principal);
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--Background-Color-forms);
+  color: var(--negro);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.isDark{
+  background-color: rgb(53,53,53);
+  color: wheat;
+}
+
+  
+  
+.Layout-container {
+  display: grid;
+  grid-template-columns: var(--size-width-sidemenu-collapsed) auto;
+  grid-template-areas:
+    'header header'
+    'menu main'
+    'footer footer';
+  gap: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column wrap;
+  background-color: inherit;
+  color: inherit;
+}
+
+.Layout-container>div {
+  text-align: center;
+}
+
+
 
 .Header {
     grid-area: header;
@@ -9,7 +52,8 @@
   
   .Main {
     grid-area: main;
-    background-color: var(--Background-Color-forms);
+    background-color: inherit;
+    color: inherit;
     width: 100%;
     height: 100%;
     display: flex;
@@ -17,7 +61,6 @@
     flex-flow: column wrap;
     align-items: center;
     /* max-width: var(--maxWidth); */
-
   }
   
   .Main-cover{
@@ -43,40 +86,7 @@
     grid-area: footer;
   }
   
-  
-  .Body {
-    width: 100%;
-    height: 100%;
-    font-size: 100%;
-    font-family: var(--letra-principal);
-    font-smooth: always;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: var(--Background-Color-forms);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .Layout-container {
-    display: grid;
-    grid-template-columns: var(--size-width-sidemenu-collapsed) auto;
-    grid-template-areas:
-      'header header'
-      'menu main'
-      'footer footer';
-    gap: 0 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column wrap;
-  }
-  
-  .Layout-container>div {
-    text-align: center;
-  }
-  
-  
+
   
   @media screen and (max-width: 950px) {
     .Layout-container {

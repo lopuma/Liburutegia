@@ -43,18 +43,19 @@ CREATE TABLE `bookings` (
 CREATE TABLE `books` (
   `id_book` int unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
-  `author` varchar(50) NOT NULL DEFAULT 'Desconocido',
+  `author` varchar(50) NOT NULL DEFAULT 'Unknown',
   `isbn` int DEFAULT NULL,
   `type` varchar(45) DEFAULT NULL,
   `language` varchar(25) DEFAULT NULL,
   `collection` varchar(50) DEFAULT NULL,
   `purchase_date` date DEFAULT NULL,
   `reserved` tinyint(1) DEFAULT '0',
-  `comment` varchar(800) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `comment` varchar(800) COLLATE utf8mb4_spanish_ci NULL  DEFAULT 'No comments',
   `num_votes` int unsigned not null default 0,
   `total_score` int unsigned not null default 0,
-  `rating` decimal(8,2) not null default 0,
-  PRIMARY KEY (`id_book`)
+  `rating` decimal(8,2) not null default 0.00,
+  PRIMARY KEY (`id_book`),
+  UNIQUE KEY `title` (`title`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -98,12 +99,12 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `votes` (
-    `vote_id` int unsigned not null AUTO_INCREMENT,
+    `id_vote` int unsigned not null AUTO_INCREMENT,
     `book_id` int unsigned NOT NULL,
     `partner_dni` varchar(10) NOT NULL,
     `score` tinyint(1) unsigned not null default 0,
     `review` varchar(4000) null,
-    primary key (vote_id),
+    primary key (id_vote),
     KEY `book_id` (`book_id`),
     KEY `partner_dni` (`partner_dni`),
     CONSTRAINT `vote_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id_book`),

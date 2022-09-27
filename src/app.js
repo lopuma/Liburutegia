@@ -11,7 +11,7 @@ const app = express();
 
 //3- Invocamos a dotenv
 require('dotenv').config({
-    path: path.resolve(__dirname, '../env/.env')
+	path: path.resolve(__dirname, '../env/.env')
 });
 
 console.log(process.env.NODE_ENV)
@@ -65,8 +65,8 @@ app.use(session({
 
 // 8 - Invocamos a la conexion de la DB
 // 6 - Invocamos a bscryptjs
-// const connection = require("../../database/db");
-// const bscryptjs = require("bcryptjs");
+const connection = require("../database/db");
+const bscryptjs = require("bcryptjs");
 
 // Creamos usuario inicial
 const userDef = require('../src/routes/db/userDefault')
@@ -86,17 +86,20 @@ app.use(require('./routes/auth')); // RUTAS DE LOGIN
 app.use('/workspace', require('./routes/workspace'));
 
 // 9.1 ROUTERS API
-app.use('/api', require('./routes/api/api')); // API
+app.use('/api/books', require('./routes/api/BookRouter'))
+app.use('/api/bookings', require('./routes/api/BookingRouter'))
+app.use('/api/partners', require('./routes/api/PartnerRouter'))
+app.use('/api/votes', require('./routes/api/VoteRouter'))
 
-app.get('/flash', function(req, res){
+app.get('/flash', function (req, res) {
 	// Configure un mensaje flash pasando la clave, seguida del valor, a req.flash().	req.flash('info', 'Flash is back!')
 	res.redirect('/login');
-  });
-
-app.use(function (req, res) {
-	res.header('Content-Type', 'text/html; charset=utf-8')
-	res.status(404).render('../views/error_page/404')
 });
+
+// app.use(function (req, res) {
+// 	res.header('Content-Type', 'text/html; charset=utf-8')
+// 	res.status(404).render('../views/error_page/404')
+// });
 
 // https.createServer({
 //   cert: fs.readFileSync('liburudenda-selfsigned.crt'),

@@ -37,6 +37,7 @@ function asigneRol(req, results) {
     }
     req.session.ruta = ruta;
 }
+
 exports.login = async (req, res) => {
     try {
         const logueado = req.session.loggedin;
@@ -79,7 +80,6 @@ exports.login = async (req, res) => {
         console.log(error);
     }
 }
-
 
 exports.isAuthenticated = async (req, res, next) => {
     const logueado = req.session.loggedin;

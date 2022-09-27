@@ -19,17 +19,21 @@ const btnLoginSidemenu = document.getElementById('btnLoginSidemenu');
 window.onload = onLoad();
 
 function onLoad() {
-
+console.log("CARGA")
   try {
     // HOME
     if ($('#stateHome').val() === '') { // 
+      console.log("Succes: True")
+
       btnHome.classList.add('isSelected');
       btnHomeSidemenu.classList.add('Sidemenu--isSelected');
     } else {
       btnHome.classList.remove('isSelected');
       btnHomeSidemenu.classList.remove('Sidemenu--isSelected');
     }
-  } catch { }
+  } catch (error) {
+    console.log(error.message)
+  }
 
   try {
     // LOGIN
@@ -38,7 +42,9 @@ function onLoad() {
     } else {
       btnLoginSidemenu.classList.remove('Sidemenu--isSelected');
     }
-  } catch { }
+  } catch (error) {
+    console.log(error.message)
+  }
 
   try {
     // BOOKS
@@ -49,7 +55,9 @@ function onLoad() {
       btnBook.classList.remove('isSelected');
       btnBookSidemenu.classList.remove('Sidemenu--isSelected');
     }
-  } catch { }
+  } catch (error) {
+    return console.log(error.message)
+  }
 
   try {
     // BOOKINGS
@@ -60,7 +68,9 @@ function onLoad() {
       btnBooking.classList.remove('isSelected');
       btnBookingSidemenu.classList.remove('Sidemenu--isSelected');
     }
-  } catch { }
+  } catch (error) {
+    return console.log(error.message)
+  }
 
   try {
     // ADMIN
@@ -71,7 +81,9 @@ function onLoad() {
       btnAdmin.classList.remove('isSelected');
       btnAdminSidemenu.classList.remove('Sidemenu--isSelected');
     }
-  } catch { }
+  } catch (error) {
+    return console.log(error.message)
+  }
 
   try {
     // RECORD
@@ -80,7 +92,9 @@ function onLoad() {
     } else {
       btnRecord.classList.remove('isSelected');
     }
-  } catch { }
+  } catch (error) {
+    return console.log(error.message)
+  }
 
   try {
     //PARTNERS
@@ -91,8 +105,9 @@ function onLoad() {
       btnPartner.classList.remove('isSelected');
       btnPartnerSidemenu.classList.remove('Sidemenu--isSelected');
     }
-  } catch { }
-
+  } catch (error) {
+    return console.log(error.message)
+  }
 }
 
 // </ ---- Mostrar MENU en modo responsive ---->
@@ -151,6 +166,8 @@ function Cover() {
 function addClassSideMenu() {
   Aside.classList.toggle("menu-expanded");
   Aside.classList.toggle("menu-collapsed");
+  sideMenu.classList.toggle("menu-expanded");
+  sideMenu.classList.toggle("menu-collapsed");
 }
 
 function showCloseCover(act, actFunct, Funct){
@@ -220,3 +237,21 @@ window.onscroll = function () {
 }
 
 window.onresize = menuBtnChange();
+
+// const btn = document.querySelector(".btn-toggle");
+
+// const currentTheme = localStorage.getItem("theme");
+// if (currentTheme == "dark") {
+//   document.body.classList.add("isDark");
+// }
+
+// btn.addEventListener("click", function () {
+//   document.body.classList.toggle("isDark");
+//   document.documentElement.style.setproperty('--Color-logo', 'wheat');
+
+//   let theme = "light";
+//   if (document.body.classList.contains("isDark")) {
+//     theme = "dark";
+//   }
+//   localStorage.setItem("theme", theme);
+// });

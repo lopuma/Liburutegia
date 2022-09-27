@@ -13,6 +13,7 @@
     "test": "echo \"Error\"",
     "dev": "nodemon src/app.js",
     "start": "pm2 start src/app.js",
+    "stop": "pm2 stop src/app.js",
     "deve": "set NODE_ENV=development && nodemon src/app.js",
     "prod": "set NODE_ENV=production && nodemon src/app.js"
   },

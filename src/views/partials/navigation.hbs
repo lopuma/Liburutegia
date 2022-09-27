@@ -11,29 +11,30 @@
 
 <nav class="Header-nav" id="navBar">
   <ul class="Header-ul">
+    <button class="btn-toggle">Toggle Dark-Mode</button>
     {{#if login}}
     {{#if userRol}}
-    <li class="Header-li"><a class="Header-a  Header-a--toogle isDisabled isFocus"
+    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus"
         href="../workspace/admin" id="btnAdmin">
         User Manager
       </a></li>
     {{/if}}
-    <li class="Header-li"><a class="Header-a Header-a--toogle isDisabled isFocus"
+    <li class="Header-li"><a class="Header-a isToogle isDisabled isFocus"
         href="../workspace/books" id="btnBook">Books</a></li>
-    <li class="Header-li"><a class="Header-a  Header-a--toogle isDisabled isFocus"
+    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus"
         href="../workspace/partners" id="btnPartner">Partners</a></li>
-    <li class="Header-li"><a class="Header-a  Header-a--toogle isDisabled isFocus"
+    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus"
         href="../workspace/bookings" id="btnBooking">Bookings</a></li>
 
 
     {{#if userRol}}
-    <li class="Header-li"><a class="Header-a Header-a--toogle isFocus" href="/register"
+    <li class="Header-li"><a class="Header-a isToogle isFocus" href="/register"
         id="btnRecord">Record</a></li>
     {{/if}}
-    <li class="Header-li"><a class="Header-a Header-a--activeLogout" href="/logout">Logout</a></li>
+    <li class="Header-li"><a class="Header-a activeLogout" href="/logout">Logout</a></li>
     {{else}}
-    <li class="Header-li"><a class="Header-a Header-a--toogle isFocus" href="/" id="btnHome">Home</a></li>
-    <li class="Header-li"><a href="/login" class="Header-a Header-a--activeLogin">Login</a></li>
+    <li class="Header-li"><a class="Header-a isToogle isFocus" href="/" id="btnHome">Home</a></li>
+    <li class="Header-li"><a href="/login" class="Header-a activeLogin">Login</a></li>
     {{/if}}
   </ul>
 </nav>

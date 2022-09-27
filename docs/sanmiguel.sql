@@ -62,7 +62,7 @@ CREATE TABLE `books` (
   `collection` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `purchase_date` date DEFAULT NULL,
   `reserved` tinyint(1) DEFAULT '0',
-  `comment` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `comment` varchar(800) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NULL DEFAULT 'No comments',
   `num_votes` int unsigned NOT NULL DEFAULT '0',
   `total_score` int unsigned NOT NULL DEFAULT '0',
   `rating` decimal(8,2) NOT NULL DEFAULT '0.00',
