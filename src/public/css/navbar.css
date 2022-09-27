@@ -265,6 +265,7 @@
   
     .Header-li {
       margin: 15px 0;
+      padding: 0;
     }
 
     .Header-a {
