@@ -12,10 +12,10 @@
   "scripts": {
     "test": "echo \"Error\"",
     "dev": "nodemon src/app.js",
-    "start": "pm2 start src/app.js",
+    "start": "set NODE_ENV='production' && pm2 start src/app.js",
     "stop": "pm2 stop src/app.js",
-    "deve": "set NODE_ENV=development && nodemon src/app.js",
-    "prod": "set NODE_ENV=production && nodemon src/app.js"
+    "deve": "set NODE_ENV='production' && nodemon src/app.js",
+    "prod": "node src/app.js"
   },
   "keywords": [
     "nodejs",
@@ -26,12 +26,10 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "connect-flash": "^0.1.1",
+    "cookie-session": "^2.0.0",
     "dotenv": "^16.0.1",
     "express": "^4.16.4",
     "express-handlebars": "^6.0.6",
-    "express-mysql-session": "^2.1.8",
-    "express-session": "^1.17.3",
-    "jquery": "^3.6.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "passport": "^0.6.0",

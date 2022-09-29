@@ -10,13 +10,18 @@ const bodyParser = require('body-parser');
 const app = express();
 
 //3- Invocamos a dotenv
-require('dotenv').config({
-	path: path.resolve(__dirname, '../env/.env')
-});
-
-console.log(process.env.NODE_ENV)
+// if(process.env.NODE_ENV !== 'production'){
+// 	console.log("ESTA EN PRO")
+// 	require('dotenv').config();
+//}
+if (process.env.NODE_ENV !== 'production'){
+	require('dotenv').config({
+		path: path.resolve(__dirname, '../env/.env')
+	});
+}
+console.log("1-", process.env.PORT)
 // Configuraciones
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares - mostrar las peticiones por consola
