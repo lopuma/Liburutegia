@@ -1,59 +1,69 @@
 <link rel="stylesheet" href="../style/login.css">
 
+
 <div class="Singin" id="stateRecord">
-    {{> messages}}
+    <div class="Message">
+            {{> messages}}
+    </div>
     <form class="Register" action="/register" method="post" id="formRegister" name="formRegister">
         {{!-- <div class="form-content-register"> --}}
             <div class="Register-content">
                 <div class="Register-title">Register user</div>
-                    <div class="Input-boxes">
-                        <div class="Input-box">
-                            <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
-                            <input class="Box-input" id="email" type="email" name="email" placeholder="Enter your email" tabindex="1" required
-                                autofocus>
-                        </div>
-                        <div class="Input-box">
-                            <i id="iconFirtname" class="Box-i fa-solid fa-user"></i>
-                            <input class="Box-input" id="firstname" type="text" name="firstname" placeholder="Enter Firt Name" required
-                                tabindex="2">
-                        </div>
-                        <div class="Input-box">
-                            <i id="iconLastname" class="Box-i fa-solid fa-user"></i>
-                            <input class="Box-input" id="lastname" type="text" name="lastname" placeholder="Enter Last Name" required
-                                tabindex="3">
+                <div class="Input-boxes">
+                    <div class="Input-box">
+                        <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
+                        <input class="Box-input" id="email" type="email" name="email" placeholder="Enter your email address*"
+                            tabindex="1" required autofocus>
+                    </div>
+                    <div class="Input-error" id="grupo__mail">
+                        <p class="Error-p ">The Email is not correct.</p>
+                    </div>
+                    <div class="Input-box">
+                        <i id="iconFirtname" class="Box-i fa-solid fa-user"></i>
+                        <input class="Box-input" id="firstname" type="text" name="username"
+                            placeholder="Enter your Username *" required tabindex="2">
+                    </div>
+                    <div class="Input-error" id="grupo__username">
+                        <p class="Error-p ">The Username is not correct.</p>
+                    </div>
+                    <div class="Input-box">
+                        <i id="iconLastname" class="Box-i fa-solid fa-user"></i>
+                        <input class="Box-input" id="lastname" type="text" name="fullname" placeholder="Enter your Full name"
+                            tabindex="3">
 
-                        </div>
-                        <div class="Input-box">
-                            <i id="iconPass" class="Box-i fa-solid fa-key"></i>
-                            <input class="Box-input" id="pass" type="password" name="pass" placeholder="Create a password" required
-                                tabindex="4">
-                            <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
-                        </div>
-                        <div class="Input-error" id="grupo__password">
-                                <p class="Error-p">The verification password does not match.</p>
-                        </div>
-                        <div class="Input-box">
-                            <i id="iconPassRepeat" class="Box-i fa-solid fa-key"></i>
-                            <input class="Box-input" id="passRepeat" type="password" name="passRepeat" placeholder="Repeat password" required
-                                tabindex="5">
-                            <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
-                        </div>
-                        <div class="Input-error" id="grupo__password2">
-                                <p class="Error-p">The verification password does not match.</p>
-                        </div>
                     </div>
-                    <div class="Input-select">
-                        <label class="Select-label" for="rol">Select a Rol for User</label>
-                        <select id="rol" name="rol" class="Select-rol" tabindex="6">
-                            <option class="Select-option" value="admin" selected>Admin</option>
-                            <option class="Select-option" value="data entry">Data Entry</option>
-                        </select>
+                    <div class="Input-box">
+                        <i id="iconPass" class="Box-i fa-solid fa-key"></i>
+                        <input class="Box-input" id="pass" type="password" name="pass" placeholder="Create a password *"
+                            required tabindex="4">
+                        <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
                     </div>
-                    <div class="Input-button">
-                            <input class="Button-cancel" id="btnCancel" type="submit" value='CANCEL' tabindex="7" />
-                            <input class="Button-accept" id="btnAccept" type="submit" value='ACCEPT' tabindex="8" />
+                    <div class="Input-error" id="grupo__password">
+                        <p class="Error-p ">The verification password does not match.</p>
+                    </div>
+                    <div class="Input-box">
+                        <i id="iconPassRepeat" class="Box-i fa-solid fa-key"></i>
+                        <input class="Box-input" id="passRepeat" type="password" name="passRepeat"
+                            placeholder="Repeat password *" required tabindex="5">
+                        <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
+                    </div>
+                    <div class="Input-error" id="grupo__password2">
+                        <p class="Error-p ">The verification password does not match.</p>
+                    </div>
+                </div>
+                <div class="Input-select">
+                    <label class="Select-label" for="rol">Select a Rol for User</label>
+                    <select id="rol" name="rol" class="Select-rol" tabindex="6">
+                        <option class="Select-option" value="admin" selected>Admin</option>
+                        <option class="Select-option" value="data entry">Data Entry</option>
+                    </select>
+                </div>
+                <div class="Input-button">
+                    <input class="Button-cancel" id="btnCancel" type="submit" value='CANCEL' tabindex="7" />
+                    <input class="Button-accept" id="btnAccept" type="submit" value='ACCEPT' tabindex="8" />
                 </div>
             </div>
-        {{!-- </div> --}}
+            {{!--
+        </div> --}}
     </form>
 </div>

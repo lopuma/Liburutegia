@@ -422,6 +422,10 @@
   width: 180px;
 }
 
+.noData{
+  margin-top: 120px;
+  color: var(--negro);
+}
 
 /* @media (min-width: 768px){ 
 

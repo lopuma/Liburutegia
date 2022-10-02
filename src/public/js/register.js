@@ -41,21 +41,21 @@ const expresiones = {
 function validatePassword() {
   if (formPass.value == "") {
     document
-      .querySelector(`#grupo__password .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.remove("errorActivo");
     return;
   } else if (formPass.value != formPassRepeat.value) {
     document
-      .querySelector(`#grupo__password .formulario__input-error`)
-      .classList.add("formulario__input-error-activo");
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.add("errorActivo");
     return;
   } else {
     document
-      .querySelector(`#grupo__password .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.remove("errorActivo");
     document
-      .querySelector(`#grupo__password2 .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.remove("errorActivo");
     return true;
   }
 }
@@ -63,21 +63,21 @@ function validatePassword() {
 function validateRepeatPassword() {
   if (formPassRepeat.value == "") {
     document
-      .querySelector(`#grupo__password2 .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.remove("errorActivo");
     return;
   } else if (formPass.value != formPassRepeat.value) {
     document
-      .querySelector(`#grupo__password2 .formulario__input-error`)
-      .classList.add("formulario__input-error-activo");
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.add("errorActivo");
     return;
   } else {
     document
-      .querySelector(`#grupo__password .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.remove("errorActivo");
     document
-      .querySelector(`#grupo__password2 .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.remove("errorActivo");
     return true;
   }
 }
@@ -119,27 +119,29 @@ function validateFormPassword(){
         iconPassRepeat.style.color = "var(--background-forms)";
     }
 }
+
 function validateForms(evento) {
   evento.preventDefault();
   if (formPass.value == "") {
-    document.formRegister.formPass.focus();
+    console.log("vacio ==>", formPass)
     return;
   } else if (formPassRepeat.value == "") {
-    document.formRegister.formPassRepeat.focus();
+    console.log("vacio ==>", formPass)
     return;
   } else if (formPass.value != formPassRepeat.value) {
-    document.formRegister.formPass.focus();
+    console.log("diferentes ==>", formPass.value)
+    console.log("diferentes ==>", formPassRepeat.value)
     document
-      .querySelector(`#grupo__password .formulario__input-error`)
-      .classList.add("formulario__input-error-activo");
+      .querySelector(`#grupo__password`)
+      .classList.add("errorActivo");
     return;
   } else {
     document
-      .querySelector(`#grupo__password2 .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password2`)
+      .classList.remove("errorActivo");
     document
-      .querySelector(`#grupo__password .formulario__input-error`)
-      .classList.remove("formulario__input-error-activo");
+      .querySelector(`#grupo__password`)
+      .classList.remove("errorActivo");
     this.submit();
   }
 }

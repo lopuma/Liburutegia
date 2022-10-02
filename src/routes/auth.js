@@ -125,7 +125,7 @@ router.get("/register", (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { email, firstname, lastname, rol, pass } = req.body;
+  const { email, username, fullname, rol, pass } = req.body;
   const _ss = 0;
   let passwordHash = await bscryptjs.hash(pass, 8);
   sqlUser = "SELECT * FROM users WHERE email = ?";
@@ -139,8 +139,8 @@ router.post("/register", async (req, res) => {
         sqlInsert,
         {
           email,
-          firstname,
-          lastname,
+          firstname: username,
+          lastname: fullname,
           rol,
           pass: passwordHash,
           _ss
@@ -181,7 +181,7 @@ router.post("/register", async (req, res) => {
 
 // LOGOUTH
 router.get("/logout", async (req, res) => {
-  req.session.destroy();
+  req.session = null;
   res.redirect("/");
 });
 

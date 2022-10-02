@@ -5,3 +5,12 @@ env/
 .gitignore
 docker-compose.yml
 .mysql-data/
+Procfile
+mysql-data/
+data/
+.env
+sanmiguel.sql
+docker-compose_DEV.yml
+docker-compose PRO.yml
+.gitignore
+.dockerignore

@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production'){
 }
 console.log("1-", process.env.PORT)
 // Configuraciones
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 app.set('views', path.join(__dirname, 'views'));
 
 // Middlewares - mostrar las peticiones por consola
@@ -58,9 +58,10 @@ app.use(flash()); // enviar mensajes al cliente
 
 
 // 7 - Variables de SSESSION
-const session = require('express-session');
+//todo REMPLAZAMOS EXPRESS POR COOKIES
+const session = require('cookie-session');
 const { patch } = require('./routes/index');
-const MySQLStore = require('express-mysql-session')(session);
+//const MySQLStore = require('express-mysql-session')(session);
 
 app.use(session({
 	secret: 'secret',

@@ -20,6 +20,11 @@
     transition: background .3s ease-in-out;
 }
 
+.Singin{    
+    width: 60%;
+    flex-flow: column nowrap;
+}
+
 .Register,
 .Login,
 .Reset {
@@ -130,7 +135,7 @@
 }
 
 .Register-content {
-    width: 60%;
+    width: 90%;
     height: auto;
     /* overflow: hidden; */
 }
@@ -141,7 +146,7 @@
 .Reset-title {
     position: relative;
     font-size: 24px;
-    font-weight: 500;
+    font-weight: 700;
     color: inherit;
     padding: 0 20px;
     display: flex;
@@ -162,7 +167,7 @@
 }
 
 .Input-boxes {
-    margin-top: 30px;
+    margin-top: 0px;
     width: 100%;
     height: 100%;
     padding: 20px;
@@ -199,6 +204,7 @@
     text-align: center;
     height: var(--size-height-box);
     width: 100%;
+    height: 20px;
     position: relative;
     display: none;
 }
@@ -207,11 +213,11 @@
     align-items: center;
     font-size: 15px;
     text-align: center;
-    padding: 10px 0;
+    padding: 0;
     margin: 0;
 }
 
-.Error-p__isActivo {
+.errorActivo {
     display: block;
     color: brown;
 }
@@ -297,6 +303,7 @@
     justify-content: center;
     align-items: center;
     margin: 0;
+    margin-top: 10px;
 }
 
 .Select-label {
@@ -418,10 +425,14 @@
         .Singin,
         .Authentication {
             display: flex;
-            flex-flow: column wrap;
+            flex-flow: column nowrap;
             align-items: center;
             justify-content: space-between;
             margin: var(--size-height-navBar) auto;
+        }
+
+        .Singin{
+            width: 80%;
         }
 
         .Login {
@@ -469,4 +480,38 @@
     .Authentication {
         width: 100%;
     }
+
+    .Register{
+        padding: 10px;
+    }
+
+    .Input-boxes{
+        margin: 0;
+        padding-top: 10px ;
+    }
+
+    .Input-box{
+        margin: 20px 0;
+    }
+
+    .Register-title{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .Register-title::before{
+        left: -120px;
+        bottom: -10px;
+        right: 0;
+        top: 50%;
+        margin: auto;
+    }
+
+    .Input-error {
+        justify-content: center;
+        height: 40px;
+        position: relative;
+    }
+
 }
