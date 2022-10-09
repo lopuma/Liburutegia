@@ -1,6 +1,6 @@
-const connection = require("../../database/db");
+const connection = require("../../../database/db");
 
-const bookController = {
+const partnerController = {
     // EXISTS
     existPartner: async(req, res, next) =>{
         try {
@@ -226,4 +226,4 @@ const bookController = {
     }
 }
 
-module.exports = bookController;
+module.exports = partnerController;

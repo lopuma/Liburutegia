@@ -7,3 +7,9 @@ mysql-data/
 docker-compose.yml
 data/
 Dockerfile
+docs/
+excel/
+Procfile
+docker-compose PRO.yml
+docker-compose_DEV.yml
+.gitignore

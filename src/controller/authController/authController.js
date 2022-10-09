@@ -1,6 +1,6 @@
 // const jwt = require('jsonwebtoken')
 // const {promisify} = require('util')
-const connection = require("../../database/db");
+const connection = require("../../../database/db");
 const bscryptjs = require("bcryptjs");
 
 //procedimiento para registrarnos
@@ -38,48 +38,6 @@ function asigneRol(req, results) {
     req.session.ruta = ruta;
 }
 
-exports.login = async (req, res) => {
-    try {
-        const logueado = req.session.loggedin;
-        const nameUser = req.session.name;
-        let body = req.body;
-        if (body) {
-            email = body.email;
-            pass = body.password;
-        }
-        if (email && pass) {
-            sql = "SELECT * FROM users WHERE email = ?";
-            connection.query(sql, [email], async (error, results) => {
-                if (
-                    results.length == 0 ||
-                    !await bscryptjs.compare(pass, results[0].pass)
-                ) {
-                    req.flash("error_msg", "These credentials do not match our records.");
-                    res.send(
-                        {
-                            Error: error
-                        },
-                        res.redirect("/login")
-                    );
-                } else {
-                    asigneRol(req, results);
-                    res.render("../views/forms/login", {
-                        Success: results[0].email,
-                        alert: true,
-                        alertTitle: "Conexion Success",
-                        alertMessage: "!Login Success",
-                        alertIcon: "success",
-                        timer: 2000,
-                        ruta
-                    });
-                }
-            });
-        }
-        // }
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 exports.isAuthenticated = async (req, res, next) => {
     const logueado = req.session.loggedin;

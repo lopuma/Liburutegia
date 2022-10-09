@@ -1,5 +1,5 @@
 const routerPartners = require('express').Router();
-const {getPartners, getPartner, existPartner, noExistPartner, addPartner, deletePartner, duplicatePartner, putPartner} = require('../../controller/partnerController');
+const {getPartners, getPartner, existPartner, noExistPartner, addPartner, deletePartner, duplicatePartner, putPartner} = require('../../controller/apiController/partnerController');
 //SHOW ALL
 routerPartners.get("/", getPartners);
 

@@ -1,5 +1,5 @@
 const routerBooks = require('express').Router();
-const bookController = require('../../controller/bookController');
+const bookController = require('../../controller/apiController/bookController');
 
 routerBooks.get("/", bookController.getBooks);
 routerBooks.get("/:id_book", bookController.getBook);

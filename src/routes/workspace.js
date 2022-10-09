@@ -54,8 +54,6 @@ router.get("/admin", async (req, res) => {
         req.session = null;
         res.redirect("/");
       }
-      console.log("RESULT ==> ", results)
-      console.log(existData);
       res.render("workspace/dashboard-admin", {
         login: true,
         nameUser,

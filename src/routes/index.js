@@ -3,7 +3,7 @@ const router = express.Router();
 const connection = require("../../database/db");
 const bscryptjs = require("bcryptjs");
 
-const authController = require('../controller/authController')
+const authController = require('../controller/authController/authController')
 
 router.get('/', authController.isAuthenticated, async (req, res, next) => {
   const nameUser = req.session.name;

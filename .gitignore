@@ -1,7 +1,7 @@
 node_modules/
 liburudenda-selfsigned.*
 ##docs/
-env/
+env/.env
 .gitignore
 docker-compose.yml
 .mysql-data/
@@ -13,4 +13,7 @@ sanmiguel.sql
 docker-compose_DEV.yml
 docker-compose PRO.yml
 .gitignore
+.dockerignore
+excel/
+package copy*
 .dockerignore

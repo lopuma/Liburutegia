@@ -1,4 +1,4 @@
-const connection = require("../../database/db");
+const connection = require("../../../database/db");
 
 const bookController = {
     // SHOW ALL BOOKS
