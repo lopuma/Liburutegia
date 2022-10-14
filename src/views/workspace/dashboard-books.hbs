@@ -1,18 +1,18 @@
-<div class="Book-container" id="stateBooks">
-  <fieldset class="Book-fieldset">
-    <legend class="Book-legend" id="lengedBook">
-      <span class="Book-span">Book Dashboard</span>
-      {{#if login}}
-      <div class="Book-Username">
-        <span class="Book-Username-greeting">Hi, Welcome </span>
-        <span id="tipName" class="Book-Username-name">{{nameUser}}</span>
+<div class="Admin-container" id="stateBooks">
+  <fieldset class="Admin-fieldset">
+    <legend class="Admin-legend colorBook" id="lengedAdmin">
+      <span class="Admin-span">Book Dashboard</span>
+      {{#if loggedIn}}
+      <div class="Admin-Username">
+        <span class="Admin-Username-greeting">Hi, Welcome </span>
+        <span id="tipName" class="Admin-Username-name">{{userName}}</span>
       </div>
       {{/if}}
     </legend>
-    {{>books}}
+      {{> books }}
   </fieldset>
 </div>
-<link rel="stylesheet" href="../style/books.css">
+<link rel="stylesheet" href="../style/admin.css">
 
 <script>
   $(document).ready(function () {

@@ -13,3 +13,5 @@ Procfile
 docker-compose PRO.yml
 docker-compose_DEV.yml
 .gitignore
+.env/.env
+otros/

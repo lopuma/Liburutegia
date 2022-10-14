@@ -2,13 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const exphbs = require('express-handlebars');
-// const passport = require('passport');
 const flash = require('connect-flash');
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
-//PARA HTTPS
-// const https = require('https')
-// const fs = require('fs')
 
 // Iniciar express
 const app = express();
@@ -43,6 +39,7 @@ app.engine('.hbs', exphbs.engine({
 	layoutsDir: path.join(app.get('views'), 'layouts'),
 	partialsDir: path.join(app.get('views'), 'partials'), // REUTILIZAR CODIGO EN LAS VISTAS
 	formsDir: path.join(app.get('views'), 'forms'), // REUTILIZAR CODIGO EN LAS VISTAS
+	profileDir: path.join(app.get('views'), 'profile'), // REUTILIZAR CODIGO EN LAS VISTAS
 	extname: '.hbs',
 	//helpers: require('./lib/handlebars') // EJECUTAR FUNCIONES
 }))
@@ -51,12 +48,9 @@ app.set('view engine', '.hbs'); // EJECUTAR NUESTRO MOTOR HBS
 // Capturar los datos de formularios.
 app.use(express.urlencoded({ extended: true })); // aceptar datos del formulario (extended : false), solo acepta text
 app.use(express.json()); // recibir JSON
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.use(flash()); // enviar mensajes al cliente
-
-// const { patch } = require('./routes/index');
-//const MySQLStore = require('express-mysql-session')(session);
 
 // 7 - Variables de SSESSION
 const session = require('express-session');
@@ -76,25 +70,28 @@ const bscryptjs = require("bcryptjs");
 const userDef = require('../src/routes/db/userDefault')
 userDef();
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 // Starting the server
 app.listen(PORT, () => {
 	console.log(`Server is in port , ${PORT}`, `http://localhost:${PORT}`);
 });
 
-// 9 - Routers
-app.use(require('./routes/index')); // PAGINA PRICIPAL
-app.use('/workspace', require('./routes/workspace'));
+// 9 - ROUTERS
+app.use('/', require('./routes/IndexRouter')); // PAGINA PRICIPAL
+app.use('/profile', require('./routes/profile/ProfileRouter'));
+app.use('/workspace', require('./routes/workspace/WorkspaceRouter'));
 
-// 9.1 ROUTERS API
+// 9.1 - ROUTERS API
 app.use('/api/books', require('./routes/api/BookRouter'))
 app.use('/api/bookings', require('./routes/api/BookingRouter'))
 app.use('/api/partners', require('./routes/api/PartnerRouter'))
 app.use('/api/votes', require('./routes/api/VoteRouter'))
 
-// 9.2 ROUTES AUTH
+// 9.2 - ROUTES AUTH
 app.use('/login', require('./routes/authentication/LoginRouter'))
 app.use('/logout', require('./routes/authentication/LogoutRouter'))
-//app.use('/reset', require('./routes/authentication/ResetRouter'))
+app.use('/reset', require('./routes/authentication/ResetRouter'))
+//app.use('/register', require('./routes/authentication/RegisterRouter'))
+
+app.use(function(req, res){
+	res.render('error_page/404')
+})

@@ -1,20 +1,15 @@
-
 <div class="Admin-container" id="stateAdmin">
   <fieldset class="Admin-fieldset">
     <legend class="Admin-legend" id="lengedAdmin">
       <span class="Admin-span">Admin Dashboard</span>
-      {{#if login}}
+      {{#if loggedIn}}
       <div class="Admin-Username">
         <span class="Admin-Username-greeting">Hi, Welcome </span>
-        <span id="tipName" class="Admin-Username-name">{{nameUser}}</span>
+        <span id="tipName" class="Admin-Username-name">{{userName}}</span>
       </div>
       {{/if}}
     </legend>
-    {{#if existData}}
       {{> admin }}
-    {{else}}  
-      <h1 class="noData">There is no data</h1>
-    {{/if}}
   </fieldset>
 </div>
-  <link rel="stylesheet" href="../style/admin.css">
+<link rel="stylesheet" href="../style/admin.css">

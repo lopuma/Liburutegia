@@ -3,7 +3,7 @@
 
 <div class="Singin" id="stateRecord">
     <div class="Message">
-            {{> messages}}
+        {{> messages}}
     </div>
     <form class="Register" action="/register" method="post" id="formRegister" name="formRegister">
         {{!-- <div class="form-content-register"> --}}
@@ -12,8 +12,9 @@
                 <div class="Input-boxes">
                     <div class="Input-box">
                         <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
-                        <input class="Box-input" id="email" type="email" name="email" placeholder="Enter your email address*"
+                        <input class="Box-input" id="email" type="email" name="email"
                             tabindex="1" required autofocus>
+                        <label for="email" class="Input-label">Enter your email address *</label>
                     </div>
                     <div class="Input-error" id="grupo__mail">
                         <p class="Error-p ">The Email is not correct.</p>
@@ -28,8 +29,8 @@
                     </div>
                     <div class="Input-box">
                         <i id="iconLastname" class="Box-i fa-solid fa-user"></i>
-                        <input class="Box-input" id="lastname" type="text" name="fullname" placeholder="Enter your Full name"
-                            tabindex="3">
+                        <input class="Box-input" id="lastname" type="text" name="fullname"
+                            placeholder="Enter your Full name" tabindex="3">
 
                     </div>
                     <div class="Input-box">

@@ -98,7 +98,7 @@ console.log("CARGA")
 
   try {
     //PARTNERS
-    if ($('#statePartner').val() === '') { // 
+    if ($('#statePartners').val() === '') { // 
       btnPartner.classList.add('isSelected');
       btnPartnerSidemenu.classList.add('Sidemenu--isSelected');
     } else {

@@ -1,8 +1,17 @@
 const routerBooks = require('express').Router();
-const bookController = require('../../controller/apiController/bookController');
+const { getBooks, getBook, addBook, noExistBook, deleteBook, putBook } = require('../../controller/apiController/bookController');
 
-routerBooks.get("/", bookController.getBooks);
-routerBooks.get("/:id_book", bookController.getBook);
-routerBooks.put("/:id_book", bookController.putBooks);
+routerBooks.get("/", getBooks);
+
+routerBooks.get("/:id_book", getBook);
+
+//ADD
+//routerBooks.post("/add", addBook);
+
+//DELETE
+//routerBooks.delete("/delete/:id_book", noExistBook, deleteBook);
+
+// UPDATE
+//routerBooks.put("/update/:id_book", noExistBook, putBook);
 
 module.exports = routerBooks;

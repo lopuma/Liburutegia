@@ -1,0 +1,64 @@
+#docker network create ntw-app
+version: '3.7'
+services:
+    nginx-proxy:
+        image: nginx
+        container_name: nginx-liburutegia
+        restart: always
+        ports: 
+            - "80:80"
+        depends_on:
+            - application
+        volumes:
+            - ./nginx/templates:/etc/nginx/templates
+        environment:
+            - NGINX_HOST=liburutegia-sanmiguel.com
+            - NGINX_PORT=80
+        networks:
+            - ntw-app
+        #command: ./src/scripts/run_nginx.sh
+#docker run -dp 5000:3000 --network ntk-app -e NODE_ENV='production' -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=secret -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=sanmiguel lopuma/liburutegia:3.0.1
+    application:
+        container_name: liburutegia
+        build: .
+        image: liburutegia
+        ports:
+            - ${PORT}:3000
+        depends_on:
+            - "mysql"
+        environment:
+            - NODE_ENV=${NODE_ENV}
+            - MYSQL_HOST=${MYSQL_HOST}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+        volumes:
+            - ./src:/app/src
+        networks:
+            - ntw-app
+#docker run -d     --network ntw-app --network-alias mysql     -v data:/var/lib/mysql  -e MYSQL_PASSWORD=secret   -e MYSQL_ROOT_PASSWORD=secret     -e MYSQL_DATABASE=sanmiguel -p 3306:3306     lopuma/db-liburutegia:3.0.1
+    mysql:
+        container_name: db-liburutegia
+        build:
+            context: ./data
+            args:
+                - NODE_ENV=${NODE_ENV}
+                - MYSQL_DATABASE=${MYSQL_DATABASE}
+                - MYSQL_USER=${MYSQL_USER}
+                - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+                - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        image: db-liburutegia
+        restart: always
+        ports:
+            - "${MYSQL_PORT}:3306"
+        environment:
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        volumes:
+            - ./mysql-data:/var/lib/mysql
+        networks:
+            - ntw-app
+networks:
+    ntw-app:
+        driver: bridge
+        name: mysql

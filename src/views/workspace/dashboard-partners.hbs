@@ -1,16 +1,26 @@
-
-<div class="Partner-container" id="statePartner">
-  <fieldset class="Partner-fieldset">
-    <legend class="Partner-legend" id="lengedPartner">
-      <span class="Partner-span">Partner Dashboard</span>
-      {{#if login}}
-      <div class="Partner-Username">
-        <span class="Partner-Username-greeting">Hi, Welcome </span>
-        <span id="tipName" class="Partner-Username-name">{{nameUser}}</span>
+<div class="Admin-container" id="statePartners">
+  <fieldset class="Admin-fieldset">
+    <legend class="Admin-legend colorPartner" id="lengedAdmin">
+      <span class="Admin-span">Partner Dashboard</span>
+      {{#if loggedIn}}
+      <div class="Admin-Username">
+        <span class="Admin-Username-greeting">Hi, Welcome </span>
+        <span id="tipName" class="Admin-Username-name">{{userName}}</span>
       </div>
       {{/if}}
     </legend>
-      {{!-- {{> partners }} --}}
+      {{> partners }}
   </fieldset>
-  </div>
-<link rel="stylesheet" href="../style/partners.css">
+</div>
+<link rel="stylesheet" href="../style/admin.css">
+
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable({
+      responsive: true,
+      lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
+      pageLength: 15,
+      //"pagingType": "simple_numbers"
+    });
+  });
+</script>

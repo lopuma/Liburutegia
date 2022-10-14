@@ -1,79 +1,102 @@
 const connection = require("../../../database/db");
 const bscryptjs = require("bcryptjs");
-const flash = require("connect-flash");
+const flash = require('connect-flash');
+
+const { body, validationResult } = require('express-validator');
 
 const loginController = {
+    
+    validate: [ 
+        body('email', "The format email address is incorrect.").isEmail(),
+        body('password', "Password must contain the following: Minimun 5 characters").exists().isLength({min: 5})
+    ],
     asigneRol: async (req, res, results) => {
         try {
-            req.session.loggedin = true;
-            req.session.name = results[0].firstname;
-            req.session.email = results[0].email;
-            rol = await results[0].rol;
+            const rol = await results[0].rol;
             if (rol == 'admin' || rol == 'Admin') {
-                req.session.rol = rol;
-                login = true;
                 ruta = "workspace/admin";
+                rolAdmin = true;
             } else {
-                req.session.rol = "";
                 ruta = "workspace/books";
+                rolAdmin = false;
             }
             req.session.ruta = ruta;
+            req.session.rol = rol;
+            req.session.roladmin = rolAdmin;
         } catch (error) {
             throw res.status(400).send({
                 success: false,
                 message: error.message
             })    
         }
-        
+    },
+    isAuthenticated: async (req, res, next) => {
+        const loggedIn = req.session.loggedin;
+        if (loggedIn) {
+            try {
+                return next()
+            }   catch (error) {
+                    throw res.status(400).send({
+                        success: false,
+                        message: error.message
+                    })          
+            }
+        } else {
+            res.redirect("/");
+        }
     },
     postLogin: async (req, res) => {
         try {
-            let body = req.body;
-            if (body) {
-                email = body.email;
-                pass = body.password;
+            const errors = validationResult(req);
+            const { email, password : pass } = req.body;
+            if(!errors.isEmpty()){
+                req.flash("errorValidation", errors.array()) 
+                return res.redirect('/login');
             }
-            if (email && pass) {
+            if (email || pass ){
                 sql = "SELECT * FROM users WHERE email = ?";
                 connection.query(sql, [email], async (err, results) => {
-                if (err || results.length === 0 ||
-                    !await bscryptjs.compare(pass, results[0].pass)) {
-                        req.flash("errorMessage", "These credentials do not match our records.") 
-                        res.redirect('/login')
+                    if (err || results.length === 0 ||
+                        !await bscryptjs.compare(pass, results[0].pass)) {
+                            req.flash("errorMessage", "These credentials do not match our records.") 
+                            return res.redirect('/login');
                     }
-                ruta = await loginController.asigneRol(req, res, results);
-                res.render("forms/login", {
-                    success: true,
-                    alert: true,
-                    alertTitle: "Conexion Success",
-                    alertMessage: "!Login Success",
-                    alertIcon: "success",
-                    timer: 1000,
-                    ruta
+                    ruta = await loginController.asigneRol(req, res, results);
+                    req.session.loggedin = true;
+                    req.session.username = results[0].username;
+                    req.session.usermail = results[0].email;
+                    req.session.rol = results[0].rol;
+                    res.render("forms/login", {
+                        success: true,
+                        alert: true,
+                        alertTitle: "Conexion Success",
+                        alertMessage: "!Login Success",
+                        alertIcon: "success",
+                        timer: 1000,
+                        ruta
+                    });
                 });
-            });
-            }
-            // }
+            } 
         } catch (error) {
-            console.log(error);
+            throw res.status(400).send({
+                success: false,
+                message: error.message
+            })  
         }
     },
     getLogin: async (req, res) => {
         try {
-                const logueado = req.session.loggedin;
-                const nameUser = req.session.name;
-                const ruta = req.session.ruta;
-                if (logueado) {
-                login: true;
-                nameUser;
-                res.status(200).redirect(ruta);
-            } else {
+                const loggedIn = req.session.loggedin;
+                if (loggedIn) {
+                    const ruta = req.session.ruta;
+                    return res.status(200).redirect(ruta);
+                }
                 res.status(400).render('forms/login', {
-                    success: false,
-                    nameUser: "",
-                    errorMessage: req.flash("errorMessage"),
-                  });
-            }
+                    loggedIn: false,
+                    userName: "",
+                    errorMessage: req.flash("errorMessage") ,
+                    errorValidation: req.flash("errorValidation")               
+                });
             }
         catch (error) {
             throw res.status(400).send({
@@ -81,7 +104,8 @@ const loginController = {
                 message: error.message
             })          
         }
-    },
+    }
+    
 }
 
 module.exports = loginController;

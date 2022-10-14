@@ -3,7 +3,6 @@ liburudenda-selfsigned.*
 ##docs/
 env/.env
 .gitignore
-docker-compose.yml
 .mysql-data/
 Procfile
 mysql-data/

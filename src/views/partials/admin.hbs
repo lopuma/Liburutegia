@@ -1,4 +1,3 @@
-
 <div class="container-cards">
     {{#each users}}
         <div class="cards" id='{{this.id}}'>
@@ -8,9 +7,9 @@
             </div>
             <div class="card-content">
                 <div class="card-details">
-                    <h2>{{this.firstname}}<br><span>{{this.rol}}</span></h2>
+                    <h2>{{this.username}}<br><span>{{this.rol}}</span></h2>
                     <div class="data">
-                        <h3>Lastname: </h3><span>{{this.lastname}}</span>
+                        <h3>Lastname: </h3><span>{{this.fullname}}</span>
                     </div>
                     <div class="data">
                         <h3>Email: </h3><span>{{this.email}}</span>

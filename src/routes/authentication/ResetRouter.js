@@ -1,5 +1,8 @@
-router.post("/reset-password", (req, res) => {
-    let reqData = req.body;
-    res.send("Recibido-RESE");
-    res.end();
-  });
+const routerReset = require('express').Router();
+const { postReset } = require('../../controller/authController/resetController')
+
+// FORGOT-PASSWORD
+
+routerReset.post("/", postReset);
+
+module.exports = routerReset;

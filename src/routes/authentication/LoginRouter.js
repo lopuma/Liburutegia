@@ -1,8 +1,9 @@
 const routerLogin = require('express').Router();
-const { getLogin, postLogin } = require('../../controller/authController/loginController');
+const { validate, getLogin, postLogin } = require('../../controller/authController/loginController');
+const { isAuthenticated } = require('../../controller/authController/loginController')
 
 // ROUTER LOGIN
-routerLogin.post("/", postLogin);
+routerLogin.post("/", validate, postLogin);
 
 routerLogin.get("/", getLogin);
 

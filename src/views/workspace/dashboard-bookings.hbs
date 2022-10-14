@@ -1,14 +1,26 @@
-<div class="Booking-container" id="stateBookings">
-  <fieldset class="Booking-fieldset">
-    <legend class="Booking-legend" id="lengedBooking">
-      <span class="Booking-span">Booking Dashboard</span>
-      {{#if login}}
-      <div class="Booking-Username">
-        <span class="Booking-Username-greeting">Hi, Welcome </span>
-        <span id="tipName" class="Booking-Username-name">{{nameUser}}</span>
+<div class="Admin-container" id="stateBookings">
+  <fieldset class="Admin-fieldset">
+    <legend class="Admin-legend colorBooking" id="lengedAdmin">
+      <span class="Admin-span">Booking Dashboard</span>
+      {{#if loggedIn}}
+      <div class="Admin-Username">
+        <span class="Admin-Username-greeting">Hi, Welcome </span>
+        <span id="tipName" class="Admin-Username-name">{{userName}}</span>
       </div>
       {{/if}}
     </legend>
+      {{> bookings }}
   </fieldset>
 </div>
-<link rel="stylesheet" href="../style/bookings.css">
+<link rel="stylesheet" href="../style/admin.css">
+
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable({
+      responsive: true,
+      lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
+      pageLength: 15,
+      //"pagingType": "simple_numbers"
+    });
+  });
+</script>
