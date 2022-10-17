@@ -2,8 +2,8 @@
 const formEmail = document.getElementById("email")
 const formFirtname = document.getElementById("firstname")
 const formLastname = document.getElementById("lastname")
-const formPass = document.getElementById("pass");
-const formPassRepeat = document.getElementById("passRepeat");
+const formPass = document.getElementById("newPass");
+const formPassRepeat = document.getElementById("newPassRepeat");
 // --------------------------------------------------------------------------
 
 const btnAccept = document.querySelector("#btnAccept");
@@ -160,12 +160,12 @@ const validarFormulario = e => {
         validateLastname();
       // validarCampo(expresiones.password, e.target, 'password');
       break;
-    case "pass":
+    case "newPass":
       validatePassword();
       validateFormPassword();
       console.log("VALIDATE",validatePassword())
       break;
-    case "passRepeat":
+    case "newPassRepeat":
       validateRepeatPassword();
       validateFormPassword();
       console.log("VALIDATE REPEAT",validateRepeatPassword())

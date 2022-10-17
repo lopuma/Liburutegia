@@ -16,12 +16,19 @@ const btnBookingSidemenu = document.getElementById('btnBookingSidemenu');
 const btnPartnerSidemenu = document.getElementById('btnPartnerSidemenu');
 const btnLoginSidemenu = document.getElementById('btnLoginSidemenu');
 
+setTimeout(() => {
+  console.log("Delayed for 1 second.");
+  $(".alert").alert('close');
+  //$(".alert").alert('dispose')
+}, "6000")
+
 window.onload = onLoad();
 
 function onLoad() {
 console.log("CARGA")
   try {
     // HOME
+
     if ($('#stateHome').val() === '') { // 
       console.log("Succes: True")
 

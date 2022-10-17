@@ -454,6 +454,10 @@
     align-items: center;
     flex-flow: column wrap;
 }
+
+#btnCloseAlert{
+    margin-bottom: 20px;
+}
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
      @media all and (max-width: 950px) {

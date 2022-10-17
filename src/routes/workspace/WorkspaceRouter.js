@@ -8,6 +8,6 @@ routerWorkSpace.get("/bookings", isAuthenticated, getBookings);
 
 routerWorkSpace.get("/admin", isAuthenticated, getAdmin);
 
-routerWorkSpace.get("/partners", isAuthenticated, getPartners);
+routerWorkSpace.get("/partners",isAuthenticated, getPartners);
 
 module.exports = routerWorkSpace;

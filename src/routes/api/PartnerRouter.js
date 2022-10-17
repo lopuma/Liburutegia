@@ -11,10 +11,11 @@ routerPartners.get("/:id_partner", getPartner);
 //ADD
 routerPartners.post("/add", isAuthenticated, validate, addPartner);
 
+
 //DELETE
-routerPartners.delete("/delete/:id_partner", isAuthenticated, noExistPartner, deletePartner);
+routerPartners.get("/delete/:id_partner", isAuthenticated, noExistPartner, deletePartner);
 
 //UPDATE
-routerPartners.put("/update/:id_partner", isAuthenticated, noExistPartner, validate, putPartner);
+routerPartners.post("/update/:id_partner", isAuthenticated, noExistPartner, validate, putPartner);
 
 module.exports = routerPartners;

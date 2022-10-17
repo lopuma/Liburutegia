@@ -1,4 +1,5 @@
 <div class="Admin-container" id="stateBookings">
+    {{> messages}}
   <fieldset class="Admin-fieldset">
     <legend class="Admin-legend colorBooking" id="lengedAdmin">
       <span class="Admin-span">Booking Dashboard</span>
@@ -12,7 +13,7 @@
       {{> bookings }}
   </fieldset>
 </div>
-<link rel="stylesheet" href="../style/admin.css">
+{{!-- <link rel="stylesheet" href="../style/admin.css"> --}}
 
 <script>
   $(document).ready(function () {

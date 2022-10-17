@@ -1,11 +1,14 @@
 const { body, validationResult } = require('express-validator');
 const connection = require("../../../database/db");
+const flash = require('connect-flash');
 
 const partnerController = {
 
     //VALIDATIONS
     validate: [ 
-        body('email', "The format email address is incorrect.").isEmail()
+        body('email', "The format email address is incorrect.").isEmail(),
+        //body('phonea', "The format Phone is incorrect, minimum 9 characters.").isMobilePhone().isLength({min:9, max:9}),
+        //body('phoneb', "The format Phone2 is incorrect, minimum 9 characters.").isMobilePhone().isLength({min:9, max:9})
     ],
     // EXISTS
     existPartner: async (req, res, next) => {
@@ -31,12 +34,12 @@ const partnerController = {
     },
     noExistPartner: async (req, res, next) => {
         try {
-            const idPartner = req.params.id_partner;
-            await connection.query('SELECT * FROM partners WHERE id_partner = ?', [idPartner], (err, results) => {
+            const id_partner = req.params.id_partner;
+            await connection.query('SELECT * FROM partners WHERE id_partner = ?', [id_partner], (err, results) => {
                 if (err || results.length === 0) {
                     return res.status(404).send({
                         success: false,
-                        errorMessage: `Error there is no member with ID PARTNER : ${idPartner}`
+                        errorMessage: `Error there is no member with ID PARTNER : ${id_partner}`
                     });
                 } else {
                     next();
@@ -60,12 +63,7 @@ const partnerController = {
                         error: err
                     });
                 }
-                res.status(200).send(JSON.stringify({
-                    success: true,
-                    messageSuccess: "The following PARTNERS have been found",
-                    data: results
-                }
-                ));
+                res.status(200).send(results);
             });
         } catch (error) {
             throw res.status(400).send({
@@ -87,12 +85,7 @@ const partnerController = {
                         error: err
                     });
                 }
-                res.send(JSON.stringify({
-                    success: true,
-                    messageSuccess: `Successfully found partner with ID : ${results[0].id_partner}`,
-                    data: results[0]
-                }
-                ));
+                res.send(results[0]);
             });
         } catch (error) {
             return res.status(400).send({
@@ -105,50 +98,33 @@ const partnerController = {
     addPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const partner ={ dni, scanner, name, lastname, direction, population, phone1, phone2, email } = req.body;
+            const { dni, scanner, name, lastname, direction, population, email } = req.body;
             const sql = "INSERT INTO partners SET ?";
-            if (!partner.dni || !partner.name || !partner.lastname) {
-                return res.status(400).send({
-                    success: false,
-                    errorMessage: `Missing data to complete, can not be empty`
-                })
+            let phone1 = req.body.phone1;
+            let phone2 = req.body.phone2;
+            if (!dni || !name || !lastname) {
+                req.flash("errorMessage", `Missing data to complete, can not be empty`) 
+                return res.status(200).redirect('/workspace/partners/new');
             }
-            if(!errors.isEmpty()){
-                return res.status(400).send({
-                    success: false,
-                    errorValidation: errors.array()
-                })            
+            if( email !== ''){
+                if(!errors.isEmpty()){
+                    req.flash("errorValidation", errors.array()) 
+                    return res.status(200).redirect('/workspace/partners/new');      
+                }
             }
+            const phonea = phone1 ? parseInt(phone1) : null
+            const phoneb = phone2 ? parseInt(phone2) : null
 
-            if(partner.phone1 != undefined || partner.phone1 != null){
-                if(typeof(partner.phone1) !== "number" || partner.phone1.toString().length < 9){
-                    return res.status(400).send({
-                        success: false,
-                        errorMessage: `Error in the phone1 format : ${partner.phone1}, minimum 9 characters and value must be numeric.`
-                    })
-                }
-            }
-            if(partner.phone2 != undefined || partner.phone2 != null){
-                if(typeof(partner.phone2) !== "number" || partner.phone2.toString().length < 9){
-                    return res.status(400).send({
-                        success: false,
-                        errorMessage: `Error in the phone2 format : ${partner.phone2}, minimum 9 characters and value must be numeric.`
-                    })
-                }
-            }
-            connection.query(sql, partner, (err, results) => {
+            connection.query(sql, {dni, scanner, name, lastname, direction, population, phone1:phonea, phone2:phoneb, email}, (err, results) => {
                 if (err) {
                     throw err;
-                } else {
-                    return res.status(200).send({
-                        success: true,
-                        messageSuccess: `Partner successfully created, with PARTNER ID : ${results.insertId}`,
-                        partner
-                    });
                 }
+                req.flash("messageSuccess", `Partner successfully created, with PARTNER ID : ${results.insertId}`) 
+                return res.status(200).redirect('/workspace/partners/new');
             }
             );
         } catch (error) {
+            req.flash("errorMessage", `error`) 
             return res.status(400).send({
                 success: false,
                 message: error.message
@@ -159,18 +135,18 @@ const partnerController = {
     deletePartner: async (req, res) => {
         try {
             const id_partner = req.params.id_partner;
+            console.log(id_partner)
             deleteBookins = [`DELETE bookings FROM bookings JOIN partners ON partners.dni = bookings.partner_dni WHERE partners.id_partner = ${id_partner}`,
             `DELETE FROM partners WHERE id_partner =  ${id_partner}`
             ]
-            await connection.query(deleteBookins.join(";"), async (err) => {
+            await connection.query(deleteBookins.join(";"), async (err, results) => {
                 if (err) {
                     throw err;
                 }
-                res.status(200).send({
-                    success: true,
-                    messageSuccess: `Partner successfully delete, with ID PARTNER : ${id_partner} And reservations related to the partner.`
-                });
-            })
+                req.flash("messageUpdate", `Partner successfully delete, with PARTNER ID : ${id_partner}`) 
+                return res.redirect('/workspace/partners');
+            }
+            );
         } catch (error) {
             throw res.status(400).send({
                 success: false,
@@ -182,48 +158,49 @@ const partnerController = {
     putPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const idPartner = req.params.id_partner;
+            const id_partner = req.params.id_partner;
             const partner = { dni, scanner, name, lastname, direction, population, phone1, phone2, email } = req.body;
-            if (!partner.name || !partner.lastname) {
-                return res.status(400).send({
-                    success: false,
-                    messageNotFound: "Missing data to complete, can not be empty"
-                })
-            }
-
-            if(!errors.isEmpty()){
-                return res.status(400).send({
-                    success: false,
-                    errorValidation: errors.array()
-                })            
-            }
-            if(partner.phone1 != undefined || partner.phone1 != null){
-                if(typeof(partner.phone1) !== "number" || partner.phone1.toString().length < 9){
-                    return res.status(400).send({
-                        success: false,
-                        errorMessage: `Error in the phone1 format : ${partner.phone1}, minimum 9 characters and value must be numeric.`
-                    })
-                }
-            }
-            if(partner.phone2 != undefined || partner.phone2 != null){
-                if(typeof(partner.phone2) !== "number" || partner.phone2.toString().length < 9){
-                    return res.status(400).send({
-                        success: false,
-                        errorMessage: `Error in the phone2 format : ${partner.phone2}, minimum 9 characters and value must be numeric.`
-                    })
-                }
-            }
+            console.log("PARTNER ==>", partner)
+        //     if (!partner.name || !partner.lastname) {
+        //         return res.status(400).send({
+        //             success: false,
+        //             messageNotFound: "Missing data to complete, can not be empty"
+        //         })
+        //     }
+        //     if(!errors.isEmpty()){
+        //         return res.status(400).send({
+        //             success: false,
+        //             errorValidation: errors.array()
+        //         })            
+        //     }
+        //     if(partner.phone1 != undefined || partner.phone1 != null){
+        //         if(typeof(partner.phone1) !== "number" || partner.phone1.toString().trim().length < 9){
+        //             return res.status(400).send({
+        //                 success: false,
+        //                 errorMessage: `Error in the phone1 format : ${partner.phone1}, minimum 9 characters and value must be numeric.`
+        //             })
+        //         }
+        //     }
+        //     if(partner.phone2 != undefined || partner.phone2 != null){
+        //         if(typeof(partner.phone2) !== "number" || partner.phone2.toString().trim().length < 9){
+        //             return res.status(400).send({
+        //                 success: false,
+        //                 errorMessage: `Error in the phone2 format : ${partner.phone2}, minimum 9 characters and value must be numeric.`
+        //             })
+        //         }
+        //     }
             const sql = "UPDATE partners SET ? WHERE id_partner = ?";
-            await connection.query(sql, [partner, idPartner], (err, results) => {
+            await connection.query(sql, [partner, id_partner], (err, results) => {
                 if (err) {
                     throw err;
-                } else {
-                    return res.status(200).send({
-                        success: true,
-                        messageSuccess: `Partner successfully update, with PARTNER ID : ${idPartner}`,
-                        result: results.message
-                    });
-                }
+                }           
+                req.flash("messageUpdate", `Partner successfully update, with PARTNER ID : ${id_partner}`) 
+                //return res.redirect('/workspace/partners/');
+                res.send({
+                    'success': true,
+                    'messageUpdate': `Partner successfully update, with PARTNER ID : ${id_partner}`
+                })
+                console.log(req.flash('messageUpdate'))
             }
             );
         } catch (error) {

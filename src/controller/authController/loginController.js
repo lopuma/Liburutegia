@@ -93,10 +93,8 @@ const loginController = {
                 }
                 res.status(400).render('forms/login', {
                     loggedIn: false,
-                    userName: "",
-                    errorMessage: req.flash("errorMessage") ,
-                    errorValidation: req.flash("errorValidation")               
-                });
+                    userName: ""
+               });
             }
         catch (error) {
             throw res.status(400).send({

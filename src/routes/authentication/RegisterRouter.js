@@ -1,5 +1,9 @@
-//REGISTER
-router.get("/register", (req, res) => {
+const routerRegister = require('express').Router();
+const connection = require("../../../database/db");
+//const { postReset } = require('../../controller/authController/resetController')
+const bscryptjs = require("bcryptjs");
+
+routerRegister.get("/", async (req, res) => {
     const logueado = req.session.loggedin;
     const nameUser = req.session.name;
     const userRol = req.session.rol;
@@ -18,10 +22,10 @@ router.get("/register", (req, res) => {
     }
   });
   
-router.post("/register", async (req, res) => {
-  const { email, username, fullname, rol, pass } = req.body;
+  routerRegister.post("/", async (req, res) => {
+  const { email, username, fullname, rol, newPass } = req.body;
   const _ss = 0;
-  let passwordHash = await bscryptjs.hash(pass, 8);
+  let passwordHash = await bscryptjs.hash(newPass, 8);
   sqlUser = "SELECT * FROM users WHERE email = ?";
   connection.query(sqlUser, [email], async (error, resul) => {
     if (error) {
@@ -33,8 +37,8 @@ router.post("/register", async (req, res) => {
         sqlInsert,
         {
           email,
-          firstname: username,
-          lastname: fullname,
+          username,
+          fullname,
           rol,
           pass: passwordHash,
           _ss
@@ -68,4 +72,5 @@ router.post("/register", async (req, res) => {
     }
   });
 });
-  
+
+module.exports = routerRegister;

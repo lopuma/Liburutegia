@@ -1,0 +1,78 @@
+<div class="New">
+    <form class="New-form" action="/api/partners/add" method="post">
+        <div class="New-content">
+            <div class="New-title">
+                <h1 class="New-h1">Add New Partner</h1>
+            </div>
+            {{> messages}}
+
+            {{!-- <div class="isBaseline">
+                <label class="New-label">Id Partner</label>
+                <input type="text" name="id" id="id" value="" tabindex="1">
+            </div> --}}
+            <div class="New-boxes">
+                <div class="New-box">
+                    {{!-- <label class="New-label">Dni</label> --}}
+                    <input class="New-input" type="text" name="dni" id="dni" value="" tabindex="2" autofocus required>
+                    <label for="dni" class="Input-label">Enter Dni *</label>
+
+                </div>
+                <div class="New-box">
+                    {{!-- <label class="New-label">Scanner</label> --}}
+                    <input class="New-input" type="text" name="scanner" id="scanner" value="" tabindex="3">
+                    <label for="scanner" class="Input-label">Enter Scanner</label>
+                </div>
+            </div>
+            <div class="New-boxes">
+                <div class="New-box">
+                    {{!-- <label class="New-label">Name</label> --}}
+                    <input class="New-input" type="text" name="name" id="name" value="" tabindex="4" required>
+                    <label for="name" class="Input-label">Enter Name *</label>
+                </div>
+                <div class="New-box">
+                    {{!-- <label class="New-label">Last Name</label> --}}
+                    <input class="New-input" type="text" name="lastname" id="lastname" value="" tabindex="5" required>
+                    <label for="lastname" class="Input-label">Enter Last name *</label>
+                </div>
+            </div>
+            <div class="New-boxes">
+                <div class="New-box">
+                    {{!-- <label class="New-label">Population</label> --}}
+                    <input class="New-input" type="text" name="population" id="population" value="" tabindex="6">
+                    <label for="population" class="Input-label">Enter Population</label>
+                </div>
+                <div class="New-box">
+                    {{!-- <label class="New-label">Direction</label> --}}
+                    <input class="New-input" type="text" name="direction" id="direction" value="" tabindex="7">
+                    <label for="direction" class="Input-label">Enter Direction</label>
+                </div>
+            </div>
+            <div class="New-boxes">
+                <div class="New-box">
+                    {{!-- <label class="New-label">Phone</label> --}}
+                    <input class="New-input" type="tel" name="phone1" id="phone1" value="" tabindex="8" placeholder="123456789">
+                    <label for="phone1" class="Input-label">Enter Phone</label>
+                </div>
+                <div class="New-box">
+                    {{!-- <label class="New-label">Phone 2</label> --}}
+                    <input class="New-input" type="tel" name="phone2" id="phone2" value="" tabindex="9">
+                    <label for="phone2" class="Input-label">Enter Phone 2</label>
+                </div>
+            </div>
+            <div class="New-boxes">
+                <div class="New-box">
+                    {{!-- <label class="New-label">Email</label> --}}
+                    <input class="New-input" type="email" name="email" id="email" value="" tabindex="10">
+                    <label for="email" class="Input-label">Enter Email</label>
+                </div>
+            </div>
+            <div class="Input-button">
+                <a class="Button-cancel" id="btnCancel" href="/workspace/partners" type="button" value='CANCEL' tabindex="11" />CANCEL</a>
+                <input class="Button-accept" id="btnAccept" type="submit" value='ACCEPT' tabindex="12" />
+            </div>
+        </div>
+    </form>
+</div>
+
+{{!-- <link href="/style/app.css" rel="stylesheet"> --}}
+<link href="/style/new.css" rel="stylesheet">

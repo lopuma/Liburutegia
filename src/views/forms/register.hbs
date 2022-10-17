@@ -12,8 +12,7 @@
                 <div class="Input-boxes">
                     <div class="Input-box">
                         <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
-                        <input class="Box-input" id="email" type="email" name="email"
-                            tabindex="1" required autofocus>
+                        <input class="Box-input" id="email" type="email" name="email" tabindex="1" required autofocus>
                         <label for="email" class="Input-label">Enter your email address *</label>
                     </div>
                     <div class="Input-error" id="grupo__mail">
@@ -21,32 +20,36 @@
                     </div>
                     <div class="Input-box">
                         <i id="iconFirtname" class="Box-i fa-solid fa-user"></i>
-                        <input class="Box-input" id="firstname" type="text" name="username"
-                            placeholder="Enter your Username *" required tabindex="2">
+                        <input class="Box-input" id="username" type="text" name="username" required autocomplete="false" tabindex="2">
+                        <label for="username" class="Input-label">Enter your Username *</label>
                     </div>
                     <div class="Input-error" id="grupo__username">
                         <p class="Error-p ">The Username is not correct.</p>
                     </div>
                     <div class="Input-box">
                         <i id="iconLastname" class="Box-i fa-solid fa-user"></i>
-                        <input class="Box-input" id="lastname" type="text" name="fullname"
-                            placeholder="Enter your Full name" tabindex="3">
-
+                        <input class="Box-input" id="fullname" type="text" name="fullname" autocomplete="false" tabindex="3">
+                        <label for="fullname" class="Input-label">Enter your Full name *</label>
                     </div>
                     <div class="Input-box">
                         <i id="iconPass" class="Box-i fa-solid fa-key"></i>
-                        <input class="Box-input" id="pass" type="password" name="pass" placeholder="Create a password *"
-                            required tabindex="4">
+                        <input class="Box-input" name="newPass" id="newPass" type="password" autocomplete="false"
+                            required="required" readonly onfocus="this.removeAttribute('readonly');" tabindex="4" />
+                        <label for="newPass" class="Input-label">Create a password *</label>
+
                         <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
+
                     </div>
                     <div class="Input-error" id="grupo__password">
                         <p class="Error-p ">The verification password does not match.</p>
                     </div>
                     <div class="Input-box">
                         <i id="iconPassRepeat" class="Box-i fa-solid fa-key"></i>
-                        <input class="Box-input" id="passRepeat" type="password" name="passRepeat"
-                            placeholder="Repeat password *" required tabindex="5">
-                        <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
+                        <input class="Box-input" name="newPassRepeat" id="newPassRepeat" type="password"
+                            autocomplete="false" required="required" readonly
+                            onfocus="this.removeAttribute('readonly');" placeholder="Repeat password *" tabindex="5" /> 
+                            <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
+                        {{!-- <label for="newPassRepeat" class="Input-label">Repeat password *</label> --}}
                     </div>
                     <div class="Input-error" id="grupo__password2">
                         <p class="Error-p ">The verification password does not match.</p>

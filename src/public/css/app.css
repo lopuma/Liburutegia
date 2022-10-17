@@ -1,13 +1,10 @@
 /* IMPORT CSS STYLE */
 @import url("_reset.css");
-@import url("variables.css");
-/* @import url("navbar.css"); */
-/* @import url("sidemenu.css"); */
-@import url("main.css");
-/* @import url("index.css"); */
-/* @import url("login.css"); */
-/* @import url("admin.css"); */
-/* @import url("books.css"); */
-/* @import url("bookings.css"); */
-/* @import url("partners.css"); */
+@import url("admin.css");
 @import url("footer.css");
+@import url("index.css");
+@import url("login.css");
+@import url("main.css");
+@import url("navbar.css");
+@import url("sidemenu.css");
+@import url("variables.css");

@@ -1,4 +1,5 @@
 const connection = require("../../../database/db");
+const flash = require('connect-flash');
 
 const workSpaceController = {
 
@@ -53,7 +54,9 @@ const workSpaceController = {
             userName,
             userMail,
             users,
-            rolAdmin
+            rolAdmin,
+            messageSuccess: req.flash("messageSuccess"),
+            messageDelete: req.flash("messageDelete")
           })
         });
     }
