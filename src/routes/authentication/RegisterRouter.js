@@ -1,28 +1,25 @@
-const routerRegister = require('express').Router();
+const routerRegister = require("express").Router();
 const connection = require("../../../database/db");
 //const { postReset } = require('../../controller/authController/resetController')
 const bscryptjs = require("bcryptjs");
+const {
+  isAuthenticated
+} = require("../../controller/authController/loginController");
 
-routerRegister.get("/", async (req, res) => {
-    const logueado = req.session.loggedin;
-    const nameUser = req.session.name;
-    const userRol = req.session.rol;
-    const error_msg_exist = req.flash("error_msg_exist");
-  
-    if (logueado && userRol) {
-      res.render("../views/forms/register", {
-        login: true,
-        nameUser,
-        userRol,
-        error_msg_exist
-      });
-    } else {
-      login = true, nameUser, userRol;
-      return res.redirect('/');
-    }
-  });
-  
-  routerRegister.post("/", async (req, res) => {
+routerRegister.get("/", isAuthenticated, async (req, res) => {
+  const userName = req.session.username;
+  const loggedIn = req.session.loggedin;
+  const userMail = req.session.usermail;
+  rolAdmin === false ?
+    res.redirect('/') :
+    res.render("../views/forms/register", {
+      loggedIn,
+      userName,
+      userMail,
+    });
+});
+
+routerRegister.post("/", isAuthenticated, async (req, res) => {
   const { email, username, fullname, rol, newPass } = req.body;
   const _ss = 0;
   let passwordHash = await bscryptjs.hash(newPass, 8);

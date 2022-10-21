@@ -1,44 +1,96 @@
-.New{
+/* MODAL */
+.modal-footer {
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-footer button {
+    width: 20% !important;
+}
+
+.modal-dialog {
+    max-width: 70% !important;
+    margin: 20px auto;
+}
+
+.New {
     font-family: inherit;
-    font-size: inherit;
     border-radius: var(--Radius-forms);
     color: var(--negro);
     background-color: var(--blanco);
-    overflow: hidden;
-    width: 80%;
+    width: 100%;
     height: auto;
-    margin: var(--margin-top-forms) auto auto auto;
-    position: relative;
     padding: 20px;
     transition: background .3s ease-in-out;
     min-height: 100%;
+    overflow: hidden;
 }
 
-.New-content{
+
+.isNew {
+    font-size: inherit;
+    width: 60%;
+    margin: calc(var(--margin-top-forms) + 20px) auto 40px auto;
+    box-shadow: rgb(17, 17, 17) 0px 0px 8px, rgba(0, 0, 0, 0.7) 2px 8px 8px;
+}
+
+.New-form {
+    margin-top: 30px;
+}
+
+.New-content {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-flow:  column nowrap;
+    flex-flow: column nowrap;
     width: 100%;
-    height: auto;
+    height: 100%;
     overflow: hidden;
 }
 
-.New-title{
+.New-title {
     display: flex;
     justify-content: start;
-    height: 100%;
-    width: 100%;
     padding: 20px;
+    margin: 20px 0;
     overflow: hidden;
+    margin: 0;
+    position: absolute;
+    top: 80px;
+    left: 20%;
+    display: none;
 }
 
-.New-h1{
-    font-size: 20px;
-    font-weight: 700;
+.New-title.isEnable {
+    display: block;
 }
 
-.New-boxes{
+.New-h1 {
+    background-color: var(--Background-Color-forms-partner);
+    color: black;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+
+}
+
+.Main-h1 {
+    background-color: var(--background-nav);
+    color: var(--color-nav);
+    border-radius: 3px;
+    padding: 20px;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 15px 0;
+    width: fit-content;
+}
+
+.New-boxes {
     display: flex;
     align-items: center;
     flex-flow: row wrap;
@@ -51,7 +103,7 @@
     overflow: hidden;
 }
 
-.isBaseline{
+.isBaseline {
     display: flex;
     justify-content: flex-start;
     flex-flow: row nowrap;
@@ -59,7 +111,7 @@
     padding: 20px;
 }
 
-.New-box{
+.New-box {
     display: flex;
     align-items: center;
     flex-flow: row wrap;
@@ -67,22 +119,22 @@
     width: 50%;
 }
 
-.New-label{
+.New-label {
     display: inline-block;
     width: 80px;
     text-align: start;
     margin: 20px;
 }
 
-.New-input{
+.New-input {
     display: inline-block;
     height: 100%;
     width: 100%;
     outline: none;
     border: none;
     padding: 25px 20px;
-    margin: 0 20px;
-    font-size: 17px;
+    margin: 20px;
+    font-size: 20px;
     font-weight: 500;
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
@@ -95,41 +147,125 @@
 
 .Input-label {
     position: absolute;
-    top: 0px;
-    left: 0;
-    transform: translate(10px, 10px);
-    transform: transform .25s;
+    top: 30px;
+    left: 10px;
+    /* transform: translate(20px, 30px); */
+    /* transform: transform .25s; */
+    margin: 0;
+    padding: 0 10px;
 }
 
 .New-input:focus+.Input-label,
 .New-input:valid+.Input-label {
+    top: 5px;
+    transform: translate(0px, 0px) scale(.8);
     border-color: rgb(32, 162, 202);
-    transform: translate(10px, -14px)  scale(.8);
     color: #d1c5fc;
     padding-inline: 8px;
     background-color: #242329;
     font-size: 20px;
     letter-spacing: 3px;
-    left: 0;
-    margin: 0 10px;
-    padding: 0 10px;
 }
 
-.New-input:is(:focus, :valid){
+.New-input:is(:focus, :valid) {
     outline: 1px solid #242329;
 }
 
-.errorValidation{
+.errorValidation {
     margin-bottom: 20px;
 }
 
-@media screen and (max-width: 750px) {
+@media all and (max-width: 950px) {
+    .isNew {
+        width: 80%;
+    }
 
-   .New-boxes{
-    flex-flow: column nowrap;
-   } 
-   .New-box{
-    width: 100%;
-    margin: 10px auto;
-   }
+    .New-title {
+        width: 100%;
+        left: 10%;
+    }
+
+    .modal-dialog {
+        max-width: 80% !important;
+    }
+}
+
+@media all and (max-width: 750px) {
+
+    .New-boxes {
+        flex-flow: column nowrap;
+    }
+
+    .New-box {
+        width: 90%;
+    }
+}
+
+@media all and (max-width: 500px) {
+    .modal-footer {
+        width: 100% !important;
+        flex-flow: column nowrap !important;
+    }
+
+    .isNew {
+        width: 90%;
+    }
+
+    .New-title {
+        width: 100%;
+        margin: 0;
+        left: 10px;
+    }
+
+    .New-content {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .New-form {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        margin-top: 50px;
+    }
+
+    .New-boxes {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .Input-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column nowrap;
+        width: 100%;
+    }
+
+    .Button-cancel {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .Button-accept {
+        width: 100%;
+    }
+
+    .New-input:focus+.Input-label,
+    .New-input:valid+.Input-label {
+        left: 0;
+        top: 5px;
+        transform: translate(0px, 0px) scale(.6);
+    }
+
+
+    .New-input {
+        margin: 20px 0;
+    }
+
+    .modal-dialog {
+        max-width: 90% !important;
+    }
 }

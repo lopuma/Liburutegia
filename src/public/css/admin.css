@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-flow:  column wrap;
+  flex-flow: column wrap;
   min-height: 100%;
 }
 
@@ -31,6 +31,7 @@
   margin: 20px 0;
   height: 100%;
   background-color: var(--blanco);
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px, rgba(0, 0, 0, 0.3) 0px 0px 8px;
 }
 
 .Admin-legend {
@@ -47,7 +48,7 @@
   letter-spacing: 3px;
 }
 
-.container-fluid{
+.container-fluid {
   margin-top: 20px;
 }
 
@@ -55,34 +56,25 @@
 .col-md-6 {
   text-align: start;
 }
-.colorBook{
+
+.colorBook {
   background: var(--Background-Color-forms-book);
 }
 
-.colorBooking{
+.colorBooking {
   background: var(--Background-Color-forms-booking);
 }
 
-.colorPartner{
+.colorPartner {
   background: var(--Background-Color-forms-partner);
 }
 
-.dataTables_info{
+.dataTables_info {
   margin: 30px 0;
   font-weight: 600;
 }
 
-#example_paginate,
-.pagination{
-  text-align: center;
-  justify-content: center;
-  margin: 30px 0;
-}
 
-#example_filter{
-  display: flex;
-  justify-content: flex-end;
-}
 .Admin-span {
   font-weight: 600;
   flex: 40%;
@@ -372,10 +364,11 @@
   opacity: 0.5;
 }
 
-.Button-cancel{
+.Button-cancel {
   text-decoration: none;
 }
-.Button-cancel:hover{
+
+.Button-cancel:hover {
   text-decoration: none;
 }
 
@@ -406,6 +399,81 @@
 
 .card-actionBtn .card-actionBtn-main button span i {
   font-size: 13px;
+}
+
+/* DATA TABLES ELEMNTS */
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  font-size: 18px;
+}
+
+.col-sm-12 {
+  align-items: center;
+  padding: 20px;
+}
+
+.dataTables_filter,
+.dataTables_length {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.dataTables_filter label,
+#example_filter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+.form-select {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px 30px;
+}
+
+
+
+div.dataTables_wrapper div.dataTables_filter input {
+  width: 350px !important;
+  height: 50px;
+  font-size: 20px;
+}
+
+/* Cargando */
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid black;
+  border-color: black transparent black transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 480px) {
@@ -470,4 +538,15 @@
   .row .pagination {
     width: 100%;
   }
+
+
+  div.dataTables_wrapper div.dataTables_filter input {
+    width: auto !important;
+  }
+
+  .dataTables_filter label {
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
 }

@@ -26,12 +26,8 @@ if (process.env.NODE_ENV !== 'production'){
 // Configuraciones
 const PORT = process.env.PORT || 3000;
 app.set('views', path.join(__dirname, 'views'));
+app.set('tables', path.join(__dirname, 'views/workspace/tables'));
 
-
-// // 8 - Invocamos a la conexion de la DB
-// const connection = require("../database/db");
-// // 6 - Invocamos a bscryptjs
-// const bscryptjs = require("bcryptjs");
 const { database } = require('../database/keys.js');
 
 app.use(morgan('dev'));
@@ -41,8 +37,8 @@ app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true,
-	//store: new MySqlStore(database)
-	maxAge: 1 * 60 * 60 * 1000
+	//store: new MySqlStore(database),
+	//maxAge: 1 * 60 * 60 * 1000
 }));
 
 app.use(flash()); // enviar mensajes al cliente
@@ -54,6 +50,14 @@ app.use((req, res, next) => {
 	res.locals.messageDelete = req.flash('messageDelete');
 	res.locals.errorMessage = req.flash('errorMessage');
 	res.locals.errorValidation = req.flash('errorValidation');
+	// console.log("AL INICIO ", req.session.rolAdmin)
+	// res.locals.rolAdmin = req.session.rolAdmin;
+	// res.locals.error_msg_exist =  req.session.error_msg_exist;
+	// res.locals.ruta =  req.session.ruta;
+	// res.locals.rol =  req.session.rol;
+	// res.locals.loggedIn =  req.session.loggedin;
+	// res.locals.userName =  req.session.username;
+	// res.locals.userMail =  req.session.usermail;
 	next();
 });
 
@@ -75,16 +79,17 @@ app.engine('.hbs', exphbs.engine({
 	layoutsDir: path.join(app.get('views'), 'layouts'),
 	partialsDir: path.join(app.get('views'), 'partials'), // REUTILIZAR CODIGO EN LAS VISTAS
 	formsDir: path.join(app.get('views'), 'forms'), // REUTILIZAR CODIGO EN LAS VISTAS
-	profileDir: path.join(app.get('views'), 'profile'), // REUTILIZAR CODIGO EN LAS VISTAS
-	workspaceDir: path.join(app.get('views'), 'workspace'), // REUTILIZAR CODIGO EN LAS VISTAS
+	// profileDir: path.join(app.get('views'), 'profile'), // REUTILIZAR CODIGO EN LAS VISTAS
+	// workspaceDir: path.join(app.get('views'), 'workspace'), // REUTILIZAR CODIGO EN LAS VISTAS
+	// formDir: path.join(app.get('tables')), // REUTILIZAR CODIGO EN LAS VISTAS
 	extname: '.hbs',
 	//helpers: require('./lib/handlebars') // EJECUTAR FUNCIONES
 }))
 app.set('view engine', '.hbs'); // EJECUTAR NUESTRO MOTOR HBS
 
 // Creamos usuario inicial
-const userDef = require('../src/routes/db/userDefault');
-userDef();
+// const userDef = require('../src/routes/db/userDefault');
+// userDef();
 
 // Starting the server
 app.listen(PORT, () => {
@@ -95,7 +100,7 @@ app.listen(PORT, () => {
 app.use('/', require('./routes/IndexRouter')); // PAGINA PRICIPAL
 app.use('/profile', require('./routes/profile/ProfileRouter'));
 app.use('/workspace', require('./routes/workspace/WorkspaceRouter'));
-app.use('/workspace/partners', require('./routes/workspace/partners/PartnersRouter'));
+app.use('/workspace/partners', require('./routes/workspace/PartnersRouter'));
 
 // 9.1 - ROUTERS API
 app.use('/api/books', require('./routes/api/BookRouter'))

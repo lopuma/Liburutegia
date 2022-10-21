@@ -1,77 +1,63 @@
-<div class="container-fluid">
-<div class="row">
-    <div class="col-lg-12">
-    <table id="example" class="table table-bordered  display nowrap" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-                <th>Salary</th>
-                <th>Salary</th>
-                <th>Salary</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-                <th>Salary</th>
-                <th>Salary</th>
-                <th>Salary</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-    </table>  
-    
+<!--Modal para CRUD-->
+<div id="modalBOOK" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBOOKLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalBOOKLabel"></h5>
+      </div>
+      <div class="New">
+        <form class="New-form" id="formu">
+          {{> formNewBook}}
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="10">Cancel</button>
+            <button type="submit" id="btnGuardar" class="btn btn-dark" tabindex="11">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
-</div> 
+  </div>
 </div>
 
-<script>
-     $(document).ready(function (e) {
-      $('#example').DataTable({
-        'searching': true,
-        'ordering': true,
-        'info': true,
-        'responsive': true,
-        "order": [[0, "desc"]],
-        "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-        "pageLength": 5,
-        'ajax': '/api/books/',
-        columns: [
-        { data: 'data.id_book' },
-        { data: 'data.title' },
-        { data: 'data.author' },
-        { data: 'data.type' },
-        { data: 'data.language' },
-        { data: 'data.purchase_date' },
-        { data: 'data.reserved' },
-          {
-            data: null,
-            render: function (data, type) {
-              return `
-                      <div class="ui buttons">
-                        <button id="btnEditBook" onClick=mostrar(`+ data.id_book + `) type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#modalCRUD" href="#edit" title="Edit book"><i class="fa-regular fa-pen-to-square"></i></button>
-                        <div class="or" data-text="or">                          
-                        </div>
-                        <button id="btnDeleteBook" onClick=deleteBook(`+ data.id_book + `) class="btn btn-outline-danger" title="Delete book"><i class="fa-solid fa-trash-can"></i></button>
-                      </div>
-                      `
-            }
-          }
-        ]
-      });
-    });
-</script>
+{{!-- LOADING --}}
+<div id="spinner">
+  <div class="lds-dual-ring">&nbsp</div>
+</div>
+
+{{!-- DATA --}}
+<div class="container-fluid">
+  <a href="/workspace/books/new">New Book</a>
+  <div class="row">
+    <div class="col-lg-12">
+      <table id="tableBook" class="table table-bordered  display nowrap" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>id_book</th>
+            <th>TITLE</th>
+            <th>AUTHOR</th>
+            <th>ISBN</th>
+            <th>TYPE</th>
+            <th>LANGUAGE</th>
+            <th>PURCHASE DATE<br><span style="color: gray; font-size: 14px; text-aling: center">(DD/MM/AAAA)</span></th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>id_book</th>
+            <th>TITLE</th>
+            <th>AUTHOR</th>
+            <th>ISBN</th>
+            <th>TYPE</th>
+            <th>LANGUAGE</th>
+            <th>PURCHASE DATE</th>
+            <th>ACTIONS</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<link href="/style/new.css" rel="stylesheet">

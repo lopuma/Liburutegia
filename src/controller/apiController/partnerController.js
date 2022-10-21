@@ -57,10 +57,9 @@ const partnerController = {
         try {
             await connection.query("SELECT * FROM partners", function (err, results) {
                 if (err || results.length === 0) {
-                    return res.status(404).send({
+                    return res.status(200).send({
                         success: true,
                         messageNotFound: "No data found for PARTNERS",
-                        error: err
                     });
                 }
                 res.status(200).send(results);

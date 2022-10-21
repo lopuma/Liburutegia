@@ -2,18 +2,20 @@ const database = require('../../../database/keys')
 const partnersController = {
 
     getNew: async(req, res) => {
-        res.render('workspace/partners/new')
+        const userName = req.session.username;
+        const loggedIn = req.session.loggedin;
+        const userMail = req.session.usermail;
+        res.render('workspace/partners/new', {
+            loggedIn,
+            userName,
+            userMail,
+            rolAdmin
+        }
+        )
     },
     getShow: async(req, res) => {
         res.send("hola show partners")
-    },
-    getDelete: async(req, res) => {
-        res.send("hola delete partners")
-    },
-    getUpdate: async(req, res) => {
-        res.send("hola update partners")
     }
-
 }
 
 module.exports =  partnersController;

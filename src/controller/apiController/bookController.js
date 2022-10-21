@@ -6,17 +6,12 @@ const bookController = {
         try {
             await connection.query("SELECT * FROM books", (err, results) => {
                 if (err || results.length === 0) {
-                    return res.status(404).send({
+                    return res.status(200).send({
                         success: true,
-                        message: "No data found for BOOKS",
-                        error: err
+                        message: "No data found for BOOKS"
                     });
                 }
-                res.status(200).send(JSON.stringify({
-                    success: true,
-                    message: "The following BOOKS have been found",
-                    data: results
-                }));
+                res.status(200).send(results);
             });
         } catch (error) {
             throw res.status(400).send({

@@ -13,15 +13,155 @@
       {{> books }}
   </fieldset>
 </div>
-{{!-- <link rel="stylesheet" href="../style/admin.css"> --}}
 
 <script>
-  $(document).ready(function () {
-    $('#example').DataTable({
-      responsive: true,
-      lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-      pageLength: 15,
-      //"pagingType": "simple_numbers"
+  //EDITAR
+  function edit(id_book) {
+    opcion = 'edit';
+    const idBook = id_book;
+    const url = `/api/books/${idBook}`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((datos) => {
+        $("#id_book").val(datos.id_book);
+        $("#title").val(datos.dni);
+        $("#author").val(datos.scanner);
+        $("#editorial").val(datos.name);
+        $("#isbn").val(datos.lastname);
+        $("#type").val(datos.direction);
+        $("#language").val(datos.population);
+        $("#collection").val(datos.phone1);
+        $("#purchase_date").val(datos.phone2);
+        $("#observations").val(datos.email);
+        $(".modal-header").css("background-color", "var(--Background-Color-forms-book)");
+        $(".modal-header").css("color", "white");
+        $(".modal-title").text("EDIT BOOK").css("font-weight", "700");
+      })
+      .then((result) => {
+        console.log(result)
+      })
+  }
+
+  //DELETE
+  function deleteBook(id_book) {
+    opcion = 'delete';
+    const idBook = id_book;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Are you sure you want to delete the BOOK!",
+      icon: 'warning',
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted! Book ' + idBook,
+            'Your Book has been deleted.',
+            'success',
+            window.location = `/api/books/delete/${idBook}`
+          );
+        }
+      });
+  }
+
+  //MOSTRAR
+  setTimeout(() => {
+
+    $(document).ready(function (e) {
+      const url = '/api/books/';
+      $('#tableBook').DataTable({
+        "ajax": {
+          "url": url,
+          "dataSrc": ""
+        },
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'responsive': true,
+        "order": [[0, "desc"]],
+        "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
+        "pageLength": 15,
+        'deferRender': true,
+        columns: [
+          { data: 'id_book', 'visible': false },
+          { data: 'title' },
+          { data: 'author' },
+          { data: 'isbn' },
+          { data: 'type' },
+          { data: 'language' },
+          { data: 'purchase_date' },
+          {
+            data: null,
+            render: function (data, type) {
+              return `
+                      <div class="ui buttons">
+                        <button id="btnEditBook" onClick=edit(`+ data.id_book + `) type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#modalBOOK" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+
+                        <button id="btnDeleteBook" onClick=deleteBook(`+ data.id_book + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
+                      </div>
+                      `
+            }
+          }
+        ]
+        //para añadir decimales a un numero
+        /* "columnDefs": [{
+           "targets": [7],
+           render(v) {
+             return Number(v).toFixed(2)
+           }
+         }]*/
+      });
     });
+    document.getElementById("spinner").style.display = "none";
+  }, "1000")
+
+  const accionAsincrona = async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+      }, 3000);
+    });
+  }
+
+  //UPDATE
+  $('#formuBook').submit(function (e) {
+    e.preventDefault();
+    id_book = $.trim($('#id_book').val());
+    title = $.trim($('#title').val());
+    author = $.trim($('#author').val());
+    editorial = $.trim($('#editorial').val());
+    isbn = $.trim($('#isbn').val());
+    type = $.trim($('#type').val());
+    language = $.trim($('#language').val());
+    collection = $.trim($('#collection').val());
+    purchase_date = $.trim($('#purchase_date').val());
+    observations = $.trim($('#observations').val());
+    url = `/api/books/update/${id_book}`
+    if (opcion === 'edit') {
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          title,
+          author,
+          editorial,
+          isbn,
+          type,
+          language,
+          collection,
+          purchase_date,
+          observations
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      });
+    }
+    location.reload(true);
+    $('#modalBOOK').hide();
   });
+
 </script>
