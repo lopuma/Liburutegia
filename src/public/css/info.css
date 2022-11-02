@@ -1,0 +1,209 @@
+.Info-contenedor {
+    margin-top: 150px;
+    width: 80%;
+    height: 100%;
+    /* max-width: 120em; */
+    padding: 1em;
+    margin-bottom: 30px;
+    color: var(--negro);
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    border-radius: 0.5em;
+    background-color: var(--blanco);
+    -webkit-box-shadow: var(--box-shadow-forms);
+    box-shadow: var(--box-shadow-forms);
+}
+
+.Info-tabs {
+    width: 100%;
+    border: 0.5px solid black;
+    padding: 1em;
+    border-radius: 0.5em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.Tabs-titles {
+    width: 100%;
+    padding: 1em;
+    border-radius: 0.5em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+
+
+.Info-tab {
+    height: 100%;
+    padding: 1em;
+    margin: 0 2em 0 0;
+    color: var(--negro);
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    border: 1px solid black;
+    border-radius: 0.5em;
+    background-color: var(--blanco);
+    -webkit-box-shadow: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
+    box-shadow: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+.Info-tab:hover {
+    background-color: lightblue;
+}
+
+.Info-tab.activo {
+    background-color: rgb(21, 97, 145);
+    color: white;
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.Info-contents {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.Info-bloque {
+    margin: 1em;
+    padding: 1em;
+    width: 100%;
+    height: 300px;
+    margin: auto;
+    top: 1em;
+    color: var(--negro);
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    border-radius: 0.5em;
+    background-color: var(--blanco);
+    -webkit-box-shadow: var(--box-shadow-forms);
+    box-shadow: var(--box-shadow-forms);
+    opacity: 0;
+    display: none;
+}
+
+.Info-bloque.isScroll {
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.Info-bloque.activo {
+    opacity: 1;
+    display: block;
+}
+
+.Tabs-direcciones {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row nowrap;
+    display: none;
+    /* padding: 10px 40px;
+    margin: 10px; */
+}
+
+/* STARs */
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: gold;
+}
+@media all and (max-width: 500px) {
+    .Info-tabs {
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+    }
+
+    .Tabs-titles {
+        position: relative;
+        height: 120px;
+        width: 100%;
+    }
+
+    .Info-tab {
+        text-align: center;
+        width: 80%;
+        height: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+
+    .Info-tab.isActive {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+/*      
+    .Info-tab:nth-child(2) {
+        display: none;
+    }
+
+    .Info-tab:nth-child(3) {
+        display: none;
+    } */
+
+    .Tabs-direcciones {
+        display: flex;
+        padding: 0;
+    }
+/* 
+    .atras {
+        width: 50%;
+    }
+
+    .adelante {
+        width: 50%;
+    } */
+}

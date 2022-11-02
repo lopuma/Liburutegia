@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>PROFILE</h1>
-</body>
-</html>
+    <div class="profile" style="margin: 150px 0; color: black">
+        <h1 style="color: red">Profile</h1>
+        {{#if loggedIn}}
+            {{#each userProfile}}
+                <h1>{{this.email}}</h1>
+                <h1>{{this.username}}</h1>
+                <h1>{{this.fullname}}</h1>
+                <h1>{{this.rol}}</h1>
+            {{/each}}
+        {{/if}}
+    </div>

@@ -1,9 +1,11 @@
 const routerBooks = require('express').Router();
-const { getBooks, getBook, addBook, noExistBook, deleteBook, putBook } = require('../../controller/apiController/bookController');
+const { getBooks, getBook, deliverBook, addBook, noExistBook, deleteBook, putBook } = require('../../controller/apiController/bookController');
 
 routerBooks.get("/", getBooks);
 
 routerBooks.get("/:id_book", getBook);
+
+routerBooks.post("/deliver/:id_book", deliverBook);
 
 //ADD
 //routerBooks.post("/add", addBook);

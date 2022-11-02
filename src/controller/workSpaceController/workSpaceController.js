@@ -1,73 +1,87 @@
 const connection = require("../../../database/db");
-const flash = require('connect-flash');
 
 const workSpaceController = {
 
-    getBooks: async (req, res) =>{
-        const userName = req.session.username;
-        const loggedIn = req.session.loggedin;
-        const userMail = req.session.usermail;
-        const rolAdmin = req.session.roladmin;
-        res.render("workspace/dashboard-books", {
-          loggedIn,
-          userName,
-          userMail,
-          rolAdmin
-        });
-    },
-    getBookings: async (req, res) => {
-        const userName = req.session.username;
-        const loggedIn = req.session.loggedin;
-        const userMail = req.session.usermail;
+  getBooks: async (req, res) => { // TODO ✅
+    try {
+      const userName = req.session.username;
+      const loggedIn = req.session.loggedin;
+      const rolAdmin = req.session.roladmin;
+      res.render("workspace/dashboard-books", {
+        loggedIn,
+        userName,
+        rolAdmin
+      });
+    } catch (error) {
+      console.log(error)
+      res.redirect("/")
+    }
+  },
 
-        res.render("workspace/dashboard-bookings", {
-            loggedIn,
-            userName,
-            userMail,
-            // res.rolAdmin
-        });
-    },
-    getPartners: async (req, res) => {
-        const userName = req.session.username;
-        const loggedIn = req.session.loggedin;
-        const userMail = req.session.usermail;
-        res.render("workspace/dashboard-partners", {
-          loggedIn,
-          userName,
-          userMail,
-          // rolAdmin
-        });
-    },
-    getAdmin: async (req, res) => {
-        const userName = req.session.username;
-        const userMail = req.session.usermail;
-        const loggedIn = req.session.loggedin;
-        const rolAdmin = req.session.roladmin;
-        sql = "SELECT * FROM users";
-        await connection.query(sql, async (error, results) => {
-          if(error){
-            throw error;
-          }
-          const users =  results;
-          try {
-            if(rolAdmin === false){
-              return res.redirect('/');
+  getBookings: async (req, res) => { // TODO ✅
+    try {
+      const userName = req.session.username;
+      const loggedIn = req.session.loggedin;
+      const rolAdmin = req.session.roladmin;
+      res.render("workspace/dashboard-bookings", {
+        loggedIn,
+        userName,
+        rolAdmin,
+      });
+    } catch (error) {
+      console.log(error)
+      res.redirect("/")
+    }
+  },
+  
+  getPartners: async (req, res) => { // TODO ✅
+    try {
+      const userName = req.session.username;
+      const loggedIn = req.session.loggedin;
+      const rolAdmin = req.session.roladmin;
+      res.render("workspace/dashboard-partners", {
+        loggedIn,
+        userName,
+        rolAdmin
+      });
+    } catch (error) {
+      console.log(error)
+      res.redirect("/")
+    }
+  },
+  
+  getAdmin: async (req, res) => { // TODO ✅
+    try {
+      const userName = req.session.username;
+      const loggedIn = req.session.loggedin;
+      const rolAdmin = req.session.roladmin;
+      sql = "SELECT * FROM users";
+      await connection.query(sql, async (error, results) => {
+        if (error) {
+          throw error;
+        }
+        const users = results;
+        try {
+          if (rolAdmin === false) {
+            return res.redirect('/');
           }
           res.render("workspace/dashboard-admin", {
             loggedIn,
             userName,
-            userMail,
             users,
             rolAdmin,
-            // messageSuccess: req.flash("messageSuccess"),
-            // messageDelete: req.flash("messageDelete")
           })
-          } catch (error) {
-            console.log(error)
-            res.redirect("/")
-          }
-        });
+        } catch (error) {
+          console.log(error)
+          res.redirect("/")
+        }
+      });
+    } catch (error) {
+      console.log(error)
+      res.redirect("/")
     }
+  }
+
 }
 
 module.exports = workSpaceController;

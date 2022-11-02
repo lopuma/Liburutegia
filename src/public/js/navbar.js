@@ -1,4 +1,4 @@
-// </ ----Colorear ITEM MENU ---->
+// / ----Colorear ITEM MENU ---->
 
 // Variables MENU
 const btnBook = document.getElementById('btnBook');
@@ -18,12 +18,11 @@ const btnLoginSidemenu = document.getElementById('btnLoginSidemenu');
 
 setTimeout(() => {
   $(".alert").alert('close');
-}, "6000")
+}, "5000")
 
 window.onload = onLoad();
 
 function onLoad() {
-console.log("CARGA")
   try {
     // HOME
 
@@ -32,23 +31,18 @@ console.log("CARGA")
 
       btnHome.classList.add('isSelected');
       btnHomeSidemenu.classList.add('Sidemenu--isSelected');
-    } else {
-      btnHome.classList.remove('isSelected');
-      btnHomeSidemenu.classList.remove('Sidemenu--isSelected');
-    }
+    } 
   } catch (error) {
-    console.log(error.message)
+      throw error
   }
 
   try {
     // LOGIN
     if ($('#stateLogin').val() === '') { // 
       btnLoginSidemenu.classList.add('Sidemenu--isSelected');
-    } else {
-      btnLoginSidemenu.classList.remove('Sidemenu--isSelected');
-    }
+    } 
   } catch (error) {
-    console.log(error.message)
+      throw error
   }
 
   try {
@@ -56,12 +50,9 @@ console.log("CARGA")
     if ($('#stateBooks').val() === '') { // 
       btnBook.classList.add('isSelected');
       btnBookSidemenu.classList.add('Sidemenu--isSelected');
-    } else {
-      btnBook.classList.remove('isSelected');
-      btnBookSidemenu.classList.remove('Sidemenu--isSelected');
-    }
+    } 
   } catch (error) {
-    return console.log(error.message)
+      throw error
   }
 
   try {
@@ -69,12 +60,9 @@ console.log("CARGA")
     if ($('#stateBookings').val() === '') { // 
       btnBooking.classList.add('isSelected');
       btnBookingSidemenu.classList.add('Sidemenu--isSelected');
-    } else {
-      btnBooking.classList.remove('isSelected');
-      btnBookingSidemenu.classList.remove('Sidemenu--isSelected');
-    }
+    } 
   } catch (error) {
-    return console.log(error.message)
+      throw error
   }
 
   try {
@@ -82,23 +70,18 @@ console.log("CARGA")
     if ($('#stateAdmin').val() === '') { // 
       btnAdmin.classList.add('isSelected');
       btnAdminSidemenu.classList.add('Sidemenu--isSelected');
-    } else {
-      btnAdmin.classList.remove('isSelected');
-      btnAdminSidemenu.classList.remove('Sidemenu--isSelected');
-    }
+    } 
   } catch (error) {
-    return console.log(error.message)
+      throw error
   }
 
   try {
     // RECORD
     if ($('#stateRecord').val() === '') { // 
       btnRecord.classList.add('isSelected');
-    } else {
-      btnRecord.classList.remove('isSelected');
-    }
+    } 
   } catch (error) {
-    return console.log(error.message)
+      throw error
   }
 
   try {
@@ -106,20 +89,17 @@ console.log("CARGA")
     if ($('#statePartners').val() === '') { // 
       btnPartner.classList.add('isSelected');
       btnPartnerSidemenu.classList.add('Sidemenu--isSelected');
-    } else {
-      btnPartner.classList.remove('isSelected');
-      btnPartnerSidemenu.classList.remove('Sidemenu--isSelected');
-    }
+    } 
   } catch (error) {
-    return console.log(error.message)
+      throw error
   }
 }
 
-// </ ---- Mostrar MENU en modo responsive ---->
+// <---- Mostrar MENU en modo responsive ---->
 const btnToggle = document.querySelector('#btnToggle');
 const navBar = document.querySelector('#navBar');
 
-// </ ---- Expandir Side Menu ---->
+// <---- Expandir Side Menu ---->
 const btnSidemenu = document.getElementById("btnSidemenu");
 const sideMenu = document.querySelector(".Sidemenu");
 const Aside = document.querySelector(".Aside");
@@ -184,7 +164,7 @@ function showCloseCover(act, actFunct, Funct){
     console.log("actfunc", actFunct);
     if(actFunct){
       Funct();
-   }
+  }
 };
 
 // siguiente es el código para cambiar el botón de la barra lateral
@@ -223,7 +203,7 @@ btnToggle.addEventListener('click', function () {
 });
 
 
-// </ ---- Desaparecer y aparecer el MENU BAR ---->
+// / ---- Desaparecer y aparecer el MENU BAR ---->
 let ubicacionPrincipal = window.pageYOffset;
 
 window.onscroll = function () {
@@ -242,21 +222,3 @@ window.onscroll = function () {
 }
 
 window.onresize = menuBtnChange();
-
-// const btn = document.querySelector(".btn-toggle");
-
-// const currentTheme = localStorage.getItem("theme");
-// if (currentTheme == "dark") {
-//   document.body.classList.add("isDark");
-// }
-
-// btn.addEventListener("click", function () {
-//   document.body.classList.toggle("isDark");
-//   document.documentElement.style.setproperty('--Color-logo', 'wheat');
-
-//   let theme = "light";
-//   if (document.body.classList.contains("isDark")) {
-//     theme = "dark";
-//   }
-//   localStorage.setItem("theme", theme);
-// });

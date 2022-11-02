@@ -3,6 +3,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap');
 
 :root {
+
+  --negro: #393939;
+  --blanco: #ececec;
+  --sombra-ppal: #c9c9c9;
+  --sombra-sec: #00000050;
+  --borde-negro: #00000050;
+  --marcado: rgb(127, 195, 255);
+  /* Tipografía */
+  --tipo-principal: Helvetica, Arial, sans-serif;
   /* ALL */
   --maxWidth: 1600px;
 
@@ -22,9 +31,9 @@
   /* FORMS */
   --Heigth-forms: 600px;
   --margin-top-forms: calc(var(--size-height-navBar) + 20px);
-  --box-shadow-forms: rgb(255, 255, 255) 0px 0px 8px, rgba(0, 0, 0, 0.8) 0px 0px 8px;
+  --box-shadow-forms: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
   --Radius-forms: 8px;
-  --Background-Color-forms-admin-head: #ffffff;
+  --Background-Color-forms-admin-head: #222222;
   --color-forms-admin-head: #000000;
   --Background-Color-forms-book-head: rgb(58, 76, 156);
   --color-forms-book-head: #ffffff;
@@ -68,7 +77,7 @@
 
   /* SIDEMENU */
   --size-width-sidemenu: 280px;
-  --size-width-sidemenu-collapsed: 50px;
+  --size-width-sidemenu-collapsed: 60px;
 
   /* FORM AUTH*/
   --size-height-box: 60px;
@@ -111,6 +120,16 @@
 
   --padding: 10px;
   --hovercolor: rgba(99, 99, 99, 0.836);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --negro: #ececec;
+    --blanco: #303030;
+    --sombra-ppal: #242424;
+    --sombra-sec: #3c3c3c;
+    --borde-negro: #FFFFFF50;
+  }
 }
 
 

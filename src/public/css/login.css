@@ -20,7 +20,7 @@
     transition: background .3s ease-in-out;
 }
 
-.Singin{    
+.Singin {
     width: 60%;
     flex-flow: column nowrap;
 }
@@ -41,12 +41,12 @@
     overflow: hidden;
 }
 
-.Login{
+.Login {
     margin-right: 40px;
     animation: text-anim var(--duraction-animations) ease;
 }
 
-.Reset{
+.Reset {
     visibility: hidden;
 }
 
@@ -235,44 +235,45 @@
     transition: all 0.3s ease;
 }
 
-/* .Box-input{
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    font: inherit;
-    color: #000000;
-    background-color: transparent;
-    outline: 2px solid #fff;
-} */
 .Input-label {
     position: absolute;
-    top: 1px;
+    top: 20px;
     left: 40px;
-    transform: translate(10px, 10px);
-    transform: transform .25s;
+    margin: 0;
 }
 
-.Box-input:focus,
-.Box-input:valid {
-    border-color: rgb(32, 162, 202);
-}
-
+.Box-input:invalid+.Input-label,
 .Box-input:focus+.Input-label,
 .Box-input:valid+.Input-label {
+    top: 0;
+    left: 0;
     border-color: rgb(32, 162, 202);
-    transform: translate(10px, -14px)  scale(.8);
+    transform: translate(15px, -15px) scale(0.8);
     color: #d1c5fc;
     padding-inline: 8px;
     background-color: #242329;
+    border-radius: 5px;
     font-size: 17px;
     letter-spacing: 3px;
-    left: 0;
-    margin: 0 10px;
+    margin: 0;
     padding: 0 10px;
 }
 
-.Box-input:is(:focus, :valid){
+.Box-input:focus {
+    border-color: #000000;
+}
+
+.Box-input:valid {
+    border-color: var(--Success);
+}
+
+.Box-input:invalid {
+    border-color: var(--Unsuccess);
+}
+
+.Box-input:is(:focus, :valid, :invalid) {
     outline: 1px solid #242329;
+    border-radius: 5px;
 }
 
 .Box-i {
@@ -332,7 +333,7 @@
 }
 
 /* Pertenece al REGISTRO */
-.Input-select{
+.Input-select {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -349,7 +350,8 @@
     width: 50%;
     font-weight: 700;
     font-family: 'Nunito Sans', sans-serif;
-    letter-spacing: 2px;}
+    letter-spacing: 2px;
+}
 
 .Select-rol {
     background: #FCE38A;
@@ -366,7 +368,7 @@
     transition: all 0.5s ease;
 }
 
-.Select-rol:hover{
+.Select-rol:hover {
     background-color: #FCE38A;
     box-shadow: 0px 2px 8px gold, -0px -2px 8px goldenrod
 }
@@ -449,74 +451,74 @@
     display: none;
 }
 
-#alertNotLogin{
+#alertNotLogin {
     display: flex;
     align-items: center;
     flex-flow: column wrap;
 }
 
-#btnCloseAlert{
+#btnCloseAlert {
     margin-bottom: 20px;
 }
+
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
-     @media all and (max-width: 950px) {
+@media all and (max-width: 950px) {
 
-        .Auth-cover {
-            display: none;
-        }
-  
-        .Singin,
-        .Authentication {
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-            justify-content: space-between;
-            margin: var(--size-height-navBar) auto;
-        }
-
-        .Singin{
-            width: 80%;
-        }
-
-        .Login {
-            margin: 0;
-            animation-name: down;
-            animation-duration: 1s;
-            animation-fill-mode: forwards;
-            margin-bottom: 50px;
-        }
-
-        .Reset
-         {
-            margin: 0;
-            display: none;
-        }
-
-        #flip:checked~.Login {
-            display: none;
-        }
-
-        #flip:checked~.Reset {
-            margin: 0;
-            display: block;
-            animation-name: up;
-            animation-duration: 1s;
-            animation-fill-mode: forwards;
-        }
-
-        /* Reggistros */
-
-        .Register-content {
-            width: 100%;
-            margin: 0;
-        }
-
-        .Select-label{
-            width: 100%;
-        }
+    .Auth-cover {
+        display: none;
     }
-    
+
+    .Singin,
+    .Authentication {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: space-between;
+        margin: var(--size-height-navBar) auto;
+    }
+
+    .Singin {
+        width: 80%;
+    }
+
+    .Login {
+        margin: 0;
+        animation-name: down;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        margin-bottom: 50px;
+    }
+
+    .Reset {
+        margin: 0;
+        display: none;
+    }
+
+    #flip:checked~.Login {
+        display: none;
+    }
+
+    #flip:checked~.Reset {
+        margin: 0;
+        display: block;
+        animation-name: up;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+
+    /* Reggistros */
+
+    .Register-content {
+        width: 100%;
+        margin: 0;
+    }
+
+    .Select-label {
+        width: 100%;
+    }
+}
+
 
 @media all and (max-width: 500px) {
 
@@ -525,29 +527,30 @@
         width: 100%;
     }
 
-    .Register{
+    .Register {
         padding: 10px;
     }
 
-    .Login{
+    .Login {
         padding: 0;
     }
-    .Input-boxes{
+
+    .Input-boxes {
         margin: 0;
         padding: 10px;
     }
 
-    .Input-box{
+    .Input-box {
         margin: 30px 0;
     }
 
-    .Register-title{
+    .Register-title {
         display: flex;
         justify-content: center;
         text-align: center;
     }
 
-    .Register-title::before{
+    .Register-title::before {
         left: -120px;
         bottom: -10px;
         right: 0;
@@ -561,36 +564,38 @@
         position: relative;
     }
 
-    .Box-input{
+    .Box-input {
         text-align: center;
         padding: 0;
         margin: 0;
     }
 
-    .Box-i{
+    .Box-i {
         margin: 0 10px;
     }
-    #alertNotLogin{
+
+    #alertNotLogin {
         top: 10px;
         margin: 10px auto;
         padding-bottom: 10px;
         padding-top: 10px;
     }
-    .alert{
+
+    .alert {
         top: 10px;
         padding: 0 10px;
         margin: 20px;
         font-size: 14px;
     }
 
-    .alert-heading{
+    .alert-heading {
         font-size: 16px;
         font-weight: 700;
         margin: 0;
         margin-top: 10px;
     }
 
-    .close{
+    .close {
         padding: 0;
         opacity: none;
     }

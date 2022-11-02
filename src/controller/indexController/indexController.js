@@ -1,9 +1,10 @@
-const indexController = {
-    getIndex: async (req, res) => {
+const indexController = { 
+    
+    getIndex: async (req, res) => { // TODO ✅
         const loggedIn = req.session.loggedin;
-        const ruta = req.session.ruta;
+        const userPath = req.session.ruta;
         if(loggedIn){
-            return res.status(200).redirect(ruta);
+            return res.status(200).redirect(userPath);
         }
         req.session.loggedin = false;
         req.session.roladmin =  false;
@@ -12,5 +13,7 @@ const indexController = {
         req.session.usermail = "";
         res.status(200).render('index');
     }
+
 }
+
 module.exports = indexController;

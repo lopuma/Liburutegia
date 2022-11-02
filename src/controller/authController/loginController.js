@@ -5,11 +5,11 @@ const flash = require('connect-flash');
 const { body, validationResult } = require('express-validator');
 const loginController = {
 
-    validate: [
-        body('email', "The format email address is incorrect.").exists().isEmail(),
-        body('password', "\nPassword must contain the following: Minimun 5 characters").exists().isLength({ min: 5 })
+    validate: [ // TODO ✅
+        body('email', "- The format email address is incorrect.").exists().isEmail(),
+        body('password', "- Password must contain the following: Minimun 5 characters").exists().isLength({ min: 5 })
     ],
-    asigneRol: async (req, res, results) => { // TODO PERFECT
+    asigneRol: async (req, res, results) => { // TODO ✅
         try {
             const rol = await results[0].rol;
             if (rol == 'admin' || rol == 'Admin') {
@@ -27,7 +27,7 @@ const loginController = {
             res.status(404).redirect("/")
         }
     },
-    isAuthenticated: async (req, res, next) => { // TODO PERFECT
+    isAuthenticated: async (req, res, next) => { // TODO ✅
         const loggedIn = req.session.loggedin;
         try {
             loggedIn ? next() : res.redirect("/");
@@ -36,10 +36,11 @@ const loginController = {
             res.status(404).redirect("/")
         }
     },
-    postLogin: async (req, res) => { // TODO PERFECT
+    postLogin: async (req, res) => { // TODO ✅
         try {
             const errors = validationResult(req);
             const { email, password: pass } = req.body;
+
             if (!errors.isEmpty()) {
                 req.flash("errorValidation", errors.array())
                 return res.redirect('/login');
@@ -48,13 +49,14 @@ const loginController = {
                 sql = "SELECT * FROM users WHERE email = ?";
                 connection.query(sql, [email], async (err, results) => {
                     if (err || results.length === 0 || !await bscryptjs.compare(pass, results[0].pass)) {
-                        req.flash("errorMessage", "These credentials do not match our records.")
+                        req.flash("errorMessage", "- These credentials do not match our records.")
                         return res.redirect('/login');
                     }
                     await loginController.asigneRol(req, res, results);
                     req.session.loggedin = true;
                     req.session.username = results[0].username;
                     req.session.usermail = results[0].email;
+                    req.session.profile = results;
                     res.render("forms/login", {
                         success: true,
                         alert: true,
@@ -71,7 +73,7 @@ const loginController = {
             res.redirect("/")
         }
     },
-    getLogin: async (req, res) => { //TODO PERFECT 
+    getLogin: async (req, res) => { // TODO ✅
         const loggedIn = req.session.loggedin;
         const ruta = req.session.ruta;
         try {
@@ -79,7 +81,8 @@ const loginController = {
                 res.status(200).redirect(ruta) :
                 res.status(200).render('forms/login', {
                     loggedIn: false,
-                    userName: ""
+                    userName: "",
+                    userPath: ""
                 });
         } catch (error) {
             console.log(error)

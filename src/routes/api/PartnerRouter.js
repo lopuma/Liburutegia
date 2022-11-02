@@ -1,5 +1,5 @@
 const routerPartners = require('express').Router();
-const { validate, getPartners, getPartner, existPartner, noExistPartner, addPartner, deletePartner, putPartner} = require('../../controller/apiController/partnerController');
+const { validate, getPartners, getPartner, existPartner, noExistPartner, addPartner, deletePartner, putPartner, infoPartner} = require('../../controller/apiController/partnerController');
 const { isAuthenticated } = require('../../controller/authController/loginController');
 
 //SHOW ALL
@@ -8,9 +8,11 @@ routerPartners.get("/", getPartners);
 //SHOW PARTNER
 routerPartners.get("/:id_partner", getPartner);
 
+//API INFORMACION PARTNER
+routerPartners.get("/info/:idPartner", infoPartner);
+
 //ADD
 routerPartners.post("/add", isAuthenticated, validate, addPartner);
-
 
 //DELETE
 routerPartners.get("/delete/:id_partner", isAuthenticated, noExistPartner, deletePartner);

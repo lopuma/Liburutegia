@@ -1,12 +1,32 @@
 /* MODAL */
 .modal-footer {
     width: 100% !important;
+    display: flex;
     align-items: center;
     justify-content: center;
+    flex-flow: row nowrap;
 }
 
-.modal-footer button {
-    width: 20% !important;
+.btn-secondary {
+    width: 30%;
+    background-color: var(--Unsuccess);
+}
+
+.btn-secondary:hover {
+    color: var(--Success);
+    background-color: var(--Unsuccess);
+    box-shadow: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
+}
+
+.btn-dark {
+    width: 30%;
+    background-color: var(--Success);
+}
+
+.btn-dark:hover {
+    color: var(--blanco);
+    background-color: var(--Success);
+    box-shadow: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
 }
 
 .modal-dialog {
@@ -31,12 +51,13 @@
 .isNew {
     font-size: inherit;
     width: 60%;
-    margin: calc(var(--margin-top-forms) + 20px) auto 40px auto;
-    box-shadow: rgb(17, 17, 17) 0px 0px 8px, rgba(0, 0, 0, 0.7) 2px 8px 8px;
+    margin: calc(var(--margin-top-forms) + 30px) auto 40px auto;
+    -webkit-box-shadow: var(--box-shadow-forms);
+    box-shadow: var(--box-shadow-forms);
 }
 
 .New-form {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .New-content {
@@ -53,9 +74,7 @@
     display: flex;
     justify-content: start;
     padding: 20px;
-    margin: 20px 0;
     overflow: hidden;
-    margin: 0;
     position: absolute;
     top: 80px;
     left: 20%;
@@ -68,14 +87,13 @@
 
 .New-h1 {
     background-color: var(--Background-Color-forms-partner);
-    color: black;
-    border-radius: 3px;
+    color: rgb(250, 250, 250);
+    border-radius: 5px;
     padding: 10px 20px;
     font-size: 2em;
     font-weight: bold;
     text-align: center;
     width: fit-content;
-
 }
 
 .Main-h1 {
@@ -132,8 +150,8 @@
     width: 100%;
     outline: none;
     border: none;
-    padding: 25px 20px;
-    margin: 20px;
+    padding: 20px;
+    margin: 0px 10px;
     font-size: 20px;
     font-weight: 500;
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
@@ -145,30 +163,45 @@
     border-color: rgb(32, 162, 202);
 }
 
-.Input-label {
+.Input-new {
     position: absolute;
-    top: 30px;
-    left: 10px;
-    /* transform: translate(20px, 30px); */
-    /* transform: transform .25s; */
+    top: 0px;
+    left: 0px;
     margin: 0;
-    padding: 0 10px;
 }
 
-.New-input:focus+.Input-label,
-.New-input:valid+.Input-label {
-    top: 5px;
-    transform: translate(0px, 0px) scale(.8);
+.New-input:invalid+.Input-new,
+.New-input:focus+.Input-new,
+.New-input:valid+.Input-new {
+    top: 0px;
+    left: 0px;
     border-color: rgb(32, 162, 202);
+    transform: translate(-10px, -15px) scale(.8);
     color: #d1c5fc;
     padding-inline: 8px;
     background-color: #242329;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: max-content;
     font-size: 20px;
     letter-spacing: 3px;
 }
 
-.New-input:is(:focus, :valid) {
+.New-input:focus {
+    border-color: #000000;
+}
+
+.New-input:valid {
+    border-color: var(--Success);
+}
+
+.New-input:is(:focus, :valid, :invalid) {
     outline: 1px solid #242329;
+    border-radius: 5px;
+}
+
+.New-input:invalid {
+    border-color: var(--Unsuccess);
 }
 
 .errorValidation {
@@ -183,6 +216,7 @@
     .New-title {
         width: 100%;
         left: 10%;
+
     }
 
     .modal-dialog {
@@ -253,11 +287,12 @@
         width: 100%;
     }
 
-    .New-input:focus+.Input-label,
-    .New-input:valid+.Input-label {
-        left: 0;
-        top: 5px;
-        transform: translate(0px, 0px) scale(.6);
+    .New-input:invalid+.Input-new,
+    .New-input:focus+.Input-new,
+    .New-input:valid+.Input-new {
+        left: 0px;
+        top: 0px;
+        transform: translate(-15px, 5px) scale(0.8);
     }
 
 
@@ -268,4 +303,13 @@
     .modal-dialog {
         max-width: 90% !important;
     }
+
+    .btn-secondary {
+        width: 100%;
+    }
+
+    .btn-dark {
+        width: 100%;
+    }
+
 }

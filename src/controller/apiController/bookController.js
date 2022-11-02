@@ -73,6 +73,30 @@ const bookController = {
                 message: error.message
             })
         }
+    },
+    deliverBook: async (req, res) => {
+        const idBook = req.params.id_book;
+        const body = req.body;
+        console.log("BODY ", body);
+        if (Object.keys(body).length === 0) {
+            const sql = `UPDATE books SET reserved=0 WHERE id_book=${idBook}`;
+            await connection.query(sql, (err, result) => {
+                if (err) {
+                    throw err;
+                }
+                res.end(`The following BOOK has been delivered with ID : ${idBook}`);
+        })
+        } else { 
+            const { dni, score, review } = req.body;
+            const sql = [`UPDATE books SET reserved=0 WHERE id_book=${idBook}`, 
+            "INSERT INTO votes SET ?" ];
+            await connection.query(sql.join(";"), { book_id:idBook, partner_dni:dni, score, review }, (err, result) => {
+                if (err) {
+                    throw err;
+                }
+                res.end(`The following BOOK has been delivered with ID : ${idBook}, and a review has been added`);
+            })
+        }
     }
 }
 

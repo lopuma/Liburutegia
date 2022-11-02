@@ -93,6 +93,33 @@ const partnerController = {
             })
         }
     },
+    infoPartner: async(req, res) => {
+        try {            
+            const idPartner = req.params.idPartner
+            const loggedIn = req.session.loggedin;
+            const rolAdmin = req.session.roladmin;
+            const sqlPartner = "SELECT * FROM partners WHERE id_partner = ?"
+            const sqlBookin = "SELECT p.id_partner, p.dni, p.name, bk.book_id, b.title, b.author, b.reserved, bk.reservation_date, bk.deliver_date, v.score, v.review FROM partners p INNER JOIN bookings bk ON p.dni = bk.partner_dni INNER JOIN books b ON bk.book_id = b.id_book LEFT OUTER JOIN votes v ON b.id_book=v.book_id WHERE p.dni = ?";
+            //const sqlBookin = "SELECT p.id_partner, p.name, b.title, b.author, b.reserved, bk.reservation_date, bk.deliver_date, v.score, v.review FROM partners p INNER JOIN bookings bk ON p.dni = bk.partner_dni INNER JOIN books b ON bk.book_id = b.id_book JOIN votes v ON b.id_book = v.book_id WHERE p.dni=?";
+            //const sqlBookin = "SELECT * FROM bookings INNER JOIN partners ON partners.dni = bookings.partner_dni INNER JOIN books ON books.id_book = bookings.book_id WHERE partners.dni = ?";
+            await connection.query(sqlPartner, [ idPartner ], (err, results) => {
+                if (err){
+                    throw err
+                }
+                const dni = results[0].dni
+                connection.query(sqlBookin, [ dni ], (err, results) => {
+                    if (err){
+                        throw err
+                    }
+                    const data = results
+                    res.send(data);
+                })
+            })
+        } catch (error) {
+            console.log(error)
+            res.redirect("/")
+        }
+    },
     // ADD PARTNERS
     addPartner: async (req, res) => {
         try {

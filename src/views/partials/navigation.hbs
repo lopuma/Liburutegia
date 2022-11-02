@@ -2,41 +2,41 @@
   <button class="Header-button--sidemenu" id="btnSidemenu">
     <i id="fa-bars" data-original="fa-solid fa-bars" class="fa-solid fa-bars"></i>
   </button>
-  <a href="/" class="Header-a--logo"><img loading="lazy" src="/image/logo.svg" alt="SanMiguel Logo" width="100%" height="100%"></img></a>
+  <a href="/" class="Header-a--logo"><img loading="lazy" src="/image/logo.svg" alt="SanMiguel Logo" width="100%"
+      height="100%"></img></a>
 </div>
 
 <button class="Header-button--toggle" id="btnToggle">
-  <i id="fa-bars--toggle" data-original="Header-i--toggle fa-solid fa-bars" class="Header-i--toggle fa-solid fa-bars"></i>
+  <i id="fa-bars--toggle" data-original="Header-i--toggle fa-solid fa-bars"
+    class="Header-i--toggle fa-solid fa-bars"></i>
 </button>
 
 <nav class="Header-nav" id="navBar">
   <ul class="Header-ul">
-    <button class="btn-toggle">Toggle Dark-Mode</button>
+    {{!-- <button class="btn-toggle">Toggle Dark-Mode</button> --}}
     {{#if loggedIn }}
-    {{#if rolAdmin }}
-    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus"
-        href="../workspace/admin" id="btnAdmin">
-        User Manager
-      </a></li>
-    {{/if}}
-    <li class="Header-li"><a class="Header-a isToogle isDisabled isFocus"
-        href="/workspace/books" id="btnBook">Books</a></li>
-    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus"
-        href="/workspace/partners" id="btnPartner">Partners</a></li>
-    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus"
-        href="/workspace/bookings" id="btnBooking">Bookings</a></li>
-
-
-    {{#if rolAdmin}}
-    <li class="Header-li"><a class="Header-a isToogle isFocus" href="/register"
-        id="btnRecord">Record</a></li>
-    {{/if}}
+      {{#if rolAdmin }}
+        <li class="Header-li">
+          <a class="Header-a  isToogle isDisabled isFocus" href="../workspace/admin" id="btnAdmin">
+            User Manager
+          </a>
+        </li>
+      {{/if}}
+    <li class="Header-li"><a class="Header-a isToogle isDisabled isFocus" href="/workspace/books" id="btnBook">Books</a>
+    </li>
+    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus" href="/workspace/partners"
+        id="btnPartner">Partners</a></li>
+    <li class="Header-li"><a class="Header-a  isToogle isDisabled isFocus" href="/workspace/bookings"
+        id="btnBooking">Bookings</a></li>
+      {{#if rolAdmin}}
+        <li class="Header-li">
+          <a class="Header-a isToogle isFocus" href="/register" id="btnRecord">Record</a>
+        </li>
+      {{/if}}
     <li class="Header-li"><a class="Header-a activeLogout" href="/logout">Logout</a></li>
     {{else}}
-    <li class="Header-li"><a class="Header-a isToogle isFocus" href="/" id="btnHome">Home</a></li>
-    <li class="Header-li"><a href="/login" class="Header-a activeLogin">Login</a></li>
+      <li class="Header-li"><a class="Header-a isToogle isFocus" href="/" id="btnHome">Home</a></li>
+      <li class="Header-li"><a href="/login" class="Header-a activeLogin">Login</a></li>
     {{/if}}
   </ul>
 </nav>
-
-{{!-- <link rel="stylesheet" href="../style/navbar.css"> --}}

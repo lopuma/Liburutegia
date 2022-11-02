@@ -47,19 +47,21 @@
 </div>
 {{/if}}
 
+{{!-- VALIDACION DE DATOS ERRONEOS --}}
 {{#if errorValidation}}
-<div id="alertNotLogin" class="errorValidation alert alert-message alert-warning alert-dismissible fade show" role="alert">
-  <div class="alert-headers">
-    <h4 class="alert-heading">Something went wrong.</h4>
+  <div id="alertNotLogin" class="errorValidation alert alert-message alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert-headers">
+      <h4 class="alert-heading">Something went wrong.</h4>
+    </div>
+    <hr>
+    {{#each errorValidation}}
+      {{this.msg}}
+      <br>
+    {{/each}}
+    <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+        aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <hr>
-{{#each errorValidation}}
-{{this.msg}}
-{{/each}}
-  <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-      aria-hidden="true">&times;</span>
-  </button>
-</div>
 {{/if}}
 
 {{#if error_msg_exist}}
