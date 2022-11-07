@@ -5,7 +5,7 @@
 :root {
 
   --negro: #393939;
-  --blanco: #ececec;
+  --blanco: #fff;
   --sombra-ppal: #c9c9c9;
   --sombra-sec: #00000050;
   --borde-negro: #00000050;
@@ -13,26 +13,36 @@
   /* Tipografía */
   --tipo-principal: Helvetica, Arial, sans-serif;
   /* ALL */
-  --maxWidth: 1600px;
+  --Max-width: 1600px;
+  --font-size: 2em; 
 
-
-  /* BUTTONS */
-  --Max-Width-forms: 1600px;
-  --Success: #76BA99;
-  --SuccessHigh: #6de9ad48;
-  --Unsuccess: #C21010;
-  --size-font-button__mv: 1em;
+  
   --box-shadow-buttons-success: 0px 2px 8px var(--colour-button-success), -0px -2px 8px var(--Brown);
   --box-shadow-buttons-unsuccess: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
   --Radius-button: 8px;
   --size-font-menu-button: 1em;
   --size-font-menu-button__mv: 1em;
 
-  /* FORMS */
+  /* VALIDAS */
+  --Margin-top-forms: calc(var(--size-height-navBar) + 20px);
+  --Radius: 8px;
+  --Width-forms: 90%;
+  --Color-legend: var(--blanco);
+  --Font-family-legend: 'Oswald', sans-serif;
+  --Background-Color-forms-admin: #A10035;
+  --Background-Color-forms-partner: #cea135;
+  --Background-Color-forms-book: rgb(58, 76, 156);
+  --Background-Color-forms-booking: rgb(124, 25, 108);
   --Heigth-forms: 600px;
-  --margin-top-forms: calc(var(--size-height-navBar) + 20px);
-  --box-shadow-forms: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
-  --Radius-forms: 8px;
+  --Box-shadow: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
+  --Success: #76BA99;
+  --SuccessHigh: #6de9ad48;
+  --Unsuccess: #C21010;
+  --Size-font-button: 1em;
+  --Brown: #876445;
+
+
+
   --Background-Color-forms-admin-head: #222222;
   --color-forms-admin-head: #000000;
   --Background-Color-forms-book-head: rgb(58, 76, 156);
@@ -41,24 +51,19 @@
   --color-forms-booking-head: 3ffffff;
   --Background-Color-forms-partner-head: rgb(206, 157, 22);
   --color-forms-partner-head: #ffffff;
-  --Background-Color-forms-booking: rgb(124, 25, 108);
   --color-forms-booking: #ffffff;
-  --Background-Color-forms-book: rgb(58, 76, 156);
   --color-forms-book: #ffffff;
-  --Background-Color-forms-partner: #cea135;
   --color-forms-partner: #ffffff;
-  --Background-Color-forms-admin: #A10035;
   --color-forms-admin: #ffffff;
   --Background-Color-forms: #f6f0e6;
   --Color-forms: rgb(0, 0, 0);
   --width-auth-forms: 80%;
   --width-singin-forms: 80%;
   --margin-forms: 30px 30px;
-
+  
 
   /* BODY */
   --letra-principal: 'Karla', sans-serif;
-  --blanco: #fff;
   --negro: #393939;
 
 
@@ -67,9 +72,8 @@
   --Color-sideMenu: #000;
   --size-height-navBar: 80px;
   --size-element: calc(var(--size-height-navBar) - 20px);
-  --Brown: #876445;
   --Color-Selected: #dbcf20;
-  --font-family-menu: 'Nunito Sans', sans-serif;
+  --Font-family-menu: 'Nunito Sans', sans-serif;
   --size-font-menu: 2em;
   --size-font-menu__mv: 1.5em;
 
@@ -114,7 +118,6 @@
 
 
   /* FUENTES */
-  --font-family-legend: 'Oswald', sans-serif;
 
   /* MARGENES */
 

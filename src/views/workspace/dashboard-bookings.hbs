@@ -1,27 +1,17 @@
 <div class="Workspace-container" id="stateBookings">
-    {{> messages}}
+  {{> messages}}
   <fieldset class="Workspace-fieldset">
-    <legend class="Workspace-legend colorBooking" id="lengedWorkspace">
+    <legend class="Workspace-legend isColorBooking" id="lengedWorkspace">
       <span class="Workspace-span">Booking Dashboard</span>
       {{#if loggedIn}}
-      <div class="Workspace-Username">
-        <span class="Workspace-Username-greeting">Hi, Welcome </span>
-        <span id="tipName" class="Workspace-Username-name">{{userName}}</span>
+      <div class="Workspace-Username Username">
+        <span class="Username-greeting">Hi, Welcome </span>
+        <span class="Username-name" id="tipName">{{userName}}</span>
       </div>
       {{/if}}
     </legend>
-      {{> bookings }}
+    {{> bookings }}
   </fieldset>
 </div>
-{{!-- <link rel="stylesheet" href="../style/admin.css"> --}}
 
-<script>
-  $(document).ready(function () {
-    $('#tableBooking').DataTable({
-      responsive: true,
-      lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-      pageLength: 15,
-      //"pagingType": "simple_numbers"
-    });
-  });
-</script>
+<link rel="stylesheet" href="/style/workspace.css">

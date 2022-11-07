@@ -1,19 +1,17 @@
-<link href="/style/new.css" rel="stylesheet">
 
 <!--Modal para CRUD-->
-<div id="modalPARTNER" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalPARTNERLabel"
-  aria-hidden="true">
+<div class="modal fade"  id="modalPartner"  tabindex="-1" role="dialog" aria-labelledby="modalPartnerLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalPARTNERLabel"></h5>
+        <h5 class="modal-title" id="modalPartnerLabel"></h5>
       </div>
       <div class="New">
         <form class="New-form" id="formu">
-          {{> formNew}}
+          {{> formPartner}}
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="10">Cancel</button>
-            <button type="submit" id="btnGuardar" class="btn btn-dark" tabindex="11">Save</button>
+            <button type="button" class="Button-cancel btn btn-secondary" data-dismiss="modal" tabindex="10">Cancel</button>
+            <button type="submit" id="btnGuardar" class="Button-accept btn btn-dark" tabindex="11">Save</button>
           </div>
         </form>
       </div>
@@ -21,14 +19,13 @@
   </div>
 </div>
 
-{{!-- DATA --}}
-<div class="container-fluid Dashboard">
-  <a class="Dashboard-a" href="/workspace/partners/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Partners</a>
-  <div class="Dashboard-row row">
-    <div class="col-lg-12">
-      <table id="tablePartner" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
-        <thead>
-          <tr class="Dashboard-tr">
+{{!-- TODO DATA --}}
+<div class="Dashboard">
+  <a class="Dashboard-a" href="/workspace/partners/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Partner</a>
+  <div class="Dashboard-row">
+      <table class="Dashboard-table table table-bordered  display wrap" id="tablePartner" cellspacing="0" width="100%">
+        <thead class="Dashboard-head">
+          <tr>
             <th>id_partner</th>
             <th>DNI</th>
             <th>NAME</th>
@@ -44,8 +41,8 @@
             <div class="lds-dual-ring">&nbsp</div>
           </div>
         </tbody>
-        <tfoot>
-          <tr class="Dashboard-tr">
+        <tfoot class="Dashboard-foot">
+          <tr>
             <th>id_partner</th>
             <th>DNI</th>
             <th>NAME</th>
@@ -57,8 +54,7 @@
           </tr>
         </tfoot>
       </table>
-    </div>
   </div>
 </div>
 
-<script src="/scripts/partners.js" defer></script>
+<script defer src="/scripts/partners.js"></script>

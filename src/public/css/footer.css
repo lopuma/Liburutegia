@@ -22,7 +22,7 @@
 }
 
 .Footer-copyright {
-    font-size: 22px;
+    font-size: 1.2em;
     font-weight: 700;
     color: black;
     position: absolute;
@@ -59,6 +59,6 @@
 @media screen and (max-width: 500px) {
 
     .Footer-copyright {
-        font-size: 18px;
+        font-size: 1em;
     }
 }

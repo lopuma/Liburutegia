@@ -1,7 +1,6 @@
 .Body {
   width: 100%;
   height: 100%;
-  font-size: 100%;
   font-family: var(--letra-principal);
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
@@ -13,10 +12,10 @@
   min-height: 100vh;
 }
 
-.isDark {
+/* .isDark {
   background-color: rgb(53, 53, 53);
   color: wheat;
-}
+} */
 
 .Layout-container {
   display: grid;
@@ -48,15 +47,15 @@
 
 .Main {
   grid-area: main;
-  background-color: inherit;
-  color: inherit;
+  /* background-color: inherit; */
+  /* color: inherit; */
   width: 100%;
-  height: 100%;
-  display: flex;
+  max-width: var(--Max-width);
+  /* height: 100%; */
+  /* display: flex; */
   /* justify-content: space-between; */
-  flex-flow: column wrap;
-  align-items: center;
-  /* max-width: var(--maxWidth); */
+  /* flex-flow: column wrap; */
+  /* align-items: center; */
 }
 
 .Main-cover {

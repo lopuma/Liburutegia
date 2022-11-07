@@ -1,20 +1,9 @@
 .Index-container {
-  margin: var(--margin-top-forms) auto auto auto;
-  font-family: inherit;
-  font-size: inherit;
-  border-radius: var(--Radius-forms);
-  color: inherit;
-  background-color: inherit;
-  overflow: hidden;
-  position: relative;
-  padding: 50px 20px;
-  width: 90%;
-  flex: 1;
-  max-width: var(--Max-Width-forms);
-  height: 100%;
+  margin: var(--Margin-top-forms);
+  width: var(--Width-forms);
+  height: auto;
   display: flex;
   align-items: center;
-  transition: background .3s ease-in-out;
 }
 
 .Index-text {
@@ -36,7 +25,6 @@
   font-size: 3em;
   font-weight: 700;
   text-align: left;
-  letter-spacing: -2px;
   text-decoration: none;
   white-space: normal;
   background-clip: border-box;
@@ -60,7 +48,7 @@
 .Index-a {
   width: auto;
   border-radius: var(--Radius-button);
-  font-size: var(--size-font-button);
+  font-size: var(--Size-font-button);
   font-weight: 700;
   font-family: inherit;
   letter-spacing: 4px;
@@ -133,7 +121,7 @@
     }
 
     .Index-a{
-      font-size: var(--size-font-button__mv)
+      font-size: var(--Size-font-button__mv)
     }
 }
 

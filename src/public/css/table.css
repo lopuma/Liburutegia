@@ -1,0 +1,143 @@
+/* TODO CSS PARA TABLE */
+.Dashboard {
+    margin: 20px 0;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+
+.Dashboard-a {
+    width: max-content;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: var(--Radius);
+    background-color: #1746A2;
+    color: #fff;
+    font-size: 1em;
+    transition: all 0.5s ease;
+}
+
+.Dashboard-a:hover {
+    text-decoration: none;
+    background-color: #5F9DF7;
+    color: black;
+    transform: translateX(8px);
+}
+
+.Dashboard-i {
+    margin-right: 10px;
+}
+
+.Dashboard-row {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.Dashboard-table {
+    width: 100%;
+    font-size: 1em;
+    text-align: start;
+}
+
+.Dashboard-head {
+    background-color: #222831;
+    color: #fff;
+    border: none;
+    position: sticky;
+    top: 0;
+    z-index: 97;
+}
+
+
+.Dashboard-foot {
+    background-color: #222831;
+    color: #fff;
+    border: none;
+}
+
+/* TODO DATATABLE STYLE */
+.col-sm-12 {
+    align-items: center;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.dataTables_wrapper .row .dataTables_length {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.dataTables_wrapper .row .dataTables_length label {
+    padding: 0;
+    margin: 0;
+}
+
+.dataTables_wrapper .row .dataTables_filter {
+    display: flex;
+    justify-content: flex-end;
+    flex-flow: row wrap;
+    align-items: center;
+    width: 100% !important;
+    height: 100%;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    padding: 0;
+    margin: 0;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    width: 420px !important;
+    font-size: 1.2em;
+    border: solid 1px #000;
+}
+
+/* TODO SELECT NUMERO DE ITEMS */
+.form-select {
+    border: 2px solid rgb(117, 117, 117);
+    border-radius: 5px;
+    padding: 10px 30px;
+    margin: 0 10px;
+}
+
+/*TODO  PIE DE TABLE */
+.col-md-7 {
+    justify-content: flex-end;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    font-weight: 600;
+    padding: 0 !important;
+}
+
+/* <=========================> */
+
+@media all and (max-width: 950px) {
+    div.dataTables_wrapper div.dataTables_filter {
+        justify-content: flex-start !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+        margin: 0 !important;
+        display: flex !important;
+        width: auto !important;
+        justify-content: flex-start !important;
+    }
+
+    .col-md-7 {
+        padding: 10px 20px !important;
+        order: 1;
+    }
+
+    .col-md-5 {
+        padding: 0 20px !important;
+        order: 2;
+    }
+}

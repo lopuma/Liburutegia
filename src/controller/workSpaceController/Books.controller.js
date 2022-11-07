@@ -1,12 +1,12 @@
 const connection = require("../../../database/db");
 
-const partnersController = {
+const booksController = {
     
     getNew: async(req, res) => { // TODO ✅
         try {
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            res.render('workspace/partners/new', {
+            res.render('workspace/books/new', {
                 loggedIn,
                 rolAdmin
             }
@@ -20,23 +20,22 @@ const partnersController = {
     getInfo: async(req, res) => {
         try {            
             
-            const idPartner = req.params.idPartner
+            const idBook = req.params.idBook
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
             
-            const sqlPartner = "SELECT * FROM partners WHERE id_partner = ?"
+            const sqlBook = "SELECT * FROM books WHERE id_book = ?"
             
-            await connection.query(sqlPartner, [ idPartner ], (err, results) => {
+            await connection.query(sqlBook, [ idBook ], (err, results) => {
                 if (err){
                     return console.error("error: " + err);
                 }
-                const partner = results;
-                res.render('workspace/partners/info', {
+                const book = results;
+                res.render("workspace/book/info", {
                     loggedIn,
                     rolAdmin,
-                    partner
-                } 
-                )
+                    book
+                });
             })
         } catch (error) {
             console.log(error)
@@ -45,4 +44,4 @@ const partnersController = {
     }
 }
 
-module.exports =  partnersController;
+module.exports =  booksController;

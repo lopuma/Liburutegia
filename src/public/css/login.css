@@ -1,25 +1,14 @@
-/* CONTENEDOR DE LOGIN*/
+/* TODO CONTENEDOR DE LOGIN*/
 .Singin,
 .Authentication {
-    margin: var(--margin-top-forms) auto auto auto;
-    font-family: inherit;
-    font-size: inherit;
-    border-radius: var(--Radius-forms);
-    color: var(--Color-forms);
-    background-color: inherit;
-    overflow: hidden;
+    margin: var(--Margin-top-forms);
+    padding-top: 20px;
+    width: 80%;
     position: relative;
-    padding: 50px 20px;
-    width: 90%;
-    flex: 1;
-    max-width: var(--Max-Width-forms);
-    height: var(--Heigth-forms);
-    min-height: var(--Heigth-forms);
     display: flex;
-    align-items: center;
-    transition: background .3s ease-in-out;
 }
 
+/* TODO RECORD */
 .Singin {
     width: 60%;
     flex-flow: column nowrap;
@@ -28,41 +17,37 @@
 .Register,
 .Login,
 .Reset {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-flow: column wrap;
     height: auto;
     width: 100%;
-    box-shadow: var(--box-shadow-forms);
-    border-radius: var(--Radius-forms);
+    box-shadow: var(--Box-shadow);
+    border-radius: var(--Radius);
     padding: 20px;
     background-color: var(--blanco);
-    overflow: hidden;
 }
 
 .Login {
     margin-right: 40px;
     animation: text-anim var(--duraction-animations) ease;
+    height: 500px;
 }
 
 .Reset {
     visibility: hidden;
 }
 
-/* COVER DE IMG */
+/* TODO COVER DE IMG */
 .Auth-cover {
     position: absolute;
     top: 0;
     left: 50%;
     height: 100%;
     width: 50%;
-    z-index: 20;
+    z-index: 20; 
     transition: all var(--duraction-animations);
     transform-origin: left;
     transform-style: preserve-3d;
     background-color: inherit;
-    animation: img-anim var(--duraction-animations) ease;
+    animation: img-anim var(--duraction-animations) ease; 
 }
 
 #flip:checked~.Auth-cover {
@@ -78,6 +63,7 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
+
 
 .Auth-cover--front,
 .Auth-cover--back {
@@ -100,17 +86,24 @@
     /* Safari and Chrome */
     -o-transform: rotateY(180deg);
     /* Opera */
+    display: none;
+}
+#flip:checked~.Auth-cover .Auth-cover--back {
+    display: block;
 }
 
 .Auth-img {
     position: absolute;
     height: 100%;
     width: 100%;
-    object-fit: contain;
     overflow: hidden;
     border-radius: var(--Radius-forms);
     z-index: 10;
     background-color: inherit;
+}
+
+.Auth-cover--back .Auth-img{
+        object-fit: contain;
 }
 
 /* ANIMACIONES FORMS AUTH */
@@ -181,7 +174,7 @@
     justify-content: space-between;
     height: var(--size-height-box);
     width: 100%;
-    margin: 40px 0;
+    margin: 10px 0;
     position: relative;
 }
 
@@ -191,7 +184,7 @@
     justify-content: center;
     flex-flow: row wrap;
     width: 100%;
-    margin: 20px 0;
+    margin: 10px 0;
     height: auto;
     overflow: hidden;
 }
@@ -221,7 +214,15 @@
     display: block;
     color: brown;
 }
-
+.Box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--size-height-box);
+    width: 100%;
+    margin: 40px 0;
+    position: relative;
+}
 .Box-input {
     height: 100%;
     width: 100%;
@@ -235,16 +236,16 @@
     transition: all 0.3s ease;
 }
 
-.Input-label {
+.Box-label {
     position: absolute;
     top: 20px;
     left: 40px;
     margin: 0;
 }
 
-.Box-input:invalid+.Input-label,
-.Box-input:focus+.Input-label,
-.Box-input:valid+.Input-label {
+.Box-input:invalid+.Box-label,
+.Box-input:focus+.Box-label,
+.Box-input:valid+.Box-label {
     top: 0;
     left: 0;
     border-color: rgb(32, 162, 202);
@@ -283,7 +284,7 @@
 }
 
 
-.Box-label {
+.Input-label {
     margin-top: 30px;
     color: inherit;
     font-weight: 600;
@@ -306,12 +307,13 @@
     transition-property: background-color, box-shadow, color;
     transition-duration: 00.5s;
     transition-timing-function: ease;
-    font-size: var(--size-font-button);
+    font-size: var(--Size-font-button);
     font-weight: 700;
     font-family: 'Nunito Sans', sans-serif;
     border-radius: var(--Radius-button);
     letter-spacing: 3px;
     white-space: normal;
+    width: 100%;
 }
 
 .Login-button {
@@ -323,7 +325,7 @@
     transition-property: background-color, box-shadow, color;
     transition-duration: 00.5s;
     transition-timing-function: ease;
-    font-size: var(--size-font-button);
+    font-size: var(--Size-font-button);
     font-weight: 700;
     font-family: 'Nunito Sans', sans-serif;
     border-radius: var(--Radius-button);
@@ -395,52 +397,14 @@
     margin: 20px 0;
 }
 
-.Button-cancel {
-    border-radius: var(--Radius-button);
-    padding: 10px;
-    color: var(--blanco);
-    background-color: var(--Unsuccess);
-    border: 1px solid #fff;
-    cursor: pointer;
-    font-size: var(--size-font-button);
-    font-weight: 700;
-    font-family: 'Nunito Sans', sans-serif;
-    letter-spacing: 5px;
-    text-align: center;
-    align-items: center;
-    width: 40%;
-    transition-property: background-color, box-shadow, color;
-    transition-duration: 00.5s;
-    transition-timing-function: ease;
-}
 
-.Button-accept {
-    border-radius: var(--Radius-button);
-    padding: 10px;
-    color: inherit;
-    background-color: var(--Success);
-    border: 1px solid #fff;
-    cursor: pointer;
-    font-size: var(--size-font-button);
-    font-weight: 700;
-    font-family: 'Nunito Sans', sans-serif;
-    letter-spacing: 5px;
-    text-align: center;
-    width: 40%;
-    transition-property: background-color, box-shadow, color;
-    transition-duration: 00.5s;
-    transition-timing-function: ease;
-    color: var(--Brown);
-}
 
-.Reset-button:hover,
-.Button-cancel:hover {
+.Reset-button:hover {
     color: var(--Success);
     background-color: var(--Unsuccess);
     box-shadow: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
 }
 
-.Button-accept:hover,
 .Login-button:hover {
     color: var(--blanco);
     background-color: var(--Success);
@@ -475,7 +439,7 @@
         flex-flow: column nowrap;
         align-items: center;
         justify-content: space-between;
-        margin: var(--size-height-navBar) auto;
+        margin: var(--Margin-top-forms) 0;
     }
 
     .Singin {
@@ -488,6 +452,7 @@
         animation-duration: 1s;
         animation-fill-mode: forwards;
         margin-bottom: 50px;
+        height: auto;
     }
 
     .Reset {
@@ -507,8 +472,7 @@
         animation-fill-mode: forwards;
     }
 
-    /* Reggistros */
-
+    /* TODO Reggistros */
     .Register-content {
         width: 100%;
         margin: 0;
@@ -524,7 +488,8 @@
 
     .Singin,
     .Authentication {
-        width: 100%;
+        width: 90%;
+        margin: var(--Margin-top-forms) auto 20px auto; 
     }
 
     .Register {
@@ -534,13 +499,15 @@
     .Login {
         padding: 0;
     }
+    .Reset{
+        padding: 0;
+    }
 
     .Input-boxes {
         margin: 0;
-        padding: 10px;
     }
 
-    .Input-box {
+    .Box{
         margin: 30px 0;
     }
 
@@ -565,8 +532,8 @@
     }
 
     .Box-input {
-        text-align: center;
-        padding: 0;
+        text-align: start;
+        padding: 0 10px;
         margin: 0;
     }
 

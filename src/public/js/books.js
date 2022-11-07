@@ -1,134 +1,179 @@
-  //EDITAR
-  async function edit(id_partner) {
-    opcion = 'edit';
-    const idPartner = id_partner;
-    const url = `/api/partners/${idPartner}`;
-    fetch(url)
-      .then((response) => response.json())
-      .then((datos) => {
-        $("#id_partner").val(datos.id_partner);
-        $("#dni").val(datos.dni);
-        $("#scanner").val(datos.scanner);
-        $("#name").val(datos.name);
-        $("#lastname").val(datos.lastname);
-        $("#direction").val(datos.direction);
-        $("#population").val(datos.population);
-        $("#phone1").val(datos.phone1);
-        $("#phone2").val(datos.phone2);
-        $("#email").val(datos.email);
-        $(".modal-header").css("background-color", "var(--Background-Color-forms-partner)");
-        $(".modal-header").css("color", "white");
-        $(".modal-title").text("EDIT PARTNER").css("font-weight", "700");
-      })
-  }
+const spinner = document.getElementById("spinner");
 
-  //DELETE
-  async function deletePartner(id_partner) {
-    opcion = 'delete';
-    const idPartner = id_partner;
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "Are you sure you want to delete the PARTNER!",
-      icon: 'warning',
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+//TODO RESERVED
+async function reservedBook(id_book){
+  const idBook = id_book;
+  console.log(idBook)
+}
+
+// TODO EDITAR
+async function edit(id_book) {
+  opcion = "edit";
+  const idBook = id_book;
+  const url = `/api/books/${idBook}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(datos => {
+      $("#id_book").val(datos.id_book);
+      $("#title").val(datos.dni);
+      $("#author").val(datos.scanner);
+      $("#editorial").val(datos.name);
+      $("#isbn").val(datos.lastname);
+      $("#type").val(datos.direction);
+      $("#language").val(datos.population);
+      $("#collection").val(datos.phone1);
+      $("#purchase_date").val(datos.phone2);
+      $("#observations").val(datos.email);
+      $(".modal-header").css(
+        "background-color",
+        "var(--Background-Color-forms-book)"
+      );
+      $(".modal-header").css("color", "white");
+      $(".modal-title").text("EDIT BOOK").css("font-weight", "700");
     })
-      .then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted! Book ' + idPartner,
-            'Your Partner has been deleted.',
-            'success',
-            window.location = `/api/partners/delete/${idPartner}`
-          );
-        }
-      });
-  }
+    .then(result => {
+      console.log(result);
+    });
+}
 
-  //INFO PARTNER
-  async function infoPartner(id_partner) {
-    window.location = `/workspace/partners/info/${id_partner}`
-  }
+//TODO DELETE
+async function deleteBook(id_book) {
+  opcion = "delete";
+  const idBook = id_book;
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Are you sure you want to delete the BOOK!",
+    icon: "warning",
+    showConfirmButton: true,
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then(result => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        "Deleted! Book " + idBook,
+        "Your Book has been deleted.",
+        "success",
+        (window.location = `/api/books/delete/${idBook}`)
+      );
+    }
+  });
+}
 
-  //MOSTRAR
-  setTimeout(() => {
-    $(document).ready(function (e) {
-      const url = '/api/partners/';
-      $('#tablePartner').DataTable({
-        "ajax": {
-          "url": url,
-          "dataSrc": ""
+//TODO INFO
+async function infoBook(id_book) {
+  const idBook = id_book;
+  console.log(idBook);
+}
+//MOSTRAR
+setTimeout(async () => {
+  spinner.style.display = "block";
+  $(document).ready(async function (e) {
+    const url = "/api/books/";
+    $("#tableBook").DataTable({
+      ajax: {
+        url: url,
+        dataSrc: ""
+      },
+      searching: true,
+      ordering: true,
+      info: true,
+      responsive: true,
+      order: [[0, "desc"]],
+      lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
+      pageLength: 15,
+      deferRender: true,
+      columns: [
+        { data: "id_book", visible: false },
+        { data: "isbn" },
+        { data: "title" },
+        { data: "author" },
+        //{ data: "type" },
+        { data: "language" },
+        //{ data: "purchase_date" },
+        {
+          data: "reserved",
+          render: function (data, type) {
+            if (type === 'display') {
+              if (data === 1) {
+                reserved = '<span class="badge badge-warning" style="cursor: pointer; color: black; font-size: 1em">Unavailable</span>';
+              } else {
+                reserved = '<span class="badge badge-success" style="cursor: pointer; font-size: 1em">Available</span>';
+              }
+              return reserved;
+            }
+            return data;
+          }
         },
-        'searching': true,
-        'ordering': true,
-        'info': true,
-        'responsive': true,
-        "order": [[0, "desc"]],
-        "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-        "pageLength": 15,
-        'deferRender': true,
-        columns: [
-          { data: 'id_partner', 'visible': false },
-          { data: 'dni' },
-          { data: 'name' },
-          { data: 'lastname' },
-          { data: 'phone1' },
-          { data: 'phone2' },
-          { data: 'email' },
-          {
-            data: null,
-            render: function (data, type) {
+        {
+          data: null,
+          render: function (data, type) {
+            if (type === "display") {
+              if (data.reserved === 0) {
+                btnDisable = `<button id="btnReservedBook" onClick=reservedBook(` + data.id_book + `) class="btn btn-secondary" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
+              } else {
+                btnDisable = `<button id="btnReservedBook" class="btn btn-secondary disabled" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
+              }
               return `
                 <div class="ui buttons">
-                  <button id="btnEditPartner" onClick=edit(`+ data.id_partner + `) type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#modalPARTNER" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                  <button id="btnInfoPartner" onClick=infoPartner(`+ data.id_partner + `) class="btn btn-outline-primary" title="Info Partner"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                  <button id="btnDeletePartner" onClick=deletePartner(`+ data.id_partner + `) class="btn btn-outline-danger" title="Delete Partner"><i class="fa-solid fa-trash-can"></i></button>
+                  ${btnDisable}
+                  <button id="btnInfoBook" onClick=infoBook(` + data.id_book + `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
+                  <button id="btnEditBook" onClick=edit(` + data.id_book + `) type="button"  class="btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button id="btnDeleteBook" onClick=deleteBook(` + data.id_book + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
-                `
+                `;
             }
+            return data;
           }
-        ]
-      });
+        }
+      ]
     });
-    document.getElementById("spinner").style.display = "none";
-    }, "500")
-
-  //UPDATE
-  $('#formu').submit(async function (e) {
-    e.preventDefault();
-    id_partner = $.trim($('#id_partner').val());
-    dni = $.trim($('#dni').val());
-    name = $.trim($('#name').val());
-    scanner = $.trim($('#scanner').val());
-    lastname = $.trim($('#lastname').val());
-    direction = $.trim($('#direction').val());
-    population = $.trim($('#population').val());
-    phone1 = $.trim($('#phone1').val());
-    phone2 = $.trim($('#phone2').val());
-    email = $.trim($('#email').val());
-    url = `/api/partners/update/${id_partner}`
-    if (opcion === 'edit') {
-      fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({
-          dni: dni,
-          name: name,
-          scanner: scanner,
-          lastname: lastname,
-          direction: direction,
-          population: population,
-          phone1: phone1,
-          phone2: phone2,
-          email: email
-        }),
-      headers: {
-          "Content-type": "application/json; charset=UTF-8"
-      }
-      });
-    }
-    location.reload(true);
-    $('#modalPARTNER').hide();
   });
+  spinner.style.display = "none";
+}, "1000");
+
+const accionAsincrona = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 3000);
+  });
+};
+
+//UPDATE
+$("#formuBook").submit(function (e) {
+  e.preventDefault();
+  id_book = $.trim($("#id_book").val());
+  title = $.trim($("#title").val());
+  author = $.trim($("#author").val());
+  editorial = $.trim($("#editorial").val());
+  isbn = $.trim($("#isbn").val());
+  type = $.trim($("#type").val());
+  language = $.trim($("#language").val());
+  collection = $.trim($("#collection").val());
+  purchase_date = $.trim($("#purchase_date").val());
+  observations = $.trim($("#observations").val());
+  url = `/api/books/update/${id_book}`;
+  if (opcion === "edit") {
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        author,
+        editorial,
+        isbn,
+        type,
+        language,
+        collection,
+        purchase_date,
+        observations
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    });
+  }
+  location.reload(true);
+  $("#modalBook").hide();
+});

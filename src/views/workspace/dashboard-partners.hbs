@@ -1,12 +1,12 @@
 <div class="Workspace-container" id="statePartners">
   {{> messages}}
   <fieldset class="Workspace-fieldset">
-    <legend class="Workspace-legend colorPartner" id="lengedWorkspace">
+    <legend class="Workspace-legend isColorPartner" id="lengedWorkspace">
       <span class="Workspace-span">Partner Dashboard</span>
       {{#if loggedIn}}
-      <div class="Workspace-Username">
-        <span class="Workspace-Username-greeting">Hi, Welcome </span>
-        <span id="tipName" class="Workspace-Username-name">{{userName}}</span>
+      <div class="Workspace-Username Username">
+        <span class="Username-greeting">Hi, Welcome </span>
+        <span class="Username-name" id="tipName">{{userName}}</span>
       </div>
       {{/if}}
     </legend>
@@ -14,3 +14,4 @@
   </fieldset>
 </div>
 
+<link rel="stylesheet" href="/style/workspace.css">

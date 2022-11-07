@@ -1,3 +1,5 @@
+  const spinner = document.getElementById("spinner");
+
   //EDITAR
   async function edit(id_partner) {
     opcion = 'edit';
@@ -55,47 +57,56 @@
   }
 
   //MOSTRAR
-  setTimeout(() => {
-    $(document).ready(function (e) {
+  setTimeout(async () => {
+    spinner.style.display = "block";
+    $(document).ready(async function (e) {
       const url = '/api/partners/';
-      $('#tablePartner').DataTable({
-        "ajax": {
-          "url": url,
-          "dataSrc": ""
+      $("#tablePartner").DataTable({
+        ajax: {
+          url: url,
+          dataSrc: ""
         },
-        'searching': true,
-        'ordering': true,
-        'info': true,
-        'responsive': true,
-        "order": [[0, "desc"]],
-        "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-        "pageLength": 15,
-        'deferRender': true,
+        searching: true,
+        ordering: true,
+        info: true,
+        responsive: true,
+        order: [[0, "desc"]],
+        lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
+        pageLength: 15,
+        deferRender: true,
         columns: [
-          { data: 'id_partner', 'visible': false },
-          { data: 'dni' },
-          { data: 'name' },
-          { data: 'lastname' },
-          { data: 'phone1' },
-          { data: 'phone2' },
-          { data: 'email' },
+          { data: "id_partner", visible: false },
+          { data: "dni" },
+          { data: "name" },
+          { data: "lastname" },
+          { data: "phone1" },
+          { data: "phone2" },
+          { data: "email" },
           {
             data: null,
-            render: function (data, type) {
-              return `
+            render: function(data, type) {
+              return (
+                `
                 <div class="ui buttons">
-                  <button id="btnInfoPartner" onClick=infoPartner(` + data.id_partner + `) class="btn btn-outline-warning" title="Info Partner"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                  <button id="btnEditPartner" onClick=edit(` + data.id_partner + `) type="button"  class="btn btn-outline-info" title="Edit Partner" data-toggle="modal" data-target="#modalPARTNER" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                  <button id="btnDeletePartner" onClick=deletePartner(` + data.id_partner + `) class="btn btn-outline-danger" title="Delete Partner"><i class="fa-solid fa-trash-can"></i></button>
+                  <button id="btnInfoPartner" onClick=infoPartner(` +
+                data.id_partner +
+                `) class="btn btn-outline-warning" title="Info Partner"><i class="fa-sharp fa-solid fa-eye"></i></button>
+                  <button id="btnEditPartner" onClick=edit(` +
+                data.id_partner +
+                `) type="button"  class="btn btn-outline-info" title="Edit Partner" data-toggle="modal" data-target="#modalPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button id="btnDeletePartner" onClick=deletePartner(` +
+                data.id_partner +
+                `) class="btn btn-outline-danger" title="Delete Partner"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
-                `;
+                `
+              );
             }
           }
         ]
       });
     });
-    document.getElementById("spinner").style.display = "none";
-    }, "500")
+    spinner.style.display = "none";
+    }, "300")
 
   //UPDATE
   $('#formu').submit(async function (e) {
@@ -115,15 +126,15 @@
       fetch(url, {
         method: 'POST',
         body: JSON.stringify({
-          dni: dni,
-          name: name,
-          scanner: scanner,
-          lastname: lastname,
-          direction: direction,
-          population: population,
-          phone1: phone1,
-          phone2: phone2,
-          email: email
+          dni,
+          name,
+          scanner,
+          lastname,
+          direction,
+          population,
+          phone1,
+          phone2,
+          email
         }),
       headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -131,5 +142,5 @@
       });
     }
     location.reload(true);
-    $('#modalPARTNER').hide();
+    $('#modalPartner').hide();
   });

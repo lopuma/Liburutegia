@@ -87,7 +87,9 @@ app.set('view engine', '.hbs');
 app.use('/', require('./routes/IndexRouter')); // PAGINA PRICIPAL
 app.use('/profile', require('./routes/profile/ProfileRouter'));
 app.use('/workspace', require('./routes/workspace/WorkspaceRouter'));
-app.use('/workspace/partners', require('./routes/workspace/Partners.router'));
+app.use("/workspace/partners", require("./routes/workspace/Partners.router"));
+app.use("/workspace/books", require("./routes/workspace/Books.router"));
+//app.use("/workspace/partners", require("./routes/workspace/Partners.router"));
 
 // 12.1 - ROUTERS API
 app.use('/api/books', require('./routes/api/BookRouter'))
