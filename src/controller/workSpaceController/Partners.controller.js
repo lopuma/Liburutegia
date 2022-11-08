@@ -6,7 +6,7 @@ const partnersController = {
         try {
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            res.render('workspace/partners/new', {
+            res.render('workspace/partners/newPartner', {
                 loggedIn,
                 rolAdmin
             }
@@ -31,7 +31,7 @@ const partnersController = {
                     return console.error("error: " + err);
                 }
                 const partner = results;
-                res.render('workspace/partners/info', {
+                res.render('workspace/partners/infoPartner', {
                     loggedIn,
                     rolAdmin,
                     partner

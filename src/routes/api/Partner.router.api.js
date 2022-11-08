@@ -1,5 +1,5 @@
 const routerPartners = require('express').Router();
-const { validate, getPartners, getPartner, existPartner, noExistPartner, addPartner, deletePartner, putPartner, infoPartner} = require('../../controller/apiController/partnerController');
+const { validate, getPartners, getPartner, existPartner, noExistPartner, addPartner, deletePartner, putPartner, infoPartner} = require('../../controller/apiController/Partner.controller.api');
 const { isAuthenticated } = require('../../controller/authController/loginController');
 
 //SHOW ALL

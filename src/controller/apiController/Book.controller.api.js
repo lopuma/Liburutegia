@@ -74,6 +74,7 @@ const bookController = {
             })
         }
     },
+    // TODO ENTREGA
     deliverBook: async (req, res) => {
         const idBook = req.params.id_book;
         const { idBooking, score, review, deliver_date_review } = req.body;
@@ -86,7 +87,22 @@ const bookController = {
             }
             res.end(`The following BOOK has been delivered with ID : ${idBook}, and a review has been added`);
         })
+    },
+    // TODO DELETE
+    deleteBook: async (req, res) => {
+        const idBook = req.params.idBook;
+        sql = "DELETE FROM books WHERE id_book=?";
+        connection.query(sql, [idBook], (err, results) => {
+            if(err){
+                throw err
+            }
+            res .status(200)
+                .send({
+                    "message": `The book with id ${idBook} has been successfully deleted`,
+                });
+        })
     }
+
 }
 
 module.exports = bookController;

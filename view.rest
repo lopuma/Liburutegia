@@ -1,1 +1,1 @@
-GET http://localhost:3000/api/partners/info/13
+GET http://localhost:3000/api/books/delete/2155

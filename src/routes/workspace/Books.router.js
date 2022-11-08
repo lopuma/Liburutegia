@@ -5,6 +5,6 @@ const { getNew, getInfo } = require("../../controller/workSpaceController/Books.
 
 routerBooks.get("/new", isAuthenticated, getNew);
 
-routerBooks.get("/info/:idPartner", isAuthenticated, getInfo);
+routerBooks.get("/info/:idPartner", getInfo);
 
 module.exports = routerBooks;

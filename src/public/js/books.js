@@ -1,9 +1,9 @@
 const spinner = document.getElementById("spinner");
 
 //TODO RESERVED
-async function reservedBook(id_book){
+async function reservedBook(id_book) {
   const idBook = id_book;
-  console.log(idBook)
+  console.log(idBook);
 }
 
 // TODO EDITAR
@@ -36,8 +36,19 @@ async function edit(id_book) {
     });
 }
 
+async function bookDelete(idBook) {
+  const url = `/api/books/delete/${idBook}`;
+  fetch(url).then(() => {
+    const table = $("#tableBook").DataTable();
+    table.destroy();
+    setTimeout(() => {
+      mostrarData();
+    }, 500);
+  });
+}
+
 //TODO DELETE
-async function deleteBook(id_book) {
+async function deleteBook(id_book, count) {
   opcion = "delete";
   const idBook = id_book;
   Swal.fire({
@@ -55,7 +66,7 @@ async function deleteBook(id_book) {
         "Deleted! Book " + idBook,
         "Your Book has been deleted.",
         "success",
-        (window.location = `/api/books/delete/${idBook}`)
+        bookDelete(idBook)
       );
     }
   });
@@ -66,12 +77,11 @@ async function infoBook(id_book) {
   const idBook = id_book;
   console.log(idBook);
 }
-//MOSTRAR
-setTimeout(async () => {
-  spinner.style.display = "block";
-  $(document).ready(async function (e) {
+//TODO MOSTRAR
+async function mostrarData() {
+  $(document).ready(async function(e) {
     const url = "/api/books/";
-    $("#tableBook").DataTable({
+    myTable = $("#tableBook").DataTable({
       ajax: {
         url: url,
         dataSrc: ""
@@ -94,12 +104,14 @@ setTimeout(async () => {
         //{ data: "purchase_date" },
         {
           data: "reserved",
-          render: function (data, type) {
-            if (type === 'display') {
+          render: function(data, type) {
+            if (type === "display") {
               if (data === 1) {
-                reserved = '<span class="badge badge-warning" style="cursor: pointer; color: black; font-size: 1em">Unavailable</span>';
+                reserved =
+                  '<span class="badge badge-warning" style="cursor: pointer; color: black; font-size: 1em">Unavailable</span>';
               } else {
-                reserved = '<span class="badge badge-success" style="cursor: pointer; font-size: 1em">Available</span>';
+                reserved =
+                  '<span class="badge badge-success" style="cursor: pointer; font-size: 1em">Available</span>';
               }
               return reserved;
             }
@@ -108,21 +120,31 @@ setTimeout(async () => {
         },
         {
           data: null,
-          render: function (data, type) {
+          render: function(data, type) {
             if (type === "display") {
               if (data.reserved === 0) {
-                btnDisable = `<button id="btnReservedBook" onClick=reservedBook(` + data.id_book + `) class="btn btn-secondary" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
+                btnDisable =
+                  `<button id="btnReservedBook" onClick=reservedBook(` +
+                  data.id_book +
+                  `) class="btn btn-secondary" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
               } else {
                 btnDisable = `<button id="btnReservedBook" class="btn btn-secondary disabled" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
               }
-              return `
+
+              return (
+                `
                 <div class="ui buttons">
                   ${btnDisable}
-                  <button id="btnInfoBook" onClick=infoBook(` + data.id_book + `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                  <button id="btnEditBook" onClick=edit(` + data.id_book + `) type="button"  class="btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button id="btnInfoBook" onClick=infoBook(` +
+                data.id_book +
+                `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
+                  <button id="btnEditBook" onClick=edit(` +
+                data.id_book +
+                `) type="button"  class="btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
                   <button id="btnDeleteBook" onClick=deleteBook(` + data.id_book + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
-                `;
+                `
+              );
             }
             return data;
           }
@@ -130,19 +152,15 @@ setTimeout(async () => {
       ]
     });
   });
+}
+setTimeout(async () => {
+  spinner.style.display = "block";
+  mostrarData();
   spinner.style.display = "none";
-}, "1000");
-
-const accionAsincrona = async () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, 3000);
-  });
-};
+}, "500");
 
 //UPDATE
-$("#formuBook").submit(function (e) {
+$("#formuBook").submit(function(e) {
   e.preventDefault();
   id_book = $.trim($("#id_book").val());
   title = $.trim($("#title").val());
