@@ -16,3 +16,4 @@ docker-compose PRO.yml
 excel/
 package copy*
 .dockerignore
+*.csv
