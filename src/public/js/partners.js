@@ -1,3 +1,4 @@
+
 const spinner = document.getElementById("spinner");
 const tbodyPartner = document.getElementById("tbodyPartner");
 
@@ -63,9 +64,9 @@ async function infoPartner(id_partner) {
 
 //TODO MOSTRAR
 async function mostrarData() {
-  $(document).ready(async function (e) {
-    const url = "/api/partners/";
-    myTable = $("#tablePartner").DataTable({
+  const url = "/api/partners/";
+  $(document).ready(async () => {
+    myTable = await $("#tablePartner").DataTable({
       ajax: {
         url: url,
         dataSrc: ""

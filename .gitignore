@@ -17,3 +17,9 @@ excel/
 package copy*
 .dockerignore
 *.csv
+exec/
+addData*.js
+env/
+.env
+compose*
+.git/

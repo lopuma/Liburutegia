@@ -8,7 +8,9 @@ if (process.env.NODE_ENV !== 'production'){
 }
 module.exports = {
     database: {
-        connectionLimit: 100,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0,
         multipleStatements: true,
         host: process.env.DB_HOST || process.env.MYSQL_HOST,
         // port: process.env.DB_PORT || 3306,

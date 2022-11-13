@@ -1,6 +1,5 @@
 <!--Modal para CRUD-->
-<div id="modalStar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStar"
-    aria-hidden="true">
+<div id="modalStar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStar" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,23 +37,40 @@
 </div>
 
 <div class="Info-contenedor">
-    <ul class="Info-tabs">
-        <div class="Tabs-titles">
-            <li class="Info-tab activo isActive">Information</li>
-            {{#each partner}}
-            <li class="Info-tab" onClick="infoPartner({{this.id_partner}})" style="cursor: pointer;">Active Reserves
-            </li>
-            <li class="Info-tab" onClick="infoHistory({{this.id_partner}})" style="cursor: pointer;">Reservation History
-            </li>
-            {{/each}}
+    <div class="Slider">
+        <div class="Slider-move">
+            <div class="Slider-card">
+                <a class="Slider-a activo isActive">Information</a>
+            </div>
+            <div class="Slider-card">
+                {{#each partner}}
+                <a class="Slider-a" onClick="infoPartner({{this.id_partner}})" style="cursor: pointer;">Active Reserves
+                </a>
+                {{/each}}
+            </div>
+            <div class="Slider-card">
+                {{#each partner}}
+                <a class="Slider-a" onClick="infoHistory({{this.id_partner}})" style="cursor: pointer;">Reservation
+                    History
+                </a>
+                {{/each}}
+            </div>
         </div>
-        <div class="Tabs-direcciones">
+        <button class="Slider-arrow isPrev">
             {{#each partner}}
-            <a href="#" class="atras" onclick="avanzaSlide(-1, {{this.id_partner}})">&#10094;</a>
-            <a href="#" class="adelante" onclick="avanzaSlide(1, {{this.id_partner}})">&#10095;</a>
+                <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                </svg>
             {{/each}}
-        </div>
-    </ul>
+        </button>
+        <button class="Slider-arrow isNext">
+            {{#each partner}}
+                <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+            {{/each}}
+        </button>
+    </div>
     <div class="Info-subcontenedor">
         <div class="Info-bloque activo">
             {{#each partner}}
@@ -64,7 +80,8 @@
         </div>
         <div class="Info-bloque Dashboard" id="infoBloqueActive">
             <div class="Bloque-table Dashboard-row">
-                <table class="Dashboard-table table table-bordered   display wrap" id="tablePartnerActive" cellspacing="0" width="100%">
+                <table class="Dashboard-table table table-bordered   display wrap" id="tablePartnerActive"
+                    cellspacing="0" width="100%">
                     <thead class="Dashboard-head">
                         <tr>
                             <th>ISBN</th>
@@ -79,7 +96,7 @@
                             <div class="lds-dual-ring">&nbsp</div>
                         </div>
                     </tbody>
-                    <tfoot  class="Dashboard-foot">
+                    <tfoot class="Dashboard-foot">
                         <tr>
                             <th>ISBN</th>
                             <th>TITLE</th>
@@ -93,7 +110,8 @@
         </div>
         <div class="Info-bloque Dashboard" id="infoBloqueHistory">
             <div class="Bloque-table Dashboard-row">
-                <table class="Dashboard-table table table-bordered  display wrap" id="tablePartnerHistory" cellspacing="0" width="100%">
+                <table class="Dashboard-table table table-bordered  display wrap" id="tablePartnerHistory"
+                    cellspacing="0" width="100%">
                     <thead class="Dashboard-head">
                         <tr>
                             <th>ISBN</th>
@@ -129,12 +147,12 @@
 
 <link href="/style/info.css" rel="stylesheet" />
 
-<script defer>
+<script>
     const post = document.querySelector(".post");
     const widget = document.querySelector(".star-widget");
     const editBtn = document.querySelector(".edit");
     const textarea = document.querySelector("#textarea");
-    const li = document.querySelectorAll(".Info-tab");
+    const li = document.querySelectorAll(".Slider-a");
     const bloque = document.querySelectorAll(".Info-bloque");
     const tbodyHistory = document.getElementById("historyData");
     const tbodyActive = document.getElementById("activeData");
@@ -142,7 +160,7 @@
     const infoBloqueActive = document.getElementById("infoBloqueActive");
     const spinnerHistory = document.getElementById("spinnerHistory");
     const spinnerActive = document.getElementById("spinnerActive");
-    
+
     //TODO OBTENER DATOS DEL MODAL
     $('#formuStar').submit(async function (e) {
         e.preventDefault();
@@ -156,11 +174,11 @@
         const deliver_date_review = new Intl.DateTimeFormat("en-US").format(fecha);
         let dateActual = new Date();
         dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
-            
+
         const data = {
             idBooking,
             score,
-            review, 
+            review,
             deliver_date_review: dateActual
         }
         fetch(url, {
@@ -191,13 +209,13 @@
 
     //TODO ENTREGA
     async function deliver(book_id, id_booking, count) {
-        try{
+        try {
             const idBook = book_id;
             const idBooking = id_booking;
-            const url = `/api/books/deliver/${idBook}`; 
+            const url = `/api/books/deliver/${idBook}`;
             let dateActual = new Date();
-            dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/","-");
-            
+            dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
+
             Swal.fire({
                 title: 'Deliver',
                 text: `Do you want to add a review, for the book : ${idBook} ?`,
@@ -255,7 +273,7 @@
     }
 
     //TODO RESERVAS ACTIVAS
-    async function createdTableActive(){
+    async function createdTableActive() {
         setTimeout(async () => {
             spinnerActive.style.display = "none";
             $(document).ready(function () {
@@ -301,7 +319,7 @@
                 }
                 setTimeout(async () => {
                     tbodyActive.innerHTML = body;
-                }, 400) 
+                }, 400)
             }
         }
     }
@@ -345,7 +363,7 @@
 
         let count = 0;
         let bodyHistory = "";
-        
+
         data.message ? vacio = true : vacio = false;
         tbodyHistory.innerHTML = "";
         if (vacio) {
@@ -368,22 +386,22 @@
 
                 const starPercentage = elemento.score / starTotal * 100;
                 const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-                
+
                 if (reserved === 0 || (reserved === 1 && idBookingReview !== null)) {
                     bodyHistory += `<tr  id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td>${deliverDateReview}</td><td><div class="stars-outer"><div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${elemento.score}"></div></div></td><td>${elemento.review}</td></tr>`;
                 } else {
                     infoBloqueHistory.classList.remove("isScroll");
                     infoBloqueHistory.classList.add("isNormal");
                 }
-                setTimeout(async ()=> {
+                setTimeout(async () => {
                     tbodyHistory.innerHTML = bodyHistory;
-                },400)
+                }, 400)
             }
-        }   
+        }
     }
     async function infoHistory(id_partner) {
         spinnerHistory.style.display = "block";
-        try{
+        try {
             tableB.destroy();
             createdTableHistory();
         } catch (error) {
@@ -395,7 +413,7 @@
             .then(response => response.json())
             .then(data => obtenerHistory(data));
     }
-    
+
     //TODO ACTIVAR TAB
     li.forEach((cadaLi, i) => {
         li[i].addEventListener("click", () => {
@@ -413,14 +431,14 @@
         });
     });
 
-    let indice = 1;
 
+    let indice = 1;
     function avanzaSlide(n, idPartner) {
         muestraSlides((indice += n));
         try {
-            indice === 2 ? 
-            infoPartner(idPartner) :
-            infoHistory(idPartner)
+            indice === 2 ?
+                infoPartner(idPartner) :
+                infoHistory(idPartner)
 
         } catch (error) {
             console.error(error);
@@ -428,27 +446,27 @@
     }
 
     function muestraSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("Info-tab");
-            let barras = document.getElementsByClassName("barra");
+        let i;
+        let slides = document.getElementsByClassName("Slider-a");
+        let barras = document.getElementsByClassName("barra");
 
-            if (n > slides.length) {
-                indice = 1;
-            }
-            if (n < 1) {
-                indice = slides.length;
-            }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-                slides[i].classList.remove("activo");
-                bloque[i].classList.remove("activo");
-            }
-            for (i = 0; i < barras.length; i++) {
-                barras[i].className = barras[i].className.replace("active", "");
-            }
-
-            slides[indice - 1].style.display = "block";
-            slides[indice - 1].classList.add("activo");
-            bloque[indice - 1].classList.add("activo");
+        if (n > slides.length) {
+            indice = 1;
         }
+        if (n < 1) {
+            indice = slides.length;
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            slides[i].classList.remove("activo");
+            bloque[i].classList.remove("activo");
+        }
+        for (i = 0; i < barras.length; i++) {
+            barras[i].className = barras[i].className.replace("active", "");
+        }
+
+        slides[indice - 1].style.display = "block";
+        slides[indice - 1].classList.add("activo");
+        bloque[indice - 1].classList.add("activo");
+    }
 </script>

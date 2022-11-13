@@ -13,25 +13,24 @@
   <form class="Login" action="/login" method="POST" id="formLogin">
     {{> messages }}
     <div class="Login-content">
-      <div class="Login-title">Login</div>
+      <h1 class="Login-title">Sign in to Liburutegia</h1>
       <div class="Input-boxes">
         <div class="Input-box Box">
-          <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
-          <input class="Box-input" id="email" type="email" name="email" autocomplete="email" required="required"
-            autofocus tabindex="1"/>
-          <label for="email" class="Box-label">Enter your Email</label>
+            <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
+            <input class="Box-input" id="email" type="email" name="email" required="required" autofocus tabindex="1"/>
+            <label for="email" class="Box-label isNoFlex">Enter your Email</label>
         </div>
         <div class="Input-box Box">
-          <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-          <input class="Box-input" name="password" id="password" type="password" autocomplete="false" required="required" readonly onfocus="this.removeAttribute('readonly');" tabindex="2"/>
-          <label for="password" class="Box-label">Enter your Password</label>
-          <i id="icon-eye" class="Box-i fa-solid fa-eye"></i>
+            <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+            <input class="Box-input" name="password" id="password" type="password" required="required" tabindex="2"/>
+            <label for="password" class="Box-label">Enter your Password</label>
+            <i id="icon-eye" class="Box-i fa-solid fa-eye"></i>
         </div>
-        <div class="Input-box">
-          <label class="Input-label" for="flip">Forgot Password?</label>
+        <div class="Input-box isText">
+          <label class="Input-label" for="flip" tabindex="3">Forgot Password?</label>
         </div>
-        <div class="Button-box">
-          <input class="Login-button" id="btnLogin" type="submit" value='LOG IN' tabindex="3"/>
+        <div class="Input-box isButton">
+          <input class="Login-button" id="btnLogin" type="submit" value='LOG IN' tabindex="4" />
         </div>
       </div>
     </div>
@@ -44,26 +43,29 @@
       <div class="Input-boxes">
         <div class="Input-box Box">
           <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
-          <input class="Box-input" id="emailReset" type="email" name="emailReset" autocomplete="email" required="required" autofocus tabindex="1"/>
+          <input class="Box-input" id="emailReset" type="email" name="emailReset" required="required" autofocus
+            tabindex="1" />
           <label for="emailReset" class="Box-label">Enter your Email</label>
         </div>
         <div class="Input-box Box">
           <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-          <input class="Box-input" name="newPassword" id="newPassword" type="password" autocomplete="false" required="required" readonly onfocus="this.removeAttribute('readonly');" tabindex="2"/>
+          <input class="Box-input" name="newPassword" id="newPassword" type="password" required="required"
+            tabindex="2" />
           <label for="newPassword" class="Box-label">Enter new Password</label>
           <i id="icon-eye-new" class="Box-i fa-solid fa-eye"></i>
         </div>
         <div class="Input-box Box">
           <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-          <input class="Box-input" name="repeatPassword" id="repeatPassword" type="password" autocomplete="false" required="required" readonly onfocus="this.removeAttribute('readonly');" tabindex="3"/>
+          <input class="Box-input" name="repeatPassword" id="repeatPassword" type="password" required="required"
+            tabindex="3" />
           <label for="repeatPassword" class="Box-label">Repear Password</label>
           <i id="icon-eye-repeat" class="Box-i fa-solid fa-eye"></i>
         </div>
-        <div class="Input-box">
-          <label class="Input-label" for="flip">Login?</label>
+        <div class="Input-box isText">
+          <label class="Input-label" for="flip" tabindex="4">Login?</label>
         </div>
-        <div class="Button-box">
-          <input class="Reset-button" id="btnReset" type="submit" value='RESET PASSWORD' tabindex="4"/>
+        <div class="Button-box isButton">
+          <input class="Reset-button" id="btnReset" type="submit" value='RESET PASSWORD' tabindex="5" />
         </div>
       </div>
     </div>

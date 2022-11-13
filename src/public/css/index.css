@@ -4,6 +4,8 @@
   height: auto;
   display: flex;
   align-items: center;
+  font-size: 1em;
+  font-family: var(--Font-family-principal);
 }
 
 .Index-text {
@@ -13,7 +15,7 @@
   flex-flow: column wrap;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 2em;
   margin: auto 0;
   color: inherit;
   background-color: inherit;
@@ -29,38 +31,37 @@
   white-space: normal;
   background-clip: border-box;
   -webkit-text-fill-color: inherit;
-  margin: 20px 0;
+  margin: 1em 0;
   font-family: inherit;
   width: 100%;
 }
 
 .Index-p {
   text-align: justify;
-  margin: 20px 0;
+  margin: 1em 0;
   font-family: inherit;
   color: inherit;
   font-size: 1.5em;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 300;
-  letter-spacing: 0;
 }
 
 .Index-a {
   width: auto;
-  border-radius: var(--Radius-button);
+  border-radius: var(--Radius);
   font-size: var(--Size-font-button);
   font-weight: 700;
   font-family: inherit;
-  letter-spacing: 4px;
+  letter-spacing: var(--Letter-spacing);
   text-align: center;
-  padding: 15px 10px;
+  padding: 1em;
   background-color: var(--Success);
   border: 1px solid var(--negro);
   transition-property: color, background-color, box-shadow, border;
   transition-duration: 00.5s;
   transition-timing-function: ease-in-out;
   color: var(--Brown);
-  margin: 20px 0;
+  margin: 1em 0;
   text-transform: uppercase;
 }
 
@@ -74,7 +75,7 @@
 
 .Index-img {
   flex: 60%;
-  padding: 15px;
+  padding: 0.9375rem;
   width: 100%;
   height: 100%;
   display: flex;
@@ -101,7 +102,7 @@
     display: flex;
     flex-flow: column-reverse wrap;
     align-items: center;
-    margin: var(--margin-top-forms) auto auto auto;
+    margin: var(--Margin-top-forms) auto auto auto;
   }
 
     .Index-text{
@@ -110,14 +111,14 @@
 
     .Index-h1{
       text-align: center;
-      padding: 10px 0;
+      padding: 1em 0;
       font-size: 2em;
     }
 
     .Index-p{
       text-align: center;
-      padding: 10px 0;
-      font-size: 1.5em;
+      padding: 1em 0;
+      font-size: 1em;
     }
 
     .Index-a{
@@ -128,6 +129,6 @@
 @media screen and (max-width: 500px) {
   .Index-container{
     padding: 0;
-    margin: var(--size-height-navBar) auto 50px auto;
+    margin: var(--Size-height-navBar) auto 3.125em auto;
   }
 }

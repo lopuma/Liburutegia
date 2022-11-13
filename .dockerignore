@@ -16,3 +16,8 @@ docker-compose_DEV.yml
 .env/.env
 otros/
 *.csv
+exec/
+addData*.js
+env/
+compose*
+.git/

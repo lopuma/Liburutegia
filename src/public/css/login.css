@@ -1,38 +1,14 @@
 /* TODO CONTENEDOR DE LOGIN*/
 .Singin,
 .Authentication {
-    margin: var(--Margin-top-forms);
-    padding-top: 20px;
-    width: 80%;
+    margin: var(--Margin-top-forms) auto;
+    font-size: 1em;
+    font-family: var(--Font-family-principal);
+    padding-top: 1.25em;
+    width: 70%;
     position: relative;
     display: flex;
-}
-
-/* TODO RECORD */
-.Singin {
-    width: 60%;
-    flex-flow: column nowrap;
-}
-
-.Register,
-.Login,
-.Reset {
-    height: auto;
-    width: 100%;
-    box-shadow: var(--Box-shadow);
-    border-radius: var(--Radius);
-    padding: 20px;
-    background-color: var(--blanco);
-}
-
-.Login {
-    margin-right: 40px;
-    animation: text-anim var(--duraction-animations) ease;
-    height: 500px;
-}
-
-.Reset {
-    visibility: hidden;
+    justify-content: space-between;
 }
 
 /* TODO COVER DE IMG */
@@ -42,12 +18,12 @@
     left: 50%;
     height: 100%;
     width: 50%;
-    z-index: 20; 
-    transition: all var(--duraction-animations);
+    z-index: 20;
+    transition: all 1s;
     transform-origin: left;
     transform-style: preserve-3d;
     background-color: inherit;
-    animation: img-anim var(--duraction-animations) ease; 
+    animation: img-anim 1s ease;
 }
 
 #flip:checked~.Auth-cover {
@@ -63,7 +39,6 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
-
 
 .Auth-cover--front,
 .Auth-cover--back {
@@ -88,6 +63,7 @@
     /* Opera */
     display: none;
 }
+
 #flip:checked~.Auth-cover .Auth-cover--back {
     display: block;
 }
@@ -102,11 +78,14 @@
     background-color: inherit;
 }
 
-.Auth-cover--back .Auth-img{
-        object-fit: contain;
+.Auth-cover--back .Auth-img {
+    object-fit: contain;
 }
 
-/* ANIMACIONES FORMS AUTH */
+#flip {
+    display: none;
+}
+
 #flip:checked~.Reset {
     animation: img-anim 1s ease;
     visibility: visible;
@@ -120,31 +99,67 @@
     margin-left: 0px;
 }
 
-/* FORMS */
-.Login-content,
-.Reset-content {
+.Login {
     width: 100%;
+    font-size: inherit;
+    font-family: inherit;
+    box-shadow: var(--Box-shadow);
+    border-radius: var(--Radius);
+    padding: 1.5em;
+    background-color: var(--blanco);
+    margin-right: 2.5em;
+    animation: text-anim 1s ease;
+    height: auto;
+}
+
+.Reset {
+    width: 100%;
+    font-size: inherit;
+    font-family: inherit;
+    box-shadow: var(--Box-shadow);
+    border-radius: var(--Radius);
+    padding: 1.25em;
+    background-color: var(--blanco);
+    height: 36.25em;
+}
+
+.Reset {
+    visibility: hidden;
+}
+
+/* FORMS */
+.Login-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-flow: column nowrap;
+}
+
+.Login-content {
+    width: 100%;
+    height: auto;
     overflow: hidden;
 }
 
-.Register-content {
-    width: 90%;
+.Reset-content {
+    width: 100%;
     height: auto;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
-
-.Register-title,
+.Reset-title,
 .Login-title,
-.Reset-title {
-    position: relative;
-    font-size: 24px;
-    font-weight: 700;
+.Register-title {
+    font-size: 1.5rem;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-weight: 600;
+    letter-spacing: 2px;
     color: inherit;
-    padding: 0 20px;
     display: flex;
     justify-content: flex-start;
-    margin-top: 10px;
+    align-items: center;
+    margin: 0.625em 0;
+    position: relative;
 }
 
 .Reset-title::before,
@@ -154,39 +169,135 @@
     position: absolute;
     left: 0x;
     bottom: -5px;
-    height: 3px;
-    width: 25px;
-    background: gold;
+    height: 0.1875em;
+    width: 2em;
+    background: var(--Color-Selected);
 }
 
 .Input-boxes {
-    margin-top: 0px;
     width: 100%;
     height: 100%;
-    padding: 20px;
+    font-size: inherit;
     align-items: center;
     overflow: hidden;
+    margin: 1em 0;
 }
 
-.Input-box {
+.Box {
+    margin: 2.5em 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: var(--size-height-box);
-    width: 100%;
-    margin: 10px 0;
     position: relative;
 }
 
-.Button-box {
+.Box-i {
+    color: inherit;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.Box-input {
+    font-size: 1.2em;
+    font-family: inherit;
+    color: inherit;
+    padding: 1em .5em;
+    border-radius: var(--Radius);
+    border: none;
+    transition: all 0.3s ease;
+    margin: 0 1em;
+    outline: none;
+    width: 100%;
+    border-bottom: 3px solid var(--Color-shadow-input);
+}
+
+.Box-label {
+    position: absolute;
+    top: 1em;
+    left: 2.5em;
+    margin: 0;
+}
+
+.Box-input:focus+.Box-label,
+.Box-input:valid+.Box-label {
+    top: 0;
+    left: 0;
+    transform: translate(15px, -15px) scale(0.8);
+    color: var(--blanco);
+    padding-inline: 8px;
+    background-color: var(--negro);
+    border-radius: var(--Radius);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    margin: 0;
+    padding: 0;
+}
+
+.Box-input:is(:focus, :valid) {
+    border-radius: var(--Radius);
+    border-bottom: 3px solid var(--Color-Selected);
+    box-shadow: 0 .8em .8em var(--Color-shadow-input);
+}
+
+.isText,
+.isButton {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-flow: row wrap;
     width: 100%;
-    margin: 10px 0;
     height: auto;
-    overflow: hidden;
+    margin: 1.5em 0;
+}
+
+.Reset-button,
+.Login-button {
+    width: auto;
+    border-radius: var(--Radius);
+    font-size: var(--Size-font-button);
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: var(--Letter-spacing);
+    text-align: center;
+    padding: 1em;
+    background-color: var(--Success);
+    border: 1px solid var(--blanco);
+    transition-property: color, background-color, box-shadow, border;
+    transition-duration: 00.5s;
+    transition-timing-function: ease-in-out;
+    color: var(--Brown);
+    margin: 1em 0;
+    text-transform: uppercase;
+}
+
+.Reset-button {
+    background-color: var(--Unsuccess);
+    color: var(--blanco);
+}
+
+.Reset-button:hover {
+    color: var(--Success);
+    background-color: var(--Unsuccess);
+    box-shadow: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
+}
+
+.Login-button:hover {
+    color: var(--blanco);
+    background-color: var(--Success);
+    box-shadow: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
+}
+
+.Input-label {
+    color: inherit;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+}
+
+.Input-label:hover {
+    color: var(--Color-Selected);
 }
 
 .Input-error {
@@ -204,7 +315,7 @@
 
 .Error-p {
     align-items: center;
-    font-size: 15px;
+    font-size: 15pautox;
     text-align: center;
     padding: 0;
     margin: 0;
@@ -212,129 +323,27 @@
 
 .errorActivo {
     display: block;
-    color: brown;
-}
-.Box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: var(--size-height-box);
-    width: 100%;
-    margin: 40px 0;
-    position: relative;
-}
-.Box-input {
-    height: 100%;
-    width: 100%;
-    outline: none;
-    border: none;
-    padding: 0 10px;
-    margin: 0 20px;
-    font-size: 17px;
-    font-weight: 500;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.Box-label {
-    position: absolute;
-    top: 20px;
-    left: 40px;
-    margin: 0;
-}
-
-.Box-input:invalid+.Box-label,
-.Box-input:focus+.Box-label,
-.Box-input:valid+.Box-label {
-    top: 0;
-    left: 0;
-    border-color: rgb(32, 162, 202);
-    transform: translate(15px, -15px) scale(0.8);
-    color: #d1c5fc;
-    padding-inline: 8px;
-    background-color: #242329;
-    border-radius: 5px;
-    font-size: 17px;
-    letter-spacing: 3px;
-    margin: 0;
-    padding: 0 10px;
-}
-
-.Box-input:focus {
-    border-color: #000000;
-}
-
-.Box-input:valid {
-    border-color: var(--Success);
-}
-
-.Box-input:invalid {
-    border-color: var(--Unsuccess);
-}
-
-.Box-input:is(:focus, :valid, :invalid) {
-    outline: 1px solid #242329;
-    border-radius: 5px;
-}
-
-.Box-i {
-    color: inherit;
-    font-size: var(--size-font-icon);
-    cursor: pointer;
-}
-
-
-.Input-label {
-    margin-top: 30px;
-    color: inherit;
-    font-weight: 600;
-    font-size: 17px;
-    cursor: pointer;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 0;
-}
-
-
-.Reset-button {
-    padding: 10px;
-    color: var(--blanco);
-    background-color: var(--Unsuccess);
-    border: 1px solid #fff;
-    cursor: pointer;
-    transition-property: background-color, box-shadow, color;
-    transition-duration: 00.5s;
-    transition-timing-function: ease;
-    font-size: var(--Size-font-button);
-    font-weight: 700;
-    font-family: 'Nunito Sans', sans-serif;
-    border-radius: var(--Radius-button);
-    letter-spacing: 3px;
-    white-space: normal;
-    width: 100%;
-}
-
-.Login-button {
-    padding: 10px 20px;
     color: var(--Brown);
-    background-color: var(--Success);
-    border: 1px solid #fff;
-    cursor: pointer;
-    transition-property: background-color, box-shadow, color;
-    transition-duration: 00.5s;
-    transition-timing-function: ease;
-    font-size: var(--Size-font-button);
-    font-weight: 700;
-    font-family: 'Nunito Sans', sans-serif;
-    border-radius: var(--Radius-button);
-    letter-spacing: 3px;
-    white-space: normal;
-    width: 100%;
 }
 
-/* Pertenece al REGISTRO */
+/* TODO RECORD */
+.Singin {
+    width: 60%;
+    flex-flow: column nowrap;
+}
+
+.Register {
+    height: auto;
+    width: 100%;
+    font-size: inherit;
+    font-family: inherit;
+    box-shadow: var(--Box-shadow);
+    border-radius: var(--Radius);
+    padding: 1.25em;
+    background-color: var(--blanco);
+}
+
+/* TODO Pertenece al REGISTRO */
 .Input-select {
     display: flex;
     flex-flow: column nowrap;
@@ -351,7 +360,7 @@
     margin: 0;
     width: 50%;
     font-weight: 700;
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: var(--Font-family-principal);
     letter-spacing: 2px;
 }
 
@@ -362,9 +371,9 @@
     text-align: center;
     padding: 10px;
     width: 50%;
-    color: #000000;
+    color: var(--negro);
     font-weight: 400;
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: var(--Font-family-principal);
     letter-spacing: 5px;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -372,7 +381,7 @@
 
 .Select-rol:hover {
     background-color: #FCE38A;
-    box-shadow: 0px 2px 8px gold, -0px -2px 8px goldenrod
+    box-shadow: 0px 2px 8px var(--Color-Selected), -0px -2px 8px var(--Color-Selected)
 }
 
 .Select-rol:focus {
@@ -380,39 +389,10 @@
 }
 
 .Select-option {
-    color: #000000;
-    background-color: #EAFFD0;
+    color: var(--negro);
+    background-color: var(--blanco);
     cursor: pointer;
 
-}
-
-.Input-button {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    padding: 20px;
-    margin: 20px 0;
-}
-
-
-
-.Reset-button:hover {
-    color: var(--Success);
-    background-color: var(--Unsuccess);
-    box-shadow: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
-}
-
-.Login-button:hover {
-    color: var(--blanco);
-    background-color: var(--Success);
-    box-shadow: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
-}
-
-#flip {
-    display: none;
 }
 
 #alertNotLogin {
@@ -446,18 +426,27 @@
         width: 80%;
     }
 
+    .Authentication {
+        width: 70%;
+    }
+
+    .Box {
+        margin: 3em 0;
+    }
+
     .Login {
         margin: 0;
         animation-name: down;
         animation-duration: 1s;
         animation-fill-mode: forwards;
-        margin-bottom: 50px;
+        margin-bottom: 3.125em;
         height: auto;
     }
 
     .Reset {
         margin: 0;
         display: none;
+        height: auto;
     }
 
     #flip:checked~.Login {
@@ -489,82 +478,15 @@
     .Singin,
     .Authentication {
         width: 90%;
-        margin: var(--Margin-top-forms) auto 20px auto; 
+        margin: var(--Margin-top-forms) auto 1.25em auto;
     }
 
-    .Register {
-        padding: 10px;
-    }
+    .Login{
+        width: auto;
+        height: auto;    }
 
-    .Login {
-        padding: 0;
-    }
     .Reset{
-        padding: 0;
-    }
-
-    .Input-boxes {
-        margin: 0;
-    }
-
-    .Box{
-        margin: 30px 0;
-    }
-
-    .Register-title {
-        display: flex;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .Register-title::before {
-        left: -120px;
-        bottom: -10px;
-        right: 0;
-        top: 50%;
-        margin: auto;
-    }
-
-    .Input-error {
-        justify-content: center;
-        height: 40px;
-        position: relative;
-    }
-
-    .Box-input {
-        text-align: start;
-        padding: 0 10px;
-        margin: 0;
-    }
-
-    .Box-i {
-        margin: 0 10px;
-    }
-
-    #alertNotLogin {
-        top: 10px;
-        margin: 10px auto;
-        padding-bottom: 10px;
-        padding-top: 10px;
-    }
-
-    .alert {
-        top: 10px;
-        padding: 0 10px;
-        margin: 20px;
-        font-size: 14px;
-    }
-
-    .alert-heading {
-        font-size: 16px;
-        font-weight: 700;
-        margin: 0;
-        margin-top: 10px;
-    }
-
-    .close {
-        padding: 0;
-        opacity: none;
+        height: auto;
     }
 
 }

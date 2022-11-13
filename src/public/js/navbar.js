@@ -17,7 +17,7 @@ const btnPartnerSidemenu = document.getElementById('btnPartnerSidemenu');
 const btnLoginSidemenu = document.getElementById('btnLoginSidemenu');
 
 setTimeout(() => {
-  $(".alert").alert('close');
+  $("#alert").alert('close');
 }, "5000")
 
 window.onload = onLoad();
@@ -211,8 +211,8 @@ window.onscroll = function () {
 
   if (ubicacionPrincipal >= Desplazamiento_Actual) {
     document.getElementById('navbar').style.top = '0px';
-    document.getElementById('navBar').style.top = 'var(--size-height-navBar)';
-    document.getElementById('sidemenu').style.top = 'var(--size-height-navBar)';
+    document.getElementById('navBar').style.top = 'var(--Size-height-navBar)';
+    document.getElementById('sidemenu').style.top = 'var(--Size-height-navBar)';
   } else {
     document.getElementById('navbar').style.top = '-100px';
     document.getElementById('navBar').style.top = '0px';

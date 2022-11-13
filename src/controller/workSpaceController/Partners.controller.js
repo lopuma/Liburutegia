@@ -25,7 +25,7 @@ const partnersController = {
             const rolAdmin = req.session.roladmin;
             
             const sqlPartner = "SELECT * FROM partners WHERE id_partner = ?"
-            
+        
             await connection.query(sqlPartner, [ idPartner ], (err, results) => {
                 if (err){
                     return console.error("error: " + err);

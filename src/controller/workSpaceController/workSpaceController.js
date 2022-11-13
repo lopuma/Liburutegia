@@ -60,12 +60,12 @@ const workSpaceController = {
         if (error) {
           throw error;
         }
-        const users = results;
+      const users = results;
         try {
           if (rolAdmin === false) {
             return res.redirect('/');
           }
-          res.render("workspace/dashboard-admin", {
+          res.status(200).render("workspace/dashboard-admin", {
             loggedIn,
             userName,
             users,

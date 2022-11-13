@@ -10,6 +10,7 @@ routerRegister.get("/", isAuthenticated, async (req, res) => {
   const userName = req.session.username;
   const loggedIn = req.session.loggedin;
   const userMail = req.session.usermail;
+  const rolAdmin = req.session.rolAdmin;
   rolAdmin === false ?
     res.redirect('/') :
     res.render("../views/forms/register", {

@@ -4,8 +4,11 @@
 
 :root {
 
-  --negro: #393939;
+  --Font-family-principal: 'Karla', sans-serif;
+  --negro: #303030;
   --blanco: #fff;
+  --marron: #2c2316;
+  --Background-Color-forms: #ececec;
   --sombra-ppal: #c9c9c9;
   --sombra-sec: #00000050;
   --borde-negro: #00000050;
@@ -17,15 +20,12 @@
   --font-size: 2em; 
 
   
-  --box-shadow-buttons-success: 0px 2px 8px var(--colour-button-success), -0px -2px 8px var(--Brown);
-  --box-shadow-buttons-unsuccess: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
-  --Radius-button: 8px;
-  --size-font-menu-button: 1em;
-  --size-font-menu-button__mv: 1em;
+  --Box-shadow-buttons-success: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
+  --Box-shadow-buttons-unsuccess: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
 
   /* VALIDAS */
-  --Margin-top-forms: calc(var(--size-height-navBar) + 20px);
-  --Radius: 8px;
+  --Margin-top-forms: calc(var(--Size-height-navBar) + 20px);
+  --Radius: 5px;
   --Width-forms: 90%;
   --Color-legend: var(--blanco);
   --Font-family-legend: 'Oswald', sans-serif;
@@ -40,8 +40,9 @@
   --Unsuccess: #C21010;
   --Size-font-button: 1em;
   --Brown: #876445;
-
-
+  --HovercolorSideMenu: rgba(99, 99, 99, 0.836);
+  --Letter-spacing: 0.3125em;
+  --Color-shadow-input: rgba(0, 0, 0, 0.2);
 
   --Background-Color-forms-admin-head: #222222;
   --color-forms-admin-head: #000000;
@@ -55,74 +56,25 @@
   --color-forms-book: #ffffff;
   --color-forms-partner: #ffffff;
   --color-forms-admin: #ffffff;
-  --Background-Color-forms: #f6f0e6;
   --Color-forms: rgb(0, 0, 0);
   --width-auth-forms: 80%;
   --width-singin-forms: 80%;
   --margin-forms: 30px 30px;
   
-
-  /* BODY */
-  --letra-principal: 'Karla', sans-serif;
-  --negro: #393939;
-
-
-  /* NAVIGATION */
-  --Color-logo: #000;
+  /* TODO NAVIGATION */
+  --Color-logo: var(--negro);
   --Color-sideMenu: #000;
-  --size-height-navBar: 80px;
-  --size-element: calc(var(--size-height-navBar) - 20px);
-  --Color-Selected: #dbcf20;
+  --Size-height-navBar: 80px;
+  --Size-element: calc(var(--Size-height-navBar) - 20px);
+  --Color-Selected: gold;
   --Font-family-menu: 'Nunito Sans', sans-serif;
-  --size-font-menu: 2em;
-  --size-font-menu__mv: 1.5em;
-
-  --background-menu: var(--Background-Color-forms);
+  --Size-font-menu: 1em;
+  --Background-menu: var(--Background-Color-forms);
 
   /* SIDEMENU */
-  --size-width-sidemenu: 280px;
-  --size-width-sidemenu-collapsed: 60px;
+  --Size-width-sidemenu: 20em;
+  --Size-width-sidemenu-collapsed: 3.75em;
 
-  /* FORM AUTH*/
-  --size-height-box: 60px;
-  --size-font-icon: 17px;
-  --duraction-animations: 1s;
-
-
-
-  /* ------------------------------------------------------------------------------------------------ */
-  /* ------------------------------------------------------------------------------------------------ */
-  --bg-scope-table: #013d55;
-  --color-bg-th-table: #f1ed9bc9;
-  --color-text-th-table: #000000;
-  --color-sub-text: rgb(117, 117, 117);
-  --color-txt-btn: rgba(0, 0, 0, 0.89);
-  --color-border: rgb(67, 61, 150);
-  --size-txt-welcome: 15px;
-  --color-background-shadow-botton: #18191abe;
-  /* COLORES EMCABEZADO FIELSET */
-
-
-  /* COLORES PARA SOMNRA SUPERIOR */
-  --color-background-shadow-top: #18191abe;
-  --color-background-shadow-top-admin: var(--Background-Color-forms-admin-head);
-  --color-background-shadow-top-book: var(--Background-Color-forms-admin-head);
-  --color-background-shadow-top-partner: var(--Background-Color-forms-admin-head);
-  --color-background-shadow-top-booking: var(--Background-Color-forms-admin-head);
-
-  /* RADIUS BORDER */
-  --size-border-radius-fieldset: 5px;
-  --size-border-radius-cards: 5px;
-  --size-border-radius-cards-head: 5px;
-  --size-border-radius-menu: 8px;
-
-
-  /* FUENTES */
-
-  /* MARGENES */
-
-  --padding: 10px;
-  --hovercolor: rgba(99, 99, 99, 0.836);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -135,15 +87,12 @@
   }
 }
 
-
-/* // Animation */
 @keyframes text-anim {
   0% {
     opacity: 0;
     transform: translateX(-30%);
   }
 }
-
 
 @keyframes img-anim {
   0% {

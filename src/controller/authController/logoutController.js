@@ -13,7 +13,6 @@ const logoutController = {
         console.log(error)
         res.status(404).redirect("/")
       }
-      console.log("session destryu")
       req.session.destroy();
       res.redirect("/");
     }

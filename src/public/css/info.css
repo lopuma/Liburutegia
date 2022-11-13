@@ -2,137 +2,84 @@
 
 .Info-contenedor {
     margin: var(--Margin-top-forms) auto;
-    width: 80%;
+    width: 70%;
     height: 100%;
     color: var(--negro);
     -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
+    transition: all .5s ease;
+    background-color: var(--blanco);
+}
+
+.Slider {
+    width: 100%;
+    border: 0.5px solid var(--negro);
+    padding: 1em 0;
     border-radius: var(--Radius);
-    background-color: var(--blanco);
-    -webkit-box-shadow: var(--box-shadow-forms);
-    box-shadow: var(--box-shadow-forms);
-}
-
-.Info-tabs {
-    width: 100%;
-    border: 0.5px solid black;
-    padding: 1em;
-    border-radius: 0.5em;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column nowrap;
-    flex-flow: column nowrap;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
-
-.Tabs-titles {
-    width: 100%;
-    padding: 1em;
-    border-radius: 0.5em;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row nowrap;
-    flex-flow: row nowrap;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
-
-
-
-.Info-tab {
-    height: 100%;
-    padding: 1em;
-    margin: 0 2em 0 0;
-    color: var(--negro);
-    -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-    border: 1px solid black;
-    border-radius: 0.5em;
-    background-color: var(--blanco);
-    -webkit-box-shadow: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
-    box-shadow: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
-    -webkit-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    cursor: pointer;
-    text-align: center;
-}
-
-.Info-tab:hover {
-    background-color: lightblue;
-}
-
-.Info-tab.activo {
-    background-color: rgb(21, 97, 145);
-    color: white;
-    font-family: "Nunito", sans-serif;
-    font-weight: 700;
-    text-align: center;
-}
-
-.Info-contents {
-    width: 100%;
-    height: 100%;
+    color: var(--blanco);
     position: relative;
+    overflow: hidden;
 }
 
-.Info-bloque {
-    margin: 1em;
-    padding: 1em;
-    width: 100%;
-    height: 400px;
-    margin: auto;
-    top: 1em;
-    color: var(--negro);
-    -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-    border-radius: 0.5em;
-    background-color: var(--blanco);
-    -webkit-box-shadow: var(--box-shadow-forms);
-    box-shadow: var(--box-shadow-forms);
-    opacity: 0;
-    display: none;
-}
-
-.Info-bloque.isScroll {
-    height: 800px;
-    overflow-y: scroll;
-}
-
-.Info-bloque.isNormal {
-    height: 400px;
-    overflow-y: none;
-}
-
-.Info-bloque.activo {
-    opacity: 1;
-    display: block;
-}
-
-.Tabs-direcciones {
+.Slider-move {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-flow: row nowrap;
-    display: none;
-    /* padding: 10px 40px;
-    margin: 10px; */
+    justify-content: center;
+    margin: auto;
 }
+
+.Slider-card {
+    min-height: 5rem;
+    margin: 0 1em;
+    border-radius: var(--Radius);
+    cursor: pointer;
+}
+
+.Slider-a {
+    text-decoration: none;
+    color: var(--negro);
+    border: 1px solid var(--negro);
+    border-radius: var(--Radius);
+    padding: .5em 1em;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Slider-arrow {
+    background-color: var(--negro);
+    position: absolute;
+    top: calc(50% - 1.5em);
+    padding: 1em;
+    border-radius: 50%;
+    transition: all .5s ease;
+    cursor: pointer;
+    transform: scale(1);
+}
+
+.Slider-arrow:hover {
+    transform: scale(.95);
+}
+
+.Slider-arrow:active {
+    transform: scale(1.1);
+}
+
+.Slider-svg {
+    width: .8em;
+    height: .8em;
+    fill: var(--blanco);
+}
+
+.isPrev {
+    left: 3%;
+}
+
+.isNext {
+    right: 2%;
+}
+
 
 /* STARs */
 .stars-outer {

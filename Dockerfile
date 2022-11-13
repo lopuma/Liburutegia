@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN npm install -g npm@9.1.1
+
 RUN npm install
 
 RUN npm install pm2 -g

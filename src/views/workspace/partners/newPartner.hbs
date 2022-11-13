@@ -4,11 +4,22 @@
         <div class="New-title isEnable">
             <h1 class="New-h1">Add New Partner</h1>
         </div>
+        <div class="New-family">
+            <input type="checkbox" id="underage" value="underage"> <label for="underage">Is he underage?</label>
+            <select data-live-search="true" data-live-search-style="true" class="selectpicker">
+                <option value="4444">4444</option>
+                <option value="Fedex">Fedex</option>
+                <option value="Elite">Elite</option>
+                <option value="Interp">Interp</option>
+                <option value="Test">Test</option>
+            </select>
+        </div>
         {{> formPartner }}
         <div class="Input-button">
             <input class="Button-cancel" onClick="cerrar()" id="btnCancel" type="button" value='CANCEL' tabindex="11" />
             <input class="Button-accept" id="btnAccept" type="submit" value='ACCEPT' tabindex="12" />
         </div>
+
     </form>
 </div>
 
@@ -18,4 +29,5 @@
     function cerrar() {
         window.location.href = "/workspace/partners"
     }
+
 </script>
