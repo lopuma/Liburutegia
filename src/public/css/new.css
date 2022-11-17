@@ -16,12 +16,12 @@
     font-family: inherit;
     border-radius: var(--Radius);
     border: #707070 1px solid;
-    color: var(--negro);
-    background-color: var(--blanco);
+    color: var(--Color-negro);
+    background-color: var(--Color-blanco);
     width: 100%;
     height: auto;
     padding: 20px;
-    transition: background .3s ease-in-out;
+    transition: background .3s ease;
     min-height: 100%;
     overflow: hidden;
 }
@@ -199,9 +199,9 @@
 .Button-cancel {
     border-radius: var(--Radius);
     padding: 10px;
-    color: var(--blanco);
+    color: var(--Color-blanco);
     background-color: var(--Unsuccess);
-    border: 1px solid var(--blanco);
+    border: 1px solid var(--Color-blanco);
     cursor: pointer;
     font-size: var(--Size-font-button);
     font-weight: 700;
@@ -211,7 +211,7 @@
     align-items: center;
     width: 30%;
     transition-property: background-color, box-shadow, color;
-    transition-duration: 00.5s;
+    transition-duration: .5s;
     transition-timing-function: ease;
 }
 
@@ -220,7 +220,7 @@
     padding: 10px;
     color: inherit;
     background-color: var(--Success);
-    border: 1px solid var(--blanco);
+    border: 1px solid var(--Color-blanco);
     cursor: pointer;
     font-size: var(--Size-font-button);
     font-weight: 700;
@@ -229,7 +229,7 @@
     text-align: center;
     width: 30%;
     transition-property: background-color, box-shadow, color;
-    transition-duration: 00.5s;
+    transition-duration: .5s;
     transition-timing-function: ease;
     color: var(--Brown);
 }
@@ -241,7 +241,7 @@
 }
 
 .Button-accept:hover {
-    color: var(--blanco);
+    color: var(--Color-blanco);
     background-color: var(--Success);
     box-shadow: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
 }

@@ -3,89 +3,90 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap');
 
 :root {
-
-  --Font-family-principal: 'Karla', sans-serif;
-  --negro: #303030;
-  --blanco: #fff;
-  --marron: #2c2316;
-  --Background-Color-forms: #ececec;
-  --sombra-ppal: #c9c9c9;
-  --sombra-sec: #00000050;
-  --borde-negro: #00000050;
-  --marcado: rgb(127, 195, 255);
-  /* Tipografía */
-  --tipo-principal: Helvetica, Arial, sans-serif;
-  /* ALL */
-  --Max-width: 1600px;
-  --font-size: 2em; 
-
   
-  --Box-shadow-buttons-success: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
-  --Box-shadow-buttons-unsuccess: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
-
-  /* VALIDAS */
-  --Margin-top-forms: calc(var(--Size-height-navBar) + 20px);
-  --Radius: 5px;
-  --Width-forms: 90%;
-  --Color-legend: var(--blanco);
+  /* TODO FUENTES */
+  --Font-family-principal: 'Karla', sans-serif;
   --Font-family-legend: 'Oswald', sans-serif;
+  --Font-family-menu: 'Nunito Sans', sans-serif;
+  
+  /* TODO COLORES */
+  --Color-negro: #303030;
+  --Color-texto-negro: #303030;  
+  --Color-blanco: #fff;
+  --Color-marron: #1d1d1d;
+  --Color-azul: #0070cc;
+  --Color-hover: rgb(127, 195, 255);
+  --Color-Selected: gold;
+  --Color-legend: var(--Color-blanco);
+  --Success: #76BA99;
+  --SuccessHigh: #6de9ad48;
+  --Unsuccess: #C21010;
+  --Brown: #876445;
+  --HovercolorSideMenu: rgba(99, 99, 99, 0.836);
+  --Background-Color-forms: #FBFBFB;
+  --Color-logo: var(--Color-negro);
+  --Color-sideMenu: #000;
+  --Background-menu: var(--Background-Color-forms);
   --Background-Color-forms-admin: #A10035;
   --Background-Color-forms-partner: #cea135;
   --Background-Color-forms-book: rgb(58, 76, 156);
   --Background-Color-forms-booking: rgb(124, 25, 108);
-  --Heigth-forms: 600px;
-  --Box-shadow: 0.3em 0.3em 0.6em var(--sombra-ppal), -0.3em -0.3em 0.6em var(--sombra-sec), inset 0 0 0 transparent, inset 0 0 0 transparent;
-  --Success: #76BA99;
-  --SuccessHigh: #6de9ad48;
-  --Unsuccess: #C21010;
-  --Size-font-button: 1em;
-  --Brown: #876445;
-  --HovercolorSideMenu: rgba(99, 99, 99, 0.836);
-  --Letter-spacing: 0.3125em;
-  --Color-shadow-input: rgba(0, 0, 0, 0.2);
-
-  --Background-Color-forms-admin-head: #222222;
-  --color-forms-admin-head: #000000;
-  --Background-Color-forms-book-head: rgb(58, 76, 156);
-  --color-forms-book-head: #ffffff;
-  --Background-Color-forms-booking-head: rgb(124, 25, 108);
-  --color-forms-booking-head: 3ffffff;
-  --Background-Color-forms-partner-head: rgb(206, 157, 22);
-  --color-forms-partner-head: #ffffff;
-  --color-forms-booking: #ffffff;
-  --color-forms-book: #ffffff;
-  --color-forms-partner: #ffffff;
-  --color-forms-admin: #ffffff;
-  --Color-forms: rgb(0, 0, 0);
-  --width-auth-forms: 80%;
-  --width-singin-forms: 80%;
-  --margin-forms: 30px 30px;
   
-  /* TODO NAVIGATION */
-  --Color-logo: var(--negro);
-  --Color-sideMenu: #000;
+  
+  /* TODO OTROS */
+  --Max-width: 1600px;
+  --Font-size: 2em; 
+  
+  /* TODO VALIDAS */
+  --Margin-top-forms: calc(var(--Size-height-navBar) + 20px);
+  --Radius: 5px;
+  --Width-forms: 90%;
+  --Heigth-forms: 600px;
+  --Box-shadow-forms: 0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+  
+  /* todo Button */
+  --Size-font-button: 1em;
+  --Letter-spacing: 0.1875em;
+  --Box-shadow-button: 8px 10px 10px 1px rgba(0, 0, 0, 0.5);
+  --Box-shadow-button-success: -8px 10px 10px 1px rgba(0, 0, 0, 0.5);  
+  --Box-shadow-btn-nav: rgba(0, 0, 0, 0.6) 0px 2px 4px, rgba(0, 0, 0, 0.5) 0px 7px 13px -3px, rgba(0, 0, 0, 0.1) 0px -3px 0px inset;
+  --Box-shadow-nav: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+  --Box-shadow-btn-side: rgba(0, 0, 0, 0.6) 0px 2px 4px,
+  rgba(0, 0, 0, 0.5) 0px 7px 13px -3px,
+  var(--Color-Selected) 0px -3px 0px inset;
+  --Box-shadow-side: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+  --Box-shadow-input: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  
+    /* TODO NAVIGATION */
   --Size-height-navBar: 80px;
   --Size-element: calc(var(--Size-height-navBar) - 20px);
-  --Color-Selected: gold;
-  --Font-family-menu: 'Nunito Sans', sans-serif;
   --Size-font-menu: 1em;
-  --Background-menu: var(--Background-Color-forms);
 
-  /* SIDEMENU */
+  /* TODO SIDEMENU */
   --Size-width-sidemenu: 20em;
-  --Size-width-sidemenu-collapsed: 3.75em;
+  --Size-width-sidemenu-collapsed: 4.375em;
 
 }
 
-@media (prefers-color-scheme: dark) {
+
+@media (prefers-color-scheme: dark){
+
   :root {
-    --negro: #ececec;
-    --blanco: #303030;
-    --sombra-ppal: #242424;
-    --sombra-sec: #3c3c3c;
-    --borde-negro: #FFFFFF50;
-  }
+    --Background-Color-forms: #212E36;
+    --Color-negro: #FBFBFE;
+    --Color-blanco: #303030;
+    --Box-shadow-btn-nav: rgba(255, 255, 255, 0.6) 0px 2px 4px, rgba(255, 255, 255, 0.5) 0px 7px 13px -3px, rgba(255, 255, 255, 0.1) 0px -3px 0px inset;
+    --Box-shadow-nav: rgba(255, 255, 255, 0.45) 0px 20px 20px -20px;
+    --Box-shadow-btn-side: rgba(255, 255, 255, 0.6) 0px 2px 4px,
+      rgba(255, 255, 255, 0.5) 0px 7px 13px -3px,
+      var(--Color-Selected) 0px -3px 0px inset;
+    --Box-shadow-side: rgba(255, 255, 255, 0.15) 2.4px 2.4px 3.2px;
+    --Box-shadow-forms: 0 10px 20px rgba(255, 255, 255, 0.4),
+          0 6px 6px rgba(255, 255, 255, 0.4);
+  } 
 }
+
 
 @keyframes text-anim {
   0% {

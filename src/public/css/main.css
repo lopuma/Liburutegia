@@ -6,7 +6,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--Background-Color-forms);
-  color: var(--negro);
+  color: var(--Color-negro);
   display: flex;
   flex-direction: column;
   min-height: 100vh;

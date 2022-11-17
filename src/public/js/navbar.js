@@ -7,6 +7,7 @@ const btnBooking = document.getElementById('btnBooking');
 const btnPartner = document.getElementById('btnPartner');
 const btnAdmin = document.getElementById('btnAdmin');
 const btnRecord = document.getElementById('btnRecord');
+const btnLogin = document.getElementById('btnLogin');
 
 //Variables SIDE MENU
 const btnHomeSidemenu = document.getElementById('btnHomeSidemenu');
@@ -27,10 +28,8 @@ function onLoad() {
     // HOME
 
     if ($('#stateHome').val() === '') { // 
-      console.log("Succes: True")
-
       btnHome.classList.add('isSelected');
-      btnHomeSidemenu.classList.add('Sidemenu--isSelected');
+      btnHomeSidemenu.classList.add('isSelected');
     } 
   } catch (error) {
       throw error
@@ -39,7 +38,8 @@ function onLoad() {
   try {
     // LOGIN
     if ($('#stateLogin').val() === '') { // 
-      btnLoginSidemenu.classList.add('Sidemenu--isSelected');
+      btnLoginSidemenu.classList.add('isSelect');
+      btnLogin.classList.add('isSelect');
     } 
   } catch (error) {
       throw error
@@ -49,7 +49,7 @@ function onLoad() {
     // BOOKS
     if ($('#stateBooks').val() === '') { // 
       btnBook.classList.add('isSelected');
-      btnBookSidemenu.classList.add('Sidemenu--isSelected');
+      btnBookSidemenu.classList.add('isSelected');
     } 
   } catch (error) {
       throw error
@@ -59,7 +59,7 @@ function onLoad() {
     // BOOKINGS
     if ($('#stateBookings').val() === '') { // 
       btnBooking.classList.add('isSelected');
-      btnBookingSidemenu.classList.add('Sidemenu--isSelected');
+      btnBookingSidemenu.classList.add('isSelected');
     } 
   } catch (error) {
       throw error
@@ -69,7 +69,7 @@ function onLoad() {
     // ADMIN
     if ($('#stateAdmin').val() === '') { // 
       btnAdmin.classList.add('isSelected');
-      btnAdminSidemenu.classList.add('Sidemenu--isSelected');
+      btnAdminSidemenu.classList.add('isSelected');
     } 
   } catch (error) {
       throw error
@@ -88,7 +88,7 @@ function onLoad() {
     //PARTNERS
     if ($('#statePartners').val() === '') { // 
       btnPartner.classList.add('isSelected');
-      btnPartnerSidemenu.classList.add('Sidemenu--isSelected');
+      btnPartnerSidemenu.classList.add('isSelected');
     } 
   } catch (error) {
       throw error

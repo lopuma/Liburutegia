@@ -6,12 +6,6 @@
         <div class="Sidemenu-name--profile"><span>{{ userName }}</span></div>
     </div>
     <div class="Sidemenu-container--items">
-        {{!-- <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide" href="/" title="HOME" id="btnHomeSidemenu">
-                <div class="Sidemenu-icon--item"><img><i class="fa-solid fa-house"></i></div>
-                <div class="Sidemenu-title--item"><span>Home</span></div>
-            </a>
-        </div> --}}
         {{#if rolAdmin}}
         <div class="Sidemenu-item">
             <a class="Sidemenu-a isFocusSide" href="/workspace/admin" title="USER MANAGER" id="btnAdminSidemenu">
@@ -50,7 +44,7 @@
         </div>
         <div class="Sidemenu-separator"></div>
         <div class="Sidemenu-item ">
-            <a class="Sidemenu-a activeLogout isNoPadding" href="/logout" title="LOGOUT">
+            <a class="Sidemenu-a isActiveLogout isNoPadding" href="/logout" title="LOGOUT">
                 <div class="Sidemenu-icon--item"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
                 <div class="Sidemenu-title--item "><span>Logout</span></div>
             </a>
@@ -68,7 +62,7 @@
         </div>
         <div class="Sidemenu-separator"></div>
         <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide activeLogin isNoPadding" href="/login" title="SINGIN" id="btnLoginSidemenu">
+            <a class="Sidemenu-a isFocusSide isActiveLogin isNoPadding" href="/login" title="SINGIN" id="btnLoginSidemenu">
                 <div class="Sidemenu-icon--item"><i class="fa-solid fa-right-to-bracket"></i></div>
                 <div class="Sidemenu-title--item"><span>Login</span></div>
             </a>

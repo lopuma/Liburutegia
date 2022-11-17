@@ -19,9 +19,9 @@
   width: 100%;
   height: var(--Size-height-navBar);
   background-color: var(--Background-menu);
-  color: var(--negro);
+  color: var(--Color-negro);
   min-height: var(--Size-height-navBar);
-  box-shadow: 0 0 15px #0000004f;
+  box-shadow: var(--Box-shadow-nav);
   padding: 0 1em;
   font-family: var(--Font-family-menu);
   font-size: var(--Size-font-menu);
@@ -75,17 +75,15 @@
 
 /*  LOGO */
 .Header-a--logo {
-  height: 100%;
-  margin: 0 10px;
+  margin: 0 1em;
+  width: 13.75em;
+  height: auto;
 }
 
-.Header-a--logo img {
-  width: 220px;
-  height: 100%;
+.Header-a--logo svg {
   margin: 0;
   padding: 0;
 }
-
 
 /* NAV */
 .Header-nav {
@@ -101,36 +99,34 @@
   align-items: center;
   text-align: center;
   margin: 0;
-  padding: 10px 0;
+  padding: 1em 0;
 }
 
 .Header-li {
-  margin: 0 10px;
+  margin: 0 1em;
   text-transform: uppercase;
   width: max-content;
   text-align: center;
-  padding: 20px 0;
+  padding: 1em 0;
 }
 
 .Header-a {
-  border-radius: var(--Radius);
-  transition-property: background-color, color;
-  transition-duration: 0.5s;
-  transition-timing-function: ease;
-  font-size: inherit;
-  font-weight: 700;
-  font-family: var(--Font-family-menu);
-  letter-spacing: 5px;
-  text-align: center;
   width: 100%;
   height: 100%;
+  font-size: 1em;
+  font-weight: 700;
+  font-family: var(--Font-family-menu);
+  border-radius: var(--Radius);
+  letter-spacing: 0.1875em;
+  text-align: center;
+  transition-property: color;
+  transition-duration: .5s;
+  transition-timing-function: ease;
   position: relative;
 }
 
 .Header-a:hover {
-  background-color: transparent;
   color: var(--Success);
-  text-decoration: none;
 }
 
 /* Linea cuando se pasa por el menu */
@@ -140,7 +136,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 2px;
+  height: 0.125em;
   background: linear-gradient(to right, var(--Success), var(--Brown), var(--Success));
   z-index: 1;
   transform: scaleX(0);
@@ -153,14 +149,13 @@
   transform: scaleX(1);
 }
 
-/* Linea cuando esta activa la pagina */
 .isFocus::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 4px;
+  height: 0.25em;
   background: var(--Color-Selected);
   opacity: 0;
   text-decoration: none;
@@ -168,39 +163,51 @@
 
 .isSelected::after {
   opacity: 0.8;
+  box-shadow: var(--Box-shadow-btn-side);
 }
 
-.activeLogin {
+.Header-a.isActiveLogin {
   background-color: var(--Success);
-  border: 1px solid #fff;
+  border: 1px solid rgba(0, 0, 0, 0.356);
   color: var(--Brown);
-  text-align: center;
-  padding: 15px 10px;
-  transition-property: color, background-color, box-shadow;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
+  padding: 1em;
+  transform: scale(1);
+  transition-property: color, border, box-shadow, transform;
+  transition-duration: .5s;
+  transition-timing-function: ease;
 }
 
-.activeLogin:hover {
-  color: var(--blanco);
-  background-color: var(--Success);
-  box-shadow: var(--Box-shadow-buttons-success);
-}
-
-.activeLogout {
-  background-color: var(--Unsuccess);
-  color: var(--blanco);
+.Header-a.isActiveLogin:hover {
+  color: #000;
   border: 1px solid #fff;
-  text-align: center;
-  padding: 15px 10px;
-  transition-property: background-color, box-shadow;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
+  box-shadow: var(--Box-shadow-btn-side);
+  transform: scale(1.05);
 }
 
-.activeLogout:hover {
+.Header-a.isActiveLogin:active {
+  transform: scale(1.2);
+}
+
+.Header-a.isActiveLogout {
   background-color: var(--Unsuccess);
-  box-shadow: var(--Box-shadow-buttons-unsuccess)
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding: 1em;
+  transform: scale(1);
+  transition-property: color, border, box-shadow, transform;
+  transition-duration: .5s;
+  transition-timing-function: ease;
+}
+
+.Header-a.isActiveLogout:hover {
+  color: var(--Success);
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: var(--Box-shadow-btn-side);
+  transform: scale(1.05);
+}
+
+.Header-a.isActiveLogout:active {
+  transform: scale(1.2);
 }
 
 /*  TRIBUTO PARA DESACTIVAR BOTONES */
@@ -284,8 +291,14 @@
 
   .Header-a--logo {
     margin: 0;
-    width: 100%;
-    height: 100%;
+    padding: 0;
+  }
+
+  .Header-a--logo svg {
+    margin: 0;
+    padding: 0;
+    width: 12.5em;
+    height: 15em;
   }
 
   .Header-button--toggle {

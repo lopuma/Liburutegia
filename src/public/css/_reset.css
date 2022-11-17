@@ -69,13 +69,13 @@ q:after {
 }
 
 ::-moz-selection {
-  background-color: var(--negro);
-  color: var(--blanco);
+  background-color: var(--Color-negro);
+  color: var(--Color-blanco);
 }
 
 ::selection {
-  background-color: var(--negro);
-  color: var(--blanco);
+  background-color: var(--Color-negro);
+  color: var(--Color-blanco);
 }
 
 
@@ -121,7 +121,7 @@ body {
   height: 100%;
   font-size: 100%;
   font-family: var(--Font-family-principal);
-  color: var(--negro);
+  color: var(--Color-negro);
     /* opcional */
       line-height: 1.4em;
       /* opcional */
