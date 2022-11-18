@@ -1,7 +1,6 @@
 node_modules/
 .mysql-data/
 mysql-data/
-sanmiguel.sql
 env/
 .env
 .git/
