@@ -31,7 +31,7 @@
 
 .Sidemenu-a:hover {
   background-color: var(--HovercolorSideMenu);
-  color: white;
+  color: var(--Color-texto-blanco);
   box-shadow: var(--Box-shadow-btn-side);
 }
 
@@ -42,15 +42,15 @@
 .Sidemenu-a.isActiveLogin {
   background-color: var(--Success);
   color: var(--Brown);
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--Color-outline);
   transition-property: color, border, box-shadow;
   transition-duration: .5s;
   transition-timing-function: ease;
 }
 
 .Sidemenu-a.isActiveLogin:hover {
-  color: #000;
-  border: 1px solid #fff;
+  color: var(--Color-texto-negro);
+  border: 1px solid var(--Color-outline-blanco);
   box-shadow: var(--Box-shadow-btn-side);
 }
 
@@ -60,19 +60,19 @@
 
 .Sidemenu-a.isActiveLogout {
     background-color: var(--Unsuccess);
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--Color-outline);
     transition-property: border, box-shadow;
     transition-duration: .5s;
     transition-timing-function: ease;
 }
 
 .Sidemenu-a.isActiveLogout .Sidemenu-icon--item {
-  color: white;
+  color: var(--Color-texto-blanco);
   transition: color .5s ease;
 }
 
 .Sidemenu-a.isActiveLogout:hover {
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid var(--Color-outline-blanco);
   box-shadow: var(--Box-shadow-btn-side);
 }
 
@@ -179,7 +179,7 @@
 .menu-expanded .isSelected:hover {
   background-color: var(--Color-Selected);
   opacity: 0.7;
-  color: #000;
+  color: var(--Color-texto-negro);
 }
 
 .isSelected::after {

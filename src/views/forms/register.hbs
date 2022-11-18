@@ -1,49 +1,59 @@
-<div class="Singin" id="stateRecord">
+<div class="Singup" id="stateRecord">
     <div class="Message">
         {{> messages}}
     </div>
     <form class="Register" action="/register" method="post" id="formRegister" name="formRegister">
-        {{!-- <div class="form-content-register"> --}}
             <div class="Register-content">
-                <div class="Register-title">Register user</div>
+                <h1 class="Register-title">User Register</h1>
                 <div class="Input-boxes">
-                    <div class="Input-box">
+                    <div class="Input-box Box">
                         <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
-                        <input class="Box-input" id="email" type="email" name="email" tabindex="1" required autofocus>
-                        <label for="email" class="Input-label">Enter your email address *</label>
+                        <div class="Box-animation Animation">
+                            <input class="Animation-input" id="email" type="email" name="email" tabindex="1" placeholder=" " autocomplete="off" required="required" autofocus>
+                            <label for="email" class="Animation-label">Enter your email address *</label>
+                        </div>
                     </div>
                     <div class="Input-error" id="grupo__mail">
                         <p class="Error-p ">The Email is not correct.</p>
                     </div>
-                    <div class="Input-box">
+                    <div class="Input-box Box">
                         <i id="iconFirtname" class="Box-i fa-solid fa-user"></i>
-                        <input class="Box-input" id="username" type="text" name="username" required tabindex="2">
-                        <label for="username" class="Input-label">Enter your Username *</label>
+                        <div class="Box-animation Animation">
+                            <input class="Animation-input" id="username" type="text" name="username"  placeholder=" " autocomplete="off" required tabindex="2">
+                            <label for="username" class="Animation-label">Enter your Username *</label>
+                        </div>
                     </div>
                     <div class="Input-error" id="grupo__username">
                         <p class="Error-p ">The Username is not correct.</p>
                     </div>
-                    <div class="Input-box">
+                    <div class="Input-box Box">
                         <i id="iconLastname" class="Box-i fa-solid fa-user"></i>
-                        <input class="Box-input" id="fullname" type="text" name="fullname" tabindex="3">
-                        <label for="fullname" class="Input-label">Enter your Full name *</label>
+                        <div class="Box-animation Animation">
+                            <input class="Animation-input" id="fullname" type="text" name="fullname" tabindex="3"  placeholder=" " autocomplete="off" required="required">
+                            <label class="Animation-label" for="fullname">Enter your Full name *</label>
+                        </div>
                     </div>
-                    <div class="Input-box">
+                    <div class="Input-error" id="grupo__password2">
+                        <p class="Error-p ">The verification password does not match.</p>
+                    </div>
+                    <div class="Input-box Box">
                         <i id="iconPass" class="Box-i fa-solid fa-key"></i>
-                        <input class="Box-input" name="newPass" id="newPass" type="password" required="required" tabindex="4" />
-                        <label for="newPass" class="Input-label">Create a password *</label>
-
+                        <div class="Box-animation Animation">
+                            <input class="Animation-input" name="newPass" id="newPass" type="password" required="required" tabindex="4"  placeholder=" " autocomplete="off">
+                            <label for="newPass" class="Animation-label">Create a password *</label>
+                        </div>
                         <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
-
                     </div>
                     <div class="Input-error" id="grupo__password">
                         <p class="Error-p ">The verification password does not match.</p>
                     </div>
-                    <div class="Input-box">
+                    <div class="Input-box Box">
                         <i id="iconPassRepeat" class="Box-i fa-solid fa-key"></i>
-                        <input class="Box-input" name="newPassRepeat" id="newPassRepeat" type="password" required="required" placeholder="Repeat password *" tabindex="5" /> 
-                            <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
-                        {{!-- <label for="newPassRepeat" class="Input-label">Repeat password *</label> --}}
+                        <div class="Box-animation Animation">
+                            <input class="Animation-input" name="newPassRepeat" id="newPassRepeat" type="password" required="required"  placeholder=" " autocomplete="off" tabindex="5"> 
+                            <label for="newPassRepeat" class="Animation-label">Repeat password *</label>
+                        </div>
+                        <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
                     </div>
                     <div class="Input-error" id="grupo__password2">
                         <p class="Error-p ">The verification password does not match.</p>
@@ -65,3 +75,5 @@
         </div> --}}
     </form>
 </div>
+
+<link rel="stylesheet" href="/style/singup.css">

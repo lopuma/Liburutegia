@@ -34,6 +34,7 @@
   align-items: center;
   justify-content: flex-start;
   height: 100%;
+  overflow: hidden;
 }
 
 /* BOTON PARA EXPANDIR SIDEMENU*/
@@ -168,7 +169,7 @@
 
 .Header-a.isActiveLogin {
   background-color: var(--Success);
-  border: 1px solid rgba(0, 0, 0, 0.356);
+  border: 1px solid var(--Color-outline);
   color: var(--Brown);
   padding: 1em;
   transform: scale(1);
@@ -178,8 +179,8 @@
 }
 
 .Header-a.isActiveLogin:hover {
-  color: #000;
-  border: 1px solid #fff;
+  color: var(--Color-texto-negro);
+  border: 1px solid var(--Color-outline-blanco);
   box-shadow: var(--Box-shadow-btn-side);
   transform: scale(1.05);
 }
@@ -190,8 +191,8 @@
 
 .Header-a.isActiveLogout {
   background-color: var(--Unsuccess);
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  color: #fff;
+  border: 1px solid var(--Color-outline);
+  color: var(--Color-texto-blanco);
   padding: 1em;
   transform: scale(1);
   transition-property: color, border, box-shadow, transform;
@@ -201,7 +202,7 @@
 
 .Header-a.isActiveLogout:hover {
   color: var(--Success);
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid var(--Color-outline-blanco);
   box-shadow: var(--Box-shadow-btn-side);
   transform: scale(1.05);
 }
@@ -271,12 +272,12 @@
   }
 
   .Header-li {
-    margin: 15px 0;
-    padding: 10px 0;
+    margin: 1em 0;
+    padding: 1em 0;
   }
 
   .Header-a {
-    padding: 15px;
+    padding: 1em;
   }
 
   .Header-nav__isActive {
@@ -302,7 +303,7 @@
   }
 
   .Header-button--toggle {
-    margin: 0 20px;
+    margin: 0 1.25em;
   }
 
 }

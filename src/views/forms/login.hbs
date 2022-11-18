@@ -17,14 +17,24 @@
       <div class="Input-boxes">
         <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
-            <input class="Box-input" id="email" type="email" name="email" required="required" autofocus tabindex="1"/>
-            <label for="email" class="Box-label isNoFlex">Enter your Email</label>
+            <div class="Box-animation Animation">
+              <input class="Animation-input" id="email" type="email" name="email" tabindex="1" placeholder=" " autocomplete="off" required="required" autofocus>
+              <label class="Animation-label isNoFlex" for="email" >Enter your Email</label>
+            </div>
         </div>
+        <div class="Input-error" id="grupo__mail">
+          <p class="Error-p ">The Email is not correct.</p>
+        </div>        
         <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-            <input class="Box-input" name="password" id="password" type="password" required="required" tabindex="2"/>
-            <label for="password" class="Box-label">Enter your Password</label>
+            <div class="Box-animation Animation">
+              <input class="Animation-input" name="password" id="password" type="password"  placeholder=" " autocomplete="off" required="required" tabindex="2">
+              <label class="Animation-label" for="password">Enter your Password</label>
+            </div>
             <i id="icon-eye" class="Box-i fa-solid fa-eye"></i>
+        </div>
+        <div class="Input-error" id="grupo__password2">
+          <p class="Error-p ">{{> messg }}</p>
         </div>
         <div class="Input-box isText">
           <label class="Input-label" for="flip" tabindex="3">Forgot Password?</label>
@@ -43,23 +53,35 @@
       <div class="Input-boxes">
         <div class="Input-box Box">
           <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
-          <input class="Box-input" id="emailReset" type="email" name="emailReset" required="required" autofocus
-            tabindex="1" />
-          <label for="emailReset" class="Box-label">Enter your Email</label>
+          <div class="Box-animation Animation">
+            <input class="Animation-input" id="emailReset" type="email" name="emailReset" required="required" tabindex="1" placeholder=" " autocomplete="off" autofocus>
+            <label class="Animation-label" for="emailReset">Enter your Email</label>
+          </div>
+        </div>
+        <div class="Input-error" id="grupo__mail">
+          <p class="Error-p ">The Email is not correct.</p>
         </div>
         <div class="Input-box Box">
           <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-          <input class="Box-input" name="newPassword" id="newPassword" type="password" required="required"
-            tabindex="2" />
-          <label for="newPassword" class="Box-label">Enter new Password</label>
+          <div class="Box-animation Animation">
+            <input class="Animation-input" name="newPassword" id="newPassword" type="password" required="required" tabindex="2" placeholder=" " autocomplete="off">
+            <label class="Animation-label" for="newPassword">Enter new Password</label>
+          </div>
           <i id="icon-eye-new" class="Box-i fa-solid fa-eye"></i>
         </div>
+        <div class="Input-error" id="grupo__password2">
+          <p class="Error-p ">The verification password does not match.</p>
+        </div>
         <div class="Input-box Box">
           <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-          <input class="Box-input" name="repeatPassword" id="repeatPassword" type="password" required="required"
-            tabindex="3" />
-          <label for="repeatPassword" class="Box-label">Repear Password</label>
+          <div class="Box-animation Animation">
+            <input class="Animation-input" name="repeatPassword" id="repeatPassword" type="password" required="required" tabindex="3" placeholder=" " autocomplete="off">
+            <label class="Animation-label" for="repeatPassword" >Repear Password</label>
+          </div>
           <i id="icon-eye-repeat" class="Box-i fa-solid fa-eye"></i>
+        </div>
+        <div class="Input-error" id="grupo__password2">
+          <p class="Error-p ">The verification password does not match.</p>
         </div>
         <div class="Input-box isText">
           <label class="Input-label" for="flip" tabindex="4">Login?</label>

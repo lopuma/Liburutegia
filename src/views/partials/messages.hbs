@@ -64,6 +64,13 @@
   </div>
 {{/if}}
 
+{{!-- TODO --------> --}}
+{{#if errorValidation}}
+  {{#each errorValidation}}
+    <span>{{this.msg}}</span>
+  {{/each}}
+{{/if}}
+
 {{#if error_msg_exist}}
 <div id="alertNotLogin" class="alert alert-message alert-danger alert-dismissible fade show" role="alert">
   <div class="alert-headers">
