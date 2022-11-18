@@ -13,12 +13,12 @@ APP para el control de libro de la sociedad : ' San Miguel'
 ## ** Segundo Instalaciones de los siguientes Servicios Necesarios. **
 
 
-###### Sistema operativo: Ubuntu 22
+#### Actualiza Sistema operativo: Ubuntu 22
     
 ```console
 sudo apt update
 ```
-###### MySql
+#### MySql
 
 ```console
 sudo apt install mysql-server
@@ -27,7 +27,7 @@ sudo apt install mysql-server
 ```console   
 sudo systemctl status mysql
 ```
-###### NODE
+#### NODE
 ```console
 sudo apt install nodejs
 ```
@@ -35,11 +35,20 @@ sudo apt install nodejs
 ```console
 node --version
 ```
-###### NPM
+#### NPM
 ```console
 sudo apt install npm
 ```
    > comprobar
 ```console
 npm --version
+```
+
+#### Copiar la BD a MySql
+```console
+   mysqldump -u root -p sanmiguel < /home/lopuma/Liburutegia/data/sanmiguel.sql
+```
+#### Iniciamos la instalacion de las librerias de NPM 
+```console
+   npm install
 ```

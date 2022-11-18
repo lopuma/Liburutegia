@@ -1,6 +1,6 @@
 const readline = require('readline')
 const fs = require('fs')
-const connection = require("./database/db");
+const connection = require("../database/db");
 
 const insertUser =  async () => {
     
