@@ -19,34 +19,6 @@
 -- Table structure for table `bookings`
 --
 
-DROP TABLE IF EXISTS `bookings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bookings` (
-  `id_booking` int unsigned NOT NULL AUTO_INCREMENT,
-  `book_id` int unsigned NOT NULL,
-  `partner_dni` varchar(10) NOT NULL,
-  `reservation_date` date NOT NULL,
-  PRIMARY KEY (`id_booking`),
-  KEY `book_id` (`book_id`),
-  KEY `dni_partner` (`partner_dni`),
-  CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id_book`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bookings`
---
-
-LOCK TABLES `bookings` WRITE;
-/*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `books`
---
-
 DROP TABLE IF EXISTS `books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

@@ -1,20 +1,19 @@
 upstream application {
-    server application:3000;
+    server 127.0.0.1:3000;
 }
 
 proxy_cache_path /var keys_zone=cache1:1000m;
 
 server {
-        listen ${NGINX_PORT};
-        listen [::]:${NGINX_PORT};
+        listen 80;
+        listen [::]:80;
 
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
 
-        server_name ${NGINX_HOST};
-        #return 301 https://www.liburutegia-sanmiguel,com;
-        access_log  /var/log/nginx/${NGINX_HOST}.access.log;
-        error_log  /var/log/nginx/${NGINX_HOST}.error.log;
+        server_name liburutegia-sanmiguel.com;
+        access_log  /var/log/nginx/liburutegia-sanmiguel.com.access.log;
+        error_log  /var/log/nginx/liburutegia-sanmiguel.com.error.log;
 
 
         location / { 

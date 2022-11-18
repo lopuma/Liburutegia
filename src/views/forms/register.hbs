@@ -1,7 +1,5 @@
 <div class="Singup" id="stateRecord">
-    <div class="Message">
         {{> messages}}
-    </div>
     <form class="Register" action="/register" method="post" id="formRegister" name="formRegister">
             <div class="Register-content">
                 <h1 class="Register-title">User Register</h1>
@@ -9,28 +7,29 @@
                     <div class="Input-box Box">
                         <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
                         <div class="Box-animation Animation">
-                            <input class="Animation-input" id="email" type="email" name="email" tabindex="1" placeholder=" " autocomplete="off" required="required" autofocus>
-                            <label for="email" class="Animation-label">Enter your email address *</label>
+                            <input class="Animation-input" name="newEmail"  id="newEmail" type="email" placeholder=" " autocomplete="valorNoValido" required="required" tabindex="1" autofocus>
+                            <label class="Animation-label" for="newEmail">Enter your email address *</label>
                         </div>
                     </div>
                     <div class="Input-error" id="grupo__mail">
                         <p class="Error-p ">The Email is not correct.</p>
                     </div>
+                    
                     <div class="Input-box Box">
-                        <i id="iconFirtname" class="Box-i fa-solid fa-user"></i>
+                        <i id="iconUsername" class="Box-i fa-solid fa-user"></i>
                         <div class="Box-animation Animation">
-                            <input class="Animation-input" id="username" type="text" name="username"  placeholder=" " autocomplete="off" required tabindex="2">
-                            <label for="username" class="Animation-label">Enter your Username *</label>
+                            <input class="Animation-input" name="nickname" id="nickname" type="text"  placeholder=" " autocomplete="nickname" required="required" tabindex="2">
+                            <label class="Animation-label" for="nickname" >Enter your nickname *</label>
                         </div>
                     </div>
-                    <div class="Input-error" id="grupo__username">
+                    <div class="Input-error" id="grupo__nickname">
                         <p class="Error-p ">The Username is not correct.</p>
                     </div>
                     <div class="Input-box Box">
-                        <i id="iconLastname" class="Box-i fa-solid fa-user"></i>
+                        <i id="iconFullname" class="Box-i fa-solid fa-user"></i>
                         <div class="Box-animation Animation">
-                            <input class="Animation-input" id="fullname" type="text" name="fullname" tabindex="3"  placeholder=" " autocomplete="off" required="required">
-                            <label class="Animation-label" for="fullname">Enter your Full name *</label>
+                            <input class="Animation-input" id="full-name" type="text" name="full-name" tabindex="3"  placeholder=" " autocomplete="noValido" required="required">
+                            <label class="Animation-label" for="full-name">Enter your full name *</label>
                         </div>
                     </div>
                     <div class="Input-error" id="grupo__password2">
@@ -39,7 +38,7 @@
                     <div class="Input-box Box">
                         <i id="iconPass" class="Box-i fa-solid fa-key"></i>
                         <div class="Box-animation Animation">
-                            <input class="Animation-input" name="newPass" id="newPass" type="password" required="required" tabindex="4"  placeholder=" " autocomplete="off">
+                            <input class="Animation-input" name="newPass" id="newPass" type="password" required="required" tabindex="4"  placeholder=" " autocomplete="noValido">
                             <label for="newPass" class="Animation-label">Create a password *</label>
                         </div>
                         <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
@@ -50,7 +49,7 @@
                     <div class="Input-box Box">
                         <i id="iconPassRepeat" class="Box-i fa-solid fa-key"></i>
                         <div class="Box-animation Animation">
-                            <input class="Animation-input" name="newPassRepeat" id="newPassRepeat" type="password" required="required"  placeholder=" " autocomplete="off" tabindex="5"> 
+                            <input class="Animation-input" name="newPassRepeat" id="newPassRepeat" type="password" required="required"  placeholder=" " autocomplete="noValido" tabindex="5"> 
                             <label for="newPassRepeat" class="Animation-label">Repeat password *</label>
                         </div>
                         <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
