@@ -1,7 +1,6 @@
 node_modules/
-.mysql-data/
 mysql-data/
-env/
+env/.env
 .env
 .git/
 package-lock.json

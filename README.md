@@ -43,7 +43,16 @@ sudo apt install npm
 ```console
 npm --version
 ```
+#### NGINX
 
+```console
+sudo apt install nginx
+```
+
+### Configuracion
+
+   > En la carpeta env/, cambiar el nombre del archivo .env_example por .env, y modificar los valores a los necesarios para tu APP.
+   
 #### Copiar la BD a MySql
 ```console
    mysqldump -u root -p sanmiguel < /home/lopuma/Liburutegia/data/sanmiguel.sql

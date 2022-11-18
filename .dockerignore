@@ -1,6 +1,5 @@
 node_modules/
 package-lock.json
-env_example
 liburudenda-selfsigned.crt
 liburudenda-selfsigned.key
 mysql-data/
