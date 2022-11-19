@@ -61,6 +61,8 @@ mysql -u root
 
 mysql> use sanmiguel;
 mysql> show tables;
+
+mysql> exit;
 ```
 ---
 ### NODE
@@ -90,6 +92,7 @@ npm --version
 #### Iniciamos la instalacion de las librerias de NPM 
 
 ```console
+   cd ~/Liburudenda
    npm install
 ```
 
