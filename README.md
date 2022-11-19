@@ -45,13 +45,14 @@ sudo service mysql restart
 ```
 mysql -u root
 
-mysql> CREATE DATABASE sanmiguel;
+mysql> CREATE DATABASE sanmiguel CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 mysql> exit;
 ```
 
 #### Copiar la BD a MySql
 ```console
-   mysqldump -u root sanmiguel < /home/lopuma/Liburudenda/data/sanmiguel.sql
+   mysql -u root sanmiguel < /home/lopuma/Liburudenda/data/sanmiguel.sql
 ```
 
    > Comprobar

@@ -9,7 +9,7 @@ connection.connect((err) => {
             return;
     }
     } else {
-        console.log('DataBase is connected');   
+        console.log('DataBase is Connected');   
     }
 });
 
