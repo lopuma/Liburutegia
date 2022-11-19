@@ -5,15 +5,15 @@ upstream application {
 proxy_cache_path /var keys_zone=cache1:1000m;
 
 server {
-        listen 80;
-        listen [::]:80;
+        listen ${NGINX_PORT};
+        listen [::]:${NGINX_PORT};
 
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
 
-        server_name liburutegia-sanmiguel.com;
-        access_log  /var/log/nginx/liburutegia-sanmiguel.com.access.log;
-        error_log  /var/log/nginx/liburutegia-sanmiguel.com.error.log;
+        server_name ${NGINX_HOST};
+        access_log  /var/log/nginx/${NGINX_HOST}.access.log;
+        error_log  /var/log/nginx/${NGINX_HOST}.error.log;
 
 
         location / { 
@@ -25,18 +25,4 @@ server {
                 proxy_set_header Host $host;
                 proxy_cache_bypass $http_upgrade;
         }
-        #location /admin {
-        #        proxy_cache cache1;
-        #        proxy_cache_valid any 30m;
-        #
-        #        rewrite ^/(.*) /$1 break;
-        #        proxy_pass http://application;
-        #}
-        #location /login {
-        #        proxy_cache cache1;
-        #        proxy_cache_valid any 30m;
-        #
-        #        rewrite ^/login(.*) /$1 break;
-        #        proxy_pass http://application;
-        #}
 }

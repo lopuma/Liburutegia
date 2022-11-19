@@ -10,7 +10,7 @@ APP para el control de libro de la sociedad : ' San Miguel'
 `git clone https://github.com/lopuma/Liburudenda.git`
 
 
-## ** Segundo Instalaciones de los siguientes Servicios Necesarios. **
+#### ** Segundo Instalaciones de los siguientes Servicios Necesarios. **
 
 
 #### Actualiza Sistema operativo: Ubuntu 22
@@ -18,7 +18,8 @@ APP para el control de libro de la sociedad : ' San Miguel'
 ```console
 sudo apt update
 ```
-#### MySql
+---
+### MySql
 
 ```console
 sudo apt install mysql-server
@@ -27,7 +28,7 @@ sudo apt install mysql-server
 ```console   
 sudo systemctl status mysql
 ```
-##### Configurar mysql
+#### Configurar mysql
 
 ```console
 sudo mysql -u root
@@ -47,37 +48,41 @@ mysql -u root
 mysql> CREATE DATABASE sanmiguel;
 mysql> exit;
 ```
+
 #### Copiar la BD a MySql
 ```console
    mysqldump -u root sanmiguel < /home/lopuma/Liburudenda/data/sanmiguel.sql
 ```
 
-   > comprobar
+   > Comprobar
 ```
 mysql -u root
 
 mysql> use sanmiguel;
 mysql> show tables;
 ```
-
-#### NODE
+---
+### NODE
 ```console
 sudo apt install nodejs
 ```
-   > comprobar
+   > Comprobar
 ```console
 node --version
 ```
-#### NPM
+---
+### NPM
 ```console
 sudo apt install npm
 ```
-   > comprobar
+   > Comprobar
 ```console
 npm --version
 ```
+---
+### APP
 
-### Configuracion de VARIABLES DE ENTORNO
+#### Configuracion de VARIABLES DE ENTORNO
 
    > En la carpeta env/, cambiar el nombre del archivo .env_example por .env, y modificar los valores a los necesarios para tu APP.
    
@@ -105,40 +110,34 @@ npm --version
 sudo apt install nginx
 ```
 
-   > comprobar
+   > Comprobar
 ```console
 sudo systemctl status nginx
 ```
-##### Configuracion de NGINX
+---
 
-   > declarar las siguientes variables
-  
-```console
-NGINX_PORT="80"
-NGINX_HOST="example.com"
-```
+### Configuracion de NGINX
 
-###### si el host es publico no se requiere el siguiente paso.
-   > editar fichero hosts y añadir el hosts asignado a la aplicacion
+#### si el host es publico no se requiere el siguiente paso.
+   > Editar fichero hosts y añadir el hosts asignado a la aplicacion
 
 ```console
 sudo vi /etc/hosts
 ```
-   > añadir
+   > Añadir
 ```console
 127.0.0.1 example.com www.example.com
 ```
-
-   > crear directorio templates en nginx
+####
+   > Copiar la plantilla
 ```console
-sudo mkdir /etc/nginx/templates
+sudo cp nginx/templates/default.conf.template /etc/nginx/conf.d/default.conf
 ```
 
-   > copiar la plantilla
-```console
-sudo cp nginx/templates/default.conf.template /etc/nginx/templates/
-```
+En la configuracion de NGINX, cambiar el valor de ${NGINX_PORT}, por el puerto que correra la APP, se recomienda el puerto 80.
 
-   > accedemos a la aplicacion
+La variable ${NGINX_HOST} por el host de tu aplicacion e.g example.com
+
+   > Accedemos a la aplicacion
 
 [http://example.com](http://example.com)
