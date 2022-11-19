@@ -142,6 +142,22 @@ En la configuracion de NGINX, cambiar el valor de ${NGINX_PORT}, por el puerto q
 
 La variable ${NGINX_HOST} por el host de tu aplicacion e.g example.com
 
+```
+sudo vim /etc/nginx/conf.d/default.conf
+```
+
+   > Revisamos la configuracion de NGINX, nos saldra OK y SUCCESSFUL
+   
+```
+sudo nginx -t
+```
+
+   > Reiniciamos NGINX
+
+```
+sudo systemctl restart nginx.service
+```
+
    > Accedemos a la aplicacion
 
 [http://example.com](http://example.com)
