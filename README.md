@@ -96,13 +96,13 @@ npm --version
    npm install
 ```
 
-#### Iniciamos la aplicacion en desarrollo
+#### Iniciamos la aplicacion en DESAROLLO
 
 ```console
    npm run dev
 ```
 
-#### Iniciamos la aplicacion en desarrollo
+#### Iniciamos la aplicacion en PRODUCION
 
 ```console
    npm run prod
