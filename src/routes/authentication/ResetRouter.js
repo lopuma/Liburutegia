@@ -1,8 +1,8 @@
 const routerReset = require('express').Router();
-const { postReset } = require('../../controller/authController/resetController')
+const { postReset, userExists } = require('../../controller/authController/resetController')
 
 // FORGOT-PASSWORD
 
-routerReset.post("/", postReset);
+routerReset.post("/", userExists, postReset);
 
 module.exports = routerReset;

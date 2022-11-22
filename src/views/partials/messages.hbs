@@ -1,74 +1,100 @@
-{{#if messageSuccess}}
-<div id="alertLogin" class="alert alert-message alert-success alert-dismissible fade show" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  {{messageSuccess}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/if}}
-
-{{#if messageUpdate}}
-<div id="alertLogin" class="alert alert-message alert-primary alert-dismissible fade show" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  {{messageUpdate}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/if}}
-
-{{#if messageDelete}}
-<div id="alertLogin" class="alert alert-message alert-warning alert-dismissible fade show" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  {{messageDelete}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/if}}
-
-{{#if message}}
-<div id="alertLogin" class="alert alert-message alert-success alert-dismissible fade show" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  {{message}}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/if}}
-
-{{#if errorMessage}}
-<div id="alertNotLogin" class="alert alert-message alert-danger alert-dismissible fade show" role="alert">
-  <div class="alert-headers">
-    <h4 class="alert-heading">Something went wrong.</h4>
+{{!-- TODO EMAIL LOGIN --}}
+{{#if errorUser}}
+<div class="Input-error Error isActive" >
+  <div class="Error-icon" >
+    <svg   fill="currentColor" focusable="false" width="16px" height="16px"
+      viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+    </svg>
   </div>
-  <hr>
-{{errorMessage}}
-  <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-      aria-hidden="true">&times;</span>
-  </button>
+  <div class="Error-text">
+    <span>{{errorUser}}</span>
+  </div>
 </div>
+<script>
+  const inputEmail = document.getElementById("email");
+  inputEmail.classList.add("isError");
+</script>
+{{/if}}
+
+{{!-- TODO PASSWORD LOGIN --}}
+{{#if errorPassword}}
+<div class="Input-error Error isActive" >
+  <div class="Error-icon" >
+    <svg   fill="currentColor" focusable="false" width="16px" height="16px"
+      viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+    </svg>
+  </div>
+  <div class="Error-text">
+    <span>{{errorPassword}}</span>
+  </div>
+</div>
+<script>
+  const inputPassword = document.getElementById( "password"  );
+  const formLogin     = document.getElementById( "formLogin" );
+  inputPassword.classList.add("isError");
+  formLogin.style.height = "35em";
+
+</script>
+{{/if}}
+
+{{!-- TODO EMAIL RESET --}}
+{{#if errorEmailReset}}
+<div class="Input-error Error isActive" >
+  <div class="Error-icon" >
+    <svg   fill="currentColor" focusable="false" width="16px" height="16px"
+      viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+    </svg>
+  </div>
+  <div class="Error-text">
+    <span>{{errorEmailReset}}</span>
+  </div>
+</div>
+<script>
+  const inputEmailReset = document.getElementById("inputEmailReset");
+  inputEmailReset.classList.add("isError");
+</script>
+{{/if}}
+
+{{!-- TODO PASSWORD REPEAT RESET --}}
+{{#if errorPasswordRepeat}}
+<div class="Input-error Error isActive">
+  <div class="Error-icon" >
+    <svg fill="currentColor" focusable="false" width="16px" height="16px"
+      viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+    </svg>
+  </div>
+  <div class="Error-text">
+    <span>{{errorPasswordRepeat}}</span>
+  </div>
+</div>
+<script>
+  const inputPassword = document.getElementById("repeatPassword");
+  inputPassword.classList.add("isError");
+</script>
 {{/if}}
 
 {{!-- VALIDACION DE DATOS ERRONEOS --}}
 {{#if errorValidation}}
-  <div id="alert" class="errorValidation alert" role="alert">
-    <div class="alert-headers">
-      <h4 class="alert-heading">Something went wrong.</h4>
+  <div class="Login-notifications" role="alert" id="alert">
+    <div class="Notification-headers Alert">
+      <div class="Alert-header">
+        <h4 class="Alert-heading">Something went wrong.</h4>
+      </div>
+      <button class="Alert-close"  id="btnCloseAlert" type="button">
+        <i class="fa-regular fa-circle-xmark"></i>
+      </button>
     </div>
-    <hr>
-    {{#each errorValidation}}
-      {{this.msg}}
-      <br>
-    {{/each}}
-    <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-        aria-hidden="true">&times;</span>
-    </button>
+    <hr>    
+    <div class="Notification-content">
+        {{#each errorValidation}}
+          <span class="Notification-span">{{this.msg}}</span>
+        {{/each}}
+    </div>
   </div>
-{{/if}}
-
-{{!-- TODO --------> --}}
-{{#if errorValidation}}
-  {{#each errorValidation}}
-    <span>{{this.msg}}</span>
-  {{/each}}
 {{/if}}
 
 {{#if error_msg_exist}}
@@ -79,7 +105,56 @@
   <hr>
   {{error_msg_exist}}
   <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-      aria-hidden="true">&times;</span>
+      >&times;</span>
+  </button>
+</div>
+{{/if}}
+
+{{#if messageSuccess}}
+<div id="alertLogin" class="alert alert-message alert-success alert-dismissible fade show" role="alert">
+  <h4 class="alert-heading">Well done!</h4>
+  {{messageSuccess}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span >&times;</span>
+  </button>
+</div>
+{{/if}}
+
+{{#if messageUpdate}}
+<div id="alertLogin" class="alert alert-message alert-primary alert-dismissible fade show" role="alert">
+  <h4 class="alert-heading">Well done!</h4>
+  {{messageUpdate}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span >&times;</span>
+  </button>
+</div>
+{{/if}}
+
+{{#if messageDelete}}
+<div id="alertLogin" class="alert alert-message alert-warning alert-dismissible fade show" role="alert">
+  <h4 class="alert-heading">Well done!</h4>
+  {{messageDelete}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span >&times;</span>
+  </button>
+</div>
+{{/if}}
+
+{{#if message}}
+<div id="alertLogin" class="alert alert-message alert-success alert-dismissible fade show" role="alert">
+  <h4 class="alert-heading">Well done!</h4>
+  {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span >&times;</span>
+  </button>
+</div>
+{{/if}}
+
+{{#if errorMessage}}
+<div id="alertNotLogin" class="alert alert-message alert-danger alert-dismissible fade show" role="alert">
+  <div class="alert-headers">
+    <h4 class="alert-heading">Something went wrong.</h4>
+  </div>
+  <hr>
+  {{errorMessage}}
+  <button id="btnCloseAlert" type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+      >&times;</span>
   </button>
 </div>
 {{/if}}

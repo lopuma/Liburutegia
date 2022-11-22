@@ -1,10 +1,12 @@
 /* TODO CONTENEDOR DE LOGIN*/
 .Authentication {
-    margin: var(--Margin-top-forms) auto;
+    margin: var(--Margin-top-forms) auto 60px;
     font-size: 1em;
     font-family: var(--Font-family-principal);
-    padding-top: 1.25em;
-    width: 70%;
+    padding: 1em;
+    width: 80%;
+    height: 43.75em;
+    min-height: 43.75em;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -13,7 +15,7 @@
 /* TODO COVER DE IMG */
 .Auth-cover {
     position: absolute;
-    top: 0;
+    top: -3.5em;
     left: 50%;
     height: 100%;
     width: 50%;
@@ -108,7 +110,7 @@
     background-color: var(--Color-texto-blanco);
     margin-right: 2.5em;
     animation: text-anim 1s ease;
-    height: auto;
+    height: 31em;
 }
 
 .Reset {
@@ -119,7 +121,8 @@
     border-radius: var(--Radius);
     padding: 1.25em;
     background-color: var(--Color-texto-blanco);
-    height: 36.25em;
+    height: 24em;
+    /* 43.75rem */
 }
 
 .Reset {
@@ -148,7 +151,7 @@
 
 .Reset-title,
 .Login-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-weight: 600;
     letter-spacing: 2px;
@@ -177,7 +180,16 @@
     font-size: inherit;
     align-items: center;
     overflow: hidden;
-    margin: 1em 0;
+    margin: 0;
+    padding: 1em;
+}
+
+.Input-exists{
+    display: none;
+}
+
+.Input-exists.isExists{
+    display: block;
 }
 
 .Box {
@@ -186,7 +198,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 2em 0 .5em;
+    margin: 3em 0 0;
 }
 
 .Box-i {
@@ -230,6 +242,7 @@
     transition-property: top, font-size, color, background-color, border-radius, padding, left, width;
     transition-duration: .5s;
     transition-timing-function: ease;
+    vertical-align: baseline;
 }
 
 .Animation-input:focus~.Animation-label,
@@ -249,32 +262,42 @@
     box-shadow: var(--Box-shadow-input);
 }
 
-.Animation-input:not(:placeholder-shown).Animation-input:is(:invalid){
+.Animation-input:not(:placeholder-shown).Animation-input:is(:invalid) {
     border-bottom: 3px solid var(--Color-invalid);
 }
 
-.Animation-input:not(:placeholder-shown).Animation-input:is(:invalid) ~ .Input-error{
-    display: block;
-}
-
-.Input-error {
-    text-align: start;
+.Error {
     width: 100%;
-    height: 1.25em;
-    position: relative;
-    margin: 0 0 1em;
+    margin: .5em 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     display: none;
 }
 
-.Error-p {
-    padding: 0;
-    margin: 0 2em;
+.Error-text {
+    padding: .5em;
     font-size: .9em;
     color: var(--Color-invalid);
 }
 
-.errorActivo {
-    display: block;
+.Error-icon {
+    color: var(--Color-invalid);
+    font-size: .9em;
+}
+
+.Animation-input.isError{
+    outline: .1em solid var(--Color-invalid);
+    border-bottom: 3px solid var(--Color-invalid);
+}
+
+/* .Animation-input.isError:focus~.Animation-label{
+    color: var(--Color-texto-negro);
+    background-color: var(--Color-texto-blanco);
+} */
+
+.Error.isActive {
+    display: flex;
 }
 
 .isText,
@@ -282,14 +305,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
     height: auto;
-    margin: 1.5em 0;
+    margin: 1em 2em 1em;
+    cursor: pointer;
+}
+
+.isText{
+    margin: 2.5em 0 1.5em;
+}
+
+.isDisable{
+    display: none;
+}
+
+.isEnable{
+    display: flex;
 }
 
 .Reset-button,
 .Login-button {
-    width: auto;
+    width: 65%;
     border-radius: var(--Radius);
     font-size: var(--Size-font-button);
     font-weight: 700;
@@ -303,8 +338,9 @@
     transition-duration: .5s;
     transition-timing-function: ease;
     color: var(--Brown);
-    margin: 1em 0;
+    margin: 0;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .Reset-button {
@@ -341,23 +377,81 @@
     cursor: pointer;
     text-align: center;
     width: 100%;
-    margin: 2em 0 0;
+    margin: 0;
 }
 
 .Input-label:hover {
     color: var(--Color-Selected);
 }
 
-#alertNotLogin {
+.Login-notifications {
+    position: fixed;
+    width: 40%;
+    top: calc(20% - 1em);
+    left: 30%;
+    z-index: 999999;
+    margin: auto;
+    background-color: rgba(0, 203, 122, 0.918);
+    color: whitesmoke;
+    border-radius: var(--Radius);
+    transition: all 0.3s;
+}
+
+.Alert{
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    flex-flow: column wrap;
+    padding: 1em;
 }
 
-#btnCloseAlert {
-    margin-bottom: 1em;
+.Alert-header{
+    text-align: center;
+    width: 100%;
 }
 
+.Alert-heading{
+    font-size: 1.3em;
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.Alert-close i{
+    color: var(--Color-texto-negro);
+    text-decoration:none;
+    font-size: 1.5em;
+}
+
+.Alert-close i:hover{
+    color: var(--Color-texto-blanco);
+}
+
+hr {
+    margin: 0;
+}
+
+.Notification-content{
+    display: flex;
+    justify-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 1em;
+}
+
+.Notification-span{
+    margin: .2em 0;
+    font-size: 1em;
+    font-weight: 400;
+}
+
+#alert2{
+    display: none;
+}
+
+#alert2.isEnable{
+    display: block;
+}
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
 @media all and (max-width: 950px) {
@@ -376,10 +470,6 @@
 
     .Authentication {
         width: 70%;
-    }
-
-    .Box {
-        margin: 3em 0;
     }
 
     .Login {
@@ -412,14 +502,24 @@
     .Select-label {
         width: 100%;
     }
+
+
+    .Reset-button,
+    .Login-button{
+        width: 100%;
+    }
 }
 
-
-@media all and (max-width: 500px) {
+@media screen and (max-width: 500px) {
 
     .Authentication {
-        width: 90%;
-        margin: var(--Margin-top-forms) auto 1.25em auto;
+        width: 100%;
+        align-items: unset;
+        margin: calc(var(--Margin-top-forms) + 2em) auto 1em auto;
+    }
+
+    .Input-boxes{
+        padding: 0 0 1em;
     }
 
     .Login {
@@ -428,19 +528,36 @@
     }
 
     .Reset {
-        height: auto;
+        height: 26em;
     }
 
     .Animation-label {
         letter-spacing: .1em;
         font-size: .9em;
-        left: 0;
     }
 
-                .Animation-input:focus~.Animation-label,
-                .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
-                    font-size: .6em;
-                    left: 1em;
-                    width: 90%;
-                }
+    .Animation-input:focus~.Animation-label,
+    .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
+        font-size: .6em;
+        left: 1em;
+        width: 90%;
+    }
+
+    .Box{
+        margin: 3em 0 0;
+    }
+
+    .Error-text{
+        font-size: .7em;
+    }
+    
+    .Login-notifications {
+        width: 90%;
+        /* top: calc(20% - 1em); */
+        left: calc(10% - 1em);
+    }
+
+    .isText{
+        margin: 2.5em 0;
+    }
 }

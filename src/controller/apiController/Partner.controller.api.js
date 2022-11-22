@@ -114,7 +114,7 @@ const partnerController = {
                 connection.query(sqlBookin, [dni], (err, results) => {
                     if (err || results.length === 0) {
                         return res.send({
-                            "data": results[0],
+                            "data": results,
                             "message": `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
                         });
                     }

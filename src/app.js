@@ -52,6 +52,10 @@ app.use((req, res, next) => {
 	res.locals.messageDelete = req.flash('messageDelete');
 	res.locals.errorMessage = req.flash('errorMessage');
 	res.locals.errorValidation = req.flash('errorValidation');
+	res.locals.errorUser = req.flash('errorUser');
+	res.locals.errorPassword = req.flash('errorPassword');
+	//res.locals.errorEmailReset = req.flash('errorEmailReset');
+	//res.locals.success = req.session.success;
 	next();
 });
 
@@ -92,16 +96,16 @@ app.use("/workspace/books", require("./routes/workspace/Books.router"));
 //app.use("/workspace/partners", require("./routes/workspace/Partners.router"));
 
 // 12.1 - ROUTERS API
-app.use('/api/books', require('./routes/api/Book.router.api'))
-app.use('/api/bookings', require('./routes/api/Booking.router.api'))
-app.use('/api/partners', require('./routes/api/Partner.router.api'))
-app.use('/api/votes', require('./routes/api/Vote.router.api'))
+app.use('/api/books',    require( './routes/api/Book.router.api'    ))
+app.use('/api/bookings', require( './routes/api/Booking.router.api' ))
+app.use('/api/partners', require( './routes/api/Partner.router.api' ))
+app.use('/api/votes',    require( './routes/api/Vote.router.api'    ))
 
 // 12.2 - ROUTES AUTH
-app.use('/login', require('./routes/authentication/LoginRouter'))
-app.use('/logout', require('./routes/authentication/LogoutRouter'))
-app.use('/reset', require('./routes/authentication/ResetRouter'))
-app.use('/register', require('./routes/authentication/RegisterRouter'))
+app.use('/login',    require( './routes/authentication/LoginRouter'    ))
+app.use('/logout',   require( './routes/authentication/LogoutRouter'   ))
+app.use('/reset',    require( './routes/authentication/ResetRouter'    ))
+app.use('/register', require( './routes/authentication/RegisterRouter' ))
 
 // 12.3 RUTAS QUE NO EXISTE
 app.use(function(req, res){

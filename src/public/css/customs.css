@@ -19,7 +19,8 @@
   --Color-legend: var(--Color-blanco);
   --Color-outline: rgba(0, 0, 0, 0.4);  
   --Color-outline-blanco : rgba(255, 255, 255, 0.4);
-  --Color-invalid: brown;
+  --Color-invalid: #d93025;
+  --Color-hover: rgb(97, 97, 97);
   --Success: #76BA99;
   --SuccessHigh: #6de9ad48;
   --Unsuccess: #C21010;
@@ -40,7 +41,7 @@
   --Font-size: 2em; 
   
   /* TODO VALIDAS */
-  --Margin-top-forms: calc(var(--Size-height-navBar) + 20px);
+  --Margin-top-forms: calc(var(--Size-height-navBar) + 2.5em);
   --Radius: 5px;
   --Width-forms: 90%;
   --Heigth-forms: 600px;

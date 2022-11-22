@@ -6,8 +6,8 @@ const { body, validationResult } = require('express-validator');
 const loginController = {
 
     validate: [ // TODO ✅
-        body('email', "- The format email address is incorrect.").exists().isEmail(),
-        body('password', "- Password must contain the following: Minimun 5 characters").exists().isLength({ min: 5 })
+        body('email', "The format email address is incorrect.").exists().isEmail(),
+        body('password', "Password must contain the following: Minimun 5 characters.").exists().isLength({ min: 5 })
     ],
     asigneRol: async (req, res, isRol) => { // TODO ✅
         try {
@@ -40,7 +40,6 @@ const loginController = {
         try {
             const errors = validationResult(req);
             const { email, password: pass } = req.body;
-            console.log(errors.array())
             if (!errors.isEmpty()) {
                 req.flash("errorValidation", errors.array())
                 return res.redirect('/login');
@@ -54,11 +53,17 @@ const loginController = {
                             code: 400,
                             message: err
                         });
-                    } else if (results.length === 0 || !await bscryptjs.compare(pass, results[0].pass)) {
-                        req.flash("errorMessage", "- These credentials do not match our records.")
+                    } 
+                    if (results.length === 0) {
+                        req.flash("errorUser", "Your account could not be found in Liburutegia.")
+                        req.flash("errorPassword", "")
+                        return res.redirect('/login');
+                    } 
+                    if (!await bscryptjs.compare(pass, results[0].pass)) {
+                        req.flash("errorPassword", "Wrong password. Try again or click Forgot password to reset it.")
+                        req.flash("errorUser", "")
                         return res.redirect('/login');
                     }
-
                     //TODO LLAMADA ASIGNACION DE ROL Y RUTA
                     await loginController.asigneRol(req, res, results[0].rol);
 
@@ -87,13 +92,16 @@ const loginController = {
         const loggedIn = req.session.loggedin;
         const ruta = req.session.ruta;
         try {
-            loggedIn ?
-                res.status(200).redirect(ruta) :
-                res.status(200).render('forms/login', {
+            if(loggedIn){
+                req.flash("errorNoExist", "PRUEBA DE LLEGADA")
+                res.status(200).redirect(ruta)
+            } else {    
+            res.status(200).render('forms/login', {
                     loggedIn: false,
                     userName: "",
                     userPath: ""
                 });
+            }
         } catch (error) {
             console.error(error)
             res.status(500).redirect("/")

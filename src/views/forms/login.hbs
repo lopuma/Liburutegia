@@ -9,22 +9,38 @@
       <img class="Auth-img" loading="lazy" src="image/back.svg" alt="">
     </div>
   </div>
-
+    {{#if errorValidation}}
+      {{> messages}}
+    {{/if}}
+    <div class="Login-notifications" role="alert" id="alert2">
+      <div class="Notification-headers Alert">
+        <div class="Alert-header">
+          <h4 class="Alert-heading">Something went wrong.</h4>
+        </div>
+        <button class="Alert-close"  id="btnCloseAlert2" type="button">
+          <i class="fa-regular fa-circle-xmark"></i>
+        </button>
+      </div>
+      <hr>    
+      <div class="Notification-content">
+        <span class="Notification-span" id="messageValidation"></span>
+      </div>
+    </div>
   <form class="Login" action="/login" method="POST" id="formLogin">
-    {{> messages }}
     <div class="Login-content">
       <h1 class="Login-title">Sign in to Liburutegia</h1>
       <div class="Input-boxes">
         <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
             <div class="Box-animation Animation">
-              <input class="Animation-input" id="email" type="email" name="email" tabindex="1" placeholder=" " autocomplete="off" required="required" autofocus>
-              <label class="Animation-label isNoFlex" for="email" >Enter your Email</label>
+              <input class="Animation-input" id="email" type="email" name="email" tabindex="1" placeholder=" " autocomplete="off" required="required">
+              <label class="Animation-label" for="email" >Enter your Email</label>
             </div>
         </div>
-        <div class="Input-error" id="grupo__mail">
-          <p class="Error-p ">The Email is not correct.</p>
-        </div>        
+        {{!-- TODO ERROR USER--}}
+        {{#if errorUser}}
+          {{> messages}}
+        {{/if}}
         <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
             <div class="Box-animation Animation">
@@ -33,11 +49,12 @@
             </div>
             <i id="icon-eye" class="Box-i fa-solid fa-eye"></i>
         </div>
-        <div class="Input-error" id="grupo__password2">
-          <p class="Error-p ">{{> messg }}</p>
-        </div>
+        {{!-- TODO ERROR PASSWORD--}}
+        {{#if errorPassword}}
+          {{> messages}}
+        {{/if}}
         <div class="Input-box isText">
-          <label class="Input-label" for="flip" tabindex="3">Forgot Password?</label>
+          <label class="Input-label" id="linkLogin" for="flip" tabindex="3">Forgot Password?</label>
         </div>
         <div class="Input-box isButton">
           <input class="Login-button" id="btnLogin" type="submit" value='LOG IN' tabindex="4" />
@@ -47,48 +64,86 @@
 
   </form>
 
-  <form class="Reset" action="/reset" method="post" id="formReset">
+  <form class="Reset" id="formReset">
     <div class="Reset-content">
       <div class="Reset-title">Reset Your Password</div>
       <div class="Input-boxes">
-        <div class="Input-box Box">
-          <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
-          <div class="Box-animation Animation">
-            <input class="Animation-input" id="emailReset" type="email" name="emailReset" required="required" tabindex="1" placeholder=" " autocomplete="off" autofocus>
-            <label class="Animation-label" for="emailReset">Enter your Email</label>
+          {{!-- TODO INPUT EMAIL RESET --}}
+          <div class="Input-box Box">
+            <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
+            <div class="Box-animation Animation">
+              <input class="Animation-input" id="inputEmailReset" type="email" name="inputEmailReset" required="required" tabindex="1" placeholder=" " autocomplete="off">
+              <label class="Animation-label" for="inputEmailReset">Enter your Email *</label>
+            </div>
           </div>
-        </div>
-        <div class="Input-error" id="grupo__mail">
-          <p class="Error-p ">The Email is not correct.</p>
-        </div>
-        <div class="Input-box Box">
-          <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-          <div class="Box-animation Animation">
-            <input class="Animation-input" name="newPassword" id="newPassword" type="password" required="required" tabindex="2" placeholder=" " autocomplete="off">
-            <label class="Animation-label" for="newPassword">Enter new Password</label>
+          {{!-- TODO ERROR EMAIL NO EXISTS --}}
+          <div class="Input-error Error" id="validationEmailReset">
+              <div class="Error-icon" >
+                <svg   fill="currentColor" focusable="false" width="16px" height="16px"
+                  viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+              </div>
+              <div class="Error-text">
+                <span id="errorEmailReset">{{messageEmailReset}}</span>
+              </div>
           </div>
-          <i id="icon-eye-new" class="Box-i fa-solid fa-eye"></i>
-        </div>
-        <div class="Input-error" id="grupo__password2">
-          <p class="Error-p ">The verification password does not match.</p>
-        </div>
-        <div class="Input-box Box">
-          <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-          <div class="Box-animation Animation">
-            <input class="Animation-input" name="repeatPassword" id="repeatPassword" type="password" required="required" tabindex="3" placeholder=" " autocomplete="off">
-            <label class="Animation-label" for="repeatPassword" >Repear Password</label>
+          {{!-- TODO INPUT ONLY EXISTS ACCOUNT --}}
+          <div class="Input-exists" id="inputsExists">
+            {{!-- TODO PASSWORD NEW --}}
+            <div class="Input-box Box">
+              <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+              <div class="Box-animation Animation">
+                <input class="Animation-input" id="inputPasswordNew" name="inputPasswordNew" type="password" tabindex="2" placeholder=" " autocomplete="off">
+                <label class="Animation-label" for="inputPasswordNew">Enter new Password *</label>
+              </div>
+              <i id="icon-eye-new" class="Box-i fa-solid fa-eye"></i>
+            </div>
+          {{!-- TODO ERROR PASSWORD NEW --}}
+            <div class="Input-error Error" id="validationPasswordNew">
+              <div class="Error-icon" >
+                <svg   fill="currentColor" focusable="false" width="16px" height="16px"
+                  viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+              </div>
+              <div class="Error-text">
+                <span id="errorPasswordNew">Passwords do not match.</span>
+              </div>
+            </div>
+            {{!-- TODO PASSWORD REPEAT --}}
+            <div class="Input-box Box">
+              <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+              <div class="Box-animation Animation">
+                <input class="Animation-input" id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" tabindex="3" placeholder=" " autocomplete="off">
+                <label class="Animation-label" for="inputPasswordRepeat" >Repear Password *</label>
+              </div>
+              <i id="icon-eye-repeat" class="Box-i fa-solid fa-eye"></i>
+            </div>
+          {{!-- TODO ERROR PASSWORD REPEAT --}}
+            <div class="Input-error Error" id="validationPasswordRepeat">
+              <div class="Error-icon" >
+                <svg fill="currentColor" focusable="false" width="16px" height="16px"
+                  viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+              </div>
+              <div class="Error-text">
+                <span id="errorPasswordRepeat">Passwords do not match.</span>
+              </div>
+            </div>
           </div>
-          <i id="icon-eye-repeat" class="Box-i fa-solid fa-eye"></i>
-        </div>
-        <div class="Input-error" id="grupo__password2">
-          <p class="Error-p ">The verification password does not match.</p>
-        </div>
-        <div class="Input-box isText">
-          <label class="Input-label" for="flip" tabindex="4">Login?</label>
-        </div>
-        <div class="Button-box isButton">
-          <input class="Reset-button" id="btnReset" type="submit" value='RESET PASSWORD' tabindex="5" />
-        </div>
+          {{!-- TODO TEXT --}}
+          <div class="Input-box isText">
+            <label class="Input-label" id="linkForgot" for="flip" tabindex="4">Login?</label>
+          </div>
+          {{!-- TODO BOTON --}}
+          <div class="Button-box isButton isEnable" id="btnExists">
+            <input class="Reset-button" value='RESET PASSWORD' tabindex="5" />
+          </div>
+          <div class="Button-box isButton isDisable" id="btnReset">
+            <input class="Reset-button" value='RESET PASSWORD' tabindex="6" />
+          </div>
       </div>
     </div>
   </form>
@@ -112,3 +167,253 @@
   });
 </script>
 {{/if}}
+
+<script>
+
+  const url                          = "/reset";
+  const inputEmailReset              = document.getElementById( "inputEmailReset"          );
+  const inputPasswordNew             = document.getElementById( "inputPasswordNew"         );
+  const inputPasswordRepeat          = document.getElementById( "inputPasswordRepeat"      );
+  const formReset                    = document.getElementById( "formReset"                );
+  const email                        = document.getElementById( "email"                    );
+  const validationEmailReset         = document.getElementById( "validationEmailReset"     );
+  const validationPasswordNew        = document.getElementById( "validationPasswordNew"    );
+  const validationPasswordRepeat     = document.getElementById( "validationPasswordRepeat" );
+  const flip                         = document.getElementById( 'flip'                     );
+  const inputsExists                 = document.getElementById( 'inputsExists'             );
+  const btnExists                    = document.getElementById( 'btnExists'                );
+  const btnReset                     = document.getElementById( 'btnReset'                 );
+  const linkForgot                   = document.getElementById( 'linkForgot'               );
+  const linkLogin                    = document.getElementById( 'linkLogin'                );
+  const alert2                       = document.getElementById( 'alert2'                   );
+  let   messageValidation            = document.getElementById( 'messageValidation'        );
+  let   errorEmailReset              = document.getElementById( 'errorEmailReset'          );
+  let   errorPasswordNew             = document.getElementById( 'errorPasswordNew'         );
+  let   errorPasswordRepeat          = document.getElementById( 'errorPasswordRepeat'      );
+  let   valueCkeck                   = localStorage.getItem   ( 'flip'                     );
+  
+
+  // TODO REINICIAR INPUTS
+  function reset(){
+    inputEmailReset.value = "";
+    inputPasswordNew.value = "";
+    inputPasswordRepeat.value = "";
+    inputsExists.classList.remove( 'isExists' );
+    validationEmailReset.classList.remove( 'isActive' );
+    inputEmailReset.classList.remove( 'isError'  );
+    validationPasswordRepeat.classList.remove( 'isActive' );
+    validationPasswordNew.classList.remove( 'isActive' );
+    inputPasswordNew.classList.remove( 'isError'   );
+    inputPasswordRepeat.classList.remove( 'isError'  );
+    formReset.style.height = "24em";
+  }
+
+  // TODO ACTIVAR FOCUS DEL CHECK
+  function activeFocus(){
+    valueCkeck = localStorage.getItem( 'flip' );
+    if ( valueCkeck === 'false' ) {
+          btnExists.classList.remove("isEnable")
+          resCheck = false;
+      } else {
+          btnExists.classList.add("isEnable")
+          resCheck = true;
+    }
+  }
+
+  // TODO SI TODO OK, REINICIARA LA PASSWORD
+  async function enterReset() {
+      if (inputPasswordNew.value.length <  5) {
+        inputPasswordNew.focus();
+        inputPasswordNew.select();
+        errorPasswordNew.innerHTML = "Password must contain the following: Minimun 5 characters.";
+        validationPasswordNew.classList.add( 'isActive' );
+        inputPasswordNew.classList.add( 'isError'   );
+        validationPasswordRepeat.classList.remove( 'isActive' );
+        inputPasswordRepeat.classList.remove( 'isError'  );
+        formReset.style.height = "42em";
+      } else if (inputPasswordRepeat.value.length <  5) {
+          inputPasswordRepeat.focus();
+          inputPasswordRepeat.select();
+          errorPasswordRepeat.innerHTML = "Password must contain the following: Minimun 5 characters.";
+          validationPasswordRepeat.classList.add( 'isActive' );
+          inputPasswordRepeat.classList.add( 'isError'  );
+          validationPasswordNew.classList.remove( 'isActive' );
+          inputPasswordNew.classList.remove( 'isError'   );
+          formReset.style.height = "42em";
+      } else if ( inputPasswordNew.value !== inputPasswordRepeat.value) {
+          errorPasswordNew.innerHTML = "Passwords do not match.";
+          errorPasswordRepeat.innerHTML = "Passwords do not match.";
+          validationPasswordNew.classList.add( 'isActive' );
+          validationPasswordRepeat.classList.add( 'isActive' );
+          inputPasswordNew.classList.add( 'isError'   );
+          inputPasswordRepeat.classList.add( 'isError'  );
+          formReset.style.height = "44em";
+      } else {
+        validationPasswordRepeat.classList.remove( 'isActive' );
+        validationPasswordNew.classList.remove( 'isActive' );
+        inputPasswordNew.classList.remove( 'isError'   );
+        inputPasswordRepeat.classList.remove( 'isError'  );
+        formReset.style.height = "38em";
+        //AQUI el post
+        console.log("ahora el POST")
+        userExists();
+      }
+    }
+
+  async function userNoExists() {
+      errorEmailReset.innerHTML = "Your account could not be found in Liburutegia.";
+      validationEmailReset.classList.add( 'isActive' );
+      inputEmailReset.classList.add( 'isError'  );
+      inputEmailReset.focus();
+      inputEmailReset.select();
+      formReset.style.height = "27em";
+      btnReset.classList.remove("isEnable");
+      btnReset.classList.add("isDisable");
+      btnExists.classList.add("isEnable")
+      btnExists.classList.remove("isDisable");
+      inputsExists.classList.remove( 'isExists' );
+      alert2.classList.remove('isEnable');
+      return;
+  }
+  // TODO VALIDAR SI EXISTE USUARIO
+  async function existsUser(data) {
+    const { messageEmailReset, exists } = data;
+    if( exists === false ){
+      userNoExists();
+    } else {
+      errorEmailReset.innerHTML = "";
+      validationEmailReset.classList.remove( 'isActive' );
+      inputEmailReset.classList.remove( 'isError'  );
+      inputPasswordNew.value = "";
+      inputPasswordRepeat.value = "";
+      btnExists.classList.remove('isEnable');
+      btnExists.classList.add('isDisable');
+      btnReset.classList.add('isEnable');
+      btnReset.classList.remove('isDisable');
+      inputsExists.classList.add("isExists");
+      alert2.classList.remove('isEnable');
+      formReset.style.height = "38em";
+      return;
+    }
+  }
+
+  // TODO COMPROBAR SI EXISTE USUARIO
+  async function enterExists() {
+    const data = {
+      emailReset: inputEmailReset.value
+    }
+    console.log("DATA 1 => ", {data})
+    if ( inputEmailReset.value.length === 0 ){
+      errorEmailReset.innerHTML = "The email cannot be empty.";
+      validationEmailReset.classList.add( 'isActive' );
+      inputEmailReset.classList.add( 'isError'  );
+      inputEmailReset.focus();
+      formReset.style.height = "27em";
+      return;
+    }
+    if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(inputEmailReset.value) ){
+      messageValidation.innerHTML = "The format email address is incorrect.";
+      alert2.classList.add( 'isEnable' );                       
+      validationEmailReset.classList.remove( 'isActive' );
+      inputEmailReset.classList.remove( 'isError'  )
+      return;
+    }
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+          "Content-Type": "application/json; charset=UTF-8"
+      }
+    })
+    .then( (response) => response.json() )
+    .then( (data) => existsUser(data) )
+    .catch( (error) => console.error(error))
+   };
+
+  // TODO PASSSWORD RESET SUCCESS
+  async function resetSuccess(data) {
+    console.log("data EXISTS => ", data.exists)
+    const exists = data.exists;
+    if(exists){
+      btnExists.classList.remove("isDisable")
+      btnExists.classList.remove("isEnable")
+      btnReset.classList.remove("isEnable")
+      btnReset.classList.add("isDisable")
+      reset();
+      flip.checked = false;
+      localStorage.setItem("flip", flip.checked);
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: data.successValidation,
+        showConfirmButton: false,
+        timer: 2000
+      })
+      return;
+    }
+    userNoExists();
+  }
+  // TODO COMPROBAR SI EXISTE USUARIO
+  async function userExists() {
+    const data = {
+      emailReset: inputEmailReset.value,
+      passReset: inputPasswordNew.value
+    }
+    console.log("DATA 2 => ", {data})
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+          "Content-Type": "application/json; charset=UTF-8"
+      }
+    })
+    .then( (response) => response.json() )
+    .then( (data) => resetSuccess(data) )
+    .catch( (error) => console.error(error))
+   };
+
+  // TODO EVENTOS AL HACER CLICK
+  linkLogin.addEventListener( 'click', () => {
+    btnExists.classList.add("isEnable")
+    btnExists.classList.remove("isDisable")
+  });
+
+  linkForgot.addEventListener( 'click', () => {
+    btnExists.classList.remove("isDisable")
+    btnExists.classList.remove("isEnable")
+    btnReset.classList.remove("isEnable")
+    btnReset.classList.add("isDisable")
+    reset();
+  });
+
+  btnExists.addEventListener( 'click', (e) =>{
+    e.preventDefault();
+    enterExists();
+  })
+
+  btnReset.addEventListener( 'click', (e) =>{
+    e.preventDefault();
+    enterReset();
+  });
+
+  // TODO GUARDAR EN LOCAL STORAGE EL VALOR DEL CHECK
+  activeFocus();
+  flip.checked = resCheck;
+  flip.addEventListener('change' ,function(e) {
+    localStorage.setItem("flip", flip.checked);
+  });
+
+  // TODO CADA VEZ QUE SE DA ENTER
+  document.addEventListener("keyup", function(e) {
+      if (e.key === 'Enter') {
+          if ( btnExists.classList.contains("isEnable") ) {
+            enterExists();
+          } else if ( btnReset.classList.contains("isEnable") ){
+            enterReset();
+          } else {
+            console.log("EJECUTA 3");
+          }
+      }
+  });
+
+</script>

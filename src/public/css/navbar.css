@@ -60,7 +60,7 @@
 
 .Header-button--toggle:hover,
 .Header-button--sidemenu:hover {
-  background-color: rgb(97, 97, 97);
+  background-color: var(--Color-hover);
   color: var(--Success);
   border-radius: 50%;
 }

@@ -1,26 +1,64 @@
-// / ----Colorear ITEM MENU ---->
-
 // Variables MENU
-const btnBook = document.getElementById('btnBook');
-const btnHome = document.getElementById('btnHome');
-const btnBooking = document.getElementById('btnBooking');
-const btnPartner = document.getElementById('btnPartner');
-const btnAdmin = document.getElementById('btnAdmin');
-const btnRecord = document.getElementById('btnRecord');
-const btnLogin = document.getElementById('btnLogin');
+const btnBook    = document.getElementById( 'btnBook'   );
+const btnHome    = document.getElementById( 'btnHome'   );
+const btnBooking = document.getElementById( 'btnBooking');
+const btnPartner = document.getElementById( 'btnPartner');
+const btnAdmin   = document.getElementById( 'btnAdmin'  );
+const btnRecord  = document.getElementById( 'btnRecord' );
+const btnLogin   = document.getElementById( 'btnLogin'  );
 
 //Variables SIDE MENU
-const btnHomeSidemenu = document.getElementById('btnHomeSidemenu');
-const btnAdminSidemenu = document.getElementById('btnAdminSidemenu');
-const btnBookSidemenu = document.getElementById('btnBookSidemenu');
-const btnBookingSidemenu = document.getElementById('btnBookingSidemenu');
-const btnPartnerSidemenu = document.getElementById('btnPartnerSidemenu');
-const btnLoginSidemenu = document.getElementById('btnLoginSidemenu');
+const btnHomeSidemenu    = document.getElementById( 'btnHomeSidemenu'   );
+const btnAdminSidemenu   = document.getElementById( 'btnAdminSidemenu'  );
+const btnBookSidemenu    = document.getElementById( 'btnBookSidemenu'   );
+const btnBookingSidemenu = document.getElementById( 'btnBookingSidemenu');
+const btnPartnerSidemenu = document.getElementById( 'btnPartnerSidemenu');
+const btnLoginSidemenu   = document.getElementById( 'btnLoginSidemenu'  );
 
-setTimeout(() => {
-  $("#alert").alert('close');
-}, "5000")
+// TODO VARIABLES LOGIN
+const alert         = document.getElementById( 'alert'  );
+const btnCloseAlert = document.getElementById( 'btnCloseAlert' );
+const alertReset        = document.getElementById( 'alert2' );
+const btnCloseAlert2 = document.getElementById( 'btnCloseAlert2' );
 
+function closeAlert(){
+  try {
+    alert.remove();
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+function closeAlert2(){
+  try {
+    alertReset.classList.remove('isEnable');
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+btnCloseAlert2.addEventListener( 'click', () => {
+  closeAlert2();
+})
+
+if(alert !== null){
+  try {
+    setTimeout(() => {
+      closeAlert();
+    }, "5000")
+  } catch (error) {
+    console.error(error)
+  }
+  try {
+    btnCloseAlert.addEventListener( 'click', () => {
+      closeAlert();
+      } ) 
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+// TODO CARGA FUNCION DE MARCADO DE PANTALLA
 window.onload = onLoad();
 
 function onLoad() {
