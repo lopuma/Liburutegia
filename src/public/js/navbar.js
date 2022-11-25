@@ -37,9 +37,12 @@ function closeAlert2(){
   }
 }
 
-btnCloseAlert2.addEventListener( 'click', () => {
-  closeAlert2();
-})
+try {
+	btnCloseAlert2.addEventListener( 'click', () => {
+	  closeAlert2();
+	})
+} catch (error) {
+}
 
 if(alert !== null){
   try {

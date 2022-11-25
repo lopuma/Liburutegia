@@ -1,10 +1,10 @@
 /* TODO CONTENEDOR DE LOGIN*/
 .Authentication {
     margin: var(--Margin-top-forms) auto 60px;
+    width: 80%;
     font-size: 1em;
     font-family: var(--Font-family-principal);
     padding: 1em;
-    width: 80%;
     height: 43.75em;
     min-height: 43.75em;
     position: relative;
@@ -151,7 +151,7 @@
 
 .Reset-title,
 .Login-title {
-    font-size: 1.4rem;
+    font-size: 1.5em;
     font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-weight: 600;
     letter-spacing: 2px;
@@ -177,11 +177,10 @@
 .Input-boxes {
     width: 100%;
     height: 100%;
-    font-size: inherit;
     align-items: center;
-    overflow: hidden;
     margin: 0;
     padding: 1em;
+    overflow: hidden;
 }
 
 .Input-exists{
@@ -205,6 +204,11 @@
     color: var(--Color-texto-negro);
     font-size: 1em;
     cursor: pointer;
+    transition: text-shadow .5s ease;
+}
+
+.Box-i:hover{
+    text-shadow: 1px 1px 2px var(--Color-Selected);
 }
 
 .Animation {
@@ -291,11 +295,6 @@
     border-bottom: 3px solid var(--Color-invalid);
 }
 
-/* .Animation-input.isError:focus~.Animation-label{
-    color: var(--Color-texto-negro);
-    background-color: var(--Color-texto-blanco);
-} */
-
 .Error.isActive {
     display: flex;
 }
@@ -378,10 +377,12 @@
     text-align: center;
     width: 100%;
     margin: 0;
+    letter-spacing: 2px;
+    transition: text-shadow .5s ease
 }
 
 .Input-label:hover {
-    color: var(--Color-Selected);
+    text-shadow: 1px 1px 2px var(--Color-Selected);
 }
 
 .Login-notifications {

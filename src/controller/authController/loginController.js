@@ -7,7 +7,7 @@ const loginController = {
 
     validate: [ // TODO ✅
         body('email', "The format email address is incorrect.").exists().isEmail(),
-        body('password', "Password must contain the following: Minimun 5 characters.").exists().isLength({ min: 5 })
+        body('inputPassword', "Password must contain the following: Minimun 5 characters.").exists().isLength({ min: 5 })
     ],
     asigneRol: async (req, res, isRol) => { // TODO ✅
         try {
@@ -39,7 +39,7 @@ const loginController = {
     postLogin: async (req, res) => { // TODO ✅
         try {
             const errors = validationResult(req);
-            const { email, password: pass } = req.body;
+            const { email, inputPassword: pass } = req.body;
             if (!errors.isEmpty()) {
                 req.flash("errorValidation", errors.array())
                 return res.redirect('/login');

@@ -1,78 +1,354 @@
+<link rel="stylesheet" href="/style/singup.css">
+
 <div class="Singup" id="stateRecord">
-        {{> messages}}
+    {{> messages}}
     <form class="Register" action="/register" method="post" id="formRegister" name="formRegister">
-            <div class="Register-content">
-                <h1 class="Register-title">User Register</h1>
-                <div class="Input-boxes">
-                    <div class="Input-box Box">
-                        <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="newEmail"  id="newEmail" type="email" placeholder=" " autocomplete="valorNoValido" required="required" tabindex="1" autofocus>
-                            <label class="Animation-label" for="newEmail">Enter your email address *</label>
-                        </div>
-                    </div>
-                    <div class="Input-error" id="grupo__mail">
-                        <p class="Error-p ">The Email is not correct.</p>
-                    </div>
-                    
-                    <div class="Input-box Box">
-                        <i id="iconUsername" class="Box-i fa-solid fa-user"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="nickname" id="nickname" type="text"  placeholder=" " autocomplete="nickname" required="required" tabindex="2">
-                            <label class="Animation-label" for="nickname" >Enter your nickname *</label>
-                        </div>
-                    </div>
-                    <div class="Input-error" id="grupo__nickname">
-                        <p class="Error-p ">The Username is not correct.</p>
-                    </div>
-                    <div class="Input-box Box">
-                        <i id="iconFullname" class="Box-i fa-solid fa-user"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" id="full-name" type="text" name="full-name" tabindex="3"  placeholder=" " autocomplete="noValido" required="required">
-                            <label class="Animation-label" for="full-name">Enter your full name *</label>
-                        </div>
-                    </div>
-                    <div class="Input-error" id="grupo__password2">
-                        <p class="Error-p ">The verification password does not match.</p>
-                    </div>
-                    <div class="Input-box Box">
-                        <i id="iconPass" class="Box-i fa-solid fa-key"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="newPass" id="newPass" type="password" required="required" tabindex="4"  placeholder=" " autocomplete="noValido">
-                            <label for="newPass" class="Animation-label">Create a password *</label>
-                        </div>
-                        <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
-                    </div>
-                    <div class="Input-error" id="grupo__password">
-                        <p class="Error-p ">The verification password does not match.</p>
-                    </div>
-                    <div class="Input-box Box">
-                        <i id="iconPassRepeat" class="Box-i fa-solid fa-key"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="newPassRepeat" id="newPassRepeat" type="password" required="required"  placeholder=" " autocomplete="noValido" tabindex="5"> 
-                            <label for="newPassRepeat" class="Animation-label">Repeat password *</label>
-                        </div>
-                        <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
-                    </div>
-                    <div class="Input-error" id="grupo__password2">
-                        <p class="Error-p ">The verification password does not match.</p>
+        <div class="Register-content">
+            <h1 class="Register-title">User Register</h1>
+            <div class="Input-boxes">
+                <!-- TODO EMAIL -->
+                <div class="Input-box Box">
+                    <i id="iconEmail" class="Box-i fa-solid fa-envelope"></i>
+                    <div class="Box-animation Animation">
+                        <input class="Animation-input isError" name="newEmail" id="newEmail" type="email" placeholder=" "
+                            autocomplete="valorNoValido" required="required" tabindex="1" autofocus>
+                        <label class="Animation-label" for="newEmail">Enter your Email *</label>
                     </div>
                 </div>
-                <div class="Input-select">
-                    <label class="Select-label" for="rol">Select a Rol for User</label>
-                    <select id="rol" name="rol" class="Select-rol" tabindex="6">
-                        <option class="Select-option" value="admin" selected>Admin</option>
-                        <option class="Select-option" value="data entry">Data Entry</option>
-                    </select>
+                <div class="Input-error Error isActive" id="validationPasswordRepeat">
+                    <div class="Error-icon">
+                        <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                            xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="Error-text">
+                        <span id="errorPasswordRepeat">Passwords do not match.</span>
+                    </div>
                 </div>
-                <div class="Input-button">
-                    <input class="Button-cancel" id="btnCancel" type="submit" value='CANCEL' tabindex="7" />
-                    <input class="Button-accept" id="btnAccept" type="submit" value='ACCEPT' tabindex="8" />
+
+                <!-- TODO USERNAME -->
+                <div class="Input-box Box">
+                    <i id="iconUsername" class="Box-i fa-solid fa-user"></i>
+                    <div class="Box-animation Animation">
+                        <input class="Animation-input" name="nickname" id="nickname" type="text" placeholder=" "
+                            autocomplete="nickname" required="required" tabindex="2">
+                        <label class="Animation-label" for="nickname">Enter your nickname *</label>
+                    </div>
+                </div>
+                <div class="Input-error Error isActive" id="validationPasswordRepeat">
+                    <div class="Error-icon">
+                        <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                            xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="Error-text">
+                        <span id="errorPasswordRepeat">Passwords do not match.</span>
+                    </div>
+                </div>
+                <!-- TODO FULL NAME -->
+                <div class="Input-box Box">
+                    <i id="iconFullname" class="Box-i fa-solid fa-user"></i>
+                    <div class="Box-animation Animation">
+                        <input class="Animation-input" id="full-name" type="text" name="full-name" tabindex="3"
+                            placeholder=" " autocomplete="noValido" required="required">
+                        <label class="Animation-label" for="full-name">Enter your full name *</label>
+                    </div>
+                </div>
+                <div class="Input-error Error isActive" id="validationPasswordRepeat">
+                    <div class="Error-icon">
+                        <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                            xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="Error-text">
+                        <span id="errorPasswordRepeat">Passwords do not match.</span>
+                    </div>
+                </div>
+                <!-- TODO NEW PASSWORD -->
+                <div class="Input-box Box">
+                    <i id="iconPass" class="Box-i fa-solid fa-key"></i>
+                    <div class="Box-animation Animation">
+                        <input class="Animation-input" name="newPass" id="newPass" type="password" required="required"
+                            tabindex="4" placeholder=" " autocomplete="noValido">
+                        <label for="newPass" class="Animation-label">Create a password *</label>
+                    </div>
+                    <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
+                </div>
+                <div class="Input-error Error isActive" id="validationPasswordRepeat">
+                    <div class="Error-icon">
+                        <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                            xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="Error-text">
+                        <span id="errorPasswordRepeat">Passwords do not match.</span>
+                    </div>
+                </div>
+                <!-- TODO REPEAT PASSWORD -->
+                <div class="Input-box Box">
+                    <i id="iconPassRepeat" class="Box-i fa-solid fa-key"></i>
+                    <div class="Box-animation Animation">
+                        <input class="Animation-input" name="newPassRepeat" id="newPassRepeat" type="password"
+                            required="required" placeholder=" " autocomplete="noValido" tabindex="5">
+                        <label for="newPassRepeat" class="Animation-label">Repeat password *</label>
+                    </div>
+                    <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
+                </div>
+                <div class="Input-error Error isActive" id="validationPasswordRepeat">
+                    <div class="Error-icon">
+                        <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                            xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="Error-text">
+                        <span id="errorPasswordRepeat">Passwords do not match.</span>
+                    </div>
                 </div>
             </div>
-            {{!--
-        </div> --}}
+            <div class="Input-select">
+                <label class="Select-label" for="rol">Select a Rol for User</label>
+                <select id="rol" name="rol" class="Select-rol" tabindex="6">
+                    <option class="Select-option" value="admin" selected>Admin</option>
+                    <option class="Select-option" value="data entry">Data Entry</option>
+                </select>
+            </div>
+            <div class="Input-button">
+                <input class="Button-cancel" id="btnCancel" type="submit" value='CANCEL' tabindex="7" />
+                <input class="Button-accept" id="btnAccept" type="submit" value='ACCEPT' tabindex="8" />
+            </div>
+        </div>
     </form>
 </div>
 
-<link rel="stylesheet" href="/style/singup.css">
+{{!-- <script defer src="/scripts/register.js"></script> --}}
+
+<script defer>
+const formEmail         = document.getElementById( "email"                 );
+const formFirtname      = document.getElementById( "firstname"             );
+const formLastname      = document.getElementById( "lastname"              );
+const formPass          = document.getElementById( "newPass"               );
+const formPassRepeat    = document.getElementById( "newPassRepeat"         );
+const btnAccept         = document.querySelector ( "#btnAccept"            );
+const btnShowPass       = document.getElementById( "icon-eye-rPassword"    );
+const btnShowPassRepeat = document.getElementById( "icon-eye-rRepeat"      );
+const iconEmail         = document.getElementById( "iconEmail"             );
+const iconFirtname      = document.getElementById( "iconFirtname"          );
+const iconLastname      = document.getElementById( "iconLastname"          );
+const iconPass          = document.getElementById( "iconPass"              );
+const iconPassRepeat    = document.getElementById( "iconPassRepeat"        );
+const iconRol           = document.getElementById( "iconRol"               );
+const formulario        = document.getElementById( "formRegister"          );
+const inputs            = document.querySelectorAll( "#formRegister input" );
+let active       = false;
+let activeRepeat = false;
+
+console.log("llego")
+document.addEventListener("DOMContentLoaded", function() {
+  document
+    .getElementById("formRegister")
+    .addEventListener("submit", validateForms);
+});
+
+const expresiones = {
+  usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+  nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+  password: /^.{4,12}$/, // 4 a 12 digitos.
+  correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+  telefono: /^\d{7,14}$/ // 7 a 14 numeros.
+};
+
+function validatePassword() {
+  if (formPass.value == "") {
+    document
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.remove("errorActivo");
+    return;
+  } else if (formPass.value != formPassRepeat.value) {
+    document
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.add("errorActivo");
+    return;
+  } else {
+    document
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.remove("errorActivo");
+    document
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.remove("errorActivo");
+    return true;
+  }
+}
+
+function validateRepeatPassword() {
+  if (formPassRepeat.value == "") {
+    document
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.remove("errorActivo");
+    return;
+  } else if (formPass.value != formPassRepeat.value) {
+    document
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.add("errorActivo");
+    return;
+  } else {
+    document
+      .querySelector(`#grupo__password .Error-p`)
+      .classList.remove("errorActivo");
+    document
+      .querySelector(`#grupo__password2 .Error-p`)
+      .classList.remove("errorActivo");
+    return true;
+  }
+}
+
+function validateEmail() {
+    if (formEmail.value == ""){
+        iconEmail.style.color = "var(--background-forms)";
+    }else{
+        iconEmail.style.color = "var(--succes-element)";
+    }
+}
+
+function validateFirtname() {
+    if (formFirtname.value == ""){
+        iconFirtname.style.color = "var(--background-forms)";
+    }else{
+        iconFirtname.style.color = "var(--succes-element)";
+    }
+}
+
+function validateLastname() {
+    if (formLastname.value == ""){
+        iconLastname.style.color = "var(--background-forms)";
+    }else{
+        iconLastname.style.color = "var(--succes-element)";
+    }
+}
+
+function validateFormPassword(){
+    let valuePass = validatePassword()
+    let valuePassRepeat = validateRepeatPassword()
+
+    console.log("PASS ", valuePass, "PASS REPEAT ", valuePassRepeat)
+    if(valuePass && valuePassRepeat){
+        iconPass.style.color = "var(--succes-element)";
+        iconPassRepeat.style.color = "var(--succes-element)";
+    }else{
+        iconPass.style.color = "var(--background-forms)";
+        iconPassRepeat.style.color = "var(--background-forms)";
+    }
+}
+
+function validateForms(evento) {
+  evento.preventDefault();
+  if (formPass.value == "") {
+    console.log("vacio ==>", formPass)
+    return;
+  } else if (formPassRepeat.value == "") {
+    console.log("vacio ==>", formPass)
+    return;
+  } else if (formPass.value != formPassRepeat.value) {
+    console.log("diferentes ==>", formPass.value)
+    console.log("diferentes ==>", formPassRepeat.value)
+    document
+      .querySelector(`#grupo__password`)
+      .classList.add("errorActivo");
+    return;
+  } else {
+    document
+      .querySelector(`#grupo__password2`)
+      .classList.remove("errorActivo");
+    document
+      .querySelector(`#grupo__password`)
+      .classList.remove("errorActivo");
+    this.submit();
+  }
+}
+
+const validarFormulario = e => {
+  switch (e.target.name) {
+    case "email":
+        validateEmail();
+      // validarCampo(expresiones.usuario, e.target, 'usuario');
+      break;
+    case "firstname":
+        validateFirtname();
+      //validarCampo(expresiones.nombre, e.target, 'nombre');
+      break;
+    case "lastname":
+        validateLastname();
+      // validarCampo(expresiones.password, e.target, 'password');
+      break;
+    case "newPass":
+      validatePassword();
+      validateFormPassword();
+      console.log("VALIDATE",validatePassword())
+      break;
+    case "newPassRepeat":
+      validateRepeatPassword();
+      validateFormPassword();
+      console.log("VALIDATE REPEAT",validateRepeatPassword())
+      break;
+  }
+};
+
+inputs.forEach(input => {
+  input.addEventListener("keyup", validarFormulario);
+  input.addEventListener("blur", validarFormulario);
+});
+
+btnShowPass.addEventListener("click", e => {
+  console.log("click");
+
+  if (active == false) {
+    formPass.type = "text";
+    btnShowPass.classList.replace("fa-eye", "fa-eye-slash");
+    active = true;
+    setTimeout(() => {
+      formPass.type = "password";
+      btnShowPass.classList.replace("fa-eye-slash", "fa-eye");
+      active = false;
+    }, 15000);
+  } else {
+    formPass.type = "password";
+    btnShowPass.classList.replace("fa-eye-slash", "fa-eye");
+    active = false;
+  }
+  e.preventDefault();
+});
+
+btnShowPassRepeat.addEventListener("click", e => {
+  console.log("click");
+  if (activeRepeat == false) {
+    formPassRepeat.type = "text";
+    btnShowPassRepeat.classList.replace("fa-eye", "fa-eye-slash");
+    activeRepeat = true;
+    setTimeout(() => {
+      formPassRepeat.type = "password";
+      btnShowPassRepeat.classList.replace("fa-eye-slash", "fa-eye");
+      activeRepeat = false;
+    }, 15000);
+  } else {
+    formPassRepeat.type = "password";
+    btnShowPassRepeat.classList.replace("fa-eye-slash", "fa-eye");
+    activeRepeat = false;
+  }
+  e.preventDefault();
+});
+
+</script>

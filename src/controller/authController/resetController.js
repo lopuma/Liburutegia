@@ -1,7 +1,6 @@
 const connection = require("../../../database/db");
 const bscryptjs = require("bcryptjs");
 const flash = require('connect-flash');
-const { body, validationResult } = require('express-validator');
 
 const routerReset = {
 
@@ -19,10 +18,11 @@ const routerReset = {
             });
         } 
         if (results.length === 0) {
-            req.session.exists = false;req.session.exists = false;
-            return res.status(200).send({
+            req.session.exists = false;
+            return res.status(400).send({
               messageEmailReset: "Your account could not be found in Liburutegia.",
-              exists: req.session.exists
+              exists: req.session.exists,
+              "inputs" : false 
             });
         } else {
           next();
@@ -38,6 +38,13 @@ const routerReset = {
       const { emailReset, passReset } = req.body;
       console.log({ emailReset, passReset })
       req.session.exists = true;
+      if ( passReset === "" ){
+        return res.send({
+          "errorValidation" : "The password cannot be empty",
+          "exists" : req.session.exists,
+          "inputs" : true        
+        });
+      }
       if ( passReset !== undefined ){
         let passwordHash = await bscryptjs.hash(passReset, 8);
         const sql = `UPDATE users set pass="${passwordHash}" WHERE email = ?`;
@@ -49,23 +56,22 @@ const routerReset = {
                 message: err
             });
           }
-          console.log("RES => ", {results})
           res.send({
             "successValidation":"Password has been changed successfully",
-            "exists" : req.session.exists         
+            "exists" : req.session.exists,
+            "inputs" : false       
           });
-          res.end();
         })
       } else {
-        res.send({
-          "successValidation":"User exists in the Liburutegia database",
-          "exists" : req.session.exists         
-        });
-        res.end();
+          return res.send({
+            "successValidation":"User exists in the Liburutegia database",
+            "exists" : req.session.exists,
+            "inputs" : true        
+          });
       }
-      } catch (error) {
-        throw error;
-      }
+    } catch (error) {
+      throw error;
+    }
     }
   }
 
