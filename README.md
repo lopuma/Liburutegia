@@ -36,6 +36,7 @@ sudo systemctl status mysql
 sudo mysql -u root
 
 ```
+```
 mysql> USE mysql;
 mysql> UPDATE user SET plugin='mysql_native_password' WHERE User='root';
 mysql> FLUSH PRIVILEGES;
