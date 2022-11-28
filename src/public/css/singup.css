@@ -216,12 +216,8 @@
 }
 
 .Select-rol:hover {
-    background-color: #FCE38A;
-    box-shadow: 0px 2px 8px var(--Color-Selected), -0px -2px 8px var(--Color-Selected)
-}
-
-.Select-rol:focus {
-    outline: none;
+    background-color: rgba(255, 235, 55, 0.993);
+    box-shadow: 0px 2px 8px rgb(148, 109, 0), -0px -2px 8px rgb(148, 109, 0);
 }
 
 .Select-option {

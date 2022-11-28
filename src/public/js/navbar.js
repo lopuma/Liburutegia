@@ -1,64 +1,60 @@
 // Variables MENU
-const btnBook    = document.getElementById( 'btnBook'   );
-const btnHome    = document.getElementById( 'btnHome'   );
-const btnBooking = document.getElementById( 'btnBooking');
-const btnPartner = document.getElementById( 'btnPartner');
-const btnAdmin   = document.getElementById( 'btnAdmin'  );
-const btnRecord  = document.getElementById( 'btnRecord' );
-const btnLogin   = document.getElementById( 'btnLogin'  );
+const btnBook = document.getElementById('btnBook');
+const btnHome = document.getElementById('btnHome');
+const btnBooking = document.getElementById('btnBooking');
+const btnPartner = document.getElementById('btnPartner');
+const btnAdmin = document.getElementById('btnAdmin');
+const btnRecord = document.getElementById('btnRecord');
+const btnNavLogin = document.getElementById('btnNavLogin');
+const btnHomeSidemenu = document.getElementById('btnHomeSidemenu');
+const btnAdminSidemenu = document.getElementById('btnAdminSidemenu');
+const btnBookSidemenu = document.getElementById('btnBookSidemenu');
+const btnBookingSidemenu = document.getElementById('btnBookingSidemenu');
+const btnPartnerSidemenu = document.getElementById('btnPartnerSidemenu');
+const btnLoginSidemenu = document.getElementById('btnLoginSidemenu');
+const alert = document.getElementById('alert');
+const btnCloseAlert = document.getElementById('btnCloseAlert');
+const alertReset = document.getElementById('alert2');
+const btnCloseAlert2 = document.getElementById('btnCloseAlert2');
+const btnLogout = document.getElementById('btnLogout');
 
-//Variables SIDE MENU
-const btnHomeSidemenu    = document.getElementById( 'btnHomeSidemenu'   );
-const btnAdminSidemenu   = document.getElementById( 'btnAdminSidemenu'  );
-const btnBookSidemenu    = document.getElementById( 'btnBookSidemenu'   );
-const btnBookingSidemenu = document.getElementById( 'btnBookingSidemenu');
-const btnPartnerSidemenu = document.getElementById( 'btnPartnerSidemenu');
-const btnLoginSidemenu   = document.getElementById( 'btnLoginSidemenu'  );
+try {
+  btnLogout.addEventListener('click', (e) => {
+    localStorage.removeItem('flip');
+    localStorage.removeItem('emailLocal');
+    localStorage.removeItem('emailLocalReset');
+  });
+} catch (error) {}
 
-// TODO VARIABLES LOGIN
-const alert         = document.getElementById( 'alert'  );
-const btnCloseAlert = document.getElementById( 'btnCloseAlert' );
-const alertReset        = document.getElementById( 'alert2' );
-const btnCloseAlert2 = document.getElementById( 'btnCloseAlert2' );
-
-function closeAlert(){
+function closeAlert() {
   try {
     alert.remove();
-  } catch (error) {
-    console.error(error)
-  }
+  } catch (error) {}
 }
 
-function closeAlert2(){
+function closeAlert2() {
   try {
     alertReset.classList.remove('isEnable');
-  } catch (error) {
-    console.error(error)
-  }
+  } catch (error) {}
 }
 
 try {
-	btnCloseAlert2.addEventListener( 'click', () => {
-	  closeAlert2();
-	})
-} catch (error) {
-}
+  btnCloseAlert2.addEventListener('click', () => {
+    closeAlert2();
+  })
+} catch (error) {}
 
-if(alert !== null){
+if (alert !== null) {
   try {
     setTimeout(() => {
       closeAlert();
     }, "5000")
-  } catch (error) {
-    console.error(error)
-  }
+  } catch (error) {}
   try {
-    btnCloseAlert.addEventListener( 'click', () => {
+    btnCloseAlert.addEventListener('click', () => {
       closeAlert();
-      } ) 
-  } catch (error) {
-    console.error(error)
-  }
+    })
+  } catch (error) {}
 }
 
 // TODO CARGA FUNCION DE MARCADO DE PANTALLA
@@ -71,19 +67,19 @@ function onLoad() {
     if ($('#stateHome').val() === '') { // 
       btnHome.classList.add('isSelected');
       btnHomeSidemenu.classList.add('isSelected');
-    } 
+    }
   } catch (error) {
-      throw error
+    throw error
   }
 
   try {
     // LOGIN
     if ($('#stateLogin').val() === '') { // 
       btnLoginSidemenu.classList.add('isSelect');
-      btnLogin.classList.add('isSelect');
-    } 
+      btnNavLogin.classList.add('isSelect');
+    }
   } catch (error) {
-      throw error
+    throw error
   }
 
   try {
@@ -91,9 +87,9 @@ function onLoad() {
     if ($('#stateBooks').val() === '') { // 
       btnBook.classList.add('isSelected');
       btnBookSidemenu.classList.add('isSelected');
-    } 
+    }
   } catch (error) {
-      throw error
+    throw error
   }
 
   try {
@@ -101,9 +97,9 @@ function onLoad() {
     if ($('#stateBookings').val() === '') { // 
       btnBooking.classList.add('isSelected');
       btnBookingSidemenu.classList.add('isSelected');
-    } 
+    }
   } catch (error) {
-      throw error
+    throw error
   }
 
   try {
@@ -111,18 +107,18 @@ function onLoad() {
     if ($('#stateAdmin').val() === '') { // 
       btnAdmin.classList.add('isSelected');
       btnAdminSidemenu.classList.add('isSelected');
-    } 
+    }
   } catch (error) {
-      throw error
+    throw error
   }
 
   try {
     // RECORD
     if ($('#stateRecord').val() === '') { // 
       btnRecord.classList.add('isSelected');
-    } 
+    }
   } catch (error) {
-      throw error
+    throw error
   }
 
   try {
@@ -130,9 +126,9 @@ function onLoad() {
     if ($('#statePartners').val() === '') { // 
       btnPartner.classList.add('isSelected');
       btnPartnerSidemenu.classList.add('isSelected');
-    } 
+    }
   } catch (error) {
-      throw error
+    throw error
   }
 }
 
@@ -196,22 +192,22 @@ function addClassSideMenu() {
   sideMenu.classList.toggle("menu-collapsed");
 }
 
-function showCloseCover(act, actFunct, Funct){
+function showCloseCover(act, actFunct, Funct) {
   console.log("act ", act)
-    act = true;
-    console.log("act ", act)
-    addClassSideMenu();
-    Cover();
-    console.log("actfunc", actFunct);
-    if(actFunct){
-      Funct();
+  act = true;
+  console.log("act ", act)
+  addClassSideMenu();
+  Cover();
+  console.log("actfunc", actFunct);
+  if (actFunct) {
+    Funct();
   }
 };
 
 // siguiente es el código para cambiar el botón de la barra lateral
 function menuBtnChangeSide() {
   console.log(clickInterSide);
-  if(clickInterSide){
+  if (clickInterSide) {
     try {
       i.className = i.classList.contains('fa-bars') ? 'fa-solid fa-bars-staggered' : i.getAttribute('data-original');
     } catch { }
@@ -219,11 +215,11 @@ function menuBtnChangeSide() {
 }
 
 function menuBtnChange() {
-  if(clickInterBar){
-  try {
-    j.className = j.classList.contains('fa-bars') ? 'fa-solid fa-bars-staggered' : j.getAttribute('data-original');
-  } catch { }
-}
+  if (clickInterBar) {
+    try {
+      j.className = j.classList.contains('fa-bars') ? 'fa-solid fa-bars-staggered' : j.getAttribute('data-original');
+    } catch { }
+  }
 }
 
 mainCover.addEventListener('click', () => {

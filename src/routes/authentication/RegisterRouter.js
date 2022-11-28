@@ -22,54 +22,60 @@ routerRegister.get("/", isAuthenticated, async (req, res) => {
 });
 
 routerRegister.post("/", isAuthenticated, async (req, res) => {
-  const { email, username, fullname, rol, newPass } = req.body;
+  try {
+const { email, username, fullname, rol, pass } = req.body;
+  console.log({ email, username, fullname, rol, pass });
   const _ss = 0;
-  let passwordHash = await bscryptjs.hash(newPass, 8);
-  sqlUser = "SELECT * FROM users WHERE email = ?";
-  connection.query(sqlUser, [email], async (error, resul) => {
-    if (error) {
-      return res.status(400).send({ error_msg: error });
-    }
-    if (resul.length == 0) {
+  let passwordHash = await bscryptjs.hash(pass, 8);
+  const sql = "SELECT * FROM users WHERE email = ?";
+  await connection.query(sql, [email], async (err, results) => {
+    if (err) {
+      console.error("[ DB ]", err.sqlMessage);
+      return res.status(400).send({ 
+        code: 400, 
+        message: err 
+      });
+    } 
+    if (results.length === 0) {
       sqlInsert = "INSERT INTO users SET ?";
-      connection.query(
-        sqlInsert,
-        {
+      connection.query( sqlInsert, {
           email,
           username,
           fullname,
           rol,
           pass: passwordHash,
           _ss
-        },
-        async (error, results) => {
-          if (error) {
-            return res.status(400).send({ error_msg: error });
+        }, (err, results) => {
+          if (err) {
+            console.error("[ DB ]", err.sqlMessage);
+            return res.status(400).send({ 
+              code: 400, 
+              message: err });
           }
-          respuesta = {
-            error: false,
-            cod: 200,
-            success_msg: "user created",
+          res.send({
+            status: 200,
+            exists: false,
+            inputs: false,
+            message: `User ${username} created successfully.`,
             data: results
-          };
-          return res.send(respuesta, res.redirect("workspace/admin"));
-          // res.status(200).send({
-          //   success_msg: "User creado con existo",
-          //   data:results
-          // },res.redirect("workspace/admin"),res.end()
-          // );
+          });
         }
       );
     } else {
-      req.flash("error_msg_exist", "Email already exists.");
-      res.status(304).send(
-        {
-          error_msg_exist: "Email already exists."
-        },
-        res.redirect("/register")
-      );
+      return res.send({
+        status: 400,
+        exists: true,
+        inputs: true,
+        message: `The email:  ${email}, already exists, it is associated with the username : ${username}`
+      });
     }
   });
+  } catch (error) {
+    console.error(error);
+    res.status(500).redirect("/");
+  }
+  
+  
 });
 
 module.exports = routerRegister;

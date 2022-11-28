@@ -7,14 +7,17 @@ const inputPasswordNew          = document.getElementById( 'inputPasswordNew'   
 const inputPasswordRepeat       = document.getElementById( 'inputPasswordRepeat'      );
 const inputEmailReset           = document.getElementById( 'inputEmailReset'          );
 const formReset                 = document.getElementById( 'formReset'                );    
+const validationEmail           = document.getElementById( "validationEmail"          );
 const email                     = document.getElementById( 'email'                    );
 const validationEmailReset      = document.getElementById( 'validationEmailReset'     );
+const validationPassword         = document.getElementById( "validationPassword"        );
 const validationPasswordNew     = document.getElementById( 'validationPasswordNew'    );
 const validationPasswordRepeat  = document.getElementById( 'validationPasswordRepeat' );
 const flip                      = document.getElementById( 'flip'                     );
 const inputsExists              = document.getElementById( 'inputsExists'             );
 const btnExists                 = document.getElementById( 'btnExists'                );
 const btnReset                  = document.getElementById( 'btnReset'                 );
+const botonLogin                = document.getElementById( 'botonLogin'                 );
 const linkForgot                = document.getElementById( 'linkForgot'               );
 const linkLogin                 = document.getElementById( 'linkLogin'                );
 const alert2                    = document.getElementById( 'alert2'                   );
@@ -23,10 +26,36 @@ let errorEmailReset             = document.getElementById( 'errorEmailReset'    
 let errorPasswordNew            = document.getElementById( 'errorPasswordNew'         );
 let errorPasswordRepeat         = document.getElementById( 'errorPasswordRepeat'      );
 let valueCkeck                  = localStorage.getItem( 'flip'                        );
-let emailUser                   = localStorage.getItem( 'email'                       );
 let activeEyePassword           = false;
 let activeEyePasswordNew        = false;
 let activeEyePasswordRepeat     = false;
+let emailLocal      = localStorage.getItem( "emailLocal"      );
+let emailLocalReset = localStorage.getItem( "emailLocalReset" );
+
+
+try {
+    if (emailLocal) {
+        email.value = emailLocal;
+        email.focus();
+        email.select();
+    } else if (emailLocalReset) {
+            email.value = emailLocalReset;
+            email.focus();
+            email.select();
+        } else {
+            email.value = "";
+        }
+} catch (error) {}
+
+try {
+    if (emailLocalReset) {
+        inputEmailReset.value = emailLocalReset;
+        inputEmailReset.focus();
+        inputEmailReset.select();
+    } else {
+        inputEmailReset.value = "";
+    }
+} catch (error) {}
 
 // TODO FUNCION PARA MOSTRAR O OCULTAR PASSWORD
 async function showPassword(btnEye, elementInput) {
@@ -35,10 +64,10 @@ async function showPassword(btnEye, elementInput) {
         btnEye.classList.replace('fa-eye', 'fa-eye-slash')    ;
         activeEyePassword = true;
         setTimeout(() => {
-            elementInput.type = 'password';
-            btnEye.classList.replace('fa-eye-slash', 'fa-eye');
-            activeEyePassword = false;
-        }, 8000);
+          elementInput.type = "password";
+          btnEye.classList.replace("fa-eye-slash", "fa-eye");
+          activeEyePassword = false;
+        }, [ 1.5 * 60 ] * 1000);
     } else if (activeEyePassword) {
         elementInput.type = 'password';
         btnEye.classList.replace('fa-eye-slash', 'fa-eye');
@@ -79,7 +108,6 @@ async function showPasswordRepeat(btnEye, elementInput) {
         activeEyePasswordRepeat = false;
     }
 }
-
 // TODO CLEAR INPUST AND MESSAGES ERROR
 function clearInputs() {
     inputEmailReset.value = '';
@@ -95,23 +123,49 @@ function clearInputs() {
     formReset.style.height = '24em';
 }
 
-// TODO ACTIVE FOCUS OF CHECK
 function activeCheck() {
-    valueCkeck = localStorage.getItem('flip');
-    if (valueCkeck === 'false') {
-        btnExists.classList.remove('isEnable')
-        resCheck = false;
+    valueCkeck = localStorage.getItem("flip");
+    if (valueCkeck === "false") {
+        btnExists.classList.remove("isEnable");
+        btnExists.classList.add("isDisable");
+        return resCheck = false;
+    } else if (valueCkeck === "true") {
+        btnExists.classList.add("isEnable");
+        btnExists.classList.remove("isDisable");
+        return resCheck = true;
     } else {
-        btnExists.classList.add('isEnable')
-        resCheck = true;
+        return resCheck = null;
     }
 }
 
 // TODO CALL FUNCTION ACTIVE CHECK
-activeCheck();
+resCheck = activeCheck();
+
+if (valueCkeck === null) {
+    flip.checked = false;
+    localStorage.setItem("flip", flip.checked);
+}
+
 flip.checked = resCheck;
-flip.addEventListener('change', function (e) {
-    localStorage.setItem('flip', flip.checked);
+flip.addEventListener("change", function(e) {
+    localStorage.setItem("flip", this.checked);
+});
+
+// TODO CLICK LINKS FORGOT / LOGIN
+linkLogin.addEventListener('click', () => {
+    btnExists.classList.add('isEnable')
+    btnExists.classList.remove('isDisable')
+    inputEmailReset.focus();
+});
+
+linkForgot.addEventListener('click', () => {
+    btnExists.classList.add('isDisable')
+    btnExists.classList.remove('isEnable')
+    btnReset.classList.remove('isEnable')
+    btnReset.classList.add('isDisable')
+    clearInputs();
+    email.value="";
+    email.focus();
 });
 
 // TODO VALIDATE ALL INPUTS
@@ -222,6 +276,8 @@ async function checkedUser() {
 // TODO CHECK USER EXISTS
 async function checkUserExists() {
     let auth = validationsInputs();
+    emailErrorReset = inputEmailReset.value;
+    localStorage.setItem("emailLocalReset", emailErrorReset);
     if (auth) {
         await checkedUser();
     }
@@ -252,6 +308,8 @@ async function resetPassword() {
 // TODO IT'S OK, RESET THE PASSWORD
 async function resetUserPassword() {
         let auth = validationsInputs();
+        emailErrorReset = inputEmailReset.value;
+        localStorage.setItem("emailLocalReset", emailErrorReset);
         if (auth) {
             await resetPassword();
         }
@@ -309,31 +367,28 @@ async function resetResponse(data) {
         btnReset.classList.add('isDisable')
         clearInputs();
         flip.checked = false;
-        localStorage.setItem('flip', flip.checked);
+        localStorage.setItem("flip", flip.checked);
         Swal.fire({
             position: 'top-end',
             icon: 'success',
             title: data.successValidation,
             showConfirmButton: false,
-            timer: 2000
+            timer: 1000
         })
+        try {
+            validationEmail.classList.remove("isActive");
+            email.classList.remove("isError");
+        } catch (error) {}
+        try {
+            validationPassword.classList.remove("isActive");
+            inputPassword.classList.remove("isError");        
+        } catch (error) {}
+        email.value = emailLocalReset;
+        email.focus();
+        email.select();
         return;
     }
 };
-
-// TODO CLICK LINKS FORGOT / LOGIN
-linkLogin.addEventListener('click', () => {
-    btnExists.classList.add('isEnable')
-    btnExists.classList.remove('isDisable')
-});
-
-linkForgot.addEventListener('click', () => {
-    btnExists.classList.remove('isDisable')
-    btnExists.classList.remove('isEnable')
-    btnReset.classList.remove('isEnable')
-    btnReset.classList.add('isDisable')
-    clearInputs();
-});
 
 // TODO CLICK RESET PASSWORD
 btnExists.addEventListener('click', async (e) => {
@@ -344,6 +399,11 @@ btnExists.addEventListener('click', async (e) => {
 btnReset.addEventListener('click', async (e) => {
     e.preventDefault();
     await resetUserPassword();
+});
+
+botonLogin.addEventListener( 'click', (e) => {
+    emailError = email.value;
+    localStorage.setItem("emailLocal", emailError);
 });
 
 // TODO ENTER RESET PASSWORD

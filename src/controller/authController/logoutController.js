@@ -10,7 +10,7 @@ const logoutController = {
         req.session.ruta = "";
         req.session.roladmin = "";
       } catch (error) {
-        console.log(error)
+        console.error(error)
         res.status(404).redirect("/")
       }
       req.session.destroy();

@@ -392,8 +392,8 @@
     left: 30%;
     z-index: 999999;
     margin: auto;
-    background-color: rgba(0, 203, 122, 0.918);
-    color: whitesmoke;
+    background-color: #749F82;
+    color: var(--Color-texto-negro);
     border-radius: var(--Radius);
     transition: all 0.3s;
 }

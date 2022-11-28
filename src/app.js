@@ -39,7 +39,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true,
 	//store: new MySqlStore(database),
-	//maxAge: 2 * 60 * 60 * 1000
+	//maxAge: 8 * 60 * 60 * 1000
 }));
 
 // 7 - Usar mensajes de sistemas y enviar al cliente
