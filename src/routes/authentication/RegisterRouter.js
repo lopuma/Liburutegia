@@ -1,6 +1,5 @@
 const routerRegister = require("express").Router();
 const connection = require("../../../database/db");
-//const { postReset } = require('../../controller/authController/resetController')
 const bscryptjs = require("bcryptjs");
 const {
   isAuthenticated
@@ -26,7 +25,7 @@ routerRegister.post("/", isAuthenticated, async (req, res) => {
 const { email, username, fullname, rol, pass } = req.body;
   console.log({ email, username, fullname, rol, pass });
   const _ss = 0;
-  let passwordHash = await bscryptjs.hash(pass, 8);
+  let passwordHash = await bscryptjs.hash(pass.trim(), 8);
   const sql = "SELECT * FROM users WHERE email = ?";
   await connection.query(sql, [email], async (err, results) => {
     if (err) {
@@ -38,26 +37,29 @@ const { email, username, fullname, rol, pass } = req.body;
     } 
     if (results.length === 0) {
       sqlInsert = "INSERT INTO users SET ?";
-      connection.query( sqlInsert, {
-          email,
-          username,
-          fullname,
+      connection.query(
+        sqlInsert,
+        {
+          email: email.trim(),
+          username: username.trim(),
+          fullname: fullname.trim(),
           rol,
           pass: passwordHash,
           _ss
-        }, (err, results) => {
+        },
+        err => {
           if (err) {
             console.error("[ DB ]", err.sqlMessage);
-            return res.status(400).send({ 
-              code: 400, 
-              message: err });
+            return res.status(400).send({
+              code: 400,
+              message: err
+            });
           }
           res.send({
             status: 200,
             exists: false,
             inputs: false,
-            message: `User ${username} created successfully.`,
-            data: results
+            message: `User ${username} created successfully.`
           });
         }
       );

@@ -12,6 +12,7 @@
                         <input class="Animation-input" name="inputEmailNew" id="inputEmailNew" type="email"
                             placeholder=" " autocomplete="valorNoValido" required="required" tabindex="1" autofocus>
                         <label class="Animation-label" for="inputEmailNew">Enter your Email *</label>
+                        <label class="Animation-info" for="inputEmailNew" id="infoEmail"><i class="fa-solid fa-circle-info"></i></label>
                     </div>
                 </div>
                 <div class="Input-error Error" id="validationEmailNew">
@@ -32,8 +33,9 @@
                     <i id="iconUserName" class="Box-i fa-solid fa-user"></i>
                     <div class="Box-animation Animation">
                         <input class="Animation-input" name="inputUsername" id="inputUsername" type="text"
-                            placeholder=" " autocomplete="nickname" required="required" tabindex="2">
+                            placeholder=" " autocomplete="username" required="required" tabindex="2">
                         <label class="Animation-label" for="inputUsername">Enter your Username *</label>
+                        <label class="Animation-info" for="inputUsername" id="infoUsername"><i class="fa-solid fa-circle-info"></i></label>
                     </div>
                 </div>
                 <div class="Input-error Error" id="validationUserName">
@@ -56,6 +58,7 @@
                         <input class="Animation-input" id="inputFullName" type="text" name="inputFullName" tabindex="3"
                             placeholder=" " autocomplete="noValido" required="required">
                         <label class="Animation-label" for="inputFullName">Enter your Full Name *</label>
+                        <label class="Animation-info" for="inputFullName" id="infoFullname"><i class="fa-solid fa-circle-info"></i></label>
                     </div>
                 </div>
                 <div class="Input-error Error" id="validationFullName">
@@ -78,6 +81,7 @@
                         <input class="Animation-input" name="inputPassNew" id="inputPassNew" type="password"
                             required="required" tabindex="4" placeholder=" " autocomplete="noValido">
                         <label for="inputPassNew" class="Animation-label">Create a password *</label>
+                        <label class="Animation-info" for="inputPassNew" id="infoPass"><i class="fa-solid fa-circle-info"></i></label>
                     </div>
                     <i id="icon-eye-rPassword" class="Box-i fa-solid fa-eye"></i>
                 </div>
@@ -101,6 +105,7 @@
                         <input class="Animation-input" name="inputPassNewRepeat" id="inputPassNewRepeat" type="password"
                             required="required" placeholder=" " autocomplete="noValido" tabindex="5">
                         <label for="inputPassNewRepeat" class="Animation-label">Repeat password *</label>
+                        <label class="Animation-info" for="inputPassNewRepeat" id="infoPass"><i class="fa-solid fa-circle-info"></i></label>
                     </div>
                     <i id="icon-eye-rRepeat" class="Box-i fa-solid fa-eye"></i>
                 </div>
@@ -145,32 +150,32 @@
     const formRegister = document.getElementById("formRegister");
     const inputs = document.querySelectorAll("#formRegister input");
     const inputEmailNew = document.getElementById('inputEmailNew');
-    let active = false;
-    let activeRepeat = false;
-
+    const inputUsername = document.getElementById('inputUsername');
+    const inputFullName = document.getElementById('inputFullName');
+    
     const fields = {
         email: false,
         username: false,
         fullname: false,
         pass: false
     }
+
     const expresiones = {
-        nickname: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+        username: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
         fullname: /^[a-zA-ZÀ-ÿ\s]{4,40}$/, // Letras y espacios, pueden llevar acentos.
         password: /^.{5,20}$/, // 4 a 20 digitos.
-        email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+        email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+        //email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
         //phone: /^\d{7,14}$/ // 7 a 14 numeros.
     };
 
     const validarPassword = () => {
         if (inputPassNew.value !== inputPassNewRepeat.value) {
-            console.log("no son iguales")
             document.getElementById('validationPassRepeat').classList.add('isActive');
             document.getElementById('errorPassRepeat').innerHTML = "Passwords do not match.";
             inputPassNewRepeat.classList.add('isError');
             fields['pass'] = false;
         } else {
-            console.log("iguales")
             document.getElementById('validationPassRepeat').classList.remove('isActive');
             document.getElementById('errorPassRepeat').innerHTML = "";
             inputPassNewRepeat.classList.remove('isError');
@@ -184,6 +189,21 @@
 
     async function responseRegister(data) {
         const exists = data.exists;
+        const contentSwal = {
+            text: data.message,
+            backdrop: '#2C3333',
+            timer: 5000,
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#474E68',
+            confirmButtonText: 'OK',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        }
         if (!exists) {
             Swal.fire({
                 icon: 'success',
@@ -195,18 +215,16 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#474E68',
                 confirmButtonText: 'OK',
-                cancelButtonText: 'No',
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 }
-            }).then((results) => {
-                if (results.isConfirmed) {
-                    formRegister.reset();
-                    inputEmailNew.focus();
-                }
+            }).then(() => {
+                formRegister.reset();
+                inputEmailNew.focus();
+                inputEmailNew.select();
             });
         } else {
             Swal.fire({
@@ -219,43 +237,43 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#474E68',
                 confirmButtonText: 'OK',
-                cancelButtonText: 'No',
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 }
-            }).then((results) => {
-                if (results.isConfirmed) {
-                    inputEmailNew.focus();
-                    inputEmailNew.select();
-                }
+            }).then(() => {
+                inputEmailNew.focus();
+                inputEmailNew.select();
             });
         }
     }
 
-    async function validateField(expresion, input, fieldError, fieldErrorText, textError, field) {
-        if (!expresion.test(input.value)) {
+    async function validateField(expresion, input, fieldError, fieldErrorText, textError, field, info) {
+        if (!expresion.test(input.value.trim())) {
             document.getElementById(fieldError).classList.add('isActive');
             document.getElementById(fieldErrorText).innerHTML = textError;
             input.classList.add('isError');
+            document.getElementById(info).classList.add('isVisible');
             fields[field] = false;
         } else {
             document.getElementById(fieldError).classList.remove('isActive');
             document.getElementById(fieldErrorText).innerHTML = "";
             input.classList.remove('isError');
+            document.getElementById(info).classList.remove('isVisible');
             fields[field] = true;
         }
     }
 
-    async function fieldEmpty(expression, input, errorDivValidation, errorInputText, textEmailError, field) {
-        if (input.value !== "") {
-            await validateField(expression, input, errorDivValidation, errorInputText, textEmailError, field);
+    async function fieldEmpty(expression, input, errorDivValidation, errorInputText, textEmailError, field, info) {
+        if (input.value.trim() !== "") {
+            await validateField(expression, input, errorDivValidation, errorInputText, textEmailError, field, info);
         } else {
             document.getElementById(errorDivValidation).classList.remove('isActive');
             document.getElementById(errorInputText).innerHTML = "";
             input.classList.remove('isError');
+            document.getElementById(info).classList.remove('isVisible');
         }
         return;
     }
@@ -264,51 +282,49 @@
         switch (e.target.name) {
             case "inputEmailNew":
                 let textEmailError = "Error: The format Email address is incorrect, the email can only contain letters, numbers, periods, hyphens and underscores.";
-                await fieldEmpty(expresiones.email, e.target, 'validationEmailNew', 'errorEmailNew', textEmailError, 'email');
+                await fieldEmpty(expresiones.email, e.target, 'validationEmailNew', 'errorEmailNew', textEmailError, 'email', 'infoEmail');
                 break;
             case "inputUsername":
                 let textErrorUsername = "Error: The username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces.";
-                await fieldEmpty(expresiones.nickname, e.target, 'validationUserName', 'errorUserName', textErrorUsername, 'username');
+                await fieldEmpty(expresiones.username, e.target, 'validationUserName', 'errorUserName', textErrorUsername, 'username', 'infoUsername');
                 break;
             case "inputFullName":
-                let textErrorFullname = "Error: The Full Name must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters.";
-                await fieldEmpty(expresiones.fullname, e.target, 'validationFullName', 'errorFullName', textErrorFullname, 'fullname');
+                let textErrorFullname = "Error: Full Name must have 4 to 40 digits and can contain letters, accents and spaces, cannot contain special characters.";
+                await fieldEmpty(expresiones.fullname, e.target, 'validationFullName', 'errorFullName', textErrorFullname, 'fullname', 'infoFullname');
                 break;
             case "inputPassNew":
                 let textErrorPassNew = "Error: The password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.";
-                await fieldEmpty(expresiones.password, e.target, 'validationPassNew', 'errorPassNew', textErrorPassNew, 'pass');
+                await fieldEmpty(expresiones.password, e.target, 'validationPassNew', 'errorPassNew', textErrorPassNew, 'pass', 'infoPass');
                 validarPassword();
                 break;
             case "inputPassNewRepeat":
-                //let textErrorPassRepeat = "Error: The password does not meet the requirements of the password policy, it must be between 5 and 15 digits, it can contain letters, numbers and special characters.";
-                //await fieldEmpty(expresiones.password, e.target, 'validationPassRepeat', 'errorPassRepeat', textErrorPassRepeat);
                 validarPassword();
                 break;
         }
     };
 
     inputs.forEach(input => {
-        //input.addEventListener("keyup", validateForms);
-        input.addEventListener("blur", validateForms);
+        inputs.forEach(input => {
+            input.addEventListener("blur", validateForms);
+            input.addEventListener("keyup", validateForms);
+            input.addEventListener("keypress", (e) => {
+                if (e.key === 'Enter') {
+                    validateForms;
+                }
+            });
+        });
     });
-
-    //formRegister.addEventListener('submit', (e) => {
-    //    e.preventDefault();
-    //   console.log("ENVIADO")
-    //});
 
     async function correctForms(e) {
         e.preventDefault();
-        console.log("ENVIADO");
         if (fields.email && fields.username && fields.fullname && fields.pass) {
             const data = {
-                email: document.getElementById("inputEmailNew").value,
-                username: document.getElementById("inputUsername").value,
-                fullname: document.getElementById("inputFullName").value,
+                email: inputEmailNew.value,
+                username: inputUsername.value,
+                fullname: inputFullName.value,
                 rol: document.getElementById("rol").value,
-                pass: document.getElementById("inputPassNew").value
+                pass: inputPassNew.value
             };
-            console.log({ data });
             fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -320,10 +336,34 @@
                 .then((response) => response.json())
                 .then((data) => responseRegister(data))
                 .catch((error) => console.error(error));
-            //
         } else {
-            console.log(" hay uno vacio ");
-        }
+            window.alert("There are items required your attention.")
+            if (!fields.email) {
+                inputEmailNew.focus();
+                inputEmailNew.select();
+                inputEmailNew.classList.add('isError');
+                document.getElementById('infoEmail').classList.add('isVisible');
+                return;
+            } else if (!fields.username) {
+                inputUsername.focus();
+                inputUsername.select();
+                inputUsername.classList.add('isError');
+                document.getElementById('infoUsername').classList.add('isVisible');
+                return;
+            } else if (!fields.fullname) {
+                inputFullName.focus();
+                inputFullName.select();
+                inputFullName.classList.add('isError');
+                document.getElementById('infoFullname').classList.add('isVisible');
+                return;
+            } else if (!fields.pass) {
+                inputPassNew.focus();
+                inputPassNew.select();
+                inputPassNew.classList.add('isError');
+                document.getElementById('infoPass').classList.add('isVisible');
+                return;
+            }
+        }        
     }
 
     document.addEventListener("DOMContentLoaded", function () {
