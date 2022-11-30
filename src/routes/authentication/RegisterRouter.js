@@ -68,7 +68,7 @@ const { email, username, fullname, rol, pass } = req.body;
         status: 400,
         exists: true,
         inputs: true,
-        message: `The email:  ${email}, already exists, it is associated with the username : ${username}`
+        message: `The email:  ${email}, already exists, it is associated with the username : ${results[0].username}`
       });
     }
   });

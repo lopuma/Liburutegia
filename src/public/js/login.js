@@ -1,36 +1,36 @@
 const url = '/reset';
-const btnEyePassword            = document.getElementById( 'btnEyePassword'           );
-const btnEyePasswordNew         = document.getElementById( 'btnEyePasswordNew'        );
-const btnEyePasswordRepeat      = document.getElementById( 'btnEyePasswordRepeat'     );
-const inputPassword             = document.getElementById( 'inputPassword'            );
-const inputPasswordNew          = document.getElementById( 'inputPasswordNew'         );
-const inputPasswordRepeat       = document.getElementById( 'inputPasswordRepeat'      );
-const inputEmailReset           = document.getElementById( 'inputEmailReset'          );
-const formReset                 = document.getElementById( 'formReset'                );    
-const validationEmail           = document.getElementById( "validationEmail"          );
-const email                     = document.getElementById( 'email'                    );
-const validationEmailReset      = document.getElementById( 'validationEmailReset'     );
-const validationPassword         = document.getElementById( "validationPassword"        );
-const validationPasswordNew     = document.getElementById( 'validationPasswordNew'    );
-const validationPasswordRepeat  = document.getElementById( 'validationPasswordRepeat' );
-const flip                      = document.getElementById( 'flip'                     );
-const inputsExists              = document.getElementById( 'inputsExists'             );
-const btnExists                 = document.getElementById( 'btnExists'                );
-const btnReset                  = document.getElementById( 'btnReset'                 );
-const botonLogin                = document.getElementById( 'botonLogin'                 );
-const linkForgot                = document.getElementById( 'linkForgot'               );
-const linkLogin                 = document.getElementById( 'linkLogin'                );
-const alert2                    = document.getElementById( 'alert2'                   );
-let messageValidation           = document.getElementById( 'messageValidation'        );
-let errorEmailReset             = document.getElementById( 'errorEmailReset'          );
-let errorPasswordNew            = document.getElementById( 'errorPasswordNew'         );
-let errorPasswordRepeat         = document.getElementById( 'errorPasswordRepeat'      );
-let valueCkeck                  = localStorage.getItem( 'flip'                        );
-let activeEyePassword           = false;
-let activeEyePasswordNew        = false;
-let activeEyePasswordRepeat     = false;
-let emailLocal      = localStorage.getItem( "emailLocal"      );
-let emailLocalReset = localStorage.getItem( "emailLocalReset" );
+const btnEyePassword = document.getElementById('btnEyePassword');
+const btnEyePasswordNew = document.getElementById('btnEyePasswordNew');
+const btnEyePasswordRepeat = document.getElementById('btnEyePasswordRepeat');
+const inputPassword = document.getElementById('inputPassword');
+const inputPasswordNew = document.getElementById('inputPasswordNew');
+const inputPasswordRepeat = document.getElementById('inputPasswordRepeat');
+const inputEmailReset = document.getElementById('inputEmailReset');
+const formReset = document.getElementById('formReset');
+const validationEmail = document.getElementById("validationEmail");
+const email = document.getElementById('email');
+const validationEmailReset = document.getElementById('validationEmailReset');
+const validationPassword = document.getElementById("validationPassword");
+const validationPasswordNew = document.getElementById('validationPasswordNew');
+const validationPasswordRepeat = document.getElementById('validationPasswordRepeat');
+const flip = document.getElementById('flip');
+const inputsExists = document.getElementById('inputsExists');
+const btnExists = document.getElementById('btnExists');
+const btnReset = document.getElementById('btnReset');
+const botonLogin = document.getElementById('botonLogin');
+const linkForgot = document.getElementById('linkForgot');
+const linkLogin = document.getElementById('linkLogin');
+const alert2 = document.getElementById('alert2');
+let messageValidation = document.getElementById('messageValidation');
+let errorEmailReset = document.getElementById('errorEmailReset');
+let errorPasswordNew = document.getElementById('errorPasswordNew');
+let errorPasswordRepeat = document.getElementById('errorPasswordRepeat');
+let valueCkeck = localStorage.getItem('flip');
+let activeEyePassword = false;
+let activeEyePasswordNew = false;
+let activeEyePasswordRepeat = false;
+let emailLocal = localStorage.getItem("emailLocal");
+let emailLocalReset = localStorage.getItem("emailLocalReset");
 
 
 try {
@@ -39,13 +39,13 @@ try {
         email.focus();
         email.select();
     } else if (emailLocalReset) {
-            email.value = emailLocalReset;
-            email.focus();
-            email.select();
-        } else {
-            email.value = "";
-        }
-} catch (error) {}
+        email.value = emailLocalReset;
+        email.focus();
+        email.select();
+    } else {
+        email.value = "";
+    }
+} catch (error) { }
 
 try {
     if (emailLocalReset) {
@@ -55,19 +55,19 @@ try {
     } else {
         inputEmailReset.value = "";
     }
-} catch (error) {}
+} catch (error) { }
 
 // TODO FUNCION PARA MOSTRAR O OCULTAR PASSWORD
 async function showPassword(btnEye, elementInput) {
     if (activeEyePassword === false) {
         elementInput.type = 'text';
-        btnEye.classList.replace('fa-eye', 'fa-eye-slash')    ;
+        btnEye.classList.replace('fa-eye', 'fa-eye-slash');
         activeEyePassword = true;
         setTimeout(() => {
-          elementInput.type = "password";
-          btnEye.classList.replace("fa-eye-slash", "fa-eye");
-          activeEyePassword = false;
-        }, [ 1.5 * 60 ] * 1000);
+            elementInput.type = "password";
+            btnEye.classList.replace("fa-eye-slash", "fa-eye");
+            activeEyePassword = false;
+        }, [1 * 60] * 1000);
     } else if (activeEyePassword) {
         elementInput.type = 'password';
         btnEye.classList.replace('fa-eye-slash', 'fa-eye');
@@ -84,7 +84,7 @@ async function showPasswordNew(btnEye, elementInput) {
             elementInput.type = 'password';
             btnEye.classList.replace('fa-eye-slash', 'fa-eye');
             activeEyePasswordNew = false;
-        }, 8000);
+        }, [1 * 60] * 1000);
     } else if (activeEyePasswordNew) {
         elementInput.type = 'password';
         btnEye.classList.replace('fa-eye-slash', 'fa-eye');
@@ -101,7 +101,7 @@ async function showPasswordRepeat(btnEye, elementInput) {
             elementInput.type = 'password';
             btnEye.classList.replace('fa-eye-slash', 'fa-eye');
             activeEyePasswordRepeat = false;
-        }, 8000);
+        }, [1 * 60] * 1000);
     } else if (activeEyePasswordRepeat) {
         elementInput.type = 'password';
         btnEye.classList.replace('fa-eye-slash', 'fa-eye');
@@ -147,7 +147,7 @@ if (valueCkeck === null) {
 }
 
 flip.checked = resCheck;
-flip.addEventListener("change", function(e) {
+flip.addEventListener("change", function (e) {
     localStorage.setItem("flip", this.checked);
 });
 
@@ -164,13 +164,13 @@ linkForgot.addEventListener('click', () => {
     btnReset.classList.remove('isEnable')
     btnReset.classList.add('isDisable')
     clearInputs();
-    email.value="";
+    email.value = "";
     email.focus();
 });
 
 // TODO VALIDATE ALL INPUTS
 function validationsInputs() {
-    if (inputEmailReset.value.length === 0 && inputsExists.classList.contains('isExists') ) {
+    if (inputEmailReset.value.length === 0 && inputsExists.classList.contains('isExists')) {
         errorEmailReset.innerHTML = 'The email cannot be empty.';
         validationEmailReset.classList.add('isActive');
         inputEmailReset.classList.add('isError');
@@ -183,20 +183,20 @@ function validationsInputs() {
         return false;
     }
     // TODO CHECK
-    if (inputEmailReset.value.length === 0 && !inputsExists.classList.contains('isExists') ) {
+    if (inputEmailReset.value.length === 0 && !inputsExists.classList.contains('isExists')) {
         errorEmailReset.innerHTML = 'The email cannot be empty.';
         validationEmailReset.classList.add('isActive');
         inputEmailReset.classList.add('isError');
         inputEmailReset.focus();
         formReset.style.height = '27em';
         return false;
-    } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(inputEmailReset.value) && !inputsExists.classList.contains('isExists') ) {
+    } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(inputEmailReset.value) && !inputsExists.classList.contains('isExists')) {
         messageValidation.innerHTML = 'The format email address is incorrect.';
         alert2.classList.add('isEnable');
         validationEmailReset.classList.remove('isActive');
         inputEmailReset.classList.remove('isError')
         return false;
-    } else if ( !inputsExists.classList.contains('isExists') ) {
+    } else if (!inputsExists.classList.contains('isExists')) {
         return true;
     }
     // TODO RESET
@@ -265,9 +265,9 @@ async function checkedUser() {
                 'Content-Type': 'application/json; charset=UTF-8'
             }
         })
-        .then((response) => response.json())
-        .then((data) => resetResponse(data))
-        .catch((error) => console.error(error))
+            .then((response) => response.json())
+            .then((data) => resetResponse(data))
+            .catch((error) => console.error(error))
     } catch (error) {
         throw error
     }
@@ -307,12 +307,12 @@ async function resetPassword() {
 
 // TODO IT'S OK, RESET THE PASSWORD
 async function resetUserPassword() {
-        let auth = validationsInputs();
-        emailErrorReset = inputEmailReset.value;
-        localStorage.setItem("emailLocalReset", emailErrorReset);
-        if (auth) {
-            await resetPassword();
-        }
+    let auth = validationsInputs();
+    emailErrorReset = inputEmailReset.value;
+    localStorage.setItem("emailLocalReset", emailErrorReset);
+    if (auth) {
+        await resetPassword();
+    }
 };
 
 // TODO DON'T EXISTS THE USER
@@ -335,7 +335,7 @@ async function userNoExists() {
 // TODO RESPONSE FOR USER RESET PASSWORD
 async function resetResponse(data) {
     const { exists, inputs } = data;
-    if ( !exists && !inputs) {
+    if (!exists && !inputs) {
         userNoExists();
     } else if (exists === true && inputs === true) {
         errorEmailReset.innerHTML = '';
@@ -355,12 +355,12 @@ async function resetResponse(data) {
         formReset.style.height = '38em';
         inputEmailReset.focus();
         inputEmailReset.select();
-        if ( data.errorValidation !== undefined ){
+        if (data.errorValidation !== undefined) {
             alert2.classList.add('isEnable');
             messageValidation.innerHTML = data.errorValidation;
         }
         return;
-    } else if ( exists && !inputs ) {
+    } else if (exists && !inputs) {
         btnExists.classList.remove('isDisable')
         btnExists.classList.remove('isEnable')
         btnReset.classList.remove('isEnable')
@@ -378,11 +378,11 @@ async function resetResponse(data) {
         try {
             validationEmail.classList.remove("isActive");
             email.classList.remove("isError");
-        } catch (error) {}
+        } catch (error) { }
         try {
             validationPassword.classList.remove("isActive");
-            inputPassword.classList.remove("isError");        
-        } catch (error) {}
+            inputPassword.classList.remove("isError");
+        } catch (error) { }
         email.value = emailLocalReset;
         email.focus();
         email.select();
@@ -401,7 +401,7 @@ btnReset.addEventListener('click', async (e) => {
     await resetUserPassword();
 });
 
-botonLogin.addEventListener( 'click', (e) => {
+botonLogin.addEventListener('click', (e) => {
     emailError = email.value;
     localStorage.setItem("emailLocal", emailError);
 });

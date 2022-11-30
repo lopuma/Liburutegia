@@ -98,7 +98,7 @@
     outline: none;
     transition: all 0.3s ease;
 }
-
+.Animation-closeInfo,
 .Animation-info,
 .Animation-label {
     width: auto;
@@ -106,6 +106,7 @@
     top: calc(50% - .7em);
     left: 1em;
     cursor: text;
+    font-size: 1em;
     letter-spacing: .2em;
     color: var(--Color-texto-negro);
     transition-property: top, font-size, color, background-color, border-radius, padding, left, width;
@@ -113,7 +114,6 @@
     transition-timing-function: ease;
     vertical-align: baseline;
 }
-
 
 .Animation-input:focus~.Animation-label,
 .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
@@ -128,25 +128,39 @@
 }
 
 .Animation-info {
-    left: 0px;
-    font-size: 1em;
     cursor: pointer;
     display: none;
 }
 
+.Animation-closeInfo {
+    cursor: pointer;
+    color: blueviolet;
+    display: none;
+}
+
+.Animation-input:focus~.Animation-closeInfo,
 .Animation-input:focus~.Animation-info,
+.Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-closeInfo,
 .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
     left: 0.5em;
     top: -.65em;
     font-size: 1.5em;
-    color: red;
-    background-color: white;
+    color: var(--Color-invalid);
+    background-color: #fff;
     border-radius: var(--Radius);
     padding: 0;
     text-align: start;
 }
 
+/* .Animation-input:focus~.Animation-closeInfo{
+    color: chartreuse;
+} */
+
 .Animation-info.isVisible {
+    display: flex;
+}
+
+.Animation-closeInfo.isVisible {
     display: flex;
 }
 
@@ -364,6 +378,8 @@
     }
 
     .Animation-input:focus~.Animation-info,
+    .Animation-input:focus~.Animation-closeInfo,
+    .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-closeInfo,
     .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
         top: -.6em;
         font-size: 1.6em;
