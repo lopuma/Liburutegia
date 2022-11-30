@@ -43,6 +43,16 @@ mysql> FLUSH PRIVILEGES;
 mysql> exit;
 ```
 
+  > Asignamos password a la BD
+  
+ ```
+mysql -u root
+mysql> USE mysql;
+mysql>  ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
+mysql> FLUSH PRIVILEGES;
+mysql> exit;
+```
+
 ```console
 sudo service mysql restart
 ```
