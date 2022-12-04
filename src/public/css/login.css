@@ -1,6 +1,6 @@
 /* TODO CONTENEDOR DE LOGIN*/
 .Authentication {
-    margin: var(--Margin-top-forms) auto 60px;
+    margin: var(--Margin-top-forms) auto 0;
     width: 80%;
     font-size: 1em;
     font-family: var(--Font-family-principal);
@@ -23,7 +23,6 @@
     transition: all 1s;
     transform-origin: left;
     transform-style: preserve-3d;
-    background-color: inherit;
     animation: img-anim 1s ease;
 }
 
@@ -455,7 +454,7 @@ hr {
 }
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
-@media all and (max-width: 950px) {
+@media all and (max-width: 59.375em) {
 
     .Auth-cover {
         display: none;
@@ -511,7 +510,7 @@ hr {
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 31.25em) {
 
     .Authentication {
         width: 100%;

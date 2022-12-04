@@ -32,6 +32,10 @@ a {
   font-size: inherit;
 }
 
+a:hover{
+  text-decoration: none;
+}
+
 p a {
   display: inline;
 }

@@ -52,21 +52,6 @@ async function cancel() {
 
 async function responseRegister(data) {
     const exists = data.exists;
-    const contentSwal = {
-        text: data.message,
-        backdrop: '#2C3333',
-        timer: 5000,
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#474E68',
-        confirmButtonText: 'OK',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    }
     if (!exists) {
         Swal.fire({
             icon: 'success',
@@ -208,7 +193,6 @@ async function correctForms(e) {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8'
             }
-
         })
             .then((response) => response.json())
             .then((data) => responseRegister(data))

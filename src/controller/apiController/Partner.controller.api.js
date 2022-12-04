@@ -1,52 +1,81 @@
-const { body, validationResult } = require('express-validator');
+const { body, validationResult } = require("express-validator");
 const connection = require("../../../database/db");
-const flash = require('connect-flash');
+const flash = require("connect-flash");
 
 const partnerController = {
-
-    //VALIDATIONS
-    validate: [
-        body('email', "The format email address is incorrect.").isEmail(),
-    ],
-    // EXISTS
+    //TODO VALIDATIONS
+    validate: [body("email", "The format email address is incorrect.").isEmail()],
+    //TODO EXISTS DNI PARTENER
     existPartner: async (req, res, next) => {
         try {
-            const dni = req.body.dni;
-            await connection.query('SELECT * FROM partners WHERE dni = ?', [dni], (err, results) => {
-                if (err || results.length === 1) {
-                    return res.status(404).send({
-                        success: false,
-                        message: `There is already a member with DNI : ${dni}`,
-                        results
-                    });
-                } else {
-                    next();
+            const sqlSelect = "SELECT * FROM partners WHERE dni = ?";
+            const dni = req.body.inputDni;
+            await connection.query(
+                sqlSelect,
+                [dni],
+                (err, results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res.status(400).send({
+                            code: 400,
+                            message: err
+                        });
+                    }
+                    if (results.length === 1) {
+                        return res.status(404).send({
+                            success: false,
+                            exists: true,
+                            errorMessage: `Partner DNI : ${dni} already exists with ID : ${results[0]
+                                .id_partner}`
+                        });
+                    } else {
+                        next();
+                    }
                 }
-            });
+            );
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
+    //TODO NO EXISTE ID PARTNER
     noExistPartner: async (req, res, next) => {
         try {
-            const id_partner = req.params.id_partner;
-            await connection.query('SELECT * FROM partners WHERE id_partner = ?', [id_partner], (err, results) => {
-                if (err || results.length === 0) {
-                    return res.status(404).send({
-                        success: false,
-                        errorMessage: `Error there is no member with ID PARTNER : ${id_partner}`
-                    });
-                } else {
-                    next();
+            const id_partner = req.params.idPartner;
+            console.log(id_partner);
+            const sqlSelect = "SELECT * FROM partners WHERE id_partner = ?";
+            await connection.query(
+                sqlSelect,
+                [id_partner],
+                (err, results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res
+                            .status(400)
+                            .send({
+                                code: 400,
+                                message: err
+                            });
+                    }
+                    if (results.length === 0) {
+                        return res
+                            .status(404)
+                            .send({
+                                success: false,
+                                exists: false,
+                                errorMessage: `Error there is no member with ID PARTNER : ${id_partner}`
+                            });
+                    } else {
+                        next();
+                    }
                 }
-            });
+            );
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
-    // SHOW ALL PARTNERS
+    //TODO SHOW ALL PARTNERS
     getPartners: async (req, res) => {
         try {
             await connection.query("SELECT * FROM partners", (err, results) => {
@@ -56,7 +85,8 @@ const partnerController = {
                         code: 400,
                         message: err
                     });
-                } else if (results.length === 0) {
+                }
+                if (results.length === 0) {
                     return res.status(200).send({
                         success: true,
                         messageNotFound: "No data found for Partners"
@@ -65,93 +95,115 @@ const partnerController = {
                 res.status(200).send(results);
             });
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
-    // SHOW ONLY PARTNER FOR ID
+    //TODO SHOW ONLY PARTNER FOR ID
     getPartner: async (req, res) => {
         try {
-            const id_partner = req.params.id_partner;
-            var sql = "SELECT * FROM partners WHERE id_partner=?"
-            await connection.query(sql, [id_partner], (err, results) => {
+            const id_partner = req.params.idPartner;
+            const sqlSelect = "SELECT * FROM partners WHERE id_partner=?";
+            await connection.query(sqlSelect, [id_partner], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
-                    return res
-                        .status(400).send({
-                            code: 400,
-                            success: false,
-                            message: err
-                        });
-                } else if (results.length === 0) {
-                    return res.status(404)
-                        .send({
-                            success: true,
-                            messageNotFound: `No data found for id Partner ${id_partner}`,
-                        });
+                    return res.status(400).send({
+                        code: 400,
+                        success: false,
+                        message: err
+                    });
                 }
                 res.status(200).send(results[0]);
             });
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
     infoPartner: async (req, res) => {
         try {
-            const idPartner = req.params.idPartner
+            const idPartner = req.params.idPartner;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            const sqlPartner = "SELECT * FROM partners WHERE id_partner = ?"
+            const sqlPartner = "SELECT * FROM partners WHERE id_partner = ?";
             const sqlBookin = "SELECT p.id_partner, p.dni, p.name, bk.id_booking, bk.book_id, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.id_booking id_booking_review, v.score, v.review, v.deliver_date_review FROM partners p LEFT OUTER JOIN bookings bk ON p.dni=bk.partner_dni INNER JOIN books b ON bk.book_id=b.id_book LEFT OUTER JOIN votes v ON bk.id_booking=v.id_booking WHERE p.dni = ?";
-            await connection.query(sqlPartner, [idPartner], (err, results) => {
-                if (err || results.length === 0) {
-                    console.error("error: " + err);
-                    return res.send(`There is no partner with that id: ${idPartner}`);
+            await connection.query(sqlPartner, [idPartner], async (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res
+                        .status(400)
+                        .send({
+                            code: 400,
+                            message: err
+                        });
                 }
                 const dni = results[0].dni;
-
-                connection.query(sqlBookin, [dni], (err, results) => {
-                    if (err || results.length === 0) {
+                console.log(" ==> ",{dni})
+                await connection.query(sqlBookin, [dni], (err, results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res
+                            .status(400)
+                            .send({
+                                code: 400,
+                                message: err
+                            });
+                    }
+                    if (results.length === 0) {
                         return res.send({
-                            "data": results,
-                            "message": `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
+                            success: false,
+                            data: results,
+                            errorMessage: `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
                         });
                     }
-                    const data = results
+                    const data = results;
                     res.send(data);
-                })
-            })
+                });
+            });
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
     // ADD PARTNERS
     addPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const { dni, scanner, name, lastname, direction, population, email } = req.body;
-            const sql = "INSERT INTO partners SET ?";
-            let phone1 = req.body.phone1;
-            let phone2 = req.body.phone2;
+            const {
+                inputDni: dni,
+                inputScanner: scanner,
+                inputName: name,
+                inputLastname: lastname,
+                inputDirection: direction,
+                inputPopulation: population,
+                inputEmail: email,
+                idPartnerFamily,
+                dniFamily
+            } = req.body;
+            let phone1 = req.body.inputPhone;
+            let phone2 = req.body.inputPhoneLandline;
             if (!dni || !name || !lastname) {
-                req.flash("errorMessage", `Missing data to complete, can not be empty`);
-                return res.status(200).redirect("/workspace/partners/new");
+                return res.send({
+                    status: 400,
+                    exists: true,
+                    errorMessage: `Missing data to complete, can not be empty`
+                });
             }
             if (email !== "") {
                 if (!errors.isEmpty()) {
                     req.flash("errorValidation", errors.array());
-                    return res
-                        .status(200)
-                        .redirect("/workspace/partners/new");
+                    return res.send({
+                        status: 304,
+                        exists: false,
+                        messageSuccess: errors.array()
+                    });
                 }
             }
             const phonea = phone1 ? parseInt(phone1) : null;
             const phoneb = phone2 ? parseInt(phone2) : null;
-
-            connection.query(
-                sql,
+            const sqlInsert = "INSERT INTO partners SET ?";
+            await connection.query(
+                sqlInsert,
                 {
                     dni,
                     scanner,
@@ -165,15 +217,21 @@ const partnerController = {
                 },
                 (err, results) => {
                     if (err) {
-                        throw err;
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res.status(400).send({
+                            code: 400,
+                            message: err
+                        });
                     }
                     req.flash(
                         "messageSuccess",
                         `Partner successfully created, with PARTNER ID : ${results.insertId}`
                     );
-                    return res
-                        .status(200)
-                        .redirect("/workspace/partners/new");
+                    res.send({
+                        status: 200,
+                        exists: false,
+                        messageSuccess: `Partner successfully created, with PARTNER ID : ${results.insertId}`
+                    });
                 }
             );
         } catch (error) {
@@ -184,46 +242,61 @@ const partnerController = {
     // DELETE PARTNER
     deletePartner: async (req, res) => {
         try {
-            const id_partner = req.params.id_partner;
-            deleteBookins = [`DELETE bookings FROM bookings JOIN partners ON partners.dni = bookings.partner_dni WHERE partners.id_partner = ${id_partner}`,
-            `DELETE FROM partners WHERE id_partner =  ${id_partner}`
-            ]
+            const id_partner = req.params.idPartner;
+            deleteBookins = [
+                `DELETE bookings FROM bookings JOIN partners ON partners.dni = bookings.partner_dni WHERE partners.id_partner = ${id_partner}`,
+                `DELETE FROM partners WHERE id_partner =  ${id_partner}`
+            ];
             await connection.query(deleteBookins.join(";"), async (err, results) => {
                 if (err) {
                     throw err;
                 }
-                req.flash("messageUpdate", `Partner successfully delete, with PARTNER ID : ${id_partner}`)
-                return res.redirect('/workspace/partners');
-            }
-            );
+                req.flash(
+                    "messageUpdate",
+                    `Partner successfully delete, with PARTNER ID : ${id_partner}`
+                );
+                return res.redirect("/workspace/partners");
+            });
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
     // UDATE PARTNER FOR ID
     putPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const id_partner = req.params.id_partner;
-            const partner = { dni, scanner, name, lastname, direction, population, phone1, phone2, email } = req.body;
+            const id_partner = req.params.idPartner;
+            const partner = ({
+                dni,
+                scanner,
+                name,
+                lastname,
+                direction,
+                population,
+                phone1,
+                phone2,
+                email
+            } = req.body);
             const sql = "UPDATE partners SET ? WHERE id_partner = ?";
             await connection.query(sql, [partner, id_partner], (err, results) => {
                 if (err) {
                     throw err;
                 }
-                req.flash("messageUpdate", `Partner successfully update, with PARTNER ID : ${id_partner}`)
+                req.flash(
+                    "messageUpdate",
+                    `Partner successfully update, with PARTNER ID : ${id_partner}`
+                );
                 res.send({
-                    'success': true,
-                    'messageUpdate': `Partner successfully update, with PARTNER ID : ${id_partner}`
-                })
-            }
-            );
+                    success: true,
+                    messageUpdate: `Partner successfully update, with PARTNER ID : ${id_partner}`
+                });
+            });
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     }
-}
+};
 
 module.exports = partnerController;

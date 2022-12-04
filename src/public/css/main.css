@@ -47,16 +47,11 @@
 
 .Main {
   grid-area: main;
-  /* background-color: inherit; */
-  /* color: inherit; */
-  width: 100%;
+  width: 90%;
+  margin-left: var(--Size-width-sidemenu-collapsed);
   max-width: var(--Max-width);
-  /* height: 100%; */
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* flex-flow: column wrap; */
-  /* align-items: center; */
-  /* margin-top: var(--Margin-top-forms); */
+  margin-top: 0 auto;
+  /* background-color: red; */
 }
 
 .Main-cover {
@@ -92,9 +87,6 @@
 
   .Main {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-flow: column nowrap; 
-    align-items: center;
+    margin: 0 auto;
   }
 }

@@ -1,52 +1,249 @@
+<link href="/style/new.css" rel="stylesheet">
+
 <div class="New-content">
     <input type="text" class="form-control" id="id_partner" tabindex="0" hidden>
     <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="text" name="dni" id="dni" value="" tabindex="2" autofocus required>
-            <label for="dni" class="Input-new">Enter Dni *</label>
-
+        <!-- TODO DNI -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-regular fa-address-card"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputDni" id="inputDni" type="text"
+                        placeholder=" " autocomplete="valorNoValido" required="required" tabindex="1" autofocus>
+                    <label class="Animation-label" for="inputDni">Enter your Dni *</label>
+                    <label class="Animation-info" for="inputDni" id="infoDni"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputDni" id="closeInfoDni"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Dni cannot be empty.</span>
+                </div>
+            </div>
         </div>
-        <div class="New-box">
-            <input class="New-input" type="text" name="scanner" id="scanner" value="" tabindex="3">
-            <label for="scanner" class="Input-new">Enter Scanner</label>
+        <!-- TODO SCANNER -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-qrcode"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputScanner" id="inputScanner" type="text"
+                        placeholder=" " autocomplete="valorNoValido" tabindex="2">
+                    <label class="Animation-label" for="inputScanner">Enter your Scanner</label>
+                    <label class="Animation-info" for="inputScanner" id="infoScanner"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputScanner" id="closeInfoScanner"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Scanner cannot be empty.</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="text" name="name" id="name" value="" tabindex="4" required>
-            <label for="name" class="Input-new">Enter Name *</label>
+        <!-- TODO NAME -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-user"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputName" id="inputName" type="text"
+                        placeholder=" " autocomplete="valorNoValido" required="required" tabindex="3">
+                    <label class="Animation-label" for="inputName">Enter your Name *</label>
+                    <label class="Animation-info" for="inputName" id="infoName"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputName" id="closeInfoName"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Name cannot be empty.</span>
+                </div>
+            </div>
         </div>
-        <div class="New-box">
-            <input class="New-input" type="text" name="lastname" id="lastname" value="" tabindex="5" required>
-            <label for="lastname" class="Input-new">Enter Last name *</label>
+        <!-- TODO SURNAME -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-user"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputLastname" id="inputLastname" type="text"
+                        placeholder=" " autocomplete="valorNoValido" required tabindex="4">
+                    <label class="Animation-label" for="inputLastname">Enter your Lastname *</label>
+                    <label class="Animation-info" for="inputLastname" id="infoLastname"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputLastname" id="closeInfoLastname"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Lastname cannot be empty.</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="text" name="population" id="population" value="" tabindex="6">
-            <label for="population" class="Input-new">Enter Population</label>
+        <!-- TODO DIRECTION -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-location-dot"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputDirection" id="inputDirection" type="text"
+                        placeholder=" " autocomplete="valorNoValido" tabindex="5">
+                    <label class="Animation-label" for="inputDirection">Enter your Direction</label>
+                    <label class="Animation-info" for="inputDirection" id="infoDirection"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputDirection" id="closeInfoDirection"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Direction cannot be empty.</span>
+                </div>
+            </div>
         </div>
-        <div class="New-box">
-            <input class="New-input" type="text" name="direction" id="direction" value="" tabindex="7">
-            <label for="direction" class="Input-new">Enter Direction</label>
+        <!-- TODO POPULATION -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-location-arrow"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputPopulation" id="inputPopulation" type="text"
+                        placeholder=" " autocomplete="valorNoValido" tabindex="6">
+                    <label class="Animation-label" for="inputPopulation">Enter your Population</label>
+                    <label class="Animation-info" for="inputPopulation" id="infoPopulation"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputPopulation" id="closeInfoPopulation"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Population cannot be empty.</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="tel" name="phone1" id="phone1" value="" tabindex="8">
-            <label for="phone1" class="Input-new">Enter Phone (mobile)</label>
+        <!-- TODO PHONE (MOBILE) -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-mobile-screen-button"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputPhone" id="inputPhone" type="text"
+                        placeholder=" " autocomplete="valorNoValido" tabindex="7">
+                    <label class="Animation-label" for="inputPhone">Enter your Phone (Mobile)</label>
+                    <label class="Animation-info" for="inputPhone" id="infoPhone"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputPhone" id="closeInfoPhone"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Mobile cannot be empty.</span>
+                </div>
+            </div>
         </div>
-        <div class="New-box">
-            <input class="New-input" type="tel" name="phone2" id="phone2" value="" tabindex="9">
-            <label for="phone2" class="Input-new">Enter Phone (ladline)</label>
+        <!-- TODO PHONE (LANDLINE) -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-phone-flip"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputPhoneLandline" id="inputPhoneLandline" type="text"
+                        placeholder=" " autocomplete="valorNoValido" tabindex="8">
+                    <label class="Animation-label" for="inputPhoneLandline">Enter your Phone (Landline)</label>
+                    <label class="Animation-info" for="inputPhoneLandline" id="infoPhoneLandline"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputPhoneLandline" id="closeInfoPhoneLandline"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Mobile cannot be empty.</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="email" name="email" id="email" value="" tabindex="10">
-            <label for="email" class="Input-new">Enter Email</label>
+        <!-- TODO EMAIL -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-regular fa-address-card"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputEmail" id="inputEmail" type="email"
+                        placeholder=" " autocomplete="valorNoValido" tabindex="9">
+                    <label class="Animation-label" for="inputEmail">Enter your Email</label>
+                    <label class="Animation-info" for="inputEmail" id="infoEmail"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputEmail" id="closeInfoEmail"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationEmailNew">
+                <div class="Error-icon">
+                    <svg fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="Error-text">
+                    <span id="errorEmailNew" class="fieldErrText">Email cannot be empty.</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-<link href="/style/new.css" rel="stylesheet">

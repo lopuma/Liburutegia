@@ -2,22 +2,7 @@
 const spinner = document.getElementById("spinner");
 const tbodyPartner = document.getElementById("tbodyPartner");
 
-//TODO MESSAGE
-function menssage(txt) {
-    const msg = `
-    <div id="alertLogin" class="alert alert-message alert-success alert-dismissible fade show" role="alert">
-        <h4 class="alert-heading">Well done!</h4>
-        ${txt}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    `;
-    $("#msg").html(msg);
-    $("#msg").fadeOut(5000, function(){
-      $(this).html("");
-      $(this).fadeIn(3000);
-    })
-}
+
 
 //TODO DELETE
 async function partnerDelete(idPartner) {
@@ -126,15 +111,15 @@ async function edit(id_partner) {
     .then((response) => response.json())
     .then((datos) => {
       $("#id_partner").val(datos.id_partner);
-      $("#dni").val(datos.dni);
-      $("#scanner").val(datos.scanner);
-      $("#name").val(datos.name);
-      $("#lastname").val(datos.lastname);
-      $("#direction").val(datos.direction);
-      $("#population").val(datos.population);
-      $("#phone1").val(datos.phone1);
-      $("#phone2").val(datos.phone2);
-      $("#email").val(datos.email);
+      $("#inputDni").val(datos.inputDni);
+      $("#inputScanner").val(datos.inputScanner);
+      $("#inputName").val(datos.inputName);
+      $("#inputLastname").val(datos.inputLastname);
+      $("#inputDirection").val(datos.inputDirection);
+      $("#inputPopulation").val(datos.inputPopulation);
+      $("#inputPhone").val(datos.inputPhone);
+      $("#inputPhoneLandline").val(datos.inputPhoneLandline);
+      $("#inputEmail").val(datos.inputEmail);
       $(".modal-header").css("background-color", "var(--Background-Color-forms-partner)");
       $(".modal-header").css("color", "white");
       $(".modal-title").text("EDIT PARTNER").css("font-weight", "700");
@@ -143,40 +128,30 @@ async function edit(id_partner) {
 //TODO UPDATE
 $('#formu').submit(async function (e) {
   e.preventDefault();
-  id_partner = $.trim($('#id_partner').val());
-  dni = $.trim($('#dni').val());
-  name = $.trim($('#name').val());
-  scanner = $.trim($('#scanner').val());
-  lastname = $.trim($('#lastname').val());
-  direction = $.trim($('#direction').val());
-  population = $.trim($('#population').val());
-  phone1 = $.trim($('#phone1').val());
-  phone2 = $.trim($('#phone2').val());
-  email = $.trim($('#email').val());
-  url = `/api/partners/update/${id_partner}`
+  const url = `/api/partners/update/${id_partner}`
+  let data = {
+    id_partner: $.trim($('#id_partner').val()),
+    inputDni: $.trim($('#inputDni').val()),
+    inputName: $.trim($('#inputName').val()),
+    inputScanner: $.trim($('#inputScanner').val()),
+    inputLastname: $.trim($('#inputLastname').val()),
+    inputDirection: $.trim($('#inputDirection').val()),
+    inputPopulation: $.trim($('#inputPopulation').val()),
+    inputPhone: $.trim($('#inputPhone').val()),
+    inputPhoneLandline: $.trim($('#inputPhoneLandline').val()),
+    inputEmail: $.trim($('#inputEmail').val()),
+  }
   if (opcion === 'edit') {
     fetch(url, {
       method: "POST",
-      body: JSON.stringify({
-        dni,
-        name,
-        scanner,
-        lastname,
-        direction,
-        population,
-        phone1,
-        phone2,
-        email
-      }),
+      body: JSON.stringify(data),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
       .then(response => response.json())
-      .then(data => menssage(data.messageUpdate))
-      .catch(error => {
-        console.error("Error:", error);
-      });
+      .then(data => responseAddPartner(data))
+      .catch(error => console.error(error));
   }
   $("#modalPartner").modal("hide");
   myTable.destroy();

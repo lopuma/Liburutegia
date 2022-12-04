@@ -73,7 +73,7 @@
 }
 
 
-@media (prefers-color-scheme: dark){
+/* @media (prefers-color-scheme: dark){
 
   :root {
     --Background-Color-forms: #212E36;
@@ -88,7 +88,7 @@
     --Box-shadow-forms: 0 10px 20px rgba(255, 255, 255, 0.4),
           0 6px 6px rgba(255, 255, 255, 0.4);
   } 
-}
+} */
 
 
 @keyframes text-anim {

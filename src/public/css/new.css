@@ -13,30 +13,99 @@
 }
 
 .New {
-    font-family: inherit;
+    margin: var(--Margin-top-forms) auto 4em;
+    width: 70%;
+    padding: 2em 0;
     border-radius: var(--Radius);
-    border: #707070 1px solid;
-    color: var(--Color-negro);
-    background-color: var(--Color-blanco);
-    width: 100%;
-    height: auto;
-    padding: 20px;
-    transition: background .3s ease;
-    min-height: 100%;
-    overflow: hidden;
+    background-color: var(--Color-texto-blanco);
+    box-shadow: var(--Box-shadow-forms);
+    position: relative;
 }
 
+.New-title {
+    position: absolute;
+    top: -1em;
+    left: -4em;
+    z-index: 1;
+}
 
-.isNew {
-    font-size: inherit;
-    width: 60%;
-    margin: calc(var(--Margin-top-forms) + 30px) auto 40px auto;
-    -webkit-box-shadow: var(--box-shadow-forms);
-    box-shadow: var(--box-shadow-forms);
+.New-h1 {
+    background-color: var(--Background-Color-forms-partner);
+    color: var(--Color-texto-blanco);
+    padding: .5em 1em;
+    margin: 0;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    border-top-right-radius: var(--Radius);
+    border-top-left-radius: var(--Radius);
+    border-bottom-right-radius: var(--Radius);
+    width: fit-content;
+    border-bottom: 1px solid var(--Color-outline);
+}
+
+.New-flag {
+    position: absolute;
+    top: 3.4em;
+    left: -4em;
+    width: 2em;
+    height: 2em;
+    border-top: 5em solid rgb(145, 113, 38);    
+    border-left: 5em solid transparent;
+    z-index: 0;
 }
 
 .New-form {
-    margin-top: 40px;
+    margin-top: 1.4em;
+    background-color: var(--Color-texto-blanco);
+    position: relative;
+    z-index: 2;
+}
+
+.Family {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em;
+    height: 7.5em;}
+
+.Family-check {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    text-align: center;
+    width: 50%;
+}
+
+.Family-label {
+    margin: 0 1em;
+    padding: 0;
+}
+
+.Family-links {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    text-align: center;
+    padding: 1em;
+    width: 50%;
+}
+
+.Family-links span {
+    width: 100% !important;
+    font-size: 1em;
+}
+
+.Family-links {
+    display: none;
+}
+
+.Family-links.isEnable {
+    display: flex;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    left: 95%;
 }
 
 .New-content {
@@ -49,302 +118,334 @@
     overflow: hidden;
 }
 
-.New-title {
-    display: flex;
-    justify-content: start;
-    padding: 20px;
-    overflow: hidden;
-    position: absolute;
-    top: 80px;
-    left: 20%;
-    display: none;
-}
-
-.New-title.isEnable {
-    display: flex;
-}
-
-.New-h1 {
-    background-color: var(--Background-Color-forms-partner);
-    color: rgb(250, 250, 250);
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 2em;
-    font-weight: bold;
-    text-align: center;
-    width: fit-content;
-}
-
-.Main-h1 {
-    background-color: var(--background-nav);
-    color: var(--color-nav);
-    border-radius: 3px;
-    padding: 20px;
-    font-size: 2.5em;
-    font-weight: bold;
-    text-align: center;
-    margin: 15px 0;
-    width: fit-content;
-}
-
 .New-boxes {
     display: flex;
     align-items: center;
     flex-flow: row wrap;
     justify-content: space-between;
-    margin-top: 0px;
     width: 100%;
-    height: 100%;
-    padding: 20px;
+    padding: 1.5em 2em 2em;
     align-items: center;
     overflow: hidden;
 }
 
-.isBaseline {
+.Input-box {
+    width: 50%;
     display: flex;
-    justify-content: flex-start;
-    flex-flow: row nowrap;
-    width: 100%;
-    padding: 20px;
+    flex-direction: column;
 }
 
-.New-box {
+.Box {
+    height: 3.75em;
+    width: 100%;
     display: flex;
     align-items: center;
-    flex-flow: row wrap;
-    position: relative;
-    width: 50%;
-}
-
-.New-label {
-    display: inline-block;
-    width: 80px;
-    text-align: start;
-    margin: 20px;
-}
-
-.New-input {
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    outline: none;
-    border: none;
-    padding: 20px;
-    margin: 0px 10px;
-    font-size: 20px;
-    font-weight: 500;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.New-input:focus,
-.New-input:valid {
-    border-color: rgb(32, 162, 202);
-}
-
-.Input-new {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    justify-content: space-between;
     margin: 0;
 }
 
-.New-input:invalid+.Input-new,
-.New-input:focus+.Input-new,
-.New-input:valid+.Input-new {
-    top: 0px;
-    left: 0px;
-    border-color: rgb(32, 162, 202);
-    transform: translate(-10px, -15px) scale(.8);
-    color: #d1c5fc;
-    padding-inline: 8px;
-    background-color: #242329;
-    border-radius: 5px;
-    padding: 0 10px;
-    width: max-content;
-    font-size: 20px;
-    letter-spacing: 3px;
+.Box-i {
+    color: var(--Color-texto-negro);
+    font-size: 1em;
+    cursor: pointer;
+    transition: text-shadow .5s ease;
 }
 
-.New-input:focus {
-    border-color: #000000;
+.Box-i:hover {
+    text-shadow: 1px 1px 2px var(--Color-Selected);
 }
 
-.New-input:valid {
-    border-color: var(--Success);
+.Animation {
+    width: 100%;
+    height: 100%;
+    margin: 0 1em;
+    text-align: center;
+    position: relative;
 }
 
-.New-input:is(:focus, :valid, :invalid) {
-    outline: 1px solid #242329;
-    border-radius: 5px;
+.Animation-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 95%;
+    height: 100%;
+    font-family: inherit;
+    font-size: 1em;
+    color: var(--Color-texto-negro);
+    border-radius: var(--Radius);
+    padding: 0 1em;
+    margin-left: .5em;
+    margin-right: .5em;
+    border-bottom: 3px solid var(--Color-outline);
+    outline: none;
+    transition: all 0.3s ease;
 }
 
-.New-input:invalid {
-    border-color: var(--Unsuccess);
+.Animation-closeInfo,
+.Animation-info,
+.Animation-label {
+    width: auto;
+    position: absolute;
+    top: calc(50% - .7em);
+    left: 1em;
+    cursor: text;
+    font-size: 1em;
+    letter-spacing: .2em;
+    color: var(--Color-texto-negro);
+    transition-property: top, font-size, color, background-color, border-radius, padding, left, width;
+    transition-duration: .5s;
+    transition-timing-function: ease;
+    vertical-align: baseline;
 }
 
-.errorValidation {
-    margin-bottom: 20px;
+.Animation-input:focus~.Animation-label,
+.Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
+    top: -1.4em;
+    left: 3em;
+    font-size: .7em;
+    color: var(--Color-texto-blanco);
+    background-color: var(--Color-texto-negro);
+    border-radius: var(--Radius);
+    padding: .1em 2em;
+    text-align: start;
+}
+
+.Animation-info {
+    cursor: pointer;
+    display: none;
+}
+
+.Animation-closeInfo {
+    cursor: pointer;
+    display: none;
+}
+
+.Animation-input:focus~.Animation-closeInfo,
+.Animation-input:focus~.Animation-info,
+.Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-closeInfo,
+.Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
+    left: 0.5em;
+    top: -.65em;
+    font-size: 1.5em;
+    color: var(--Color-invalid);
+    background-color: #fff;
+    border-radius: var(--Radius);
+    padding: 0;
+    text-align: start;
+}
+
+.Animation-info.isVisible {
+    display: flex;
+}
+
+.Animation-closeInfo.isVisible {
+    display: flex;
+}
+
+.Animation-input:is(:focus, :valid) {
+    outline: .1em solid var(--Color-outline);
+    border-bottom: 3px solid var(--Color-Selected);
+    box-shadow: var(--Box-shadow-input);
+}
+
+.Animation-input:not(:placeholder-shown).Animation-input:is(:invalid) {
+    border-bottom: 3px solid var(--Color-invalid);
+}
+
+.Error {
+    width: 100%;
+    margin: .5em 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.Error-text {
+    padding: .5em;
+    font-size: .9em;
+    color: var(--Color-invalid);
+}
+
+.Error-icon {
+    color: var(--Color-invalid);
+    font-size: .9em;
+}
+
+.Animation-input.isError {
+    outline: .1em solid var(--Color-invalid);
+    border-bottom: 3px solid var(--Color-invalid);
+}
+
+.Error.isActive {
+    display: flex;
 }
 
 .Input-button {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    flex-flow: row wrap;
-    width: 100%;
-    margin: 20px 0;
+    justify-content: center;
+    height: auto;
+    margin: 1.5em 0;
 }
 
-.Button-cancel {
-    border-radius: var(--Radius);
-    padding: 10px;
-    color: var(--Color-blanco);
-    background-color: var(--Unsuccess);
-    border: 1px solid var(--Color-blanco);
-    cursor: pointer;
-    font-size: var(--Size-font-button);
-    font-weight: 700;
-    font-family: var(--Font-family-menu);
-    letter-spacing: 5px;
-    text-align: center;
-    align-items: center;
-    width: 30%;
-    transition-property: background-color, box-shadow, color;
-    transition-duration: .5s;
-    transition-timing-function: ease;
-}
-
+.Button-cancel,
 .Button-accept {
+    width: 30%;
+    border: 1px solid var(--Color-outline);
     border-radius: var(--Radius);
-    padding: 10px;
-    color: inherit;
-    background-color: var(--Success);
-    border: 1px solid var(--Color-blanco);
-    cursor: pointer;
     font-size: var(--Size-font-button);
     font-weight: 700;
-    font-family: var(--Font-family-menu);
-    letter-spacing: 5px;
+    font-family: inherit;
+    letter-spacing: var(--Letter-spacing);
     text-align: center;
-    width: 30%;
-    transition-property: background-color, box-shadow, color;
+    padding: 1em;
+    background-color: var(--Success);
+    transition-property: color, box-shadow, border, transform;
     transition-duration: .5s;
     transition-timing-function: ease;
     color: var(--Brown);
+    margin: 1em 2em;
+    text-transform: uppercase;
+}
+
+.Button-cancel {
+    background-color: var(--Unsuccess);
+    color: var(--Color-texto-blanco);
 }
 
 .Button-cancel:hover {
     color: var(--Success);
-    background-color: var(--Unsuccess);
-    box-shadow: 0px 2px 8px var(--Unsuccess), -0px -2px 8px var(--Brown);
+    box-shadow: var(--Box-shadow-button-success);
+    border: 1px solid var(--Color-outline-blanco);
+    transform: scale(1.05);
+}
+
+.Button-cancel:active {
+    transform: scale(1.2);
 }
 
 .Button-accept:hover {
-    color: var(--Color-blanco);
-    background-color: var(--Success);
-    box-shadow: 0px 2px 8px var(--Success), -0px -2px 8px var(--Brown);
+    color: var(--Color-texto-negro);
+    box-shadow: var(--Box-shadow-button);
+    border: 1px solid var(--Color-outline-blanco);
+    transform: scale(1.05);
 }
 
-@media all and (max-width: 950px) {
-    .isNew {
-        width: 80%;
-    }
-
-    .New-title {
-        left: 10%;
-    }
-
-    .modal-dialog {
-        max-width: 80% !important;
-    }
+.Button-accept:active {
+    transform: scale(1.2);
 }
 
-@media all and (max-width: 750px) {
+@media screen and (max-width: 950px) {
+
+    .Family{
+        padding: 1em 0;
+    }
 
     .New-boxes {
-        flex-flow: column nowrap;
-        padding: 0;
-    }
-
-    .New-box {
-        width: 90%;
-        margin: 20px 0;
-    }
-}
-
-@media all and (max-width: 500px) {
-    .modal-footer {
-        width: 100% !important;
-        flex-flow: column nowrap !important;
-    }
-
-    .isNew {
-        width: 90%;
-    }
-
-    .New-title {
-        margin: 0;
-        left: 10px;
-    }
-
-    .New-content {
         width: 100%;
-        margin: 0;
         padding: 0;
+        margin: 0;
+        flex-flow: column nowrap;
+    }
+
+    .Input-box {
+        width: 100%;
+        padding: .5em 0;
+    }
+
+    .Box {
+        margin: 1em 0;
+    }
+
+    .New-h1 {
+        font-size: 1.7em;
+    }
+
+    .New-flag {
+        top: 2.80em;
     }
 
     .New-form {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        margin-top: 50px;
+        padding: 1em 1em 1em 2em;
+        margin-top: .75em;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .New {
+        width: 90%;
     }
 
-    .New-boxes {
+    .Family {
+        padding: 1em 0 1em .5em;
+        flex-direction: column;
+    }
+
+    .Family-check,
+    .Family-links{
         width: 100%;
-        padding: 0;
+        margin: 0;;
+    }
+
+
+    .New-content {
+        padding: 0 0 0 .5em;
+    }
+
+    .New-title {
+        left: -1em;
+        top: -1em;
+    }
+
+    .New-flag {
+        top: 2.35em;
+        left: -1.01em;
+    }
+
+    .New-h1 {
+        font-size: 1.5em;
+    }
+
+    .New-form {
+        margin-top: 0.3em;
+        padding: 1em;
+    }
+
+    .Animation-label {
+        letter-spacing: .1em;
+        font-size: .9em;
+        left: 1em;
         margin: 0;
     }
 
-    .New-box{
-        margin: 0;
+    .Animation-input {
+        padding: .5em;
+    }
+
+    .Animation-input:focus~.Animation-label,
+    .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
+        top: -1.6em;
+        font-size: .6em;
+        left: 4.1em;
+    }
+
+    .Animation-input:focus~.Animation-info,
+    .Animation-input:focus~.Animation-closeInfo,
+    .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-closeInfo,
+    .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
+        top: -.6em;
+        font-size: 1.6em;
+        padding: 0;
     }
 
     .Input-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-flow: column nowrap;
         width: 100%;
     }
 
-    .New-input:invalid+.Input-new,
-    .New-input:focus+.Input-new,
-    .New-input:valid+.Input-new {
-        left: 0px;
-        top: 0px;
-        transform: translate(-15px, 5px) scale(0.8);
+    .Button-cancel,
+    .Button-accept {
+        width: 100%;
+        margin: 1em 0.5em;
     }
-
-
-    .New-input {
-        margin: 20px 0;
-    }
-
-    .modal-dialog {
-        max-width: 90% !important;
-    }
-
-    .Button-cancel{
-        order: 1;
-        width: 90%;
-        margin: 20px 0;
-    }
-
-    .Button-accept{
-        order: 2;
-        width: 90%;
-    }
-
 }

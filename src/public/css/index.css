@@ -1,5 +1,5 @@
 .Index-container {
-  margin: var(--Margin-top-forms);
+  margin: var(--Margin-top-forms) auto 4em;
   width: var(--Width-forms);
   height: auto;
   display: flex;
@@ -68,7 +68,7 @@
 .Index-a:hover {
   color: var(--Color-negro);
   box-shadow: var(--Box-shadow-button-success);
-  border: 1px solid var(--Color-blanco);
+  border: 1px solid var(--Color-outline-blanco);
   transform: scale(1.05);
 }
 
@@ -96,11 +96,11 @@
   width: 100%;
   height: auto;
   overflow: hidden;
-  filter: drop-shadow(8px 8px 4px var(--Success));
+  filter: drop-shadow(.5em .5em .2em var(--Success));
 }
 
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 59.375em) {
   .Index-container {
     display: flex;
     flex-flow: column-reverse wrap;
@@ -125,7 +125,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 31.25em) {
   .Index-container {
     padding: 0;
     margin: var(--Size-height-navBar) auto 3.125em auto;

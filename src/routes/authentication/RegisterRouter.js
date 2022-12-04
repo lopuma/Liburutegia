@@ -22,47 +22,47 @@ routerRegister.get("/", isAuthenticated, async (req, res) => {
 
 routerRegister.post("/", isAuthenticated, async (req, res) => {
   try {
-const { email, username, fullname, rol, pass } = req.body;
-  console.log({ email, username, fullname, rol, pass });
-  const _ss = 0;
-  let passwordHash = await bscryptjs.hash(pass.trim(), 8);
-  const sql = "SELECT * FROM users WHERE email = ?";
-  await connection.query(sql, [email], async (err, results) => {
-    if (err) {
-      console.error("[ DB ]", err.sqlMessage);
-      return res.status(400).send({ 
-        code: 400, 
-        message: err 
-      });
-    } 
-    if (results.length === 0) {
-      sqlInsert = "INSERT INTO users SET ?";
-      connection.query(
-        sqlInsert,
-        {
-          email: email.trim(),
-          username: username.trim(),
-          fullname: fullname.trim(),
-          rol,
-          pass: passwordHash,
-          _ss
-        },
-        err => {
-          if (err) {
-            console.error("[ DB ]", err.sqlMessage);
-            return res.status(400).send({
-              code: 400,
-              message: err
+    const { email, username, fullname, rol, pass } = req.body;
+    console.log({ email, username, fullname, rol, pass });
+    const _ss = 0;
+    let passwordHash = await bscryptjs.hash(pass.trim(), 8);
+    const sql = "SELECT * FROM users WHERE email = ?";
+    await connection.query(sql, [email], async (err, results) => {
+      if (err) {
+        console.error("[ DB ]", err.sqlMessage);
+        return res.status(400).send({ 
+          code: 400, 
+          message: err 
+        });
+      } 
+      if (results.length === 0) {
+        sqlInsert = "INSERT INTO users SET ?";
+        await connection.query(
+          sqlInsert,
+          {
+            email: email.trim(),
+            username: username.trim(),
+            fullname: fullname.trim(),
+            rol,
+            pass: passwordHash,
+            _ss
+          },
+          err => {
+            if (err) {
+              console.error("[ DB ]", err.sqlMessage);
+              return res.status(400).send({
+                code: 400,
+                message: err
+              });
+            }
+            res.send({
+              status: 200,
+              exists: false,
+              inputs: false,
+              message: `User ${username} created successfully.`
             });
           }
-          res.send({
-            status: 200,
-            exists: false,
-            inputs: false,
-            message: `User ${username} created successfully.`
-          });
-        }
-      );
+        );
     } else {
       return res.send({
         status: 400,
