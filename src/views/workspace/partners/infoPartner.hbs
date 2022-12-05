@@ -1,3 +1,5 @@
+<link href="/style/info.css" rel="stylesheet" />
+
 <!--Modal para CRUD-->
 <div id="modalStar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStar" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -97,8 +99,8 @@
     <div class="Info-subcontenedor">
         <div class="Info-bloque activo">
             {{#each partner}}
-            <h3>NAME {{this.name}}</h3>
-            <h3>LASTNAME {{this.lastname}}</h3>
+                <h3>NAME {{this.name}}</h3>
+                <h3>LASTNAME {{this.lastname}}</h3>
             {{/each}}
         </div>
         <div class="Info-bloque Dashboard" id="infoBloqueActive">
@@ -168,8 +170,6 @@
     </div>
 
 </div>
-
-<link href="/style/info.css" rel="stylesheet" />
 
 <script>
     const post = document.querySelector(".post");
@@ -308,6 +308,7 @@
         }, 500)
     }
     async function obtenerPartner(data) {
+        console.log("==> ", data);
         const fecha = new Date();
         const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
         let vacio = Object.keys(data).length === 0;

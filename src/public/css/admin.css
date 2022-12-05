@@ -387,48 +387,6 @@
     text-align: start;
 }
 
-.Dashboard {
-    margin: 20px;
-    padding: 20px;
-}
-
-.Dashboard-a {
-    display: flex;
-    justify-content: flex-start;
-    text-align: center;
-    align-items: center;
-    width: max-content;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #1746A2;
-    color: #fff;
-    transition: all 0.5s ease;
-}
-
-.Dashboard-a:hover {
-    text-decoration: none;
-    background-color: #5F9DF7;
-    color: black;
-    transform: translateX(8px);
-}
-
-.Dashboard-i {
-    margin: 0 5px;
-}
-
-/* TABLA */
-.Dashboard-tr {
-    background-color: #057050;
-    color: #fff;
-    text-align: center;
-    border: none;
-}
-
-.Dashboard-tr th {
-    border-radius: 5px;
-    margin: 0 2px;
-}
 
 .ui {
     display: flex;
@@ -551,10 +509,6 @@ div.dataTables_wrapper div.dataTables_info {
 
     .Workspace-fieldset {
         padding: 0;
-    }
-
-    .Dashboard-a {
-        margin: 0;
     }
 
     .col-sm-12 {

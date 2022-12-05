@@ -2,7 +2,8 @@ const connection = require("../../../database/db");
 
 const workSpaceController = {
 
-  getBooks: async (req, res) => { // TODO ✅
+  // TODO ✅ REDIRIGE A LA VISTA DE BOOKS
+  getBooks: async (req, res) => {
     try {
       const userName = req.session.username;
       const loggedIn = req.session.loggedin;
@@ -13,12 +14,13 @@ const workSpaceController = {
         rolAdmin
       });
     } catch (error) {
-      console.log(error)
-      res.redirect("/")
+      console.error(error);
+      res.status(500).redirect("/");
     }
   },
 
-  getBookings: async (req, res) => { // TODO ✅
+  // TODO ✅ REDIRIGE A LA VISTA DE BOOKINGS
+  getBookings: async (req, res) => {
     try {
       const userName = req.session.username;
       const loggedIn = req.session.loggedin;
@@ -26,15 +28,16 @@ const workSpaceController = {
       res.render("workspace/dashboard-bookings", {
         loggedIn,
         userName,
-        rolAdmin,
+        rolAdmin
       });
     } catch (error) {
-      console.log(error)
-      res.redirect("/")
+      console.error(error);
+      res.status(500).redirect("/");
     }
   },
-  
-  getPartners: async (req, res) => { // TODO ✅
+
+  // TODO ✅ REDIRIGE A LA VISTA DE PARTNERS
+  getPartners: async (req, res) => {
     try {
       const userName = req.session.username;
       const loggedIn = req.session.loggedin;
@@ -45,43 +48,46 @@ const workSpaceController = {
         rolAdmin
       });
     } catch (error) {
-      console.log(error)
-      res.redirect("/")
+      console.error(error);
+      res.status(500).redirect("/");
     }
   },
-  
-  getAdmin: async (req, res) => { // TODO ✅
+
+  // TODO ✅ REDIRIGE A LA VISTA DE ADMIN
+  getAdmin: async (req, res) => {
     try {
       const userName = req.session.username;
       const loggedIn = req.session.loggedin;
       const rolAdmin = req.session.roladmin;
-      sql = "SELECT * FROM users";
-      await connection.query(sql, async (error, results) => {
-        if (error) {
-          throw error;
+      sqlSelect = "SELECT * FROM users";
+      await connection.query(sqlSelect, async (err, results) => {
+        if (err) {
+          console.error("[ DB ]", err.sqlMessage);
+          return res.status(400).send({ code: 400, message: err });
         }
-      const users = results;
+        const users = results;
         try {
           if (rolAdmin === false) {
-            return res.redirect('/');
+            return res.redirect("/");
           }
-          res.status(200).render("workspace/dashboard-admin", {
-            loggedIn,
-            userName,
-            users,
-            rolAdmin,
-          })
+          res
+            .status(200)
+            .render("workspace/dashboard-admin", {
+              loggedIn,
+              userName,
+              users,
+              rolAdmin
+            });
         } catch (error) {
-          console.log(error)
-          res.redirect("/")
+          console.error(error);
+          res.status(500).redirect("/");
         }
       });
     } catch (error) {
-      console.log(error)
-      res.redirect("/")
+      console.error(error);
+      res.status(500).redirect("/");
     }
   }
-
-}
+};
 
 module.exports = workSpaceController;

@@ -465,7 +465,7 @@ hr {
         flex-flow: column nowrap;
         align-items: center;
         justify-content: space-between;
-        margin: var(--Margin-top-forms) 0;
+        /* margin: var(--Margin-top-forms) 0; */
     }
 
     .Authentication {
@@ -510,12 +510,10 @@ hr {
     }
 }
 
-@media screen and (max-width: 31.25em) {
+@media screen and (max-width: 34.375em) {
 
     .Authentication {
-        width: 100%;
-        align-items: unset;
-        margin: calc(var(--Margin-top-forms) + 2em) auto 1em auto;
+        width: 90%;
     }
 
     .Input-boxes{
@@ -523,8 +521,7 @@ hr {
     }
 
     .Login {
-        width: auto;
-        height: auto;
+        width: 100%;
     }
 
     .Reset {

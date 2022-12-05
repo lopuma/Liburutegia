@@ -2,6 +2,35 @@ const connection = require("../../../database/db");
 
 const bookController = {
 
+    noExistBook: async (req, res, next) => {
+        try {
+            const id_book = req.params.idBook;
+            const sqlSelect = "SELECT * FROM books WHERE id_book = ?";
+            await connection.query(sqlSelect, [id_book], (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        code: 400,
+                        message: err
+                    });
+                }
+                if (results.length === 0) {
+                    return res
+                        .status(404)
+                        .send({
+                            success: false,
+                            exists: false,
+                            errorMessage: `Error there is no book with ID BOOK: ${id_book}`
+                        });
+                } else {
+                    next();
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
     getBooks: async (req, res) => {
         try {
             await connection.query("SELECT * FROM books", (err, results) => {
@@ -17,7 +46,7 @@ const bookController = {
             throw res.status(400).send({
                 success: false,
                 message: error.message
-            })
+            });
         }
     },
     // SHOW ONLY BOOK FOR ID
@@ -33,18 +62,19 @@ const bookController = {
                         error: err
                     });
                 }
-                res.send(JSON.stringify({
-                    success: true,
-                    message: `Successfully found book with ID : ${results[0].id_book}`,
-                    data: results[0]
-                }
-                ));
+                res.send(
+                    JSON.stringify({
+                        success: true,
+                        message: `Successfully found book with ID : ${results[0].id_book}`,
+                        data: results[0]
+                    })
+                );
             });
         } catch (error) {
             return res.status(400).send({
                 success: false,
                 message: error.message
-            })
+            });
         }
     },
     // UDATE BOOK FOR ID
@@ -71,38 +101,50 @@ const bookController = {
             return res.status(400).send({
                 success: false,
                 message: error.message
-            })
+            });
         }
     },
     // TODO ENTREGA
     deliverBook: async (req, res) => {
         const idBook = req.params.id_book;
         const { idBooking, score, review, deliver_date_review } = req.body;
-        const sql = [`UPDATE books SET reserved=0 WHERE id_book=${idBook}`,
-            "INSERT INTO votes SET ?"];
-        await connection.query(sql.join(";"), { book_id: idBook, id_booking: idBooking, score, review, deliver_date_review }, (err, result) => {
-            if (err) {
-                res.status(404).redirect("/");
-                //return console.log(err)
+        const sql = [
+            `UPDATE books SET reserved=0 WHERE id_book=${idBook}`,
+            "INSERT INTO votes SET ?"
+        ];
+        await connection.query(
+            sql.join(";"),
+            {
+                book_id: idBook,
+                id_booking: idBooking,
+                score,
+                review,
+                deliver_date_review
+            },
+            (err, result) => {
+                if (err) {
+                    res.status(404).redirect("/");
+                    //return console.log(err)
+                }
+                res.end(
+                    `The following BOOK has been delivered with ID : ${idBook}, and a review has been added`
+                );
             }
-            res.end(`The following BOOK has been delivered with ID : ${idBook}, and a review has been added`);
-        })
+        );
     },
     // TODO DELETE
     deleteBook: async (req, res) => {
         const idBook = req.params.idBook;
         sql = "DELETE FROM books WHERE id_book=?";
         connection.query(sql, [idBook], (err, results) => {
-            if(err){
-                throw err
+            if (err) {
+                throw err;
             }
-            res .status(200)
-                .send({
-                    "message": `The book with id ${idBook} has been successfully deleted`,
-                });
-        })
+            res.status(200).send({
+                message: `The book with id ${idBook} has been successfully deleted`
+            });
+        });
     }
-
-}
+};
 
 module.exports = bookController;

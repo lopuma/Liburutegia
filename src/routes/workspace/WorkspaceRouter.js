@@ -1,14 +1,15 @@
-const routerWorkSpace = require("express").Router();
 const { isAuthenticated } = require('../../controller/authController/loginController')
 const { getBooks, getBookings, getPartners, getAdmin } = require('../../controller/workSpaceController/workSpaceController')
 
-routerWorkSpace.get("/books", getBooks);
+// TODO 👌 
+const routerWorkSpace = require("express").Router();
 
-routerWorkSpace.get("/bookings", isAuthenticated, getBookings);
+    routerWorkSpace.get("/books", isAuthenticated, getBooks);
 
-routerWorkSpace.get("/admin", isAuthenticated, getAdmin);
+    routerWorkSpace.get("/bookings", isAuthenticated, getBookings);
 
-//TODO :OK
-routerWorkSpace.get("/partners", isAuthenticated, getPartners);
+    routerWorkSpace.get("/admin", isAuthenticated, getAdmin);
+
+    routerWorkSpace.get("/partners", isAuthenticated, getPartners);
 
 module.exports = routerWorkSpace;

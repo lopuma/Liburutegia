@@ -47,6 +47,20 @@ async function infoPartner(id_partner) {
   window.location = `/workspace/partners/info/${idPartner}`;
 }
 
+//TODO OBTENER DNI FAMILIAR 
+function familyDni(data) {
+
+}
+
+function obtenerDniFamiliar() {
+  const url = '/api/family/';
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      return data.dni_familiar_partner;
+    });
+}
+
 //TODO MOSTRAR
 async function mostrarData() {
   const url = "/api/partners/";
@@ -69,8 +83,19 @@ async function mostrarData() {
         { data: "dni" },
         { data: "name" },
         { data: "lastname" },
+        { 
+          data: null,
+          render: function (data, type) {
+            let response = "";
+              if (data.family === 1){
+                response = 'Yes';
+              } else {
+                response = "";
+              }
+              return response;
+          }
+        },
         { data: "phone1" },
-        { data: "phone2" },
         { data: "email" },
         {
           data: null,
@@ -125,6 +150,7 @@ async function edit(id_partner) {
       $(".modal-title").text("EDIT PARTNER").css("font-weight", "700");
     })
 }
+
 //TODO UPDATE
 $('#formu').submit(async function (e) {
   e.preventDefault();

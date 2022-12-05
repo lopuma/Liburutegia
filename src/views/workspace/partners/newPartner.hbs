@@ -9,7 +9,7 @@
         <div class="New-family Family">
             <div class="Family-check">
                 <input class="Family-checkbox" type="checkbox" id="dniCheck" name="dniCheck">
-                <label class="Family-label">Is he underage?</label>
+                <label class="Family-label">Is it a relative?</label>
             </div>
             <div class="Family-links" id="familyLink">
                 <select class="js-example-basic-single" id="selectDni">
@@ -517,22 +517,25 @@ async function responseAddPartner(data) {
 
 //TODO ADD
 async function addNewPartner(data) {
-            const url = `/api/partners/add`;
-            fetch(url, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-            })
-                .then(response => response.json())
-                .then(data => responseAddPartner(data))
-                .catch(error => console.error(error));
+    const url = `/api/partners/add`;
+    fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
+    })
+        .then(response => response.json())
+        .then(data => responseAddPartner(data))
+        .catch(error => console.error(error));
 }
 
 // TODO VALIDAR FORMS
 async function correctForms(e) {
     e.preventDefault();
+    let actualDate = new Date();
+    let date = moment(actualDate).format('YYYY/DD/MM')
+    console.log(date);
     let data = {
         inputDni: $.trim($("#inputDni").val()),
         inputName: $.trim($("#inputName").val()),
@@ -542,7 +545,8 @@ async function correctForms(e) {
         inputPopulation: $.trim($("#inputPopulation").val()),
         inputPhone: $.trim($("#inputPhone").val()),
         inputPhoneLandline: $.trim($("#inputPhoneLandline").val()),
-        inputEmail: $.trim($("#inputEmail").val())
+        inputEmail: $.trim($("#inputEmail").val()),
+        actualDate: date
     }
     if(dniCheck.checked){
         const indice = selectDni.selectedIndex;

@@ -1,18 +1,28 @@
 const connection = require("../../../database/db");
+
 const bscryptjs = require("bcryptjs");
+
 const flash = require('connect-flash');
 
 const { body, validationResult } = require('express-validator');
-const loginController = {
 
-    validate: [ // TODO ✅
-        body('email', "The format email address is incorrect.").exists().isEmail(),
-        body('inputPassword', "Password must contain the following: Minimun 5 characters.").exists().isLength({ min: 5 })
+const loginController = {
+    // TODO ✅ VALIDA USUER E MAIL
+    validate: [
+        body("email", "The format email address is incorrect.").exists().isEmail(),
+        body(
+            "inputPassword",
+            "Password must contain the following: Minimun 5 characters."
+        )
+            .exists()
+            .isLength({ min: 5 })
     ],
-    asigneRol: async (req, res, isRol) => { // TODO ✅
+
+    // TODO ✅ ASIGNA ROL
+    asigneRol: async (req, res, isRol) => {
         try {
             const rol = await isRol;
-            if (rol == 'admin' || rol == 'Admin') {
+            if (rol == "admin" || rol == "Admin") {
                 ruta = "workspace/admin";
                 roladmin = true;
             } else {
@@ -23,11 +33,13 @@ const loginController = {
             req.session.rol = rol;
             req.session.roladmin = roladmin;
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
-    isAuthenticated: async (req, res, next) => { // TODO ✅
+
+    // TODO ✅ SI ES AUTHENTICATION IS TRUE
+    isAuthenticated: async (req, res, next) => {
         const loggedIn = req.session.loggedin;
         try {
             loggedIn ? next() : res.redirect("/");
@@ -36,37 +48,49 @@ const loginController = {
             res.status(500).redirect("/");
         }
     },
-    postLogin: async (req, res) => { // TODO ✅
+
+    userExists: async (req, res) => {
+        
+    },
+
+    // TODO ✅ AUTHENTICATION Y REDIRIGE A LA RUTA DEPENDE EL ROL
+    postLogin: async (req, res) => {
         try {
             const errors = validationResult(req);
             const { email, inputPassword: pass } = req.body;
+            
             if (!errors.isEmpty()) {
-                req.flash("errorValidation", errors.array())
-                return res.redirect('/login');
+                req.flash("errorValidation", errors.array());
+                return res.status(200).redirect("/login");
             }
+
             if (email || pass) {
-                const sql = "SELECT * FROM users WHERE email = ?";
-                await connection.query(sql, [email], async (err, results) => {
+                const sqlSelect = "SELECT * FROM users WHERE email = ?";
+                await connection.query(sqlSelect, [email], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
                             code: 400,
                             message: err
                         });
-                    } 
-                    if (results.length === 0) {
-                        req.flash("errorUser", "Your account could not be found in Liburutegia.")
-                        req.flash("errorPassword", "")
-                        return res.redirect('/login');
-                    } 
-                    if (!await bscryptjs.compare(pass, results[0].pass)) {
-                        req.flash("errorPassword", "Wrong password. Try again or click Forgot password to reset it.")
-                        req.flash("errorUser", "")
-                        return res.redirect('/login');
                     }
+                    if (results.length === 0) {
+                        req.flash(
+                            "errorUser",
+                            "Your account could not be found in Liburutegia."
+                        );
+                        req.flash("errorPassword", "");
+                        return res.redirect("/login");
+                    }
+                    if (!await bscryptjs.compare(pass, results[0].pass)) {
+                        req.flash("errorPassword", "Wrong password. Try again or click Forgot password to reset it.");
+                        req.flash("errorUser", "");
+                        return res.redirect("/login");
+                    }
+                    
                     //TODO LLAMADA ASIGNACION DE ROL Y RUTA
                     await loginController.asigneRol(req, res, results[0].rol);
-
+                    
                     //TODO SI TODO ES OK, SE REDIRIGE A SU RUTA
                     req.session.loggedin = true;
                     req.session.username = results[0].username;
@@ -84,29 +108,30 @@ const loginController = {
                 });
             }
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
-    getLogin: async (req, res) => { // TODO ✅
+
+    // TODO ✅ REDIRIGE A LA VISTA DE LOGIN
+    getLogin: async (req, res) => {
         const loggedIn = req.session.loggedin;
         const ruta = req.session.ruta;
         try {
-            if(loggedIn){
-                req.flash("errorNoExist", "PRUEBA DE LLEGADA")
-                res.status(200).redirect(ruta)
-            } else {    
-            res.status(200).render('forms/login', {
-                    loggedIn: false,
-                    userName: "",
-                    userPath: ""
-                });
+            if (loggedIn) {
+                return res.status(200).redirect(ruta);
             }
+            res.status(200).render("forms/login", {
+                loggedIn: false,
+                userName: "",
+                userPath: ""
+            });
         } catch (error) {
-            console.error(error)
-            res.status(500).redirect("/")
+            console.error(error);
+            res.status(500).redirect("/");
         }
     }
-}
+    
+};
 
 module.exports = loginController;

@@ -42,7 +42,6 @@ const partnerController = {
     noExistPartner: async (req, res, next) => {
         try {
             const id_partner = req.params.idPartner;
-            console.log(id_partner);
             const sqlSelect = "SELECT * FROM partners WHERE id_partner = ?";
             await connection.query(
                 sqlSelect,
@@ -78,7 +77,8 @@ const partnerController = {
     //TODO SHOW ALL PARTNERS
     getPartners: async (req, res) => {
         try {
-            await connection.query("SELECT * FROM partners", (err, results) => {
+            const sqlSelect = "SELECT * FROM partners"
+            await connection.query(sqlSelect, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -138,26 +138,47 @@ const partnerController = {
                         });
                 }
                 const dni = results[0].dni;
-                console.log(" ==> ",{dni})
-                await connection.query(sqlBookin, [dni], (err, results) => {
+                //const sqlFamily = "SELECT * FROM familys f LEFT JOIN partners p ON f.dni_familiar_partner=p.dni WHERE f.dni_family=?";
+                await connection.query(sqlBookin, [dni], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res
-                            .status(400)
-                            .send({
-                                code: 400,
-                                message: err
-                            });
+                            .status(
+                                400
+                            )
+                            .send(
+                                {
+                                    code: 400,
+                                    message: err
+                                }
+                            );
                     }
                     if (results.length === 0) {
-                        return res.send({
-                            success: false,
-                            data: results,
-                            errorMessage: `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
-                        });
+                        return res.send(
+                            {
+                                success: false,
+                                data: results,
+                                errorMessage: `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
+                            }
+                        );
                     }
                     const data = results;
-                    res.send(data);
+                    res.status(200).send(data);
+                    // await connection.query(sqlFamily, [dni], async (err, results) => {
+                    //     if (err) {
+                    //         console.error("[ DB ]", err.sqlMessage);
+                    //         return res
+                    //             .status(400)
+                    //             .send({
+                    //                 code: 400,
+                    //                 message: err
+                    //             });
+                    //     }
+                    //     res.status(200).send({
+                    //         data: resDataBookings,
+                    //         info: results
+                    //     });
+                    // });
                 });
             });
         } catch (error) {
@@ -177,6 +198,7 @@ const partnerController = {
                 inputDirection: direction,
                 inputPopulation: population,
                 inputEmail: email,
+                actualDate: date,
                 idPartnerFamily,
                 dniFamily
             } = req.body;
@@ -201,6 +223,32 @@ const partnerController = {
             }
             const phonea = phone1 ? parseInt(phone1) : null;
             const phoneb = phone2 ? parseInt(phone2) : null;
+            if (idPartnerFamily === 'null' || dniFamily === 'null') {
+                await addNewPartner(dni, scanner, name, lastname, direction, population, phonea, phoneb, email, date);
+            } else {
+                const sqlInsertFamily = "INSERT INTO familys SET ?";
+                await connection.query(sqlInsertFamily, {
+                    dni,
+                    id_familiar_partner: idPartnerFamily,
+                }, async (err) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res
+                            .status(400)
+                            .send({
+                                code: 400,
+                                message: err
+                            });
+                    }
+                    await addNewPartner(dni, scanner, name, lastname, direction, population, phonea, phoneb, email, date);
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+
+        async function addNewPartner(dni, scanner, name, lastname, direction, population, phonea, phoneb, email, date) {
             const sqlInsert = "INSERT INTO partners SET ?";
             await connection.query(
                 sqlInsert,
@@ -213,7 +261,8 @@ const partnerController = {
                     population,
                     phone1: phonea,
                     phone2: phoneb,
-                    email
+                    email,
+                    date
                 },
                 (err, results) => {
                     if (err) {
@@ -234,9 +283,6 @@ const partnerController = {
                     });
                 }
             );
-        } catch (error) {
-            console.error(error);
-            res.status(500).redirect("/");
         }
     },
     // DELETE PARTNER

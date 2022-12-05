@@ -159,7 +159,7 @@ div.dataTables_wrapper .row .dataTables_info {
     }
 
     .Dashboard {
-        padding: 0 0.5em;
+        padding: 0 1em;
         overflow: hidden;
     }
 
@@ -171,6 +171,7 @@ div.dataTables_wrapper .row .dataTables_info {
 @media screen and (max-width: 59.375em) {
     .Dashboard-a {
         margin-top: 3em;
+        
     }
 
     div.dataTables_wrapper .row .dataTables_info {
