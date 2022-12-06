@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/style/editModal.css">
+<link rel="stylesheet" href="/style/newForm.css">
+
+<!--TODO Modal para CRUD-->
+<div class="modal fade" id="modalPartner" tabindex="-1" role="dialog"
+    aria-labelledby="modalPartnerLabel" aria-hidden="true" style="padding-right:0">
+
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title" id="modalPartnerLabel"></h5>
+            </div>
+
+            <div class="New">
+                <form class="New-form" id="formu">
+
+                    {{> formPartner}}
+
+                    <div class="Input-button">
+                        <button type="button" class="Button-cancel"
+                            data-dismiss="modal" tabindex="10">Cancel</button>
+                        <button type="button" id="btnUpdate"
+                            class="Button-accept" tabindex="11">Save</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript" defer>
+
+    const btnUpdate = document.getElementById("btnUpdate");
+
+    btnUpdate.addEventListener( 'click', (event) => {
+        console.log(event.target, "click update");
+    });
+
+</script>

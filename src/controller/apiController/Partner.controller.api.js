@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const connection = require("../../../database/db");
 const flash = require("connect-flash");
+const { data } = require("jquery");
 
 const partnerController = {
     //TODO VALIDATIONS
@@ -92,7 +93,11 @@ const partnerController = {
                         messageNotFound: "No data found for Partners"
                     });
                 }
-                res.status(200).send(results);
+                res.status(200).send({
+                    success: "True",
+                    messageSuccess: results.msg,
+                    data: results,
+                });
             });
         } catch (error) {
             console.error(error);

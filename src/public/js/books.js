@@ -84,7 +84,7 @@ async function mostrarData() {
     myTable = $("#tableBook").DataTable({
       ajax: {
         url: url,
-        dataSrc: ""
+        dataSrc: "data"
       },
       searching: true,
       ordering: true,

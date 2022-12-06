@@ -1,540 +1,180 @@
-<link href="/style/new.css" rel="stylesheet">
+<link rel="stylesheet" href="/style/new.css">
 
 <div class="New">
+
+    <!-- TODO TITTLE FLAG NEW `PARTNER` -->
     <div class="New-title">
         <h1 class="New-h1">Add New Partner</h1>
     </div>
     <div class="New-flag"></div>
+
+    <!-- TODO FORMULARIO DE AÑADIR NUEVO PARTNER -->
     <form class="New-form" id="formAddPartner" id="formAddPartner">
-        <div class="New-family Family">
-            <div class="Family-check">
-                <input class="Family-checkbox" type="checkbox" id="dniCheck" name="dniCheck">
-                <label class="Family-label">Is it a relative?</label>
-            </div>
-            <div class="Family-links" id="familyLink">
-                <select class="js-example-basic-single" id="selectDni">
-                </select>
-            </div>
-        </div>
-        <div class="New-content">
-            <input type="text" class="form-control" id="id_partner" tabindex="0"
-                hidden>
-            <div class="New-boxes">
-                <!-- TODO DNI -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-regular fa-address-card"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="inputDni"
-                                id="inputDni" type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                required="required" tabindex="1" autofocus>
-                            <label class="Animation-label" for="inputDni">Enter
-                                your Dni *</label>
-                            <label class="Animation-info" for="inputDni"
-                                id="infoDni"><i class="fa-solid fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo" for="inputDni"
-                                id="closeInfoDni"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Dni
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- TODO SCANNER -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-solid fa-qrcode"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="inputScanner"
-                                id="inputScanner" type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                tabindex="2">
-                            <label class="Animation-label" for="inputScanner">Enter
-                                your Scanner</label>
-                            <label class="Animation-info" for="inputScanner"
-                                id="infoScanner"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo"
-                                for="inputScanner" id="closeInfoScanner"><i
-                                    class="fa-solid fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Scanner
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="New-boxes">
-                <!-- TODO NAME -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-solid fa-user"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="inputName"
-                                id="inputName" type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                required="required" tabindex="3">
-                            <label class="Animation-label" for="inputName">Enter
-                                your Name *</label>
-                            <label class="Animation-info" for="inputName"
-                                id="infoName"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo" for="inputName"
-                                id="closeInfoName"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Name
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- TODO SURNAME -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-solid fa-user"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="inputLastname"
-                                id="inputLastname" type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                required tabindex="4">
-                            <label class="Animation-label" for="inputLastname">Enter
-                                your Lastname *</label>
-                            <label class="Animation-info" for="inputLastname"
-                                id="infoLastname"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo"
-                                for="inputLastname" id="closeInfoLastname"><i
-                                    class="fa-solid fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Lastname
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="New-boxes">
-                <!-- TODO DIRECTION -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-solid fa-location-dot"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="inputDirection"
-                                id="inputDirection" type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                tabindex="5">
-                            <label class="Animation-label" for="inputDirection">Enter
-                                your Direction</label>
-                            <label class="Animation-info" for="inputDirection"
-                                id="infoDirection"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo"
-                                for="inputDirection" id="closeInfoDirection"><i
-                                    class="fa-solid fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Direction
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- TODO POPULATION -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-solid fa-location-arrow"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input"
-                                name="inputPopulation" id="inputPopulation"
-                                type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                tabindex="6">
-                            <label class="Animation-label"
-                                for="inputPopulation">Enter your Population</label>
-                            <label class="Animation-info" for="inputPopulation"
-                                id="infoPopulation"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo"
-                                for="inputPopulation" id="closeInfoPopulation"><i
-                                    class="fa-solid fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Population
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="New-boxes">
-                <!-- TODO PHONE (MOBILE) -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-solid fa-mobile-screen-button"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="inputPhone"
-                                id="inputPhone" type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                tabindex="7">
-                            <label class="Animation-label" for="inputPhone">Enter
-                                your Phone (Mobile)</label>
-                            <label class="Animation-info" for="inputPhone"
-                                id="infoPhone"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo" for="inputPhone"
-                                id="closeInfoPhone"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Mobile
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- TODO PHONE (LANDLINE) -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-solid fa-phone-flip"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input"
-                                name="inputPhoneLandline"
-                                id="inputPhoneLandline" type="text"
-                                placeholder=" " autocomplete="valorNoValido"
-                                tabindex="8">
-                            <label class="Animation-label"
-                                for="inputPhoneLandline">Enter your Phone
-                                (Landline)</label>
-                            <label class="Animation-info"
-                                for="inputPhoneLandline" id="infoPhoneLandline"><i
-                                    class="fa-solid fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo"
-                                for="inputPhoneLandline"
-                                id="closeInfoPhoneLandline"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Mobile
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="New-boxes">
-                <!-- TODO EMAIL -->
-                <div class="Input-box">
-                    <div class="Box">
-                        <i class="Box-i fa-regular fa-address-card"></i>
-                        <div class="Box-animation Animation">
-                            <input class="Animation-input" name="inputEmail"
-                                id="inputEmail" type="email"
-                                placeholder=" " autocomplete="valorNoValido"
-                                tabindex="9">
-                            <label class="Animation-label" for="inputEmail">Enter
-                                your Email</label>
-                            <label class="Animation-info" for="inputEmail"
-                                id="infoEmail"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                            <label class="Animation-closeInfo" for="inputEmail"
-                                id="closeInfoEmail"><i class="fa-solid
-                                    fa-circle-info"></i></label>
-                        </div>
-                    </div>
-                    <div class="Input-error Error fieldErr"
-                        id="validationEmailNew">
-                        <div class="Error-icon">
-                            <svg fill="currentColor" focusable="false"
-                                width="16px" height="16px" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
-                                    10-4.48 10-10S17.52 2 12 2zm1
-                                    15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="Error-text">
-                            <span id="errorEmailNew" class="fieldErrText">Email
-                                cannot be empty.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        {{> formPartner}}
+
         <div class="Input-button">
             <input class="Button-cancel" onClick="cerrar()" id="btnCancel"
                 type="button" value='CANCEL' tabindex="10" />
             <input class="Button-accept" id="btnAccept" type="submit"
                 value='ACCEPT' tabindex="11" />
         </div>
-    </form>
+
+    </form>    
+
 </div>
 
+<script defer>
+    const url = "/api/partners/";
+    const selectDni = document.getElementById("selectDni");
+    const dniCheck = document.getElementById("dniCheck");
+    const familyLink = document.getElementById("familyLink");
+    const formAddPartner = document.getElementById("formAddPartner");
+    const inputDni = document.getElementById("inputDni");
+    const inputName = document.getElementById("inputName");
+    
+    function cerrar() {
+    window.location.href = "/workspace/partners";
+    }
 
-<script>
-const url = "/api/partners/";
-const selectDni = document.getElementById("selectDni");
-const dniCheck = document.getElementById("dniCheck");
-const familyLink = document.getElementById("familyLink");
-const formAddPartner = document.getElementById("formAddPartner");
-const inputDni = document.getElementById("inputDni");
-const inputName = document.getElementById("inputName");
+    $(document).ready(function () {
+    theme: "bootstrap4", $(".js-example-basic-single").select2();
+    });
 
-
-function cerrar() {
-    window.location.href = "/workspace/partners"
-}
-
-$(document).ready(function() {
-    theme: "bootstrap4",
-    $('.js-example-basic-single').select2();
-});
-
-// CREDIT github @THuRStoN
-function formatNumberLength(num, length) {
+    // CREDIT github @THuRStoN
+    function formatNumberLength(num, length) {
     var r = "" + num;
-    while ( r.length < length ) {
+    while (r.length < length) {
         r = "0" + r;
     }
     return r;
-}
+    }
 
-// CREDIT github @THuRStoN
-function charDNI(dni) {
+    // CREDIT github @THuRStoN
+    function charDNI(dni) {
     var chain = "TRWAGMYFPDXBNJZSQVHLCKET";
     var pos = dni % 23;
-    var letter = chain.substring( pos, pos + 1 );
+    var letter = chain.substring(pos, pos + 1);
     return letter;
-}
+    }
 
-// CREDIT github @THuRStoN
-function rand_dni() {
-    num = Math.floor( ( Math.random() * 100000000 ) );
-    sNum = formatNumberLength( num, 8 );
-    return sNum + charDNI( sNum );
-}
+    // CREDIT github @THuRStoN
+    function rand_dni() {
+    num = Math.floor(Math.random() * 100000000);
+    sNum = formatNumberLength(num, 8);
+    return sNum + charDNI(sNum);
+    }
 
-// TODO AÑADE DNI DE PARTNERS
-async function obtenerDni(data) {
-    selectDni.innerHTML = '<option value="" disabled selected hidden>Select family member\'s DNI</option>'
-    data.forEach((partner) => {
-        let option = document.createElement('option');
+    // TODO AÑADE DNI DE PARTNERS
+    async function obtenerDni(data) {
+    selectDni.innerHTML =
+        '<option value="" disabled selected hidden>Select family member\'s DNI</option>';
+    data.forEach(partner => {
+        let option = document.createElement("option");
         option.value = partner.id_partner;
         option.text = partner.dni;
         selectDni.add(option);
     });
     inputDni.value = rand_dni();
     selectDni.focus();
-}
+    }
 
-// TODO VALIDAR SI ES MENOR
-dniCheck.addEventListener( 'change', () => {
-    if(dniCheck.checked) {
-        familyLink.classList.add('isEnable');
+    // TODO VALIDAR SI ES MENOR
+    dniCheck.addEventListener("change", () => {
+    if (dniCheck.checked) {
+        familyLink.classList.add("isEnable");
         setTimeout(() => {
-            fetch(url, {
-            method: 'GET',
+        fetch(url, {
+            method: "GET",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=utf-8'
+            Accept: "application/json",
+            "Content-Type": "application/json; charset=utf-8"
             }
-            })
-            .then((response) => response.json())
-            .then((data) => obtenerDni(data))
-            .catch((e) => window.alert("There is no record in partners, to associate."));
+        })
+            .then(response => response.json())
+            .then(data => obtenerDni(data))
+            .catch(e =>
+            window.alert("There is no record in partners, to associate.")
+            );
         }, 500);
     } else {
-        $('#selectDni').html('');
-        familyLink.classList.remove('isEnable');
+        $("#selectDni").html("");
+        familyLink.classList.remove("isEnable");
         inputDni.value = "";
         inputDni.focus();
-    };
-});
+    }
+    });
 
-//TODO MESSAGE
-async function responseAddPartner(data) {
+    //TODO MESSAGE
+    async function responseAddPartner(data) {
     const exists = data.exists;
     if (!exists) {
         Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: data.messageSuccess,
-            backdrop: '#2C3333',
-            timer: 5000,
-            showCancelButton: false,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#474E68',
-            confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        }).then((response) => {
-            $('#selectDni').html('');
-            formAddPartner.reset();
-            familyLink.classList.remove('isEnable');
-            inputDni.focus();
-        });
-    } else { 
-        Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: data.errorMessage,
-        backdrop: '#2C3333',
+        icon: "success",
+        title: "Success",
+        text: data.messageSuccess,
+        backdrop: "#2C3333",
         timer: 5000,
         showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#474E68',
-        confirmButtonText: 'OK',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#474E68",
+        confirmButtonText: "OK",
         showClass: {
-            popup: 'animate__animated animate__fadeInDown'
+            popup: "animate__animated animate__fadeInDown"
         },
         hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
+            popup: "animate__animated animate__fadeOutUp"
+        }
+        }).then(response => {
+        $("#selectDni").html("");
+        formAddPartner.reset();
+        familyLink.classList.remove("isEnable");
+        inputDni.focus();
+        });
+    } else {
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: data.errorMessage,
+        backdrop: "#2C3333",
+        timer: 5000,
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#474E68",
+        confirmButtonText: "OK",
+        showClass: {
+            popup: "animate__animated animate__fadeInDown"
+        },
+        hideClass: {
+            popup: "animate__animated animate__fadeOutUp"
         }
         }).then(() => {
-            inputDni.focus();
-            inputDni.select();
+        inputDni.focus();
+        inputDni.select();
         });
     }
-}
+    }
 
-//TODO ADD
-async function addNewPartner(data) {
+    //TODO ADD
+    async function addNewPartner(data) {
     const url = `/api/partners/add`;
     fetch(url, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
         "Content-type": "application/json; charset=UTF-8"
-    }
+        }
     })
         .then(response => response.json())
         .then(data => responseAddPartner(data))
         .catch(error => console.error(error));
-}
+    }
 
-// TODO VALIDAR FORMS
-async function correctForms(e) {
+    // TODO VALIDAR FORMS
+    async function correctForms(e) {
     e.preventDefault();
     let actualDate = new Date();
-    let date = moment(actualDate).format('YYYY/DD/MM')
+    let date = moment(actualDate).format("YYYY/DD/MM");
     console.log(date);
     let data = {
         inputDni: $.trim($("#inputDni").val()),
@@ -547,15 +187,15 @@ async function correctForms(e) {
         inputPhoneLandline: $.trim($("#inputPhoneLandline").val()),
         inputEmail: $.trim($("#inputEmail").val()),
         actualDate: date
-    }
-    if(dniCheck.checked){
+    };
+    if (dniCheck.checked) {
         const indice = selectDni.selectedIndex;
         console.log(indice);
-        if(indice === -1 || indice === undefined) return;
-        if(indice === 0) {
-            window.alert("Please select a dni to add to your partner list ");
-            return;
-        };
+        if (indice === -1 || indice === undefined) return;
+        if (indice === 0) {
+        window.alert("Please select a dni to add to your partner list ");
+        return;
+        }
         const opcionSeleccionada = selectDni.options[indice];
         console.log(opcionSeleccionada.value);
         let idPartnerFamily = opcionSeleccionada.value;
@@ -563,21 +203,22 @@ async function correctForms(e) {
         data.idPartnerFamily = idPartnerFamily;
         data.dniFamily = dniFamily;
         addNewPartner(data);
-        console.log("1 ==> ", {data});
+        console.log("1 ==> ", { data });
         selectDni.focus();
     } else {
-        let idPartnerFamily = 'null';
-        let dniFamily = 'null';
+        let idPartnerFamily = "null";
+        let dniFamily = "null";
         data.idPartnerFamily = idPartnerFamily;
         data.dniFamily = dniFamily;
-        console.log("2 ==> ", {data});
+        console.log("2 ==> ", { data });
         addNewPartner(data);
     }
-}
+    }
 
-// TODO EVENTO AL ENVIAR FORMULARIO
-document.addEventListener("DOMContentLoaded", function () {
-    formAddPartner.addEventListener("submit", correctForms);
-});
-
+    // TODO EVENTO AL ENVIAR FORMULARIO
+    try {
+        document.addEventListener("DOMContentLoaded", function () {
+            formAddPartner.addEventListener("submit", correctForms);
+        });
+    } catch(error) {}
 </script>

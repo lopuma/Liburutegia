@@ -43,12 +43,6 @@ const partnersController = {
                             message: err
                         });
                     }
-                    // res
-                    //     .status(200)
-                    //     .send({
-                    //         partner: resDataPartners,
-                    //         infoFamily: results
-                    //     })
                     res.status(200).render("workspace/partners/infoPartner", {
                         loggedIn,
                         rolAdmin,

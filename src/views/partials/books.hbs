@@ -1,4 +1,4 @@
-<!--Modal para CRUD-->
+<!--TODO Modal para CRUD-->
 <div id="modalBook" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBookLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -18,10 +18,14 @@
   </div>
 </div>
 
-{{!-- DATA --}}
+<!-- TODO DATA BOOKS FOR LIBURUTEGIA-->
 <div class="Dashboard">
   <a class="Dashboard-a" href="/workspace/books/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Book</a>
   <div class="Dashboard-row">
+      <!-- TODO LOADING -->
+      {{> loading}}
+
+      <!-- TODO TABLE BOOKS -->
       <table id="tableBook" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
         <thead  class="Dashboard-head">
           <tr>
@@ -34,11 +38,7 @@
             <th>ACTIONS</th>
           </tr>
         </thead>
-        <tbody>
-          {{!-- LOADING --}}
-          <div id="spinner">
-            <div class="lds-dual-ring">&nbsp</div>
-          </div>
+        <tbody id="tbodyBooks">
         </tbody>
         <tfoot  class="Dashboard-foot">
           <tr>

@@ -4,6 +4,6 @@ const {
 } = require("../../controller/apiController/Family.controller.api");
 
 //TODO FAMILY
-routerFamilys.get("/", getFamily);
+routerFamilys.get("/:dniPartner", getFamily);
 
 module.exports = routerFamilys;

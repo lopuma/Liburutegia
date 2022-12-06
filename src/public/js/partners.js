@@ -1,74 +1,43 @@
 
 const spinner = document.getElementById("spinner");
-const tbodyPartner = document.getElementById("tbodyPartner");
+const tbodyPartners = document.getElementById("tbodyPartners");
+
+//TODO CLOSE LOADING
+setTimeout(async () => {
+  spinner.style.display = "block";
+  loadData();
+}, "1500");
 
 
+// function responseDniFamily(data) {
+//   let resultDni = "";
+//   if (data.data !== null) {
+//     resultDni = data.data.dni_familiar_partner;
+//   } else {
+//     resultDni = "";
+//   }
+//   return resultDni;
+// }
 
-//TODO DELETE
-async function partnerDelete(idPartner) {
-  const url = `/api/partners/delete/${idPartner}`
-  fetch(url).then(() => {
-    console.log(tbodyPartner)
-    myTable.destroy();
-    tbodyPartner.innerHTML = "";
-    setTimeout(() => {
-      mostrarData();
-    }, 500);
-  });
-}
-async function deletePartner(id_partner) {
-  opcion = 'delete';
-  const idPartner = id_partner;
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "Are you sure you want to delete the PARTNER!",
-    icon: 'warning',
-    showConfirmButton: true,
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  })
-    .then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted! Book ' + idPartner,
-          'Your Partner has been deleted.',
-          'success',
-          partnerDelete(idPartner)
-        );
-      }
-    });
-}
+// function obtenerDniFamiliar(dni) {
+//   let dniPartner = dni;
+//   const url = `/api/family/${dniPartner}`;
+//   let dniFound = "";
+//   fetch(url).then(response => response.json()).then(data => {
+//     dniFound = responseDniFamily(data);
+//     console.log(dniFound);
+//   });
+// }
 
-//TODO INFO PARTNER
-async function infoPartner(id_partner) {
-  const idPartner = id_partner;
-  window.location = `/workspace/partners/info/${idPartner}`;
-}
-
-//TODO OBTENER DNI FAMILIAR 
-function familyDni(data) {
-
-}
-
-function obtenerDniFamiliar() {
-  const url = '/api/family/';
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      return data.dni_familiar_partner;
-    });
-}
-
-//TODO MOSTRAR
-async function mostrarData() {
-  const url = "/api/partners/";
+//TODO LOAD PARTNER
+async function loadData() {
+  const urlLoad = "/api/partners/";
   $(document).ready(async () => {
     myTable = await $("#tablePartner").DataTable({
       ajax: {
-        url: url,
-        dataSrc: ""
+        dataType: "json",
+        url: urlLoad,
+        dataSrc: "data"
       },
       searching: true,
       ordering: true,
@@ -83,19 +52,8 @@ async function mostrarData() {
         { data: "dni" },
         { data: "name" },
         { data: "lastname" },
-        { 
-          data: null,
-          render: function (data, type) {
-            let response = "";
-              if (data.family === 1){
-                response = 'Yes';
-              } else {
-                response = "";
-              }
-              return response;
-          }
-        },
         { data: "phone1" },
+        { data: "phone2" },
         { data: "email" },
         {
           data: null,
@@ -122,12 +80,14 @@ async function mostrarData() {
   });
   spinner.style.display = "none";
 }
-setTimeout(async () => {
-  spinner.style.display = "block";
-  mostrarData();
-}, "300")
 
-//TODO EDITAR
+//TODO INFO PARTNER
+async function infoPartner(id_partner) {
+  const idPartner = id_partner;
+  window.location = `/workspace/partners/info/${idPartner}`;
+}
+
+//TODO EDIT PARTNER
 async function edit(id_partner) {
   opcion = 'edit';
   const idPartner = id_partner;
@@ -136,22 +96,53 @@ async function edit(id_partner) {
     .then((response) => response.json())
     .then((datos) => {
       $("#id_partner").val(datos.id_partner);
-      $("#inputDni").val(datos.inputDni);
-      $("#inputScanner").val(datos.inputScanner);
-      $("#inputName").val(datos.inputName);
-      $("#inputLastname").val(datos.inputLastname);
-      $("#inputDirection").val(datos.inputDirection);
-      $("#inputPopulation").val(datos.inputPopulation);
-      $("#inputPhone").val(datos.inputPhone);
-      $("#inputPhoneLandline").val(datos.inputPhoneLandline);
-      $("#inputEmail").val(datos.inputEmail);
+      $("#inputDni").val(datos.dni);
+      $("#inputScanner").val(datos.scanner);
+      $("#inputName").val(datos.name);
+      $("#inputLastname").val(datos.lastname);
+      $("#inputDirection").val(datos.direction);
+      $("#inputPopulation").val(datos.population);
+      $("#inputPhone").val(datos.phone1);
+      $("#inputPhoneLandline").val(datos.phone2);
+      $("#inputEmail").val(datos.email);
       $(".modal-header").css("background-color", "var(--Background-Color-forms-partner)");
       $(".modal-header").css("color", "white");
       $(".modal-title").text("EDIT PARTNER").css("font-weight", "700");
     })
 }
 
-//TODO UPDATE
+//TODO DELETE
+async function partnerDelete(idPartner) {
+  const url = `/api/partners/delete/${idPartner}`
+  fetch(url).then(() => {
+    myTable.destroy();
+    tbodyPartners.innerHTML = "";
+    setTimeout(() => {
+      loadData();
+    }, 500);
+  });
+}
+async function deletePartner(id_partner) {
+  opcion = 'delete';
+  const idPartner = id_partner;
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "Are you sure you want to delete the PARTNER!",
+    icon: 'warning',
+    showConfirmButton: true,
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  })
+    .then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Removed! partner with ID: " + idPartner, "Your Partner has been deleted.", "success", partnerDelete(idPartner));
+      }
+    });
+}
+
+//TODO UPDATE PARTNER
 $('#formu').submit(async function (e) {
   e.preventDefault();
   const url = `/api/partners/update/${id_partner}`
@@ -181,8 +172,8 @@ $('#formu').submit(async function (e) {
   }
   $("#modalPartner").modal("hide");
   myTable.destroy();
-  tbodyPartner.innerHTML = "";
+  tbodyPartners.innerHTML = "";
   setTimeout(() => {
-    mostrarData();
+    loadData();
   }, 500);
 });

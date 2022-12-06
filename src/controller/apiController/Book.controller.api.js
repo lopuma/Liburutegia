@@ -40,7 +40,7 @@ const bookController = {
                         message: "No data found for BOOKS"
                     });
                 }
-                res.status(200).send(results);
+                res.status(200).send({data});
             });
         } catch (error) {
             throw res.status(400).send({
