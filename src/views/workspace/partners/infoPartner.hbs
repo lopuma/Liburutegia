@@ -43,7 +43,7 @@
         <div class="Slider-move">
             <div class="Slider-card isActive">
                 {{#each partner}}
-                    <a class="Slider-a activo" onClick="infor({{this.id_partner}})">Information</a>
+                    <a class="Slider-a isActivo" onClick="infor({{this.id_partner}})">Information</a>
                 {{/each}}
             </div>
             <div class="Slider-card">
@@ -97,13 +97,13 @@
     </ul>
     </div>
     <div class="Info-subcontenedor">
-        <div class="Info-bloque activo">
+        <div class="Info-bloque isActivo">
             {{#each partner}}
                 <h3>NAME {{this.name}}</h3>
                 <h3>LASTNAME {{this.lastname}}</h3>
             {{/each}}
         </div>
-        <div class="Info-bloque Dashboard" id="infoBloqueActive">
+        <div class="Info-bloque" id="infoBloqueActive">
             <div class="Bloque-table Dashboard-row">
                 <table class="Dashboard-table table table-bordered   display wrap" id="tablePartnerActive"
                     cellspacing="0" width="100%">
@@ -117,8 +117,8 @@
                         </tr>
                     </thead>
                     <tbody id="activeData">
-                        <div id="spinnerActive">
-                            <div class="lds-dual-ring">&nbsp</div>
+                        <div id="spinnerActive" style="margin-top: 2em">
+                            {{> loading}}
                         </div>
                     </tbody>
                     <tfoot class="Dashboard-foot">
@@ -133,7 +133,7 @@
                 </table>
             </div>
         </div>
-        <div class="Info-bloque Dashboard" id="infoBloqueHistory">
+        <div class="Info-bloque" id="infoBloqueHistory">
             <div class="Bloque-table Dashboard-row">
                 <table class="Dashboard-table table table-bordered  display wrap" id="tablePartnerHistory"
                     cellspacing="0" width="100%">
@@ -149,8 +149,8 @@
                         </tr>
                     </thead>
                     <tbody id="historyData">
-                        <div id="spinnerHistory">
-                            <div class="lds-dual-ring">&nbsp</div>
+                        <div id="spinnerHistory" style="margin-top: 2em">
+                            {{> loading}}
                         </div>
                     </tbody>
                     <tfoot class="Dashboard-foot">
@@ -184,16 +184,15 @@
     const tbodyActive = document.getElementById("activeData");
     const infoBloqueHistory = document.getElementById("infoBloqueHistory");
     const infoBloqueActive = document.getElementById("infoBloqueActive");
-    const spinnerHistory = document.getElementById("spinnerHistory");
-    const spinnerActive = document.getElementById("spinnerActive");
+
     let indice = 1;
 
     //TODO INFORMATION
     async function infor(id_partner){
         idPartner = id_partner;
         indice = 1;
-        console.log("<== INDICE ==> ", indice);
     }
+
     //TODO OBTENER DATOS DEL MODAL
     $('#formuStar').submit(async function (e) {
         e.preventDefault();
@@ -292,7 +291,6 @@
     //TODO RESERVAS ACTIVAS
     async function createdTableActive() {
         setTimeout(async () => {
-            spinnerActive.style.display = "none";
             $(document).ready(function () {
                 tableA = $("#tablePartnerActive").DataTable({
                     searching: true,
@@ -305,51 +303,58 @@
                     retrieve: true
                 });
             });
+            spinnerActive.style.display = "none";
         }, 500)
     }
+
     async function obtenerPartner(data) {
-        console.log("==> ", data);
-        const fecha = new Date();
-        const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
-        let vacio = Object.keys(data).length === 0;
-        let count = 0;
-        let body = "";
-        data.message ? vacio = true : vacio = false
-        tbodyActive.innerHTML = "";;
-        if (vacio) {
-            body += `<td COLSPAN="5" style="text-align: center; font-weight: bold">No data found</td>`;
-        } else {
-            infoBloqueActive.classList.remove("isNormal");
-            infoBloqueActive.classList.add("isScroll");
-            for (let elemento of data) {
-                count += 1;
-                const reserved = elemento.reserved;
-                const idBookingReview = elemento.id_booking_review;
-                let reservationDate = new Date(elemento.reservation_date);
-                reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
-                let deliverDateReview = new Date(elemento.deliver_date_review);
-                deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
-                if (reserved === 1 && idBookingReview === null) {
-                    body += `<tr id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td><button id="btnDeliver" onClick=deliver(` + elemento.book_id + `,` + elemento.id_booking + `,` + count + `) class="btn btn-warning" title="Deliver Book"><i class="fa-regular fa-handshake"></i> Deliver Book</button></td></tr>`;
-                } else {
-                    infoBloqueActive.classList.remove("isScroll");
-                    infoBloqueActive.classList.add("isNormal");
+        if(data.success == true) {
+            const fecha = new Date();
+            const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
+            let vacio = Object.keys(data).length === 0;
+            let count = 0;
+            let body = "";
+            data.message ? vacio = true : vacio = false
+            tbodyActive.innerHTML = "";;
+            if (vacio) {
+                body += `<td COLSPAN="5" style="text-align: center; font-weight: bold">No data found</td>`;
+            } else {
+                infoBloqueActive.classList.remove("isNormal");
+                infoBloqueActive.classList.add("isScroll");
+                for (let elemento of data) {
+                    count += 1;
+                    const reserved = elemento.reserved;
+                    const idBookingReview = elemento.id_booking_review;
+                    let reservationDate = new Date(elemento.reservation_date);
+                    reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
+                    let deliverDateReview = new Date(elemento.deliver_date_review);
+                    deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
+                    if (reserved === 1 && idBookingReview === null) {
+                        body += `<tr id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td><button id="btnDeliver" onClick=deliver(` + elemento.book_id + `,` + elemento.id_booking + `,` + count + `) class="btn btn-warning" title="Deliver Book"><i class="fa-regular fa-handshake"></i> Deliver Book</button></td></tr>`;
+                    } else {
+                        infoBloqueActive.classList.remove("isScroll");
+                        infoBloqueActive.classList.add("isNormal");
+                    }
+                    setTimeout(async () => {
+                        tbodyActive.innerHTML = body;
+                    }, 400)
                 }
-                setTimeout(async () => {
-                    tbodyActive.innerHTML = body;
-                }, 400)
             }
         }
     }
+
     async function infoPartner(id_partner) {
         indice = 2;
-        console.log("<== INDICE ==> ", indice);
-        spinnerActive.style.display = "block";
+        spinnerActive.style.display = "inline-block";
         try {
             tableA.destroy();
-            createdTableActive();
+            setTimeout(() => {
+                createdTableActive();
+            }, 1000);
         } catch (error) {
-            createdTableActive();
+            setTimeout(() => {
+                createdTableActive();
+            }, 1000);
         }
         const idPartner = id_partner;
         const url = `/api/partners/info/${idPartner}`;
@@ -360,14 +365,14 @@
     }
 
     async function infoPartner1(id_partner) {
-        spinnerActive.style.display = "block";
+        spinnerActive.style.display = "inline-block";
         await infoPartner(id_partner)
     }
+
     //TODO HISTORIAL DE RESERVAS
     async function createdTableHistory() {
         setTimeout(async () => {
             $(document).ready(function () {
-                spinnerHistory.style.display = "none";
                 tableB = $("#tablePartnerHistory").DataTable({
                     searching: true,
                     ordering: true,
@@ -378,60 +383,70 @@
                     pageLength: 5,
                 });
             });
+            spinnerHistory.style.display = "none";
         }, 500)
     }
+
     async function obtenerHistory(data) {
-        const fecha = new Date();
-        const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
-        let vacio = Object.keys(data).length === 0;
+        if(data.success == true) {
+            const fecha = new Date();
+            const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
+            let vacio = Object.keys(data).length === 0;
 
-        let count = 0;
-        let bodyHistory = "";
+            let count = 0;
+            let bodyHistory = "";
 
-        data.message ? vacio = true : vacio = false;
-        tbodyHistory.innerHTML = "";
-        if (vacio) {
-            bodyHistory += `<td COLSPAN="7" style="text-align: center; font-weight: bold">No data found</td>`;
-        } else {
-            infoBloqueHistory.classList.remove("isNormal");
-            infoBloqueHistory.classList.add("isScroll");
-            for (let elemento of data) {
-                count += 1;
-                const starTotal = 5;
-                const reserved = elemento.reserved;
-                const idBookingReview = elemento.id_booking_review;
-                const review = elemento.review;
-                const score = elemento.score;
+            data.message ? vacio = true : vacio = false;
+            tbodyHistory.innerHTML = "";
+            if (vacio) {
+                bodyHistory += `<td COLSPAN="7" style="text-align: center; font-weight: bold">No data founded</td>`;
+                infoBloqueHistory.classList.add("isNormal");
+                infoBloqueHistory.classList.remove("isScroll");
+            } else {
+                infoBloqueHistory.classList.remove("isNormal");
+                infoBloqueHistory.classList.add("isScroll");
+                for (let elemento of data) {
+                    count += 1;
+                    const starTotal = 5;
+                    const reserved = elemento.reserved;
+                    const idBookingReview = elemento.id_booking_review;
+                    const review = elemento.review;
+                    const score = elemento.score;
 
-                let reservationDate = new Date(elemento.reservation_date);
-                reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
-                let deliverDateReview = new Date(elemento.deliver_date_review);
-                deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
+                    let reservationDate = new Date(elemento.reservation_date);
+                    reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
+                    let deliverDateReview = new Date(elemento.deliver_date_review);
+                    deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
 
-                const starPercentage = elemento.score / starTotal * 100;
-                const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+                    const starPercentage = elemento.score / starTotal * 100;
+                    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
 
-                if (reserved === 0 || (reserved === 1 && idBookingReview !== null)) {
-                    bodyHistory += `<tr  id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td>${deliverDateReview}</td><td><div class="stars-outer"><div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${elemento.score}"></div></div></td><td>${elemento.review}</td></tr>`;
-                } else {
-                    infoBloqueHistory.classList.remove("isScroll");
-                    infoBloqueHistory.classList.add("isNormal");
+                    if (reserved === 0 || (reserved === 1 && idBookingReview !== null)) {
+                        bodyHistory += `<tr  id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td>${deliverDateReview}</td><td><div class="stars-outer"><div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${elemento.score}"></div></div></td><td>${elemento.review}</td></tr>`;
+                    } else {
+                        infoBloqueHistory.classList.remove("isScroll");
+                        infoBloqueHistory.classList.add("isNormal");
+                    }
+                    setTimeout(async () => {
+                        tbodyHistory.innerHTML = bodyHistory;
+                    }, 400)
                 }
-                setTimeout(async () => {
-                    tbodyHistory.innerHTML = bodyHistory;
-                }, 400)
             }
         }
     }
+
     async function infoHistory(id_partner) {
         indice = 3;
-        console.log("<== INDICE ==> ", indice);
-        spinnerHistory.style.display = "block";
+        spinnerHistory.style.display = "inline-block";
         try {
             tableB.destroy();
-            createdTableHistory();
+            setTimeout(() => {
+                createdTableHistory();
+            }, 1000);
         } catch (error) {
-            createdTableHistory();
+            setTimeout(() => {
+                createdTableHistory();
+            }, 1000);
         }
         const idPartner = id_partner;
         const url = `/api/partners/info/${idPartner}`;
@@ -445,33 +460,33 @@
     sliderButton.forEach((cadaLi, i) => {
         sliderButton[i].addEventListener("click", () => {
             sliderButton.forEach((cadaLi, i) => {
-                sliderButton[i].classList.remove("activo");
+                sliderButton[i].classList.remove("isActivo");
                 linesButton[i].classList.remove("isActive");
                 sliderCard[i].classList.remove("isActive");
-                bloque[i].classList.remove("activo");
+                bloque[i].classList.remove("isActivo");
             });
-            sliderButton[i].classList.add("activo");
+            sliderButton[i].classList.add("isActivo");
             linesButton[i].classList.add("isActive");
             sliderCard[i].classList.add("isActive");
-            bloque[i].classList.add("activo");
+            bloque[i].classList.add("isActivo");
         });
     });
 
     linesButton.forEach((cadaLi, i) => {
-            linesButton[i].addEventListener("click", () => {
-                linesButton.forEach((cadaLi, i) => {
-                    sliderButton[i].classList.remove("activo");
-                    linesButton[i].classList.remove("isActive");
-                    sliderCard[i].classList.remove("isActive");
+        linesButton[i].addEventListener("click", () => {
+            linesButton.forEach((cadaLi, i) => {
+                sliderButton[i].classList.remove("isActivo");
+                linesButton[i].classList.remove("isActive");
+                sliderCard[i].classList.remove("isActive");
 
-                    bloque[i].classList.remove("activo");
-                });
-                sliderButton[i].classList.add("activo");
-                linesButton[i].classList.add("isActive");
-                sliderCard[i].classList.add("isActive");
-                bloque[i].classList.add("activo");
+                bloque[i].classList.remove("isActivo");
             });
+            sliderButton[i].classList.add("isActivo");
+            linesButton[i].classList.add("isActive");
+            sliderCard[i].classList.add("isActive");
+            bloque[i].classList.add("isActivo");
         });
+    });
 
     async function avanzaSlide(n, idPartner) {
         muestraSlides((indice += n));
@@ -500,19 +515,19 @@
             n = 1;
             indice = 1;
         }
-        console.log("<== INDICE >> ==> ", indice);
 
         for (i = 0; i < sliderButton.length; i++) {
             //sliderButton[i].style.display = "none";
-            sliderButton[i].classList.remove("activo");
+            sliderButton[i].classList.remove("isActivo");
             linesButton[i].classList.remove("isActive");
             sliderCard[i].classList.remove("isActive");
-            bloque[i].classList.remove("activo");
+            bloque[i].classList.remove("isActivo");
         }
         sliderButton[indice - 1].style.display = "flex";
         linesButton[indice - 1].classList.add("isActive");
-        sliderButton[indice - 1].classList.add("activo");
+        sliderButton[indice - 1].classList.add("isActivo");
         sliderCard[indice - 1].classList.add("isActive");
-        bloque[indice - 1].classList.add("activo");
+        bloque[indice - 1].classList.add("isActivo");
     }
+
 </script>

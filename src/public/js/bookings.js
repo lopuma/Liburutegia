@@ -1,4 +1,25 @@
-    // MOSTRAR DATOS
+const spinner = document.getElementById("spinner");
+
+//TODO CLOSE LOADING
+setTimeout(() => {
+    loadData();
+}, "1600");
+
+async function loadData() {
+  console.log("loading");
+    $(document).ready(function() {
+      $("#tableBooking").DataTable({
+        responsive: true,
+        lengthMenu: [
+          [5, 10, 15, 25, 50, -1],
+          [5, 10, 15, 25, 50, "All"]
+        ],
+        pageLength: 15
+      });
+    });
+  spinner.style.display = "none";
+};
+// MOSTRAR DATOS
     // $(document).ready(function (e) {
     //     var tabla = $("#table-bookings").DataTable({
     //       e.preventDefault(),

@@ -1,6 +1,12 @@
 <div class="Dashboard">
     <a class="Dashboard-a" href="/workspace/books/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Booking</a>
-        <div class="Dashboard-row">
+    <div class="Dashboard-row">
+        <!-- TODO LOADING -->
+        <div id="spinner">
+            {{> loading}}
+        </div>
+
+        <!-- TODO TABLE BOOKINGS -->
         <table id="tableBooking" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
             <thead class="Dashboard-head">
                 <tr>
@@ -14,11 +20,7 @@
                     <th>ACTIONS</th>
                 </tr>
             </thead>
-            <tbody>
-                {{!-- LOADING --}}
-                <div id="spinner">
-                    <div class="lds-dual-ring">&nbsp</div>
-                </div>
+            <tbody id="tbodyBookings">
             </tbody>
             <tfoot  class="Dashboard-foot">
                 <tr>
@@ -36,12 +38,4 @@
     </div> 
 </div>    
 
-<script>
-    $(document).ready(function () {
-        $('#tableBooking').DataTable({
-            responsive: true,
-            lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-            pageLength: 15,
-        });
-    });
-</script>
+<script defer src="/scripts/bookings.js"></script>

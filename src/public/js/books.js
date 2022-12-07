@@ -1,5 +1,10 @@
 const spinner = document.getElementById("spinner");
 
+//TODO CLOSE LOADING
+setTimeout(() => {
+    loadData();
+}, "1600");
+
 //TODO RESERVED
 async function reservedBook(id_book) {
   const idBook = id_book;
@@ -42,7 +47,7 @@ async function bookDelete(idBook) {
     const table = $("#tableBook").DataTable();
     table.destroy();
     setTimeout(() => {
-      mostrarData();
+      loadData();
     }, 500);
   });
 }
@@ -78,7 +83,8 @@ async function infoBook(id_book) {
   console.log(idBook);
 }
 //TODO MOSTRAR
-async function mostrarData() {
+async function loadData() {
+
   $(document).ready(async function(e) {
     const url = "/api/books/";
     myTable = $("#tableBook").DataTable({
@@ -99,9 +105,7 @@ async function mostrarData() {
         { data: "isbn" },
         { data: "title" },
         { data: "author" },
-        //{ data: "type" },
         { data: "language" },
-        //{ data: "purchase_date" },
         {
           data: "reserved",
           render: function(data, type) {
@@ -152,12 +156,11 @@ async function mostrarData() {
       ]
     });
   });
-}
-setTimeout(async () => {
-  spinner.style.display = "block";
-  mostrarData();
+
   spinner.style.display = "none";
-}, "500");
+
+}
+
 
 //UPDATE
 $("#formuBook").submit(function(e) {

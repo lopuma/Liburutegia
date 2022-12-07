@@ -1,23 +1,32 @@
 <link rel="stylesheet" href="/style/admin.css">
 
-<div class="container-cards">
+<div id="spinner">
+    {{> loading}}
+</div>
+
+<div class="Cards">
     {{#each users}}
-        <div class="cards" id='{{this.id}}'>
+        <div class="Cards-data" id='{{this.id}}'>
+            
             <div class="imgBx">
                 {{!-- <img src=".../../../../resources/img/user.png"> --}}
                 <div class="card-head"><span>00000{{this.id}}</span></div>
             </div>
-            <div class="card-content">
-                <div class="card-details">
+            
+            <div class="Cards-content">
+                <div class="Cards-details">
                     <h2>{{this.username}}<br><span>{{this.rol}}</span></h2>
+                    
                     <div class="data">
                         <h3>Lastname: </h3><span>{{this.fullname}}</span>
                     </div>
+                    
                     <div class="data">
                         <h3>Email: </h3><span>{{this.email}}</span>
                     </div>
-                    <div class="card-actionBtn" id="card-button{{this.id}}">
-                        <div class="card-actionBtn-main" id="actionBtn">
+                    
+                    <div class="Cards-actionBtn" id="card-button{{this.id}}">
+                        <div class="Cards-actionBtn-main" id="actionBtn">
                             <button class="btnCardEdit" id="btnCardEdit" value="{{this.id}}" onclick="editUser(this)"
                                 title="Edit User" style="--i:#56CCF2; --j:#2F80ED">
                                 <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
@@ -35,8 +44,24 @@
                             </button>
                         </div>
                     </div>
+
                 </div>
             </div>
+        
         </div>
-        {{/each}}
-    </div>
+    {{/each}}
+</div>
+
+<script>
+const spinner = document.getElementById("spinner");
+
+//TODO CLOSE LOADING
+setTimeout(() => {
+    loadData();
+}, "1600");
+
+async function loadData() {
+    document.querySelector(".Cards").classList.add("isVisible");
+    spinner.style.display = "none";
+}
+</script>

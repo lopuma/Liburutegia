@@ -37,6 +37,7 @@
 .Dashboard-row {
     width: 100%;
     margin: 1em 0;
+    overflow: hidden;
 }
 
 .Dashboard-head {
@@ -79,7 +80,7 @@
 }
 
 .dataTables_wrapper .row .dataTables_filter {
-    font-size: 1.1em;
+    /* font-size: 1.1em; */
     display: flex;
     justify-content: flex-end;
     flex-flow: row wrap;
@@ -92,7 +93,7 @@ div.dataTables_wrapper div.dataTables_filter label {
 }
 
 div.dataTables_wrapper div.dataTables_filter input {
-    width: 26em;
+    width: 16em;
     border: solid 1px var(--Color-outline);
     font-size: 1.2em;
 }
@@ -179,6 +180,6 @@ div.dataTables_wrapper .row .dataTables_info {
     }
 
     div.dataTables_wrapper .row .dataTables_filter input {
-        width: 80%;
+        font-size: 1em;
     }
 }

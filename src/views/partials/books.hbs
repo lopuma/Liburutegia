@@ -23,8 +23,9 @@
   <a class="Dashboard-a" href="/workspace/books/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Book</a>
   <div class="Dashboard-row">
       <!-- TODO LOADING -->
-      {{> loading}}
-
+      <div id="spinner">
+        {{> loading}}
+    </div>
       <!-- TODO TABLE BOOKS -->
       <table id="tableBook" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
         <thead  class="Dashboard-head">

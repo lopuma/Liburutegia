@@ -3,31 +3,9 @@ const spinner = document.getElementById("spinner");
 const tbodyPartners = document.getElementById("tbodyPartners");
 
 //TODO CLOSE LOADING
-setTimeout(async () => {
-  spinner.style.display = "block";
-  loadData();
-}, "1500");
-
-
-// function responseDniFamily(data) {
-//   let resultDni = "";
-//   if (data.data !== null) {
-//     resultDni = data.data.dni_familiar_partner;
-//   } else {
-//     resultDni = "";
-//   }
-//   return resultDni;
-// }
-
-// function obtenerDniFamiliar(dni) {
-//   let dniPartner = dni;
-//   const url = `/api/family/${dniPartner}`;
-//   let dniFound = "";
-//   fetch(url).then(response => response.json()).then(data => {
-//     dniFound = responseDniFamily(data);
-//     console.log(dniFound);
-//   });
-// }
+setTimeout(() => {
+    loadData();
+}, "1600");
 
 //TODO LOAD PARTNER
 async function loadData() {

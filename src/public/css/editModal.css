@@ -1,20 +1,15 @@
 /* TODO MODAL EDIT */
 .modal.show .modal-dialog {
-    max-width: 55%;
+    max-width: 60%;
     border-radius: var(--Radius);
 }
 
 @media screen and (max-width: 950px) {
 
 .show
-.modal.show{
+.modal .show{
     padding-right: 0;
 }
-
-element.style {
-    padding-right: 0;
-}
-
 .modal.show .modal-dialog {
     max-width: 100%;
 }
