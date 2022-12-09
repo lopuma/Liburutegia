@@ -25,10 +25,14 @@ figure {
      object-position: center center;
 }
 
+th {
+  font-weight: 100;
+}
+
 a {
   display: block;
   text-decoration: none;
-  color: inherit;
+  color: var(--Color-text-negro);
   font-size: inherit;
 }
 

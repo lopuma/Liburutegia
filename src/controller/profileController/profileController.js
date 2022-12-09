@@ -16,7 +16,7 @@ const profileController = {
                     rolAdmin
                 });
             }
-            res.status(200).redirect("/");
+            res.status(400).redirect("/");
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");

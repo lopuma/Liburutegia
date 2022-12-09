@@ -10,8 +10,8 @@ const {
 // TODO 👌 
 const routerLogin = require('express').Router();
 
-routerLogin.get("/", getLogin);
+    routerLogin.get("/", getLogin);
 
-routerLogin.post("/", validate, postLogin);
+    routerLogin.post("/", validate, postLogin);
 
 module.exports = routerLogin;

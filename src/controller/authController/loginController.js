@@ -42,7 +42,7 @@ const loginController = {
     isAuthenticated: async (req, res, next) => {
         const loggedIn = req.session.loggedin;
         try {
-            loggedIn ? next() : res.redirect("/");
+            loggedIn ? next() : res.status(400).redirect("/");
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
@@ -50,7 +50,7 @@ const loginController = {
     },
 
     userExists: async (req, res) => {
-        
+
     },
 
     // TODO ✅ AUTHENTICATION Y REDIRIGE A LA RUTA DEPENDE EL ROL
@@ -58,10 +58,10 @@ const loginController = {
         try {
             const errors = validationResult(req);
             const { email, inputPassword: pass } = req.body;
-            
+
             if (!errors.isEmpty()) {
                 req.flash("errorValidation", errors.array());
-                return res.status(200).redirect("/login");
+                return res.status(300).redirect("/login");
             }
 
             if (email || pass) {
@@ -69,10 +69,13 @@ const loginController = {
                 await connection.query(sqlSelect, [email], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
-                        return res.status(400).send({
-                            code: 400,
-                            message: err
-                        });
+                        return res
+                            .status(400)
+                            .send({
+                                success: false,
+                                messageErrBD: err,
+                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                            });
                     }
                     if (results.length === 0) {
                         req.flash(
@@ -80,17 +83,17 @@ const loginController = {
                             "Your account could not be found in Liburutegia."
                         );
                         req.flash("errorPassword", "");
-                        return res.redirect("/login");
+                        return res.status(300).redirect("/login");
                     }
                     if (!await bscryptjs.compare(pass, results[0].pass)) {
                         req.flash("errorPassword", "Wrong password. Try again or click Forgot password to reset it.");
                         req.flash("errorUser", "");
-                        return res.redirect("/login");
+                        return res.status(300).redirect("/login");
                     }
-                    
+
                     //TODO LLAMADA ASIGNACION DE ROL Y RUTA
                     await loginController.asigneRol(req, res, results[0].rol);
-                    
+
                     //TODO SI TODO ES OK, SE REDIRIGE A SU RUTA
                     req.session.loggedin = true;
                     req.session.username = results[0].username;
@@ -131,7 +134,7 @@ const loginController = {
             res.status(500).redirect("/");
         }
     }
-    
+
 };
 
 module.exports = loginController;

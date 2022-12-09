@@ -8,7 +8,7 @@
     width: 100%;
     height: 100%;
     font-size: 1em;
-    font-family: var(--Font-family-principal);
+    /* font-family: var(--Font-family-principal); */
     overflow: hidden;
 }
 
@@ -40,6 +40,7 @@
     overflow: hidden;
 }
 
+
 .Dashboard-head {
     background-color: #222831;
     color: #fff;
@@ -47,12 +48,14 @@
     position: sticky;
     top: 0;
     z-index: 97;
+    font-size: 1em;
 }
 
 .Dashboard-foot {
     background-color: #222831;
     color: #fff;
     border: none;
+    font-size: 1em;
 }
 
 /* TODO DATATABLE STYLE */
@@ -128,7 +131,7 @@ div.dataTables_wrapper .row .dataTables_info {
     padding: 0;
 }
 
-.even{
+.even {
     background-color: rgba(235, 235, 235, 0.671)
 }
 
@@ -172,7 +175,7 @@ div.dataTables_wrapper .row .dataTables_info {
 @media screen and (max-width: 59.375em) {
     .Dashboard-a {
         margin-top: 3em;
-        
+
     }
 
     div.dataTables_wrapper .row .dataTables_info {

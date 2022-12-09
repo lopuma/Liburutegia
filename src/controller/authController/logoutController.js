@@ -16,7 +16,7 @@ const logoutController = {
       res.status(500).redirect("/");
     }
     req.session.destroy();
-    res.redirect("/");
+    res.status(400).redirect("/");
   }
 };
 

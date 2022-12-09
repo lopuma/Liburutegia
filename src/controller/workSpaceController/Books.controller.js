@@ -8,11 +8,11 @@ const booksController = {
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
             res
-                .render("workspace/books/new", 
-                { 
-                    loggedIn, 
-                    rolAdmin 
-                });
+                .render("workspace/books/new",
+                    {
+                        loggedIn,
+                        rolAdmin
+                    });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
@@ -32,12 +32,13 @@ const booksController = {
                     return res
                         .status(400)
                         .send({
-                            code: 400,
-                            message: err
+                            success: false,
+                            messageErrBD: err,
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
                 const book = results;
-                res.render("workspace/books/infoBook", {
+                res.status(200).render("workspace/books/infoBook", {
                     loggedIn,
                     rolAdmin,
                     book

@@ -1,9 +1,10 @@
-const routerFamilys = require("express").Router();
 const {
   getFamily
-} = require("../../controller/apiController/Family.controller.api");
+} = require("../../controller/apiController/Familys.controller.api");
 
+const routerFamilys = require("express").Router();
+  
 //TODO FAMILY
-routerFamilys.get("/:dniPartner", getFamily);
+  routerFamilys.get("/:dniPartner", getFamily);
 
 module.exports = routerFamilys;

@@ -13,8 +13,8 @@ const routerRegister = {
             const userMail = req.session.usermail;
             const rolAdmin = req.session.roladmin;
             rolAdmin === false
-                ? res.redirect("/")
-                : res.render("../views/forms/register", {
+                ? res.status(400).redirect("/")
+                : res.status(200).render("../views/forms/register", {
                     loggedIn,
                     userName,
                     userMail,
@@ -36,10 +36,13 @@ const routerRegister = {
             await connection.query(sql, [email], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
-                    return res.status(400).send({
-                        code: 400,
-                        message: err
-                    });
+                    return res
+                        .status(400)
+                        .send({
+                            success: false,
+                            messageErrBD: err,
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                        });
                 }
                 if (results.length === 0) {
                     sqlInsert = "INSERT INTO users SET ?";
@@ -56,25 +59,27 @@ const routerRegister = {
                         err => {
                             if (err) {
                                 console.error("[ DB ]", err.sqlMessage);
-                                return res.status(400).send({
-                                    code: 400,
-                                    message: err
-                                });
+                                return res
+                                    .status(400)
+                                    .send({
+                                        success: false,
+                                        messageErrBD: err,
+                                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                    });
                             }
-                            res.send({
-                                status: 200,
+                            res.status(200).send({
                                 exists: false,
                                 inputs: false,
-                                message: `User ${username} created successfully.`
+                                messageSuccess: `User ${username} created successfully.`
                             });
                         }
                     );
                 } else {
-                    return res.send({
-                        status: 400,
+                    return res.status(300).send({
+                        success: false,
                         exists: true,
                         inputs: true,
-                        message: `The email:  ${email}, already exists, it is associated with the username : ${results[0]
+                        messageError: `The email:  ${email}, already exists, it is associated with the username : ${results[0]
                             .username}`
                     });
                 }

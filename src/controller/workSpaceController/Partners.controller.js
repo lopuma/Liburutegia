@@ -1,13 +1,13 @@
 const connection = require("../../../database/db");
 
 const partnersController = {
-    
+
     // TODO ✅ REENVIAR A LA VISTA DE NUEVO PARTNER
     getNew: async (req, res) => {
         try {
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            res.render("workspace/partners/newPartner", {
+            res.status(200).render("workspace/partners/newPartner", {
                 loggedIn,
                 rolAdmin
             });
@@ -16,32 +16,38 @@ const partnersController = {
             res.status(500).redirect("/");
         }
     },
-    
+
     // TODO ✅ OBTENER LA VISTA DE INFORMACION de PARTNERS
     getInfo: async (req, res) => {
         try {
-            const id_partner = req.params.idPartner;
+            const partnerID = req.params.idPartner;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            const sqlPartner = "SELECT * FROM partners WHERE id_partner = ?";
-            const sqlFamily = "SELECT * FROM familys f LEFT JOIN partners p ON f.dni_familiar_partner=p.dni WHERE f.dni_family=? OR f.id_familiar_partner=?";
-            await connection.query(sqlPartner, [id_partner], async (err, results) => {
+            const sqlPartner = "SELECT * FROM partners WHERE partnerID = ?";
+            const sqlFamily = "SELECT p.dni as partnerDni, p.name as partnerName, p.lastname as partnerLastname, p.date as partnerRecordDate FROM familys f LEFT JOIN partners p ON f.partnerDNI=p.dni WHERE f.familyDni=?";
+            await connection.query(sqlPartner, [partnerID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
-                    return res.status(400).send({
-                        code: 400,
-                        message: err
-                    });
+                    return res
+                        .status(400)
+                        .send({
+                            success: false,
+                            messageErrBD: err,
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                        });
                 }
                 const resDataPartners = results;
                 const dni = results[0].dni;
-                await connection.query(sqlFamily, [dni, id_partner], async (err, results) => {
+                await connection.query(sqlFamily, [dni], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
-                        return res.status(400).send({
-                            code: 400,
-                            message: err
-                        });
+                        return res
+                            .status(400)
+                            .send({
+                                success: false,
+                                messageErrBD: err,
+                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                            });
                     }
                     res.status(200).render("workspace/partners/infoPartner", {
                         loggedIn,

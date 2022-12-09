@@ -10,8 +10,9 @@ const bookController = {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
-                        code: 400,
-                        message: err
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
                 if (results.length === 0) {
@@ -41,7 +42,7 @@ const bookController = {
                     });
                 }
                 res.status(200).send({
-                    data : results
+                    data: results
                 });
             });
         } catch (error) {
@@ -143,6 +144,7 @@ const bookController = {
                 throw err;
             }
             res.status(200).send({
+                success: true,
                 message: `The book with id ${idBook} has been successfully deleted`
             });
         });

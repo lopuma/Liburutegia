@@ -1,7 +1,8 @@
 <link href="/style/info.css" rel="stylesheet" />
 
 <!--Modal para CRUD-->
-<div id="modalStar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalStar" aria-hidden="true">
+<div class="modal fade" id="modalStar"  tabindex="-1" role="dialog"
+    aria-labelledby="modalStar" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,10 +25,13 @@
                 <label for="rate-1" class="fas fa-star"></label>
                 <form action="#" id="formuStar">
                     <header></header>
-                    <input type="text" class="form-control" id="id_book" tabindex="0" hidden>
-                    <input type="text" class="form-control" id="id_booking" tabindex="1" hidden>
+                    <input type="text" class="form-control" id="id_book"
+                        tabindex="0" hidden>
+                    <input type="text" class="form-control" id="id_booking"
+                        tabindex="1" hidden>
                     <div class="textarea">
-                        <textarea id="textarea" cols="30" placeholder="Describe your experience.."></textarea>
+                        <textarea id="textarea" cols="30" placeholder="Describe
+                            your experience.."></textarea>
                     </div>
                     <div class="btn">
                         <button type="submit">Post</button>
@@ -38,74 +42,109 @@
     </div>
 </div>
 
-<div class="Info-contenedor">
-    <div class="Slider">
-        <div class="Slider-move">
-            <div class="Slider-card isActive">
-                {{#each partner}}
-                    <a class="Slider-a isActivo" onClick="infor({{this.id_partner}})">Information</a>
-                {{/each}}
-            </div>
-            <div class="Slider-card">
-                {{#each partner}}
-                    <a class="Slider-a" onClick="infoPartner({{this.id_partner}})">Active Reserves
-                </a>
-                {{/each}}
-            </div>
-            <div class="Slider-card">
-                {{#each partner}}
-                <a class="Slider-a" onClick="infoHistory({{this.id_partner}})" style="cursor: pointer;">Reservation
-                    History
-                </a>
-                {{/each}}
-            </div>
-        </div>
-        {{#each partner}}
-            <button class="Slider-arrow isPrev" onclick="avanzaSlide(-1, {{this.id_partner}})">
-                    <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                    </svg>
-            </button>
-        {{/each}}
-        {{#each partner}}
-            <button class="Slider-arrow isNext" onclick="avanzaSlide(1, {{this.id_partner}})">
-                    <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                    </svg>
-            </button>
-        {{/each}}
-
-    <ul class="Slider-lines">
-        <li class="Slider-line ">
-            {{#each partner}}
-                <button class="Slider-btn isActive" onClick="infor({{this.id_partner}})">
-            {{/each}}
-        </li>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
-        <li class="Slider-line">
-            {{#each partner}}
-                <button class="Slider-btn" onClick="infoPartner1({{this.id_partner}})">
-                </button>
-            {{/each}}
-        </li>
-        <li class="Slider-line">
-            {{#each partner}}
-                <button class="Slider-btn" onClick="infoHistory({{this.id_partner}})">
-                </button>
-            {{/each}}
-        </li>
-    </ul>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
+  </div>
+</div>
+
+<div class="Info-contenedor">   
+    <!-- TODO OK SLIDER -->
+    <div class="Slider">
+        {{#each partner}}
+            <div class="Slider-move">
+                <div class="Slider-card isActive">
+                    <a class="Slider-a isActivo"
+                        onClick="infor({{this.partnerID}})">Information</a>
+                </div>
+                <div class="Slider-card">
+                    <a class="Slider-a" onClick="inforActive({{this.partnerID}})">Active
+                        Reserves
+                    </a>
+                </div>
+                <div class="Slider-card">
+                    <a class="Slider-a" onClick="inforHistory({{this.partnerID}})"
+                        style="cursor: pointer;">Reservation
+                        History
+                    </a>
+                </div>
+            </div>
+            <button class="Slider-arrow isPrev" onclick="avanzaSlide(-1, {{this.partnerID}})">
+                <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0
+                        .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1
+                        0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                </svg>
+            </button>
+            <button class="Slider-arrow isNext" onclick="avanzaSlide(1, {{this.partnerID}})">
+                <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
+                    width="16" height="16" fill="currentColor" viewBox="0 0 16
+                    16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708
+                        0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293
+                        8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+            </button>
+            <ul class="Slider-lines">
+                <li class="Slider-line">
+                        <button class="Slider-btn isActive"
+                            onClick="infor({{this.partnerID}})">
+                        </button>
+                </li>
+                <li class="Slider-line">
+                        <button class="Slider-btn"
+                            onClick="inforActive({{this.partnerID}})">
+                        </button>
+                </li>
+                <li class="Slider-line">
+                    <button class="Slider-btn"
+                        onClick="inforHistory({{this.partnerID}})">
+                    </button>
+                </li>
+            </ul>
+        {{/each}}
+    </div>
+    
+    <!-- TODO SUB CONTENEDOR -->
     <div class="Info-subcontenedor">
-        <div class="Info-bloque isActivo">
+
+        <div class="Info-bloque isActivo" id="bloqueInfo">
             {{#each partner}}
                 <h3>NAME {{this.name}}</h3>
                 <h3>LASTNAME {{this.lastname}}</h3>
             {{/each}}
+            <hr>
+            {{#if infoFamily}}
+                <h3>DNI {{this.partnerDni}}</h3>
+                <h3>NAME {{this.partnerName}}</h3>
+                <h3>LASTNAME {{this.partnerLastname}}</h3>
+                <h3>RECORD DATE {{this.partnerRecordDate}}</h3>
+            {{else}}
+                <h3>no data</h3>
+            {{/if}}
         </div>
         <div class="Info-bloque" id="infoBloqueActive">
             <div class="Bloque-table Dashboard-row">
-                <table class="Dashboard-table table table-bordered   display wrap" id="tablePartnerActive"
+                <div id="spinnerActive" style="margin-top: 2em">
+                    {{> loading}}
+                </div>
+                <table class="Dashboard-table table table-bordered
+                    display wrap" id="tablePartnerActive"
                     cellspacing="0" width="100%">
                     <thead class="Dashboard-head">
                         <tr>
@@ -117,9 +156,6 @@
                         </tr>
                     </thead>
                     <tbody id="activeData">
-                        <div id="spinnerActive" style="margin-top: 2em">
-                            {{> loading}}
-                        </div>
                     </tbody>
                     <tfoot class="Dashboard-foot">
                         <tr>
@@ -135,7 +171,11 @@
         </div>
         <div class="Info-bloque" id="infoBloqueHistory">
             <div class="Bloque-table Dashboard-row">
-                <table class="Dashboard-table table table-bordered  display wrap" id="tablePartnerHistory"
+                <div id="spinnerHistory" style="margin-top: 2em">
+                    {{> loading}}
+                </div>
+                <table class="Dashboard-table table table-bordered
+                    display wrap" id="tablePartnerHistory"
                     cellspacing="0" width="100%">
                     <thead class="Dashboard-head">
                         <tr>
@@ -149,9 +189,6 @@
                         </tr>
                     </thead>
                     <tbody id="historyData">
-                        <div id="spinnerHistory" style="margin-top: 2em">
-                            {{> loading}}
-                        </div>
                     </tbody>
                     <tfoot class="Dashboard-foot">
                         <tr>
@@ -167,6 +204,7 @@
                 </table>
             </div>
         </div>
+
     </div>
 
 </div>
@@ -184,350 +222,351 @@
     const tbodyActive = document.getElementById("activeData");
     const infoBloqueHistory = document.getElementById("infoBloqueHistory");
     const infoBloqueActive = document.getElementById("infoBloqueActive");
-
+    const bloqueInfo = document.getElementById("bloqueInfo");
     let indice = 1;
 
-    //TODO INFORMATION
-    async function infor(id_partner){
-        idPartner = id_partner;
+    //TODO ✅ INFORMATION
+    async function infor(partnerID){
+        idPartner = partnerID;
         indice = 1;
     }
 
-    //TODO OBTENER DATOS DEL MODAL
-    $('#formuStar').submit(async function (e) {
-        e.preventDefault();
-        let activoFijo = $('input[name="rate"]:checked').val();
-        const fecha = new Date();
-        const idBook = $.trim($('#id_book').val());
-        const idBooking = $.trim($('#id_booking').val());
-        const score = activoFijo;
-        const review = textarea.value;
-        const url = `/api/books/deliver/${idBook}`;
-        const deliver_date_review = new Intl.DateTimeFormat("en-US").format(fecha);
-        let dateActual = new Date();
-        dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
-
-        const data = {
-            idBooking,
-            score,
-            review,
-            deliver_date_review: dateActual
-        }
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8"
-            }
-        })
-        widget.style.display = "none";
-        post.style.display = "block";
-        editBtn.onclick = () => {
-            widget.style.display = "block";
-            post.style.display = "none";
-        }
-        setTimeout(() => {
-            $('#modalStar').modal('hide');
-        }, 1000);
-        return false;
-    })
-
-    //TODO ENTREGA
-    async function deliver(book_id, id_booking, count) {
-        try {
-            const idBook = book_id;
-            const idBooking = id_booking;
+    // DELIVER
+        // TODO ✅ ENTREGA DEL LIBRO
+        $('#formuStar').submit(async function (e) {
+            e.preventDefault();
+            let activoFijo = $('input[name="rate"]:checked').val();
+            const fecha = new Date();
+            const idBook = $.trim($('#id_book').val());
+            const idBooking = $.trim($('#id_booking').val());
+            const score = activoFijo;
+            const review = textarea.value;
             const url = `/api/books/deliver/${idBook}`;
+            const deliver_date_review = new Intl.DateTimeFormat("en-US").format(fecha);
             let dateActual = new Date();
             dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
-            Swal.fire({
-                title: 'Deliver',
-                text: `Do you want to add a review, for the book : ${idBook} ?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#474E68',
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $("#id_book").val(idBook);
-                    $("#id_booking").val(idBooking);
-                    textarea.value = "";
-                    widget.style.display = "block";
-                    post.style.display = "none";
-                    function resetRadioButtons(groupName) {
-                        var arRadioBtn = document.getElementsByName(groupName);
-                        for (var ii = 0; ii < arRadioBtn.length; ii++) {
-                            var radButton = arRadioBtn[ii];
-                            radButton.checked = false;
-                        }
-                    }
-                    resetRadioButtons("rate");
-                    $('#modalStar').modal({ show: true });
-                    document.getElementById(`row${count}`).remove();
-                } else {
-                    const data = {
-                        idBooking,
-                        score: 0,
-                        review: null,
-                        deliver_date_review: dateActual
-                    }
-                    fetch(url, {
-                        method: 'POST',
-                        body: JSON.stringify(data),
-                        headers: {
-                            "Content-Type": "application/json; charset=UTF-8"
-                        }
-                    })
-                    document.getElementById(`row${count}`).remove();
+
+            const data = {
+                idBooking,
+                score,
+                review,
+                deliver_date_review: dateActual
+            }
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8"
                 }
             })
-        } catch (error) {
-            console.error(":error ", error)
-        }
-    }
+            widget.style.display = "none";
+            post.style.display = "block";
+            editBtn.onclick = () => {
+                widget.style.display = "block";
+                post.style.display = "none";
+            }
+            setTimeout(() => {
+                $('#modalStar').modal('hide');
+            }, 1000);
+            return false;
+        });
 
-    //TODO RESERVAS ACTIVAS
-    async function createdTableActive() {
-        setTimeout(async () => {
-            $(document).ready(function () {
-                tableA = $("#tablePartnerActive").DataTable({
-                    searching: true,
-                    ordering: true,
-                    info: true,
-                    responsive: true,
-                    order: [[0, "desc"]],
-                    lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
-                    pageLength: 5,
-                    retrieve: true
-                });
-            });
-            spinnerActive.style.display = "none";
-        }, 500)
-    }
-
-    async function obtenerPartner(data) {
-        if(data.success == true) {
-            const fecha = new Date();
-            const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
-            let vacio = Object.keys(data).length === 0;
-            let count = 0;
-            let body = "";
-            data.message ? vacio = true : vacio = false
-            tbodyActive.innerHTML = "";;
-            if (vacio) {
-                body += `<td COLSPAN="5" style="text-align: center; font-weight: bold">No data found</td>`;
-            } else {
-                infoBloqueActive.classList.remove("isNormal");
-                infoBloqueActive.classList.add("isScroll");
-                for (let elemento of data) {
-                    count += 1;
-                    const reserved = elemento.reserved;
-                    const idBookingReview = elemento.id_booking_review;
-                    let reservationDate = new Date(elemento.reservation_date);
-                    reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
-                    let deliverDateReview = new Date(elemento.deliver_date_review);
-                    deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
-                    if (reserved === 1 && idBookingReview === null) {
-                        body += `<tr id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td><button id="btnDeliver" onClick=deliver(` + elemento.book_id + `,` + elemento.id_booking + `,` + count + `) class="btn btn-warning" title="Deliver Book"><i class="fa-regular fa-handshake"></i> Deliver Book</button></td></tr>`;
+        // TODO ✅ ENTEGA DEL LIBRO
+        async function deliverBook(book_id, id_booking, count) {
+            console.log({book_id, id_booking, count})
+            try {
+                const idBook = book_id;
+                const idBooking = id_booking;
+                const urlDeliver = `/api/books/deliver/${idBook}`;
+                let dateActual = new Date();
+                dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
+                Swal.fire({
+                    title: 'Deliver',
+                    text: `Do you want to add a review, for the book : ${idBook} ?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#474E68',
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#id_book").val(idBook);
+                        $("#id_booking").val(idBooking);
+                        textarea.value = "";
+                        widget.style.display = "block";
+                        post.style.display = "none";
+                        function resetRadioButtons(groupName) {
+                            var arRadioBtn = document.getElementsByName(groupName);
+                            for (var ii = 0; ii < arRadioBtn.length; ii++) {
+                                var radButton = arRadioBtn[ii];
+                                radButton.checked = false;
+                            }
+                        }
+                        resetRadioButtons("rate");
+                        $('#modalStar').modal('show'); // abrir
+                        document.getElementById(`row${count}`).remove();
                     } else {
-                        infoBloqueActive.classList.remove("isScroll");
-                        infoBloqueActive.classList.add("isNormal");
+                        const data = {
+                            idBooking,
+                            score: 0,
+                            review: null,
+                            deliver_date_review: dateActual
+                        }
+                        fetch(urlDeliver, {
+                            method: 'POST',
+                            body: JSON.stringify(data),
+                            headers: {
+                                "Content-Type": "application/json; charset=UTF-8"
+                            }
+                        })
+                        document.getElementById(`row${count}`).remove();
                     }
-                    setTimeout(async () => {
-                        tbodyActive.innerHTML = body;
-                    }, 400)
-                }
+                })
+            } catch (error) {
+                console.error(":error ", error)
             }
         }
-    }
 
-    async function infoPartner(id_partner) {
-        indice = 2;
-        spinnerActive.style.display = "inline-block";
-        try {
-            tableA.destroy();
-            setTimeout(() => {
-                createdTableActive();
-            }, 1000);
-        } catch (error) {
-            setTimeout(() => {
-                createdTableActive();
-            }, 1000);
-        }
-        const idPartner = id_partner;
-        const url = `/api/partners/info/${idPartner}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => obtenerPartner(data))
-            .catch("No hay datos");
-    }
-
-    async function infoPartner1(id_partner) {
-        spinnerActive.style.display = "inline-block";
-        await infoPartner(id_partner)
-    }
-
-    //TODO HISTORIAL DE RESERVAS
-    async function createdTableHistory() {
-        setTimeout(async () => {
-            $(document).ready(function () {
-                tableB = $("#tablePartnerHistory").DataTable({
-                    searching: true,
-                    ordering: true,
-                    info: true,
-                    responsive: true,
-                    order: [[4, "desc"]],
-                    lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
-                    pageLength: 5,
+    // INFO ACTIVE
+        // TODO ✅ RESERVAS ACTIVAS
+        async function inforActive(partnerID) {
+            try {
+                spinnerActive.style.display = "inline-block";
+                tableA.destroy();
+                tbodyActive.innerHTML = "";
+            } catch (error) {}
+            indice = 2;
+            const idPartner = partnerID;
+            const urlActive = `/api/partners/info/${idPartner}`;
+            fetch(urlActive)
+                .then(response => response.json())
+                .then((data) => {
+                    setTimeout(() => {
+                        obtenerPartner(data)
+                    }, 1000);
                 });
-            });
-            spinnerHistory.style.display = "none";
-        }, 500)
-    }
+        }
 
-    async function obtenerHistory(data) {
-        if(data.success == true) {
-            const fecha = new Date();
-            const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
-            let vacio = Object.keys(data).length === 0;
-
-            let count = 0;
-            let bodyHistory = "";
-
-            data.message ? vacio = true : vacio = false;
-            tbodyHistory.innerHTML = "";
-            if (vacio) {
-                bodyHistory += `<td COLSPAN="7" style="text-align: center; font-weight: bold">No data founded</td>`;
-                infoBloqueHistory.classList.add("isNormal");
-                infoBloqueHistory.classList.remove("isScroll");
-            } else {
-                infoBloqueHistory.classList.remove("isNormal");
-                infoBloqueHistory.classList.add("isScroll");
-                for (let elemento of data) {
-                    count += 1;
-                    const starTotal = 5;
-                    const reserved = elemento.reserved;
-                    const idBookingReview = elemento.id_booking_review;
-                    const review = elemento.review;
-                    const score = elemento.score;
-
-                    let reservationDate = new Date(elemento.reservation_date);
-                    reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
-                    let deliverDateReview = new Date(elemento.deliver_date_review);
-                    deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
-
-                    const starPercentage = elemento.score / starTotal * 100;
-                    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-
-                    if (reserved === 0 || (reserved === 1 && idBookingReview !== null)) {
-                        bodyHistory += `<tr  id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td>${deliverDateReview}</td><td><div class="stars-outer"><div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${elemento.score}"></div></div></td><td>${elemento.review}</td></tr>`;
-                    } else {
-                        infoBloqueHistory.classList.remove("isScroll");
-                        infoBloqueHistory.classList.add("isNormal");
+        // TODO ✅ OBTENER INFORMACION DEL PARTNER Y BOOKINGS
+        async function obtenerPartner(data) {
+            if(data.success == true) {
+                const fecha = new Date();
+                const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
+                let vacio = Object.keys(data).length === 0;
+                let count = 0;
+                let body = "";
+                tbodyActive.innerHTML = "";
+                if (vacio) {
+                    body += `<td COLSPAN="5" style="text-align: center; font-weight: bold">No datas found</td>`;
+                } else {
+                    for (let elemento of data.data) {
+                        count += 1;
+                        const reserved = elemento.reserved;
+                        const idBookingReview = elemento.id_booking_review;
+                        let reservationDate = new Date(elemento.reservation_date);
+                        reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
+                        let deliverDateReview = new Date(elemento.deliver_date_review);
+                        deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
+                        if (reserved === 1 && idBookingReview === null) {
+                                body += `<tr id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td><button id="btnDeliver" onClick=deliverBook(` + elemento.book_id + `,` + elemento.id_booking + `,` + count + `) class="btn btn-warning" title="Deliver Book"><i class="fa-regular fa-handshake"></i> Deliver Book</button></td></tr>`;
+                                createdTableActive();
+                        }
+                        setTimeout(async () => {
+                            tbodyActive.innerHTML = body;
+                        }, 400)
                     }
-                    setTimeout(async () => {
-                        tbodyHistory.innerHTML = bodyHistory;
-                    }, 400)
                 }
+            } else {
+                infoBloqueActive.classList.remove("isActivo");
+                infoBloqueActive.classList.remove("isAuto");
             }
         }
-    }
 
-    async function infoHistory(id_partner) {
-        indice = 3;
-        spinnerHistory.style.display = "inline-block";
-        try {
-            tableB.destroy();
-            setTimeout(() => {
-                createdTableHistory();
-            }, 1000);
-        } catch (error) {
-            setTimeout(() => {
-                createdTableHistory();
-            }, 1000);
+        // TODO ✅ CREAR TABLA
+        async function createdTableActive() {
+            console.log("CHAO");
+            setTimeout(async () => {
+                $(document).ready(function () {
+                    tableA = $("#tablePartnerActive").DataTable({
+                        searching: true,
+                        ordering: true,
+                        info: true,
+                        responsive: true,
+                        order: [[0, "desc"]],
+                        lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
+                        pageLength: 5,
+                        retrieve: true
+                    });
+                });
+                spinnerActive.style.display = "none";
+            }, 600)
         }
-        const idPartner = id_partner;
-        const url = `/api/partners/info/${idPartner}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => obtenerHistory(data));
-        //indice = 0;
-    }
 
-    //TODO ACTIVAR TAB
-    sliderButton.forEach((cadaLi, i) => {
-        sliderButton[i].addEventListener("click", () => {
-            sliderButton.forEach((cadaLi, i) => {
+    // INFO HISTORY
+        //TODO ✅ INFORMATION HISTORY RESERVED
+        async function inforHistory(partnerID) {
+            try {
+                spinnerHistory.style.display = "inline-block";
+                tableB.destroy();
+                tbodyHistory.innerHTML = "";
+            } catch (error) {}
+            indice = 3;
+            const idPartner = partnerID;
+            const urlHistory = `/api/partners/info/${idPartner}`;
+            fetch(urlHistory)
+                .then(response => response.json())
+                .then((data) => {
+                    setTimeout(() => {
+                        obtenerHistory(data)
+                    }, 1000);
+                });
+        }
+
+        // TODO ✅ OBTENER HISTORY
+        async function obtenerHistory(data) {
+            if(data.success === true) {
+                const fecha = new Date();
+                const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
+                let vacio = Object.keys(data).length === 0;
+                let count = 0;
+                let bodyHistory = "";
+                tbodyHistory.innerHTML = "";
+                if (vacio) {
+                    bodyHistory += `<td COLSPAN="7" style="text-align: center; font-weight: bold">No data founded</td>`;
+                } else {
+                    for (let elemento of data.data) {
+                        count += 1;
+                        const starTotal = 5;
+                        const reserved = elemento.reserved;
+                        const idBookingReview = elemento.id_booking_review;
+                        const review = elemento.review;
+                        const score = elemento.score;
+
+                        let reservationDate = new Date(elemento.reservation_date);
+                        reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
+                        let deliverDateReview = new Date(elemento.deliver_date_review);
+                        deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
+
+                        const starPercentage = elemento.score / starTotal * 100;
+                        const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+                        if (reserved === 0 || (reserved === 1 && idBookingReview !== null)) {
+                            bodyHistory += `<tr  id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td>${deliverDateReview}</td><td><div class="stars-outer"><div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${elemento.score}"></div></div></td><td>${elemento.review}</td></tr>`;
+                            createdTableHistory();
+                        }
+                        setTimeout(async () => {
+                            tbodyHistory.innerHTML = bodyHistory;
+                        }, 400)
+                    }
+                }
+            } else {
+                infoBloqueActive.classList.remove("isActivo");
+                infoBloqueActive.classList.remove("isAuto");
+            }
+        }
+
+        // TODO ✅ CREAR TABLA HISTORY
+        async function createdTableHistory() {
+            console.log("HOLA");
+            setTimeout(async () => {
+                $(document).ready(function () {
+                    tableB = $("#tablePartnerHistory").DataTable({
+                        searching: true,
+                        ordering: true,
+                        info: true,
+                        responsive: true,
+                        order: [[4, "desc"]],
+                        lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
+                        pageLength: 5,
+                        retrieve: true
+                    });
+                });
+                spinnerHistory.style.display = "none";
+            }, 600);
+        }
+
+    // ACTIVAR BUTTON / SLIDER
+        // TODO ✅ ACTIVA EL SLIDER ACTUAL
+        async function muestraSlides(n) {
+            let i;
+            if (n > sliderButton.length) {
+                indice = 1;
+            }
+            if (n < 1) {
+                indice = sliderButton.length;
+            }
+            if (n === 4){
+                n = 1;
+                indice = 1;
+            }
+
+            for (i = 0; i < sliderButton.length; i++) {
+                //sliderButton[i].style.display = "none";
                 sliderButton[i].classList.remove("isActivo");
                 linesButton[i].classList.remove("isActive");
                 sliderCard[i].classList.remove("isActive");
                 bloque[i].classList.remove("isActivo");
-            });
-            sliderButton[i].classList.add("isActivo");
-            linesButton[i].classList.add("isActive");
-            sliderCard[i].classList.add("isActive");
-            bloque[i].classList.add("isActivo");
-        });
-    });
-
-    linesButton.forEach((cadaLi, i) => {
-        linesButton[i].addEventListener("click", () => {
-            linesButton.forEach((cadaLi, i) => {
-                sliderButton[i].classList.remove("isActivo");
-                linesButton[i].classList.remove("isActive");
-                sliderCard[i].classList.remove("isActive");
-
-                bloque[i].classList.remove("isActivo");
-            });
-            sliderButton[i].classList.add("isActivo");
-            linesButton[i].classList.add("isActive");
-            sliderCard[i].classList.add("isActive");
-            bloque[i].classList.add("isActivo");
-        });
-    });
-
-    async function avanzaSlide(n, idPartner) {
-        muestraSlides((indice += n));
-        try {
-            if(indice === 1){
-                infor(idPartner)
-            } else if (indice === 2) {
-                infoPartner(idPartner)
-            } else if (indice === 3) {
-                infoHistory(idPartner)
+                bloque[i].classList.remove("isAuto");
             }
-        } catch (error) {
-            console.error(error);
-        }
-    }
+            sliderButton[indice - 1].style.display = "flex";
+            sliderButton[indice - 1].classList.add("isActivo");
+            linesButton[indice - 1].classList.add("isActive");
+            sliderCard[indice - 1].classList.add("isActive");
+            bloque[indice - 1].classList.add("isActivo");
+            bloque[indice - 1].classList.add("isAuto");
 
-    async function muestraSlides(n) {
-        let i;
-        if (n > sliderButton.length) {
-            indice = 1;
-        }
-        if (n < 1) {
-            indice = sliderButton.length;
-        }
-        if (n === 4){
-            n = 1;
-            indice = 1;
         }
 
-        for (i = 0; i < sliderButton.length; i++) {
-            //sliderButton[i].style.display = "none";
-            sliderButton[i].classList.remove("isActivo");
-            linesButton[i].classList.remove("isActive");
-            sliderCard[i].classList.remove("isActive");
-            bloque[i].classList.remove("isActivo");
+        // TODO ✅ AVANZAR ENTRE LOS SLIDERS
+        async function avanzaSlide(n, idPartner) {
+            muestraSlides((indice += n));
+            try {
+                if(indice === 1){
+                    infor(idPartner)
+                } else if (indice === 2) {
+                    inforActive(idPartner)
+                } else if (indice === 3) {
+                    inforHistory(idPartner)
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
-        sliderButton[indice - 1].style.display = "flex";
-        linesButton[indice - 1].classList.add("isActive");
-        sliderButton[indice - 1].classList.add("isActivo");
-        sliderCard[indice - 1].classList.add("isActive");
-        bloque[indice - 1].classList.add("isActivo");
-    }
+
+        //TODO ✅ ACTIVAR BUTTONS
+        sliderButton.forEach((cadaLi, i) => {
+            sliderButton[i].addEventListener("click", () => {
+                sliderButton.forEach((cadaLi, i) => {
+                    sliderButton[i].classList.remove("isActivo");
+                    linesButton[i].classList.remove("isActive");
+                    sliderCard[i].classList.remove("isActive");
+                    bloque[i].classList.remove("isActivo");
+                    bloque[i].classList.remove("isAuto");
+                });
+                sliderButton[i].classList.add("isActivo");
+                linesButton[i].classList.add("isActive");
+                sliderCard[i].classList.add("isActive");
+                bloque[i].classList.add("isActivo");
+                bloque[i].classList.add("isAuto");
+            });
+        });
+
+        // TODO ✅ ACTIVAR BUTTON LOW
+        linesButton.forEach((cadaLi, i) => {
+            linesButton[i].addEventListener("click", () => {
+                linesButton.forEach((cadaLi, i) => {
+                    sliderButton[i].classList.remove("isActivo");
+                    linesButton[i].classList.remove("isActive");
+                    sliderCard[i].classList.remove("isActive");
+                    bloque[i].classList.remove("isActivo");
+                    bloque[i].classList.remove("isAuto");
+                });
+                sliderButton[i].classList.add("isActivo");
+                linesButton[i].classList.add("isActive");
+                sliderCard[i].classList.add("isActive");
+                bloque[i].classList.add("isActivo");
+                bloque[i].classList.add("isAuto");
+            });
+        });
 
 </script>

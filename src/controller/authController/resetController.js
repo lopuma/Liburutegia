@@ -12,10 +12,13 @@ const routerReset = {
       await connection.query(sql, [emailReset], async (err, results) => {
         if (err) {
           console.error("[ DB ]", err.sqlMessage);
-          return res.status(400).send({
-            code: 400,
-            message: err
-          });
+          return res
+            .status(400)
+            .send({
+              success: false,
+              messageErrBD: err,
+              errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+            });
         }
         if (results.length === 0) {
           req.session.exists = false;
@@ -41,7 +44,7 @@ const routerReset = {
       const { emailReset, passReset } = req.body;
       req.session.exists = true;
       if (passReset === "") {
-        return res.send({
+        return res.status(300).send({
           errorValidation: "The password cannot be empty",
           exists: req.session.exists,
           inputs: true
@@ -53,19 +56,22 @@ const routerReset = {
         await connection.query(sql, emailReset, (err) => {
           if (err) {
             console.error("[ DB ]", err.sqlMessage);
-            return res.status(400).send({
-              code: 400,
-              message: err
-            });
+            return res
+              .status(400)
+              .send({
+                success: false,
+                messageErrBD: err,
+                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+              });
           }
-          res.send({
+          res.status(200).send({
             successValidation: "Password has been changed successfully",
             exists: req.session.exists,
             inputs: false
           });
         });
       } else {
-        return res.send({
+        return res.status(300).send({
           successValidation: "User exists in the Liburutegia databases",
           exists: req.session.exists,
           inputs: true

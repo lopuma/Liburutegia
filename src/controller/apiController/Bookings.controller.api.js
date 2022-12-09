@@ -1,84 +1,74 @@
 const { body, validationResult } = require("express-validator");
 const connection = require("../../../database/db");
 const flash = require("connect-flash");
-const { data } = require("jquery");
 
-const partnerController = {
+const bookingController = {
     //TODO VALIDATIONS
     validate: [body("email", "The format email address is incorrect.").isEmail()],
-    //TODO EXISTS DNI PARTENER
-    existPartner: async (req, res, next) => {
+
+    //TODO EXISTS DNI BOOKINGS
+    existBooking: async (req, res, next) => {
         try {
-            const sqlSelect = "SELECT * FROM partners WHERE dni = ?";
+            const sqlSelect = "SELECT * FROM bookings WHERE dni = ?";
             const dni = req.body.inputDni;
-            await connection.query(
-                sqlSelect,
-                [dni],
-                (err, results) => {
-                    if (err) {
-                        console.error("[ DB ]", err.sqlMessage);
-                        return res.status(400).send({
-                            code: 400,
-                            message: err
-                        });
-                    }
-                    if (results.length === 1) {
-                        return res.status(404).send({
-                            success: false,
-                            exists: true,
-                            errorMessage: `Partner DNI : ${dni} already exists with ID : ${results[0]
-                                .id_partner}`
-                        });
-                    } else {
-                        next();
-                    }
+            await connection.query(sqlSelect, [dni], (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        code: 400,
+                        message: err
+                    });
                 }
-            );
+                if (results.length === 1) {
+                    return res.status(404).send({
+                        success: false,
+                        exists: true,
+                        errorMessage: `Booking DNI : ${dni} already exists with ID : ${results[0]
+                            .id_booking}`
+                    });
+                } else {
+                    next();
+                }
+            });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
     },
-    //TODO NO EXISTE ID PARTNER
-    noExistPartner: async (req, res, next) => {
+
+    //TODO NO EXISTE ID BOOKINGS
+    noExistBooking: async (req, res, next) => {
         try {
-            const id_partner = req.params.idPartner;
-            const sqlSelect = "SELECT * FROM partners WHERE id_partner = ?";
-            await connection.query(
-                sqlSelect,
-                [id_partner],
-                (err, results) => {
-                    if (err) {
-                        console.error("[ DB ]", err.sqlMessage);
-                        return res
-                            .status(400)
-                            .send({
-                                code: 400,
-                                message: err
-                            });
-                    }
-                    if (results.length === 0) {
-                        return res
-                            .status(404)
-                            .send({
-                                success: false,
-                                exists: false,
-                                errorMessage: `Error there is no member with ID PARTNER : ${id_partner}`
-                            });
-                    } else {
-                        next();
-                    }
+            const id_booking = req.params.idBooking;
+            const sqlSelect = "SELECT * FROM bookings WHERE id_booking = ?";
+            await connection.query(sqlSelect, [id_booking], (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        code: 400,
+                        message: err
+                    });
                 }
-            );
+                if (results.length === 0) {
+                    return res.status(404).send({
+                        success: false,
+                        exists: false,
+                        errorMessage: `Error there is no member with ID BOOKINGS : ${id_booking}`
+                    });
+                } else {
+                    next();
+                }
+            });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
     },
-    //TODO SHOW ALL PARTNERS
-    getPartners: async (req, res) => {
+
+    //TODO ✅ SHOW ALL BOOKINGS
+    getBookings: async (req, res) => {
         try {
-            const sqlSelect = "SELECT * FROM partners"
+            const sqlSelect = "SELECT * FROM bookings";
             await connection.query(sqlSelect, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -89,14 +79,14 @@ const partnerController = {
                 }
                 if (results.length === 0) {
                     return res.status(200).send({
-                        success: true,
-                        messageNotFound: "No data found for Partners"
+                        success: false,
+                        messageNotFound: "No data found for Bookings"
                     });
                 }
                 res.status(200).send({
-                    success: "True",
+                    success: true,
                     messageSuccess: results.msg,
-                    data: results,
+                    data: results
                 });
             });
         } catch (error) {
@@ -104,12 +94,13 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    //TODO SHOW ONLY PARTNER FOR ID
-    getPartner: async (req, res) => {
+
+    //TODO SHOW ONLY BOOKINGS FOR ID
+    getBooking: async (req, res) => {
         try {
-            const id_partner = req.params.idPartner;
-            const sqlSelect = "SELECT * FROM partners WHERE id_partner=?";
-            await connection.query(sqlSelect, [id_partner], (err, results) => {
+            const id_booking = req.params.idBooking;
+            const sqlSelect = "SELECT * FROM bookings WHERE id_booking=?";
+            await connection.query(sqlSelect, [id_booking], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -125,47 +116,40 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    infoPartner: async (req, res) => {
+
+    // TODO
+    infoBooking: async (req, res) => {
         try {
-            const idPartner = req.params.idPartner;
+            const idBooking = req.params.idBooking;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            const sqlPartner = "SELECT * FROM partners WHERE id_partner = ?";
-            const sqlBookin = "SELECT p.id_partner, p.dni, p.name, bk.id_booking, bk.book_id, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.id_booking id_booking_review, v.score, v.review, v.deliver_date_review FROM partners p LEFT OUTER JOIN bookings bk ON p.dni=bk.partner_dni INNER JOIN books b ON bk.book_id=b.id_book LEFT OUTER JOIN votes v ON bk.id_booking=v.id_booking WHERE p.dni = ?";
-            await connection.query(sqlPartner, [idPartner], async (err, results) => {
+            const sqlBooking = "SELECT * FROM bookings WHERE id_booking = ?";
+            const sqlBookin =
+                "SELECT p.id_booking, p.dni, p.name, bk.id_booking, bk.book_id, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.id_booking id_booking_review, v.score, v.review, v.deliver_date_review FROM bookings p LEFT OUTER JOIN bookings bk ON p.dni=bk.booking_dni INNER JOIN books b ON bk.book_id=b.id_book LEFT OUTER JOIN votes v ON bk.id_booking=v.id_booking WHERE p.dni = ?";
+            await connection.query(sqlBooking, [idBooking], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
-                    return res
-                        .status(400)
-                        .send({
-                            code: 400,
-                            message: err
-                        });
+                    return res.status(400).send({
+                        code: 400,
+                        message: err
+                    });
                 }
                 const dni = results[0].dni;
-                //const sqlFamily = "SELECT * FROM familys f LEFT JOIN partners p ON f.dni_familiar_partner=p.dni WHERE f.dni_family=?";
+                //const sqlFamily = "SELECT * FROM familys f LEFT JOIN bookings p ON f.dni_familiar_booking=p.dni WHERE f.dni_family=?";
                 await connection.query(sqlBookin, [dni], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
-                        return res
-                            .status(
-                                400
-                            )
-                            .send(
-                                {
-                                    code: 400,
-                                    message: err
-                                }
-                            );
+                        return res.status(400).send({
+                            code: 400,
+                            message: err
+                        });
                     }
                     if (results.length === 0) {
-                        return res.send(
-                            {
-                                success: false,
-                                data: results,
-                                errorMessage: `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
-                            }
-                        );
+                        return res.send({
+                            success: false,
+                            data: results,
+                            errorMessage: `There is no data with that DNI: ${dni}, associated with the booking with id: ${idBooking}`
+                        });
                     }
                     const data = results;
                     res.status(200).send(data);
@@ -191,8 +175,9 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    // ADD PARTNERS
-    addPartner: async (req, res) => {
+
+    // ADD BOOKINGS
+    addBooking: async (req, res) => {
         try {
             const errors = validationResult(req);
             const {
@@ -204,7 +189,7 @@ const partnerController = {
                 inputPopulation: population,
                 inputEmail: email,
                 actualDate: date,
-                idPartnerFamily,
+                idBookingFamily,
                 dniFamily
             } = req.body;
             let phone1 = req.body.inputPhone;
@@ -228,33 +213,68 @@ const partnerController = {
             }
             const phonea = phone1 ? parseInt(phone1) : null;
             const phoneb = phone2 ? parseInt(phone2) : null;
-            if (idPartnerFamily === 'null' || dniFamily === 'null') {
-                await addNewPartner(dni, scanner, name, lastname, direction, population, phonea, phoneb, email, date);
+            if (idBookingFamily === "null" || dniFamily === "null") {
+                await addNewBooking(
+                    dni,
+                    scanner,
+                    name,
+                    lastname,
+                    direction,
+                    population,
+                    phonea,
+                    phoneb,
+                    email,
+                    date
+                );
             } else {
                 const sqlInsertFamily = "INSERT INTO familys SET ?";
-                await connection.query(sqlInsertFamily, {
-                    dni,
-                    id_familiar_partner: idPartnerFamily,
-                }, async (err) => {
-                    if (err) {
-                        console.error("[ DB ]", err.sqlMessage);
-                        return res
-                            .status(400)
-                            .send({
+                await connection.query(
+                    sqlInsertFamily,
+                    {
+                        dni,
+                        id_familiar_booking: idBookingFamily
+                    },
+                    async err => {
+                        if (err) {
+                            console.error("[ DB ]", err.sqlMessage);
+                            return res.status(400).send({
                                 code: 400,
                                 message: err
                             });
+                        }
+                        await addNewBooking(
+                            dni,
+                            scanner,
+                            name,
+                            lastname,
+                            direction,
+                            population,
+                            phonea,
+                            phoneb,
+                            email,
+                            date
+                        );
                     }
-                    await addNewPartner(dni, scanner, name, lastname, direction, population, phonea, phoneb, email, date);
-                });
+                );
             }
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
 
-        async function addNewPartner(dni, scanner, name, lastname, direction, population, phonea, phoneb, email, date) {
-            const sqlInsert = "INSERT INTO partners SET ?";
+        async function addNewBooking(
+            dni,
+            scanner,
+            name,
+            lastname,
+            direction,
+            population,
+            phonea,
+            phoneb,
+            email,
+            date
+        ) {
+            const sqlInsert = "INSERT INTO bookings SET ?";
             await connection.query(
                 sqlInsert,
                 {
@@ -279,24 +299,25 @@ const partnerController = {
                     }
                     req.flash(
                         "messageSuccess",
-                        `Partner successfully created, with PARTNER ID : ${results.insertId}`
+                        `Booking successfully created, with BOOKINGS ID : ${results.insertId}`
                     );
-                    res.send({
-                        status: 200,
+                    res.status(200).send({
+                        success: true,
                         exists: false,
-                        messageSuccess: `Partner successfully created, with PARTNER ID : ${results.insertId}`
+                        messageSuccess: `Booking successfully created, with BOOKINGS ID : ${results.insertId}`
                     });
                 }
             );
         }
     },
-    // DELETE PARTNER
-    deletePartner: async (req, res) => {
+
+    // DELETE BOOKINGS
+    deleteBooking: async (req, res) => {
         try {
-            const id_partner = req.params.idPartner;
+            const id_booking = req.params.idBooking;
             deleteBookins = [
-                `DELETE bookings FROM bookings JOIN partners ON partners.dni = bookings.partner_dni WHERE partners.id_partner = ${id_partner}`,
-                `DELETE FROM partners WHERE id_partner =  ${id_partner}`
+                `DELETE bookings FROM bookings JOIN bookings ON bookings.dni = bookings.booking_dni WHERE bookings.id_booking = ${id_booking}`,
+                `DELETE FROM bookings WHERE id_booking =  ${id_booking}`
             ];
             await connection.query(deleteBookins.join(";"), async (err, results) => {
                 if (err) {
@@ -304,21 +325,22 @@ const partnerController = {
                 }
                 req.flash(
                     "messageUpdate",
-                    `Partner successfully delete, with PARTNER ID : ${id_partner}`
+                    `Booking successfully delete, with BOOKINGS ID : ${id_booking}`
                 );
-                return res.redirect("/workspace/partners");
+                return res.redirect("/workspace/bookings");
             });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
     },
-    // UDATE PARTNER FOR ID
-    putPartner: async (req, res) => {
+
+    // UDATE BOOKINGS FOR ID
+    putBooking: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const id_partner = req.params.idPartner;
-            const partner = ({
+            const id_booking = req.params.idBooking;
+            const booking = ({
                 dni,
                 scanner,
                 name,
@@ -329,18 +351,18 @@ const partnerController = {
                 phone2,
                 email
             } = req.body);
-            const sql = "UPDATE partners SET ? WHERE id_partner = ?";
-            await connection.query(sql, [partner, id_partner], (err, results) => {
+            const sql = "UPDATE bookings SET ? WHERE id_booking = ?";
+            await connection.query(sql, [booking, id_booking], (err, results) => {
                 if (err) {
                     throw err;
                 }
                 req.flash(
                     "messageUpdate",
-                    `Partner successfully update, with PARTNER ID : ${id_partner}`
+                    `Booking successfully update, with BOOKINGS ID : ${id_booking}`
                 );
                 res.send({
                     success: true,
-                    messageUpdate: `Partner successfully update, with PARTNER ID : ${id_partner}`
+                    messageUpdate: `Booking successfully update, with BOOKINGS ID : ${id_booking}`
                 });
             });
         } catch (error) {
@@ -350,4 +372,6 @@ const partnerController = {
     }
 };
 
-module.exports = partnerController;
+module.exports = bookingController;
+
+

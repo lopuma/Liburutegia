@@ -8,7 +8,7 @@ const workSpaceController = {
       const userName = req.session.username;
       const loggedIn = req.session.loggedin;
       const rolAdmin = req.session.roladmin;
-      res.render("workspace/dashboard-books", {
+      res.status(200).render("workspace/dashboard-books", {
         loggedIn,
         userName,
         rolAdmin
@@ -25,7 +25,7 @@ const workSpaceController = {
       const userName = req.session.username;
       const loggedIn = req.session.loggedin;
       const rolAdmin = req.session.roladmin;
-      res.render("workspace/dashboard-bookings", {
+      res.status(200).render("workspace/dashboard-bookings", {
         loggedIn,
         userName,
         rolAdmin
@@ -42,7 +42,7 @@ const workSpaceController = {
       const userName = req.session.username;
       const loggedIn = req.session.loggedin;
       const rolAdmin = req.session.roladmin;
-      res.render("workspace/dashboard-partners", {
+      res.status(200).render("workspace/dashboard-partners", {
         loggedIn,
         userName,
         rolAdmin
@@ -63,12 +63,18 @@ const workSpaceController = {
       await connection.query(sqlSelect, async (err, results) => {
         if (err) {
           console.error("[ DB ]", err.sqlMessage);
-          return res.status(400).send({ code: 400, message: err });
+          return res
+            .status(400)
+            .send({
+              success: false,
+              messageErrBD: err,
+              errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+            });
         }
         const users = results;
         try {
           if (rolAdmin === false) {
-            return res.redirect("/");
+            return res.status(400).redirect("/");
           }
           res
             .status(200)

@@ -4,7 +4,7 @@ const {
 
 const {
     noExistPartner,
-} = require("../../controller/apiController/Partner.controller.api");
+} = require("../../controller/apiController/Partners.controller.api");
 
 const {
     getNew,

@@ -1,4 +1,3 @@
-const routerPartners = require("express").Router();
 const {
     validate,
     getPartners,
@@ -9,40 +8,40 @@ const {
     deletePartner,
     putPartner,
     infoPartner
-} = require("../../controller/apiController/Partner.controller.api");
+} = require("../../controller/apiController/Partners.controller.api");
+
 const {
     isAuthenticated
 } = require("../../controller/authController/loginController");
 
-//TODO SHOW ALL
-routerPartners.get("/", getPartners);
+// TODO 👌 
+const routerPartners = require("express").Router();
+    
+    // DATA PARTNERS
+    routerPartners.get("/", getPartners);
 
-//TODO SHOW PARTNER
-routerPartners.get("/:idPartner", noExistPartner, getPartner);
+    routerPartners.get("/:idPartner", noExistPartner, getPartner);
 
-routerPartners.post("/", validate, addPartner);
+    routerPartners.get("/info/:idPartner", noExistPartner, infoPartner);
 
-//TODO API INFORMACION PARTNER
-routerPartners.get("/info/:idPartner", noExistPartner, infoPartner);
+    routerPartners.post("/", validate, addPartner);
 
-//ADD
-routerPartners.post("/add", isAuthenticated, existPartner, addPartner);
+    // ADD PARTNER
+    routerPartners.post("/add/:idPartner", validate, existPartner, noExistPartner, addPartner);
 
-//DELETE
-routerPartners.get(
-    "/delete/:idPartner",
-    isAuthenticated,
-    noExistPartner,
-    deletePartner
-);
+    routerPartners.get(
+        "/delete/:idPartner",
+        isAuthenticated,
+        noExistPartner,
+        deletePartner
+    );
 
-//UPDATE
-routerPartners.post(
-    "/update/:idPartner",
-    isAuthenticated,
-    noExistPartner,
-    validate,
-    putPartner
-);
+    routerPartners.post(
+        "/update/:idPartner",
+        isAuthenticated,
+        noExistPartner,
+        validate,
+        putPartner
+    );
 
 module.exports = routerPartners;
