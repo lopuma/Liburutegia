@@ -1,0 +1,140 @@
+<link rel="stylesheet" href="/style/modalDeliver.css">
+
+<div class="modal fade" id="modalStar" tabindex="-1" role="dialog" aria-labelledby="modalStar" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    
+        <div class="modal-content">
+            <div class="Modal-header">
+                <h1 class="Modal-title">Star Rating</h1>
+                <button class="Modal-close" id="closeModal">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="Modal-star Star">
+                <div class="Star-content">
+                    <div class="Star-widget Widget">
+                        <input class="Widget-input" type="radio" value="5" name="rate" id="rate-5">
+                        <label for="rate-5" class=" Widget-label fas fa-star"></label>
+                        <input class="Widget-input" type="radio" value="4" name="rate" id="rate-4">
+                        <label for="rate-4" class="Widget-label fas fa-star"></label>
+                        <input class="Widget-input" type="radio" value="3" name="rate" id="rate-3">
+                        <label for="rate-3" class="Widget-label fas fa-star"></label>
+                        <input class="Widget-input" type="radio" value="2" name="rate" id="rate-2">
+                        <label for="rate-2" class="Widget-label fas fa-star"></label>
+                        <input class="Widget-input" type="radio" value="1" name="rate" id="rate-1">
+                        <label for="rate-1" class="Widget-label fas fa-star"></label>
+                        <div class="Star-header"></div>
+                        <form class="Star-form Form" action="#" id="formDeliver" name="formDeliver">
+                            <input type="text" class="form-control" id="count"
+                                tabindex="0" hidden>
+                            <input type="text" class="form-control" id="id_book"
+                                tabindex="1" hidden>
+                            <input type="text" class="form-control" id="id_booking"
+                                tabindex="2" hidden>
+                            <div class="Form-textarea">
+                                <textarea id="textarea" cols="30" placeholder="Describe your experience.." maxlength="100" tabindex="3"></textarea>
+                                <span id="caracteres">0 / 100</span>
+                            </div>
+                            <div class="Form-button">
+                                <button type="submit" id="post" tabindex="4">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="Modal-post">
+                <div class="text">Thanks for rating us! &#128366; </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const post = document.querySelector(".Modal-post");
+    const widget = document.querySelector(".Star-widget");
+    const btnCloseModal = document.getElementById("closeModal");
+    const inputCount = document.getElementById("count");
+    const inputBookID = document.getElementById("id_book");
+    const inputBookingID = document.getElementById("id_booking");
+    const textarea = document.querySelector("#textarea");
+    const btnPost = document.getElementById("post");
+    const formDeliver          = document.getElementById  ( "formDeliver"         );
+
+    function resetRadioButtons(groupName) {
+        var arRadioBtn = document.getElementsByName(groupName);
+        for (var ii = 0; ii < arRadioBtn.length; ii++) {
+            var radButton = arRadioBtn[ii];
+            radButton.checked = false;
+        }
+        textarea.value = "";
+        inputCount.value = "";
+        inputBookID.value = "";
+        inputBookingID.value = "";
+        widget.style.display = "block";
+        post.style.display = "none";
+    }
+
+    btnCloseModal.addEventListener( 'click', () => {
+        $('#modalStar').modal('hide');
+        resetRadioButtons("rate");
+    });
+
+    async function correctForms(e) {
+        e.preventDefault();
+        let activoFijo = $('input[name="rate"]:checked').val();
+        const fecha = new Date();
+        const idBook = $.trim($('#id_book').val());
+        const valueCount = inputCount.value;
+        const idBooking = $.trim($('#id_booking').val());
+        const score = activoFijo;
+        const review = textarea.value;
+        const url = `/api/books/deliver/${idBook}`;
+        const deliver_date_review = new Intl.DateTimeFormat("en-US").format(fecha);
+        let dateActual = new Date();
+        dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
+        console.log({
+            activoFijo,
+            fecha,
+            idBook,
+            idBooking,
+            score,
+            review,
+            url,
+            deliver_date_review,
+            dateActual,
+            valueCount
+        });
+        const data = {
+            idBooking,
+            score,
+            review,
+            deliver_date_review: dateActual
+        }
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8"
+            }
+        })
+        widget.style.display = "none";
+        post.style.display = "block";
+        setTimeout(() => {
+            $('#modalStar').modal('hide');
+            resetRadioButtons("rate");
+            document.getElementById(`row${valueCount}`).remove();
+            if(tbodyActive.innerHTML === "") {
+                tableA.destroy();
+                tbodyActive.innerHTML = "";
+                createdTableActive();
+            }
+        }, 1000);
+        return false;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        formDeliver.addEventListener("submit", correctForms);
+    });
+
+</script>
+

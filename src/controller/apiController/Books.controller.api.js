@@ -1,7 +1,6 @@
 const connection = require("../../../database/db");
 
 const bookController = {
-
     noExistBook: async (req, res, next) => {
         try {
             const id_book = req.params.idBook;
@@ -16,13 +15,11 @@ const bookController = {
                     });
                 }
                 if (results.length === 0) {
-                    return res
-                        .status(404)
-                        .send({
-                            success: false,
-                            exists: false,
-                            errorMessage: `Error there is no book with ID BOOK: ${id_book}`
-                        });
+                    return res.status(404).send({
+                        success: false,
+                        exists: false,
+                        errorMessage: `Error there is no book with ID BOOK: ${id_book}`
+                    });
                 } else {
                     next();
                 }
@@ -107,14 +104,17 @@ const bookController = {
             });
         }
     },
-    // TODO ENTREGA
+    // TODO ✅ ENTREGA BOOK
     deliverBook: async (req, res) => {
         const idBook = req.params.id_book;
         const { idBooking, score, review, deliver_date_review } = req.body;
+
         const sql = [
-            `UPDATE books SET reserved=0 WHERE id_book=${idBook}`,
+            `UPDATE books SET reserved=0 WHERE id_book=${idBook}`, 
+            `UPDATE bookings SET deliver=1 WHERE id_booking=${idBooking}`,
             "INSERT INTO votes SET ?"
         ];
+
         await connection.query(
             sql.join(";"),
             {
@@ -124,14 +124,19 @@ const bookController = {
                 review,
                 deliver_date_review
             },
-            (err, result) => {
+            err => {
                 if (err) {
-                    res.status(404).redirect("/");
-                    //return console.log(err)
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
                 }
-                res.end(
-                    `The following BOOK has been delivered with ID : ${idBook}, and a review has been added`
-                );
+                res.status(200).send({
+                    success: true,
+                    messageSuccess: `The following BOOK has been delivered with ID : ${idBook}, and a review has been added`
+                });
             }
         );
     },

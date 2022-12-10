@@ -8,13 +8,19 @@ const {
     putBook 
 } = require('../../controller/apiController/Books.controller.api');
 
+const {
+    isAuthenticated
+} = require("../../controller/authController/loginController");
+
+
 const routerBooks = require('express').Router();
     
-routerBooks.get("/", getBooks);
+    routerBooks.get("/", getBooks);
 
     routerBooks.get("/:id_book", getBook);
 
-    routerBooks.post("/deliver/:id_book", deliverBook);
+    // DELIVER
+    routerBooks.post("/deliver/:id_book", isAuthenticated, deliverBook);
 
     //ADD
     //routerBooks.post("/add", addBook);

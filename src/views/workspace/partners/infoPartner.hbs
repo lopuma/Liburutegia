@@ -1,115 +1,57 @@
 <link href="/style/info.css" rel="stylesheet" />
 
-<!--Modal para CRUD-->
-<div class="modal fade" id="modalStar"  tabindex="-1" role="dialog"
-    aria-labelledby="modalStar" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Star Rating</h5>
-            </div>
-            <div class="post">
-                <div class="text">Thanks for rating us!</div>
-                <div class="edit">EDIT</div>
-            </div>
-            <div class="star-widget">
-                <input type="radio" value="5" name="rate" id="rate-5">
-                <label for="rate-5" class="fas fa-star"></label>
-                <input type="radio" value="4" name="rate" id="rate-4">
-                <label for="rate-4" class="fas fa-star"></label>
-                <input type="radio" value="3" name="rate" id="rate-3">
-                <label for="rate-3" class="fas fa-star"></label>
-                <input type="radio" value="2" name="rate" id="rate-2">
-                <label for="rate-2" class="fas fa-star"></label>
-                <input type="radio" value="1" name="rate" id="rate-1">
-                <label for="rate-1" class="fas fa-star"></label>
-                <form action="#" id="formuStar">
-                    <header></header>
-                    <input type="text" class="form-control" id="id_book"
-                        tabindex="0" hidden>
-                    <input type="text" class="form-control" id="id_booking"
-                        tabindex="1" hidden>
-                    <div class="textarea">
-                        <textarea id="textarea" cols="30" placeholder="Describe
-                            your experience.."></textarea>
-                    </div>
-                    <div class="btn">
-                        <button type="submit">Post</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+{{> modalDeliver}}
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="Info-contenedor">   
+<div class="Info-contenedor">
     <!-- TODO OK SLIDER -->
     <div class="Slider">
-        {{#each partner}}
-            <div class="Slider-move">
-                <div class="Slider-card isActive">
-                    <a class="Slider-a isActivo"
-                        onClick="infor({{this.partnerID}})">Information</a>
-                </div>
-                <div class="Slider-card">
-                    <a class="Slider-a" onClick="inforActive({{this.partnerID}})">Active
-                        Reserves
-                    </a>
-                </div>
-                <div class="Slider-card">
-                    <a class="Slider-a" onClick="inforHistory({{this.partnerID}})"
-                        style="cursor: pointer;">Reservation
-                        History
-                    </a>
-                </div>
-            </div>
-            <button class="Slider-arrow isPrev" onclick="avanzaSlide(-1, {{this.partnerID}})">
-                <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
-                    width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0
-                        .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1
-                        0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                </svg>
-            </button>
-            <button class="Slider-arrow isNext" onclick="avanzaSlide(1, {{this.partnerID}})">
-                <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
-                    width="16" height="16" fill="currentColor" viewBox="0 0 16
-                    16">
-                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708
-                        0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293
-                        8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+    {{#each partner}}
+    <div class="Slider-move">
+        <div class="Slider-card isActive">
+            <a class="Slider-a isActivo"
+                onClick="infor({{this.partnerID}})">Information</a>
+        </div>
+        <div class="Slider-card">
+            <a class="Slider-a" onClick="inforActive({{this.partnerID}})">Active
+                Reserves
+            </a>
+        </div>
+        <div class="Slider-card">
+            <a class="Slider-a" onClick="inforHistory({{this.partnerID}})"
+                style="cursor: pointer;">Reservation
+                History
+            </a>
+        </div>
+    </div>
+    <button class="Slider-arrow isPrev" onclick="avanzaSlide(-1,
+        {{this.partnerID}})">
+        <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
+            width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0
+                .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1
+                0-.708l6-6a.5.5 0 0 1 .708 0z" />
+            </svg>
+        </button>
+        <button class="Slider-arrow isNext" onclick="avanzaSlide(1,
+            {{this.partnerID}})">
+            <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" fill="currentColor" viewBox="0 0 16
+                16">
+                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708
+                    0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293
+                    8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                 </svg>
             </button>
             <ul class="Slider-lines">
                 <li class="Slider-line">
-                        <button class="Slider-btn isActive"
-                            onClick="infor({{this.partnerID}})">
-                        </button>
+                    <button class="Slider-btn isActive"
+                        onClick="infor({{this.partnerID}})">
+                    </button>
                 </li>
                 <li class="Slider-line">
-                        <button class="Slider-btn"
-                            onClick="inforActive({{this.partnerID}})">
-                        </button>
+                    <button class="Slider-btn"
+                        onClick="inforActive({{this.partnerID}})">
+                    </button>
                 </li>
                 <li class="Slider-line">
                     <button class="Slider-btn"
@@ -117,103 +59,100 @@
                     </button>
                 </li>
             </ul>
-        {{/each}}
-    </div>
-    
-    <!-- TODO SUB CONTENEDOR -->
-    <div class="Info-subcontenedor">
+            {{/each}}
+        </div>
 
-        <div class="Info-bloque isActivo" id="bloqueInfo">
-            {{#each partner}}
+        <!-- TODO SUB CONTENEDOR -->
+        <div class="Info-subcontenedor">
+
+            <div class="Info-bloque isActivo" id="bloqueInfo">
+                {{#each partner}}
                 <h3>NAME {{this.name}}</h3>
                 <h3>LASTNAME {{this.lastname}}</h3>
-            {{/each}}
-            <hr>
-            {{#if infoFamily}}
+                {{/each}}
+                <hr>
+                {{#if infoFamily}}
                 <h3>DNI {{this.partnerDni}}</h3>
                 <h3>NAME {{this.partnerName}}</h3>
                 <h3>LASTNAME {{this.partnerLastname}}</h3>
                 <h3>RECORD DATE {{this.partnerRecordDate}}</h3>
-            {{else}}
+                {{else}}
                 <h3>no data</h3>
-            {{/if}}
-        </div>
-        <div class="Info-bloque" id="infoBloqueActive">
-            <div class="Bloque-table Dashboard-row">
-                <div id="spinnerActive" style="margin-top: 2em">
-                    {{> loading}}
-                </div>
-                <table class="Dashboard-table table table-bordered
-                    display wrap" id="tablePartnerActive"
-                    cellspacing="0" width="100%">
-                    <thead class="Dashboard-head">
-                        <tr>
-                            <th>ISBN</th>
-                            <th>TITLE</th>
-                            <th>AUTHOR</th>
-                            <th>DATE RESERVATION</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody id="activeData">
-                    </tbody>
-                    <tfoot class="Dashboard-foot">
-                        <tr>
-                            <th>ISBN</th>
-                            <th>TITLE</th>
-                            <th>AUTHOR</th>
-                            <th>DATE RESERVATION</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                {{/if}}
             </div>
-        </div>
-        <div class="Info-bloque" id="infoBloqueHistory">
-            <div class="Bloque-table Dashboard-row">
-                <div id="spinnerHistory" style="margin-top: 2em">
-                    {{> loading}}
+            <div class="Info-bloque" id="infoBloqueActive">
+                <div class="Bloque-table Dashboard-row">
+                    <div id="spinnerActive" style="margin-top: 2em">
+                        {{> loading}}
+                    </div>
+                    <table class="Dashboard-table table table-bordered
+                        display wrap" id="tablePartnerActive"
+                        cellspacing="0" width="100%">
+                        <thead class="Dashboard-head">
+                            <tr>
+                                <th>ISBN</th>
+                                <th>TITLE</th>
+                                <th>AUTHOR</th>
+                                <th>DATE RESERVATION</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeData">
+                        </tbody>
+                        <tfoot class="Dashboard-foot">
+                            <tr>
+                                <th>ISBN</th>
+                                <th>TITLE</th>
+                                <th>AUTHOR</th>
+                                <th>DATE RESERVATION</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
-                <table class="Dashboard-table table table-bordered
-                    display wrap" id="tablePartnerHistory"
-                    cellspacing="0" width="100%">
-                    <thead class="Dashboard-head">
-                        <tr>
-                            <th>ISBN</th>
-                            <th>TITLE</th>
-                            <th>AUTHOR</th>
-                            <th>DATE RESERVATION</th>
-                            <th>DATE DELIVER</th>
-                            <th>SCORE</th>
-                            <th>REVIEW</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyData">
-                    </tbody>
-                    <tfoot class="Dashboard-foot">
-                        <tr>
-                            <th>ISBN</th>
-                            <th>TITLE</th>
-                            <th>AUTHOR</th>
-                            <th>DATE RESERVATION</th>
-                            <th>DATE DELIVER</th>
-                            <th>SCORE</th>
-                            <th>REVIEW</th>
-                        </tr>
-                    </tfoot>
-                </table>
             </div>
-        </div>
+            <div class="Info-bloque" id="infoBloqueHistory">
+                <div class="Bloque-table Dashboard-row">
+                    <div id="spinnerHistory" style="margin-top: 2em">
+                        {{> loading}}
+                    </div>
+                    <table class="Dashboard-table table table-bordered
+                        display wrap" id="tablePartnerHistory"
+                        cellspacing="0" width="100%">
+                        <thead class="Dashboard-head">
+                            <tr>
+                                <th>ISBN</th>
+                                <th>TITLE</th>
+                                <th>AUTHOR</th>
+                                <th>DATE RESERVATION</th>
+                                <th>DATE DELIVER</th>
+                                <th>SCORE</th>
+                                <th>REVIEW</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyData">
+                        </tbody>
+                        <tfoot class="Dashboard-foot">
+                            <tr>
+                                <th>ISBN</th>
+                                <th>TITLE</th>
+                                <th>AUTHOR</th>
+                                <th>DATE RESERVATION</th>
+                                <th>DATE DELIVER</th>
+                                <th>SCORE</th>
+                                <th>REVIEW</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
 
-    </div>
+        </div>
 
 </div>
 
 <script>
-    const post = document.querySelector(".post");
-    const widget = document.querySelector(".star-widget");
     const editBtn = document.querySelector(".edit");
-    const textarea = document.querySelector("#textarea");
     const sliderCard = document.querySelectorAll(".Slider-card");
     const sliderButton = document.querySelectorAll(".Slider-a");
     const linesButton = document.querySelectorAll(".Slider-btn");
@@ -225,6 +164,8 @@
     const bloqueInfo = document.getElementById("bloqueInfo");
     let indice = 1;
 
+
+
     //TODO ✅ INFORMATION
     async function infor(partnerID){
         idPartner = partnerID;
@@ -232,48 +173,8 @@
     }
 
     // DELIVER
-        // TODO ✅ ENTREGA DEL LIBRO
-        $('#formuStar').submit(async function (e) {
-            e.preventDefault();
-            let activoFijo = $('input[name="rate"]:checked').val();
-            const fecha = new Date();
-            const idBook = $.trim($('#id_book').val());
-            const idBooking = $.trim($('#id_booking').val());
-            const score = activoFijo;
-            const review = textarea.value;
-            const url = `/api/books/deliver/${idBook}`;
-            const deliver_date_review = new Intl.DateTimeFormat("en-US").format(fecha);
-            let dateActual = new Date();
-            dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
-
-            const data = {
-                idBooking,
-                score,
-                review,
-                deliver_date_review: dateActual
-            }
-            fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json; charset=UTF-8"
-                }
-            })
-            widget.style.display = "none";
-            post.style.display = "block";
-            editBtn.onclick = () => {
-                widget.style.display = "block";
-                post.style.display = "none";
-            }
-            setTimeout(() => {
-                $('#modalStar').modal('hide');
-            }, 1000);
-            return false;
-        });
-
         // TODO ✅ ENTEGA DEL LIBRO
         async function deliverBook(book_id, id_booking, count) {
-            console.log({book_id, id_booking, count})
             try {
                 const idBook = book_id;
                 const idBooking = id_booking;
@@ -284,29 +185,20 @@
                     title: 'Deliver',
                     text: `Do you want to add a review, for the book : ${idBook} ?`,
                     icon: 'warning',
+                    showDenyButton: true,
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#474E68',
                     confirmButtonText: 'Yes',
-                    cancelButtonText: 'No'
+                    denyButtonText: `Don't review`,
+                    cancelButtonText: 'Cancel'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        $("#count").val(count);
                         $("#id_book").val(idBook);
                         $("#id_booking").val(idBooking);
-                        textarea.value = "";
-                        widget.style.display = "block";
-                        post.style.display = "none";
-                        function resetRadioButtons(groupName) {
-                            var arRadioBtn = document.getElementsByName(groupName);
-                            for (var ii = 0; ii < arRadioBtn.length; ii++) {
-                                var radButton = arRadioBtn[ii];
-                                radButton.checked = false;
-                            }
-                        }
-                        resetRadioButtons("rate");
-                        $('#modalStar').modal('show'); // abrir
-                        document.getElementById(`row${count}`).remove();
-                    } else {
+                        $('#modalStar').modal('show');
+                    } else if (result.isDenied) {
                         const data = {
                             idBooking,
                             score: 0,
@@ -321,6 +213,11 @@
                             }
                         })
                         document.getElementById(`row${count}`).remove();
+                        if(tbodyActive.innerHTML === "") {
+                            tableA.destroy();
+                            tbodyActive.innerHTML = "";
+                            createdTableActive();
+                        }
                     }
                 })
             } catch (error) {
@@ -385,7 +282,6 @@
 
         // TODO ✅ CREAR TABLA
         async function createdTableActive() {
-            console.log("CHAO");
             setTimeout(async () => {
                 $(document).ready(function () {
                     tableA = $("#tablePartnerActive").DataTable({
@@ -467,7 +363,6 @@
 
         // TODO ✅ CREAR TABLA HISTORY
         async function createdTableHistory() {
-            console.log("HOLA");
             setTimeout(async () => {
                 $(document).ready(function () {
                     tableB = $("#tablePartnerHistory").DataTable({

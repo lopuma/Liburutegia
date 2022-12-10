@@ -1,0 +1,238 @@
+/* TODO STARs */
+
+.Modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5em 1em;
+    font-size: 1.2em;
+    font-weight: 400;
+    color: var(--Color-texto-negro);
+    background-color: var(--Color-texto-blanco);
+    border-bottom: 1px solid var(--Color-outline);
+    box-shadow: var(--Box-shadow-nav);
+}
+
+.Modal-close i {
+    font-size: 1.3em;
+}
+
+.Star {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.Star-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 1em 0 0 0;
+}
+
+.Star-header {
+    width: max-content;
+    font-size: 1.5em;
+    color: var(--Color-text-negro);
+    font-weight: 500;
+    text-align: center;
+    padding: 0.5em;
+}
+
+.Star-header::before {
+    color: var(--Color-texto-negro);
+}
+
+.Widget {
+    width: 100%;
+    margin: 1em 0;
+    padding: 0 1em;
+}
+
+.Widget-input {
+    cursor: pointer;
+    display: none;
+}
+
+.Widget-label {
+    font-size: 1.5em;
+    color: var(--Color-texto-negro);
+    padding: .5em;
+    float: right;
+    transition: all .5s ease;
+    cursor: pointer;
+    margin: 0;
+}
+
+.Widget-input:not(:checked)~.Widget-label:hover,
+.Widget-input:not(:checked)~.Widget-label:hover~.Widget-label {
+    color: #fd4;
+}
+
+.Widget-input:checked~.Widget-label {
+    color: #fd4;
+}
+
+.Widget-input#rate-5:checked~.Widget-label {
+    color: #fe7;
+    text-shadow: 0 0 20px rgb(119, 90, 67);
+}
+
+#rate-1:checked~.Star-header::before {
+    content: "I don't like it ";
+}
+
+#rate-2:checked~.Star-header::before {
+    content: "i like little ";
+}
+
+#rate-3:checked~.Star-header::before {
+    content: "Alright! ";
+}
+
+#rate-4:checked~.Star-header::before {
+    content: "I like it! ";
+}
+
+#rate-5:checked~.Star-header::before {
+    content: "I'm lovin it ";
+}
+
+.Star-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    padding: 0 .5em .5em;
+    display: none;
+}
+
+.Widget-input:checked~.Star-form {
+    display: flex;
+}
+
+.Form-textarea {
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+    padding: 1em;
+}
+
+.Form-textarea span {
+    width: 100%;
+    display: flex;
+    text-align: end;
+    justify-content: end;
+    padding: 0.5em 1em;
+}
+
+.Form-textarea textarea {
+    width: 100%;
+    height: 7em;
+    outline: none;
+    border: 1px solid #333;
+    border-radius: var(--Radius);
+    padding: 1em;
+    font-size: 1em;
+    resize: none;
+    overflow-y: auto;
+}
+
+.Form-textarea textarea:focus {
+    border-color: var(--Color-outline);
+}
+
+.Form-button {
+    height: 5em;
+    width: 50%;
+    padding: 1em;
+}
+
+.Form-button button {
+    height: 100%;
+    width: 100%;
+    border: 1px solid var(--Color-outline);
+    border-radius: var(--Radius);
+    outline: none;
+    background: var(--Success);
+    color: #000;
+    font-size: 1em;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition-property: color, box-shadow, border, transform;
+    transition-duration: .5s;
+    transition-timing-function: ease;
+    color: var(--Brown);
+}
+
+.Form-button button:hover {
+    color: var(--Color-texto-negro);
+    box-shadow: var(--Box-shadow-button-success);
+    border: 1px solid var(--Color-outline-blanco);
+    transform: scale(1.05);
+}
+
+.Form-button button:active {
+    transform: scale(1.2);
+}
+
+.Modal-post {
+    margin: 1em 0;
+    font-size: 1.2em;
+    align-items: center;
+    display: none;
+}
+
+.Modal-post.isActive {
+    display: block;
+}
+
+/* TODO STARs */
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: gold;
+}
+
+@media screen and (max-width: 34.375em) {
+
+    .Star-header {
+        font-size: 1.2em;
+    }
+    .Widget-label {
+        padding: 0.3em;
+    }
+
+    .Form {
+        padding: 0;
+    }
+
+    .Form-textarea {
+        padding: 1.5em 0 0 0;
+    }
+}
