@@ -1,3 +1,8 @@
+#spinner {
+    margin: 3em 0;
+    display: inline-block;
+}
+
 .book {
     height: 2.5em;
     position: relative;
@@ -45,4 +50,8 @@
 
 .book span {
     margin-top: 5em;
+}
+
+#spinner.spinnerUser {
+    margin: 8em 0;
 }

@@ -77,10 +77,6 @@
   text-transform: uppercase;
 }
 
-#spinner {
-  margin: 3em 0;
-  display: inline-block;
-}
 
 /* TODO Cargando */
 @keyframes lds-dual-ring {
@@ -133,7 +129,7 @@
   }
 }
 
-@media all and (max-width: 500px) {
+@media screen and (max-width: 550px) {
   .Workspace-fieldset {
     padding: 0;
   }

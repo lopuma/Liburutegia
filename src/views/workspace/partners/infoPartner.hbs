@@ -90,10 +90,10 @@
                         cellspacing="0" width="100%">
                         <thead class="Dashboard-head">
                             <tr>
-                                <th>ISBN</th>
                                 <th>TITLE</th>
+                                <th>ISBN</th>
                                 <th>AUTHOR</th>
-                                <th>DATE RESERVATION</th>
+                                <th>RESERVATION DATE</th>
                                 <th>ACTIONS</th>
                             </tr>
                         </thead>
@@ -101,10 +101,10 @@
                         </tbody>
                         <tfoot class="Dashboard-foot">
                             <tr>
-                                <th>ISBN</th>
                                 <th>TITLE</th>
+                                <th>ISBN</th>
                                 <th>AUTHOR</th>
-                                <th>DATE RESERVATION</th>
+                                <th>RESERVATION DATE</th>
                                 <th>ACTIONS</th>
                             </tr>
                         </tfoot>
@@ -121,11 +121,11 @@
                         cellspacing="0" width="100%">
                         <thead class="Dashboard-head">
                             <tr>
-                                <th>ISBN</th>
                                 <th>TITLE</th>
+                                <th>ISBN</th>
                                 <th>AUTHOR</th>
-                                <th>DATE RESERVATION</th>
-                                <th>DATE DELIVER</th>
+                                <th>RESERVATION DATE</th>
+                                <th>DELIVER DATE</th>
                                 <th>SCORE</th>
                                 <th>REVIEW</th>
                             </tr>
@@ -134,11 +134,11 @@
                         </tbody>
                         <tfoot class="Dashboard-foot">
                             <tr>
-                                <th>ISBN</th>
                                 <th>TITLE</th>
+                                <th>ISBN</th>
                                 <th>AUTHOR</th>
-                                <th>DATE RESERVATION</th>
-                                <th>DATE DELIVER</th>
+                                <th>RESERVATION DATE</th>
+                                <th>DELIVER DATE</th>
                                 <th>SCORE</th>
                                 <th>REVIEW</th>
                             </tr>
@@ -171,6 +171,22 @@
         idPartner = partnerID;
         indice = 1;
     }
+
+    async function noDataFound() {
+        try{
+            tableA.destroy();
+        } catch (error) {}
+        tbodyActive.innerHTML = "";
+        createdTableActive();
+    };
+
+    async function noDataFoundActive() {
+        createdTableActive();
+    };
+
+    async function noDataFoundHistory() {
+        createdTableHistory();
+    };
 
     // DELIVER
         // TODO ✅ ENTEGA DEL LIBRO
@@ -214,9 +230,7 @@
                         })
                         document.getElementById(`row${count}`).remove();
                         if(tbodyActive.innerHTML === "") {
-                            tableA.destroy();
-                            tbodyActive.innerHTML = "";
-                            createdTableActive();
+                            noDataFound();
                         }
                     }
                 })
@@ -247,36 +261,49 @@
 
         // TODO ✅ OBTENER INFORMACION DEL PARTNER Y BOOKINGS
         async function obtenerPartner(data) {
-            if(data.success == true) {
+            let existsData = false;
+            if(data.success === true) {
                 const fecha = new Date();
                 const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
-                let vacio = Object.keys(data).length === 0;
                 let count = 0;
                 let body = "";
                 tbodyActive.innerHTML = "";
-                if (vacio) {
-                    body += `<td COLSPAN="5" style="text-align: center; font-weight: bold">No datas found</td>`;
-                } else {
-                    for (let elemento of data.data) {
-                        count += 1;
-                        const reserved = elemento.reserved;
-                        const idBookingReview = elemento.id_booking_review;
-                        let reservationDate = new Date(elemento.reservation_date);
-                        reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
-                        let deliverDateReview = new Date(elemento.deliver_date_review);
-                        deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
-                        if (reserved === 1 && idBookingReview === null) {
-                                body += `<tr id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td><button id="btnDeliver" onClick=deliverBook(` + elemento.book_id + `,` + elemento.id_booking + `,` + count + `) class="btn btn-warning" title="Deliver Book"><i class="fa-regular fa-handshake"></i> Deliver Book</button></td></tr>`;
-                                createdTableActive();
-                        }
+                for (let elemento of data.data) {
+                    count += 1;
+                    const reserved = elemento.reserved;
+                    const idBookingReview = elemento.id_booking_review;
+                    let reservationDate = new Date(elemento.reservation_date);
+                    reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
+                    let deliverDateReview = new Date(elemento.deliver_date_review);
+                    deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
+                    if (reserved === 1 && idBookingReview === null) {
+                        body += `
+                            <tr id="row${count}" value="row${count}">
+                                <td>${elemento.title}</td>
+                                <td>${elemento.isbn}</td>
+                                <td>${elemento.author}</td>
+                                <td>${reservationDate}</td>
+                                <td>
+                                    <button id="btnDeliver" onClick=deliverBook(` + elemento.book_id + `,` + elemento.id_booking + `,` + count + `) class="btn btn-warning" title="Deliver Book">
+                                        <i class="fa-regular fa-handshake"></i> Deliver Book
+                                    </button>
+                                </td>
+                            </tr>`;
+                        createdTableActive();
+                        existsData = true;
+                    } else {
+                        await noDataFoundActive();
+                        existsData = false;
+                    }
+                    if(existsData){
                         setTimeout(async () => {
                             tbodyActive.innerHTML = body;
                         }, 400)
                     }
                 }
             } else {
-                infoBloqueActive.classList.remove("isActivo");
-                infoBloqueActive.classList.remove("isAuto");
+            console.log(`Àqui cuando llega ==> `);
+            await noDataFoundActive();
             }
         }
 
@@ -289,7 +316,7 @@
                         ordering: true,
                         info: true,
                         responsive: true,
-                        order: [[0, "desc"]],
+                        order: [[4, "desc"]],
                         lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
                         pageLength: 5,
                         retrieve: true
@@ -321,43 +348,59 @@
 
         // TODO ✅ OBTENER HISTORY
         async function obtenerHistory(data) {
+            let existsData = false;
             if(data.success === true) {
                 const fecha = new Date();
                 const actualDate = new Intl.DateTimeFormat("en-US").format(fecha);
-                let vacio = Object.keys(data).length === 0;
                 let count = 0;
                 let bodyHistory = "";
                 tbodyHistory.innerHTML = "";
-                if (vacio) {
-                    bodyHistory += `<td COLSPAN="7" style="text-align: center; font-weight: bold">No data founded</td>`;
-                } else {
-                    for (let elemento of data.data) {
-                        count += 1;
-                        const starTotal = 5;
-                        const reserved = elemento.reserved;
-                        const idBookingReview = elemento.id_booking_review;
-                        const review = elemento.review;
-                        const score = elemento.score;
+                for (let elemento of data.data) {
+                    count += 1;
+                    const starTotal = 5;
+                    const reserved = elemento.reserved;
+                    const idBookingReview = elemento.id_booking_review;
+                    const review = elemento.review;
+                    const score = elemento.score;
 
-                        let reservationDate = new Date(elemento.reservation_date);
-                        reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
-                        let deliverDateReview = new Date(elemento.deliver_date_review);
-                        deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
+                    let reservationDate = new Date(elemento.reservation_date);
+                    reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
+                    let deliverDateReview = new Date(elemento.deliver_date_review);
+                    deliverDateReview = new Intl.DateTimeFormat("en-US").format(deliverDateReview);
 
-                        const starPercentage = elemento.score / starTotal * 100;
-                        const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-                        if (reserved === 0 || (reserved === 1 && idBookingReview !== null)) {
-                            bodyHistory += `<tr  id="row${count}" value="row${count}"><td>${elemento.isbn}</td><td>${elemento.title}</td><td>${elemento.author}</td><td>${reservationDate}</td><td>${deliverDateReview}</td><td><div class="stars-outer"><div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${elemento.score}"></div></div></td><td>${elemento.review}</td></tr>`;
-                            createdTableHistory();
-                        }
+                    const starPercentage = elemento.score / starTotal * 100;
+                    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+                    if (reserved === 0 || (reserved === 1 && idBookingReview !== null)) {
+                        bodyHistory += `
+                            <tr  id="row${count}" value="row${count}">
+                                <td>${elemento.title}</td>
+                                <td>${elemento.isbn}</td>
+                                <td>${elemento.author}</td>
+                                <td>${reservationDate}</td>
+                                <td>${deliverDateReview}</td>
+                                <td>
+                                    <div class="stars-outer">
+                                        <div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${elemento.score}">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>${elemento.review}</td>
+                            </tr>`;
+                        createdTableHistory();
+                        existsData = true;
+                    } else {
+                        await noDataFoundHistory();
+                        existsData = false;
+                    }
+                    if(existsData){    
                         setTimeout(async () => {
                             tbodyHistory.innerHTML = bodyHistory;
                         }, 400)
                     }
                 }
             } else {
-                infoBloqueActive.classList.remove("isActivo");
-                infoBloqueActive.classList.remove("isAuto");
+            console.log("==> 2");
+                noDataFoundHistory();
             }
         }
 

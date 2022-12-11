@@ -1,18 +1,16 @@
 <link rel="stylesheet" href="/style/workspace.css">
 
 <div class="Workspace-container" id="stateAdmin">
-  {{> messages}}
   <fieldset class="Workspace-fieldset">
     <legend class="Workspace-legend isColorAdmin" id="lengedWorkspace">
       <span class="Workspace-span">Admin Dashboard</span>
       {{#if loggedIn}}
-      <div class="Workspace-Username Username">
-        <span class="Username-greeting">Hi, Welcome </span>
-        <span class="Username-name" id="tipName">{{userName}}</span>
-      </div>
+        <div class="Workspace-Username Username">
+          <span class="Username-greeting">Hi, Welcome </span>
+          <span class="Username-name" id="tipName">{{userName}}</span>
+        </div>
       {{/if}}
     </legend>
-    
     {{> admin }}
   </fieldset>
 </div>

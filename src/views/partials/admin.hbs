@@ -1,9 +1,8 @@
 <link rel="stylesheet" href="/style/admin.css">
 
-<div id="spinner">
-    {{> loading}}
-</div>
-
+    <div id="spinner" class="spinnerUser">
+        {{> loading}}
+    </div>
 <div class="Cards">
     {{#each users}}
         <div class="Cards-data" id='{{this.id}}'>

@@ -102,8 +102,8 @@ async function loadData() {
       deferRender: true,
       columns: [
         { data: "id_book", visible: false },
-        { data: "isbn" },
         { data: "title" },
+        { data: "isbn" },
         { data: "author" },
         { data: "language" },
         {

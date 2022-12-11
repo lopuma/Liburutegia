@@ -2,7 +2,7 @@
 
 .Info-contenedor {
     margin: var(--Margin-top-forms) auto;
-    width: 100%;
+    width: 85%;
     height: 100%;
     padding: 0.5em;
     color: var(--Color-negro);
@@ -14,7 +14,6 @@
 }
 
 .Slider {
-    /* width: 100%; */
     border: 1px solid var(--Color-outline);
     padding: 1em 0;
     margin: 1em;
@@ -76,7 +75,7 @@
 }
 
 .Slider-card.isActive {
-    box-shadow: 0 .5em 1em rgb(0, 0, 0);
+    box-shadow: 0 .5em 1em var(--Color-texto-negro);
     color: var(--Color-texto-blanco);
 }
 
@@ -98,12 +97,11 @@
 }
 
 .Slider-a:hover {
-    color: white;
+    color: var(--Color-texto-blanco);
 }
 
 .Slider-a.isActivo {
     background-color: var(--Color-azul);
-    /* color: var(--Color-texto-blanco); */
     font-weight: 600;
     text-align: center;
 }
@@ -157,10 +155,12 @@
     height: .4em;
     background-color: var(--Color-negro);
     cursor: pointer;
+    border-radius: var(--Radius);
     transition: all .5s ease;
 }
 
 .Slider-btn.isActive {
+    border-radius: var(--Radius);
     background-color: var(--Color-azul);
 }
 
@@ -190,28 +190,17 @@
 }
 
 .Info-bloque.isActivo {
-    /* height: 38em; */
-    /* overflow-y: scroll; */
     opacity: 1;
     display: block;
 }
 
 .Info-bloque.isAuto {
     height: auto;
-    max-height: 46em;
+    max-height: 48em;
     overflow-y: auto;
     opacity: 1;
     display: block;
 }
-
-
-/* .Info-bloque.isNormal {
-    height: 26em;
-    overflow-y: none;
-    opacity: 1;
-    display: block;
-}
-*/
 
 /* TODO Cargando */
 @-webkit-keyframes whirl-book {
@@ -300,12 +289,8 @@
 }
 
 @media screen and (max-width: 950px) {
-    /* .Info-bloque.isScroll {
-        height: 800px;
-    } */
 
-    .Info-bloque,
-    .Info-bloque.isNormal {
+    .Info-bloque {
         height: 500px;
     }
 
@@ -319,13 +304,16 @@
 
     .Slider-card {
         position: absolute;
-        width: 100%;
+        width: 70%;
         display: none;
     }
 
+    .Slider-card.isActive{
+        display: flex;
+    }
 
     .Slider-a {
-        width: 70%;
+        width: 100%;
         letter-spacing: 2.5px;
         font-size: 1em;
         display: none;
@@ -336,7 +324,7 @@
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
 
     .Info-contenedor {
         width: 90%;
@@ -347,7 +335,7 @@
         font-size: 1em;
     }
 
-    .isActive {
+    .Slider-card.isActive {
         display: flex;
     }
 
@@ -355,11 +343,13 @@
         width: 100%;
     }
 
-    /* .Info-bloque.isScroll {
-        height: 850px;
-    } */
-
-    .Info-bloque.isNormal {
-        height: 550px;
+    div.dataTables_wrapper div.dataTables_filter input {
+        display: block;
+        margin: 0;
     }
+
+    .Info-bloque.isAuto {
+        max-height: 53em;    
+    }
+
 }
