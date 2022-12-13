@@ -109,11 +109,10 @@ const bookController = {
         const idBook = req.params.id_book;
         const { idBooking, score, review, deliver_date_review } = req.body;
 
-        const sql = [
-            `UPDATE books SET reserved=0 WHERE id_book=${idBook}`, 
-            `UPDATE bookings SET deliver=1 WHERE id_booking=${idBooking}`,
-            "INSERT INTO votes SET ?"
-        ];
+        const sql = [`UPDATE books SET 
+                    reserved=0 WHERE id_book=${idBook}`, `UPDATE ratings SET ratings.num_votes = ratings.num_votes + 1,
+                    total_score = total_score + ${score},
+                    rating = total_score / ratings.num_votes WHERE bookID=${idBook}`, `UPDATE bookings SET deliver=1 WHERE id_booking=${idBooking}`, "INSERT INTO votes SET ?"];
 
         await connection.query(
             sql.join(";"),

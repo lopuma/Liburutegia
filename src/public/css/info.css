@@ -16,7 +16,7 @@
 .Slider {
     border: 1px solid var(--Color-outline);
     padding: 1em 0;
-    margin: 1em;
+    margin: 1em 2em;
     border-radius: var(--Radius);
     color: var(--Color-blanco);
     position: relative;
@@ -27,7 +27,7 @@
     display: flex;
     justify-content: space-between;
     margin: 1em auto;
-    padding: 0 4.5em;
+    padding: 0 7em;
 }
 
 .Slider-card {
@@ -169,24 +169,35 @@
 }
 
 /* TODO BLOQUE CONTENT */
+.Info-subcontenedor {
+    padding: 1em;
+}
+
 .Info-bloque {
     margin: 1em;
-    padding: 1em;
-    height: 25em;
-    max-height: 38em;
-    margin: 1em;
-    top: 1em;
+    padding: 1em 2em;
     border: solid 1px var(--Color-outline);
-    color: var(--Color-negro);
-    -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-    border-radius: 0.5em;
-    background-color: var(--Color-blanco);
-    -webkit-box-shadow: var(--box-shadow-forms);
-    box-shadow: var(--box-shadow-forms);
+    color: var(--Color-texto-negro);
+    border-radius: var(--Radius);
+    background-color: var(--Color-texto-blanco);
+    -webkit-box-shadow: var(--Box-shadow-forms);
+    box-shadow: var(--Box-shadow-forms);
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
     overflow-y: none;
     opacity: 0;
     display: none;
+}
+
+.isFamily {
+    border: solid 1px var(--Color-outline);
+    border-radius: var(--Radius);
+    margin: 0;
+    padding: 1em;
+    color: var(--Color-texto-negro);
+    background-color: var(--Color-blanco);
+    overflow-y: none;
+    height: auto;
 }
 
 .Info-bloque.isActivo {
@@ -196,11 +207,87 @@
 
 .Info-bloque.isAuto {
     height: auto;
-    max-height: 48em;
+    max-height: 60em;
+    overflow-x: auto;
     overflow-y: auto;
     opacity: 1;
     display: block;
 }
+
+.Info-personal {
+    padding: 1em;
+    height: auto;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
+    text-align: center;
+}
+
+.Personal hr {
+    background-color: grey;
+    width: 100%;
+}
+
+.Personal-data {
+    width: 100%;
+    margin: 0 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: start;
+}
+
+.ColumnA,
+.ColumnB {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    width: 50%;
+}
+
+.ColumnA {
+    margin: 0 1em 0 0;
+}
+
+.ColumnB {
+    margin: 0 1em 0 0;
+    padding: 0 1em;
+    justify-content: flex-end;
+}
+
+.ColumnB.isButtons {
+    padding: 0;
+    margin: 0;
+}
+
+.ColumnA button {
+    margin: 0 0 0 .5em;
+}
+
+.ColumnB button {
+    margin: 0 0 0 .5em;
+}
+
+.Column-h3 {
+    padding: .5em;
+    margin: 0 .5em;
+    font-size: .9em;
+    font-weight: 600;
+    width: 400px;
+    text-align: start;
+}
+
+.Column-span {
+    padding: .5em;
+    margin: 0 .5em;
+    font-size: 1em;
+    width: 100%;
+    text-align: end;
+}
+
+
 
 /* TODO Cargando */
 @-webkit-keyframes whirl-book {
@@ -289,10 +376,10 @@
 }
 
 @media screen and (max-width: 950px) {
-
-    .Info-bloque {
-        height: 500px;
+    .Slider {
+        margin: 1em;
     }
+
 
     .Slider-move {
         position: relative;
@@ -308,7 +395,7 @@
         display: none;
     }
 
-    .Slider-card.isActive{
+    .Slider-card.isActive {
         display: flex;
     }
 
@@ -322,12 +409,48 @@
     .Slider-a.isActivo {
         display: flex;
     }
+
+    .Info-subcontenedor {
+        padding: 0;
+    }
+
+    .Info-personal {
+        padding: 0;
+    }
+
+    .Personal-data {
+        margin: 0;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ColumnA,
+    .ColumnB {
+        margin: .5em 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .Column-h3 {
+        margin: 0;
+        padding: 0;
+        flex: 50%;
+    }
+    
+    .Column-span {
+        margin: 0;
+        padding: 0;
+        flex: 50%;
+        text-align: start;
+    }
 }
 
 @media screen and (max-width: 550px) {
 
     .Info-contenedor {
-        width: 90%;
+        width: 95%;
+        padding: .5em 0;
     }
 
     .Slider-card {
@@ -349,7 +472,6 @@
     }
 
     .Info-bloque.isAuto {
-        max-height: 53em;    
-    }
-
+        max-height: 100%;
+    } 
 }

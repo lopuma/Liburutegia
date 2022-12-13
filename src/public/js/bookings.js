@@ -50,7 +50,7 @@ async function loadData() {
     //         {
     //           defaultContent: `
     //                   <div class="ui buttons">
-    //                     <button id="btnEditBooking" type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#modalCRUD" title="Edit bookin"><i class="fa-regular fa-pen-to-square"></i></button>
+    //                     <button id="btnEditBooking" type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modalCRUD" title="Edit bookin"><i class="fa-regular fa-pen-to-square"></i></button>
     //                     <div class="or" data-text="or">
     //                   </div>
     //                     <button id="btnDeleteBook" class="btn btn-outline-danger" title="Delete book"><i class="fa-solid fa-trash-can"></i></button>

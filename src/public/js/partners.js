@@ -5,7 +5,9 @@ const tbodyPartners = document.getElementById("tbodyPartners");
 //TODO CLOSE LOADING
 setTimeout(() => {
     loadData();
-    spinner.style.display = "none";
+    try{
+        spinner.style.display = "none";
+    } catch (error) {}
 }, "1600");
 
 //TODO ✅ LOAD PARTNER
@@ -43,7 +45,7 @@ async function loadData() {
                             `
                             <div class="ui buttons">
                                 <button id="btnInfoPartner" onClick=infoPartner(` + data.partnerID + `) class="btn btn-outline-warning" title="Info Partner"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                                <button id="btnEditPartner" onClick=edit(` + data.partnerID + `) type="button"  class="btn btn-outline-info" title="Edit Partner" data-toggle="modal" data-target="#modalPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button id="btnEditPartner" onClick=edit(` + data.partnerID + `) type="button"  class="btn btn-outline-primary" title="Edit Partner" data-toggle="modal" data-target="#modalPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
                                 <button id="btnDeletePartner" onClick=deletePartner(` + data.partnerID + `) class="btn btn-outline-danger" title="Delete Partner"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                             `

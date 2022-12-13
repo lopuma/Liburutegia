@@ -1,6 +1,7 @@
 <link href="/style/info.css" rel="stylesheet" />
 
 {{> modalDeliver}}
+{{>modalEditPartner}}
 
 <div class="Info-contenedor">
     <!-- TODO OK SLIDER -->
@@ -61,25 +62,142 @@
             </ul>
             {{/each}}
         </div>
-
         <!-- TODO SUB CONTENEDOR -->
         <div class="Info-subcontenedor">
-
-            <div class="Info-bloque isActivo" id="bloqueInfo">
-                {{#each partner}}
-                <h3>NAME {{this.name}}</h3>
-                <h3>LASTNAME {{this.lastname}}</h3>
-                {{/each}}
-                <hr>
+            <div class="Info-bloque isActivo isAuto" id="bloqueInfo">
+                <div class="Info-personal Personal">
+                    <div class="Personal-data">
+                        <div class="ColumnA">
+                            <button type="button" class="btn btn-outline-danger"><i class="fa-regular fa-file-pdf"></i></button>
+                            <button type="button" class="btn btn-outline-success"><i class="fa-regular fa-file-excel"></i></button>
+                        </div>
+                        <div class="ColumnB isButtons">
+                            {{#each partner}}
+                                <button id="btnEditPartner" onClick=edit({{this.partnerID}}) type="button"  class="btn btn-outline-primary" title="Edit Partner" data-toggle="modal" data-target="#modalPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
+                                <button id="btnReservedBook" onClick=reservedBook({{this.partnerID}}) class="btn btn-secondary" title="Reserved a Book"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="Personal-data">
+                        {{#each partner}}
+                            <div class="ColumnA">
+                                <h3 class="Column-h3">Partner ID: </h3>
+                                <span class="Column-span">0000{{this.partnerID}}</span>
+                            </div>
+                            <div class="ColumnB">
+                                <h3 class="Column-h3">Discharge Date: </h3>
+                                <span class="Column-span">11/12/2022</span>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <hr>
+                    <div class="Personal-data">
+                        {{#each partner}}
+                            <div class="ColumnA">
+                                <h3 class="Column-h3">DNI: </h3>
+                                <span class="Column-span">{{this.dni}}</span>
+                            </div>
+                            <div class="ColumnB">
+                                <h3 class="Column-h3">Scanner: </h3>
+                                <span class="Column-span">{{this.scanner}}</span>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <hr>
+                    <div class="Personal-data">
+                        {{#each partner}}
+                            <div class="ColumnA">
+                                <h3 class="Column-h3">Nane: </h3>
+                                <span class="Column-span">{{this.name}}</span>
+                            </div>
+                            <div class="ColumnB">
+                                <h3 class="Column-h3">Lastname: </h3>
+                                <span class="Column-span">{{this.lastname}}</span>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <hr>
+                    <div class="Personal-data">
+                        {{#each partner}}
+                            <div class="ColumnA">
+                                <h3 class="Column-h3">Population: </h3>
+                                <span class="Column-span">{{this.population}}</span>
+                            </div>
+                            <div class="ColumnB">
+                                <h3 class="Column-h3">Direction: </h3>
+                                <span class="Column-span">{{this.direction}}</span>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <hr>
+                    <div class="Personal-data">
+                        {{#each partner}}
+                            <div class="ColumnA">
+                                <h3 class="Column-h3">Phone (Mobile) :</h3>
+                                <span class="Column-span">{{this.phone1}}</span>
+                            </div>
+                            <div class="ColumnB">
+                                <h3 class="Column-h3">Phone (Landline) :</h3>
+                                <span class="Column-span">{{this.phone2}}</span>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <hr>
+                    <div class="Personal-data">
+                        {{#each partner}}
+                            <div class="ColumnA">
+                                <h3 class="Column-h3">Email :</h3>
+                                <span class="Column-span">{{this.email}}</span>
+                            </div>
+                            <div class="ColumnB">
+                                <h3 class="Column-h3"></h3>
+                                <span class="Column-span"></span>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
                 {{#if infoFamily}}
-                <h3>DNI {{this.partnerDni}}</h3>
-                <h3>NAME {{this.partnerName}}</h3>
-                <h3>LASTNAME {{this.partnerLastname}}</h3>
-                <h3>RECORD DATE {{this.partnerRecordDate}}</h3>
-                {{else}}
-                <h3>no data</h3>
+                    <div class="Info-family">
+                        <hr>
+                        <div class="isFamily" id="infoBloqueFamily">
+                            <div class="Bloque-table Dashboard-row">
+                                <table class="Dashboard-table table table-bordered
+                                    display wrap" id="tablePartnerFamily"
+                                    cellspacing="0" width="100%">
+                                    <thead class="Dashboard-head">
+                                        <tr>
+                                            <th>DNI</th>
+                                            <th>NAME</th>
+                                            <th>LASTNAME</th>
+                                            <th>DISCHARGE DATE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="familyData">
+                                        {{#each infoFamily}}
+                                        <tr>
+                                            <td>{{this.partnerDni}}</td>
+                                            <td>{{this.partnerName}}</td>
+                                            <td>{{this.partnerLastname}}</td>
+                                            <td>{{this.partnerRecordDate}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    <tfoot class="Dashboard-foot">
+                                        <tr>
+                                            <th>DNI</th>
+                                            <th>NAME</th>
+                                            <th>LASTNAME</th>
+                                            <th>DISCHARGE DATE</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 {{/if}}
             </div>
+
             <div class="Info-bloque" id="infoBloqueActive">
                 <div class="Bloque-table Dashboard-row">
                     <div id="spinnerActive" style="margin-top: 2em">
@@ -111,6 +229,7 @@
                     </table>
                 </div>
             </div>
+
             <div class="Info-bloque" id="infoBloqueHistory">
                 <div class="Bloque-table Dashboard-row">
                     <div id="spinnerHistory" style="margin-top: 2em">
@@ -151,6 +270,8 @@
 
 </div>
 
+<script defer src="/scripts/partners.js"></script>
+
 <script>
     const editBtn = document.querySelector(".edit");
     const sliderCard = document.querySelectorAll(".Slider-card");
@@ -164,7 +285,15 @@
     const bloqueInfo = document.getElementById("bloqueInfo");
     let indice = 1;
 
-
+    //TODO ✅ CARGA DATA FAMILY
+    $(document).ready(function () {
+        tableC = $("#tablePartnerFamily").DataTable({
+            ordering: true,
+            responsive: true,
+            order: [[0, "desc"]],
+            retrieve: true
+        });
+    });
 
     //TODO ✅ INFORMATION
     async function infor(partnerID){
@@ -325,6 +454,7 @@
                 spinnerActive.style.display = "none";
             }, 600)
         }
+
 
     // INFO HISTORY
         //TODO ✅ INFORMATION HISTORY RESERVED
@@ -506,5 +636,10 @@
                 bloque[i].classList.add("isAuto");
             });
         });
+
+    async function reservedBook(partnerID) {
+        const idPartner = partnerID;
+        console.log(idPartner);
+    }
 
 </script>

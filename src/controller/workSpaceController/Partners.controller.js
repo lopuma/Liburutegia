@@ -1,5 +1,10 @@
 const connection = require("../../../database/db");
 
+const {
+    getPartner
+} = require("../../controller/apiController/Partners.controller.api");
+
+
 const partnersController = {
 
     // TODO ✅ REENVIAR A LA VISTA DE NUEVO PARTNER
@@ -19,7 +24,7 @@ const partnersController = {
 
     // TODO ✅ OBTENER LA VISTA DE INFORMACION de PARTNERS
     getInfo: async (req, res) => {
-        try {
+        try {          
             const partnerID = req.params.idPartner;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;

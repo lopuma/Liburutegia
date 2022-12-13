@@ -139,12 +139,8 @@ async function loadData() {
                 `
                 <div class="ui buttons">
                   ${btnDisable}
-                  <button id="btnInfoBook" onClick=infoBook(` +
-                data.id_book +
-                `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                  <button id="btnEditBook" onClick=edit(` +
-                data.id_book +
-                `) type="button"  class="btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button id="btnInfoBook" onClick=infoBook(` + data.id_book + `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
+                  <button id="btnEditBook" onClick=edit(` + data.id_book + `) type="button"  class="btn btn-outline-primary" title="Edit Book" data-toggle="modal" data-target="#modalBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
                   <button id="btnDeleteBook" onClick=deleteBook(` + data.id_book + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
                 `
