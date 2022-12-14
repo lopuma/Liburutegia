@@ -1,7 +1,7 @@
 <link href="/style/info.css" rel="stylesheet" />
 
 {{> modalDeliver}}
-{{>modalEditPartner}}
+{{> modalEditPartner}}
 
 <div class="Info-contenedor">
     <!-- TODO OK SLIDER -->
@@ -319,10 +319,10 @@
 
     // DELIVER
         // TODO ✅ ENTEGA DEL LIBRO
-        async function deliverBook(book_id, id_booking, count) {
+        async function deliverBook(bookID, bookingID, count) {
             try {
-                const idBook = book_id;
-                const idBooking = id_booking;
+                const idBook = bookID;
+                const idBooking = bookingID;
                 const urlDeliver = `/api/books/deliver/${idBook}`;
                 let dateActual = new Date();
                 dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
@@ -340,8 +340,8 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $("#count").val(count);
-                        $("#id_book").val(idBook);
-                        $("#id_booking").val(idBooking);
+                        $("#bookID").val(idBook);
+                        $("#bookingID").val(idBooking);
                         $('#modalStar').modal('show');
                     } else if (result.isDenied) {
                         const data = {
@@ -400,7 +400,7 @@
                 for (let elemento of data.data) {
                     count += 1;
                     const reserved = elemento.reserved;
-                    const idBookingReview = elemento.id_booking_review;
+                    const idBookingReview = elemento.bookingID_review;
                     let reservationDate = new Date(elemento.reservation_date);
                     reservationDate = new Intl.DateTimeFormat("en-US").format(reservationDate);
                     let deliverDateReview = new Date(elemento.deliver_date_review);
@@ -413,7 +413,7 @@
                                 <td>${elemento.author}</td>
                                 <td>${reservationDate}</td>
                                 <td>
-                                    <button id="btnDeliver" onClick=deliverBook(` + elemento.book_id + `,` + elemento.id_booking + `,` + count + `) class="btn btn-warning" title="Deliver Book">
+                                    <button id="btnDeliver" onClick=deliverBook(` + elemento.bookID + `,` + elemento.bookingID + `,` + count + `) class="btn btn-warning" title="Deliver Book">
                                         <i class="fa-regular fa-handshake"></i> Deliver Book
                                     </button>
                                 </td>
@@ -489,7 +489,7 @@
                     count += 1;
                     const starTotal = 5;
                     const reserved = elemento.reserved;
-                    const idBookingReview = elemento.id_booking_review;
+                    const idBookingReview = elemento.bookingID_review;
                     const review = elemento.review;
                     const score = elemento.score;
 

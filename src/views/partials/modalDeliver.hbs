@@ -27,9 +27,9 @@
                         <form class="Star-form Form" action="#" id="formDeliver" name="formDeliver">
                             <input type="text" class="form-control" id="count"
                                 tabindex="0" hidden>
-                            <input type="text" class="form-control" id="id_book"
+                            <input type="text" class="form-control" id="bookID"
                                 tabindex="1" hidden>
-                            <input type="text" class="form-control" id="id_booking"
+                            <input type="text" class="form-control" id="bookingID"
                                 tabindex="2" hidden>
                             <div class="Form-textarea">
                                 <textarea id="textarea" cols="30" placeholder="Describe your experience.." maxlength="100" tabindex="3"></textarea>
@@ -54,8 +54,8 @@
     const widget = document.querySelector(".Star-widget");
     const btnCloseModal = document.getElementById("closeModal");
     const inputCount = document.getElementById("count");
-    const inputBookID = document.getElementById("id_book");
-    const inputBookingID = document.getElementById("id_booking");
+    const inputBookID = document.getElementById("bookID");
+    const inputBookingID = document.getElementById("bookingID");
     const textarea = document.querySelector("#textarea");
     const btnPost = document.getElementById("post");
     const formDeliver          = document.getElementById  ( "formDeliver"         );
@@ -83,9 +83,9 @@
         e.preventDefault();
         let activoFijo = $('input[name="rate"]:checked').val();
         const fecha = new Date();
-        const idBook = $.trim($('#id_book').val());
+        const idBook = $.trim($('#bookID').val());
         const valueCount = inputCount.value;
-        const idBooking = $.trim($('#id_booking').val());
+        const idBooking = $.trim($('#bookingID').val());
         const score = activoFijo;
         const review = textarea.value;
         const url = `/api/books/deliver/${idBook}`;

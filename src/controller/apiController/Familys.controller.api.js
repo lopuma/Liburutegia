@@ -5,12 +5,10 @@ const flash = require("connect-flash");
 const familyController = {
 
     getFamily: async (req, res) => {
-        console.log("llego");
         const dni = req.params.dniPartner;
         try {
-            const sqlSelect = "SELECT * FROM familys f LEFT JOIN partners p ON f.dni_familiar_partner=p.dni WHERE f.dni_family=?";
+            const sqlSelect = " SELECT p.dni as partnerDni FROM familys f LEFT JOIN partners p ON f.partnerDNI=p.dni WHERE f.familyDni=?";
             await connection.query(sqlSelect, dni, (err, results) => {
-
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -18,7 +16,6 @@ const familyController = {
                         message: err
                     })
                 }
-                console.log(results.length);
                 if (results.length === 0) {
                     return res
                         .status(200)

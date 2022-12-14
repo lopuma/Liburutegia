@@ -24,7 +24,7 @@ const partnersController = {
 
     // TODO ✅ OBTENER LA VISTA DE INFORMACION de PARTNERS
     getInfo: async (req, res) => {
-        try {          
+        try {
             const partnerID = req.params.idPartner;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
@@ -54,12 +54,27 @@ const partnersController = {
                                 errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                             });
                     }
-                    res.status(200).render("workspace/partners/infoPartner", {
-                        loggedIn,
-                        rolAdmin,
-                        partner: resDataPartners,
-                        infoFamily: results
-                    });
+                    fechaAlta = results[0].partnerRecordDate;
+                    const date = new Date(fechaAlta);
+                    const recordDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                    console.log({ recordDate });
+                    const updatedDataAddPartner = results.map(
+                        data => ({
+                            ...data,
+                            partnerRecordDate: recordDate
+                        })
+                    );
+                    res
+                        .status(200)
+                        .render(
+                            "workspace/partners/infoPartner",
+                            {
+                                loggedIn,
+                                rolAdmin,
+                                partner: resDataPartners,
+                                infoFamily: updatedDataAddPartner
+                            }
+                        );
                 });
             });
         } catch (error) {

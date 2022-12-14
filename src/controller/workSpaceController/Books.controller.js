@@ -22,11 +22,11 @@ const booksController = {
     //TODO ✅ OBTENER LA VISTA DE INFORMACION de BOOKS
     getInfo: async (req, res) => {
         try {
-            const id_book = req.params.idBook;
+            const bookID = req.params.idBook;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            const sqlSelect = "SELECT * FROM books WHERE id_book = ?";
-            await connection.query(sqlSelect, [id_book], (err, results) => {
+            const sqlSelect = "SELECT * FROM books WHERE bookID = ?";
+            await connection.query(sqlSelect, [bookID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res

@@ -24,7 +24,7 @@ const bookingController = {
                         success: false,
                         exists: true,
                         errorMessage: `Booking DNI : ${dni} already exists with ID : ${results[0]
-                            .id_booking}`
+                            .bookingID}`
                     });
                 } else {
                     next();
@@ -39,9 +39,9 @@ const bookingController = {
     //TODO NO EXISTE ID BOOKINGS
     noExistBooking: async (req, res, next) => {
         try {
-            const id_booking = req.params.idBooking;
-            const sqlSelect = "SELECT * FROM bookings WHERE id_booking = ?";
-            await connection.query(sqlSelect, [id_booking], (err, results) => {
+            const bookingID = req.params.idBooking;
+            const sqlSelect = "SELECT * FROM bookings WHERE bookingID = ?";
+            await connection.query(sqlSelect, [bookingID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -53,7 +53,7 @@ const bookingController = {
                     return res.status(404).send({
                         success: false,
                         exists: false,
-                        errorMessage: `Error there is no member with ID BOOKINGS : ${id_booking}`
+                        errorMessage: `Error there is no member with ID BOOKINGS : ${bookingID}`
                     });
                 } else {
                     next();
@@ -98,9 +98,9 @@ const bookingController = {
     //TODO SHOW ONLY BOOKINGS FOR ID
     getBooking: async (req, res) => {
         try {
-            const id_booking = req.params.idBooking;
-            const sqlSelect = "SELECT * FROM bookings WHERE id_booking=?";
-            await connection.query(sqlSelect, [id_booking], (err, results) => {
+            const bookingID = req.params.idBooking;
+            const sqlSelect = "SELECT * FROM bookings WHERE bookingID=?";
+            await connection.query(sqlSelect, [bookingID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -123,9 +123,9 @@ const bookingController = {
             const idBooking = req.params.idBooking;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            const sqlBooking = "SELECT * FROM bookings WHERE id_booking = ?";
+            const sqlBooking = "SELECT * FROM bookings WHERE bookingID = ?";
             const sqlBookin =
-                "SELECT p.id_booking, p.dni, p.name, bk.id_booking, bk.book_id, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.id_booking id_booking_review, v.score, v.review, v.deliver_date_review FROM bookings p LEFT OUTER JOIN bookings bk ON p.dni=bk.booking_dni INNER JOIN books b ON bk.book_id=b.id_book LEFT OUTER JOIN votes v ON bk.id_booking=v.id_booking WHERE p.dni = ?";
+                "SELECT p.bookingID, p.dni, p.name, bk.bookingID, bk.bookID, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.bookingID bookingID_review, v.score, v.review, v.deliver_date_review FROM bookings p LEFT OUTER JOIN bookings bk ON p.dni=bk.partnerDNI INNER JOIN books b ON bk.bookID=b.bookIDLEFT OUTER JOIN votes v ON bk.bookingID=v.bookingID WHERE p.dni = ?";
             await connection.query(sqlBooking, [idBooking], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -314,10 +314,10 @@ const bookingController = {
     // DELETE BOOKINGS
     deleteBooking: async (req, res) => {
         try {
-            const id_booking = req.params.idBooking;
+            const bookingID = req.params.idBooking;
             deleteBookins = [
-                `DELETE bookings FROM bookings JOIN bookings ON bookings.dni = bookings.booking_dni WHERE bookings.id_booking = ${id_booking}`,
-                `DELETE FROM bookings WHERE id_booking =  ${id_booking}`
+                `DELETE bookings FROM bookings JOIN bookings ON bookings.dni = bookings.partnerDNI WHERE bookings.bookingID = ${bookingID}`,
+                `DELETE FROM bookings WHERE bookingID =  ${bookingID}`
             ];
             await connection.query(deleteBookins.join(";"), async (err, results) => {
                 if (err) {
@@ -325,7 +325,7 @@ const bookingController = {
                 }
                 req.flash(
                     "messageUpdate",
-                    `Booking successfully delete, with BOOKINGS ID : ${id_booking}`
+                    `Booking successfully delete, with BOOKINGS ID : ${bookingID}`
                 );
                 return res.redirect("/workspace/bookings");
             });
@@ -339,7 +339,7 @@ const bookingController = {
     putBooking: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const id_booking = req.params.idBooking;
+            const bookingID = req.params.idBooking;
             const booking = ({
                 dni,
                 scanner,
@@ -351,18 +351,18 @@ const bookingController = {
                 phone2,
                 email
             } = req.body);
-            const sql = "UPDATE bookings SET ? WHERE id_booking = ?";
-            await connection.query(sql, [booking, id_booking], (err, results) => {
+            const sql = "UPDATE bookings SET ? WHERE bookingID = ?";
+            await connection.query(sql, [booking, bookingID], (err, results) => {
                 if (err) {
                     throw err;
                 }
                 req.flash(
                     "messageUpdate",
-                    `Booking successfully update, with BOOKINGS ID : ${id_booking}`
+                    `Booking successfully update, with BOOKINGS ID : ${bookingID}`
                 );
                 res.send({
                     success: true,
-                    messageUpdate: `Booking successfully update, with BOOKINGS ID : ${id_booking}`
+                    messageUpdate: `Booking successfully update, with BOOKINGS ID : ${bookingID}`
                 });
             });
         } catch (error) {

@@ -10,6 +10,7 @@ const routerWorkSpace = require("express").Router();
 
     routerWorkSpace.get("/admin", isAuthenticated, getAdmin);
 
-    routerWorkSpace.get("/partners", isAuthenticated, getPartners);
+    //routerWorkSpace.get("/partners", isAuthenticated, getPartners);
+    routerWorkSpace.get("/partners", getPartners);
 
 module.exports = routerWorkSpace;

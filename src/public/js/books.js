@@ -6,20 +6,20 @@ setTimeout(() => {
 }, "1600");
 
 //TODO RESERVED
-async function reservedBook(id_book) {
-  const idBook = id_book;
+async function reservedBook(bookID) {
+  const idBook = bookID;
   console.log(idBook);
 }
 
 // TODO EDITAR
-async function edit(id_book) {
+async function edit(bookID) {
   opcion = "edit";
-  const idBook = id_book;
+  const idBook = bookID;
   const url = `/api/books/${idBook}`;
   fetch(url)
     .then(response => response.json())
     .then(datos => {
-      $("#id_book").val(datos.id_book);
+      $("#bookID").val(datos.bookID);
       $("#title").val(datos.dni);
       $("#author").val(datos.scanner);
       $("#editorial").val(datos.name);
@@ -53,9 +53,9 @@ async function bookDelete(idBook) {
 }
 
 //TODO DELETE
-async function deleteBook(id_book, count) {
+async function deleteBook(bookID, count) {
   opcion = "delete";
-  const idBook = id_book;
+  const idBook = bookID;
   Swal.fire({
     title: "Are you sure?",
     text: "Are you sure you want to delete the BOOK!",
@@ -78,8 +78,8 @@ async function deleteBook(id_book, count) {
 }
 
 //TODO INFO
-async function infoBook(id_book) {
-  const idBook = id_book;
+async function infoBook(bookID) {
+  const idBook = bookID;
   console.log(idBook);
 }
 //TODO MOSTRAR
@@ -101,7 +101,7 @@ async function loadData() {
       pageLength: 15,
       deferRender: true,
       columns: [
-        { data: "id_book", visible: false },
+        { data: "bookID", visible: false },
         { data: "title" },
         { data: "isbn" },
         { data: "author" },
@@ -129,7 +129,7 @@ async function loadData() {
               if (data.reserved === 0) {
                 btnDisable =
                   `<button id="btnReservedBook" onClick=reservedBook(` +
-                  data.id_book +
+                  data.bookID +
                   `) class="btn btn-secondary" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
               } else {
                 btnDisable = `<button id="btnReservedBook" class="btn btn-secondary disabled" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
@@ -139,9 +139,9 @@ async function loadData() {
                 `
                 <div class="ui buttons">
                   ${btnDisable}
-                  <button id="btnInfoBook" onClick=infoBook(` + data.id_book + `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                  <button id="btnEditBook" onClick=edit(` + data.id_book + `) type="button"  class="btn btn-outline-primary" title="Edit Book" data-toggle="modal" data-target="#modalBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                  <button id="btnDeleteBook" onClick=deleteBook(` + data.id_book + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
+                  <button id="btnInfoBook" onClick=infoBook(` + data.bookID + `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
+                  <button id="btnEditBook" onClick=edit(` + data.bookID + `) type="button"  class="btn btn-outline-primary" title="Edit Book" data-toggle="modal" data-target="#modalBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                  <button id="btnDeleteBook" onClick=deleteBook(` + data.bookID + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
                 `
               );
@@ -161,7 +161,7 @@ async function loadData() {
 //UPDATE
 $("#formuBook").submit(function(e) {
   e.preventDefault();
-  id_book = $.trim($("#id_book").val());
+  bookID = $.trim($("#bookID").val());
   title = $.trim($("#title").val());
   author = $.trim($("#author").val());
   editorial = $.trim($("#editorial").val());
@@ -171,7 +171,7 @@ $("#formuBook").submit(function(e) {
   collection = $.trim($("#collection").val());
   purchase_date = $.trim($("#purchase_date").val());
   observations = $.trim($("#observations").val());
-  url = `/api/books/update/${id_book}`;
+  url = `/api/books/update/${bookID}`;
   if (opcion === "edit") {
     fetch(url, {
       method: "POST",

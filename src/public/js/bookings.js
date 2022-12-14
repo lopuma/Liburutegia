@@ -33,7 +33,7 @@ async function loadData() {
     //       "pageLength": 5,
     //       "ajax": '/api/bookings',
     //       columns: [
-    //         { data: 'id_booking' },
+    //         { data: 'bookingID' },
     //         { data: 'id_book' },
     //         { data: 'title' },
     //         { data: 'dni' },
@@ -63,14 +63,14 @@ async function loadData() {
       $(document).on("click", "#btnEditBooking", function () {
         opcion = 'edit';
         fila_booking = $(this).closest("tr");
-        id_booking = fila_booking.find('td:eq(0)').text();
+        bookingID = fila_booking.find('td:eq(0)').text();
         id_book = fila_booking.find('td:eq(1)').text();
         title_book = fila_booking.find('td:eq(2)').text();
         dni = fila_booking.find('td:eq(3)').text();
         firstname = fila_booking.find('td:eq(4)').text();
         lastname = fila_booking.find('td:eq(5)').text();
         deliver_date = fila_booking.find('td:eq(6)').text();
-        $("#id_booking").val(id_booking);
+        $("#bookingID").val(bookingID);
         $("#id_book").val(id_book);
         $("#title_book").val(title_book);
         $("#dni").val(dni);
@@ -87,7 +87,7 @@ async function loadData() {
       //DELETE
       $(document).on("click", "#btnDeleteBook", function () {
         fila_booking = $(this).closest("tr");
-        id_booking = fila_booking.find('td:eq(0)').text();
+        bookingID = fila_booking.find('td:eq(0)').text();
         Swal.fire({
           title: 'Are you sure?',
           text: "Are you sure you want to delete the BOOKING!",
@@ -100,7 +100,7 @@ async function loadData() {
         }).then((result) => {
           if (result.isConfirmed) {
             Swal.fire(
-              'Deleted! Booking ' + id_booking,
+              'Deleted! Booking ' + bookingID,
               'Your booking has been deleted.',
               'success',
             )//.then((result) => {
@@ -114,13 +114,13 @@ async function loadData() {
       $('#formu').submit(function (e) {
         e.preventDefault();
         url = "/api/bookings/"
-        id_booking = $.trim($('#id_booking').val());
+        bookingID = $.trim($('#bookingID').val());
         dni = $.trim($('#dni').val());
         deliver_date = $.trim($('#deliver_date').val());
         if (opcion == 'edit') {
           console.log("EDITAR");
           $.ajax({
-            url: url + id_booking,
+            url: url + bookingID,
             method: 'put',
             contentType: 'application/json',
             data: JSON.stringify({

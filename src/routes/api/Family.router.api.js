@@ -4,7 +4,6 @@ const {
 
 const routerFamilys = require("express").Router();
   
-//TODO FAMILY
   routerFamilys.get("/:dniPartner", getFamily);
 
 module.exports = routerFamilys;

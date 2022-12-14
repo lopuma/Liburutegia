@@ -24,86 +24,24 @@
 
 </div>
 
+<script defer src="/scripts/partners.js"></script>
+
 <script defer>
-    const url = "/api/partners/";
-    const selectDni = document.getElementById("selectDni");
-    const dniCheck = document.getElementById("dniCheck");
-    const familyLink = document.getElementById("familyLink");
     const formAddPartner = document.getElementById("formAddPartner");
     const inputDni = document.getElementById("inputDni");
     const inputName = document.getElementById("inputName");
     
     function cerrar() {
-    window.location.href = "/workspace/partners";
-    }
-
-    $(document).ready(function () {
-    theme: "bootstrap4", $(".js-example-basic-single").select2();
-    });
-
-    // CREDIT github @THuRStoN
-    function formatNumberLength(num, length) {
-        var r = "" + num;
-        while (r.length < length) {
-            r = "0" + r;
-        }
-        return r;
-    }
-
-    // CREDIT github @THuRStoN
-    function charDNI(dni) {
-        var chain = "TRWAGMYFPDXBNJZSQVHLCKET";
-        var pos = dni % 23;
-        var letter = chain.substring(pos, pos + 1);
-        return letter;
-    }
-
-    // CREDIT github @THuRStoN
-    function rand_dni() {
-        num = Math.floor(Math.random() * 100000000);
-        sNum = formatNumberLength(num, 8);
-        return sNum + charDNI(sNum);
-    }
-
-    // TODO AÑADE DNI DE PARTNERS
-    async function obtenerDni(data) {
-    selectDni.innerHTML =
-        '<option value="" disabled selected hidden>Select family member\'s DNI</option>';
-    data.forEach(partner => {
-        let option = document.createElement("option");
-        option.value = partner.partnerID;
-        option.text = partner.dni;
-        selectDni.add(option);
-    });
-    inputDni.value = rand_dni();
-    selectDni.focus();
+        window.location.href = "/workspace/partners";
     }
 
     // TODO VALIDAR SI ES MENOR
-    dniCheck.addEventListener("change", () => {
-    if (dniCheck.checked) {
-        familyLink.classList.add("isEnable");
-        setTimeout(() => {
-        fetch(url, {
-            method: "GET",
-            headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-            .then(response => response.json())
-            .then(data => obtenerDni(data))
-            .catch(e =>
-            window.alert("There is no record in partners, to associate.")
-            );
-        }, 500);
-    } else {
-        $("#selectDni").html("");
-        familyLink.classList.remove("isEnable");
-        inputDni.value = "";
-        inputDni.focus();
+    try {
+        inputDniCheck.addEventListener("change", () => {
+            activeSelectDniFamily();
+        });
     }
-    });
+    catch(error){}
 
     //TODO MESSAGE
     async function responseAddPartner(data) {
@@ -175,8 +113,9 @@
     // TODO ✅ VALIDAR FORMS
     async function correctForms(e) {
         e.preventDefault();
+        const index = selectDni.selectedIndex;
         let actualDate = new Date();
-        let date = moment(actualDate).format("YYYY/DD/MM");
+        let date = moment(actualDate).format("YYYY-MM-DD");
         let data = {
             inputDni: $.trim($("#inputDni").val()),
             inputName: $.trim($("#inputName").val()),
@@ -189,14 +128,14 @@
             inputEmail: $.trim($("#inputEmail").val()),
             actualDate: date
         };
-        if (dniCheck.checked) {
-            const indice = selectDni.selectedIndex;
-            if (indice === -1 || indice === undefined) return;
-            if (indice === 0) {
+        if (inputDniCheck.checked) {
+            if (index === -1 || index === undefined) return;
+            if (index === 0) {
                 window.alert("Please select a DNI, to add to your partner list.");
                 return;
             }
-            const opcionSeleccionada = selectDni.options[indice];
+            const opcionSeleccionada = selectDni.options[index];
+            console.log(" <==> ", opcionSeleccionada, " <==> ");
             let idPartnerFamily = opcionSeleccionada.value;
             let dniFamily = opcionSeleccionada.text;
             data.idPartnerFamily = idPartnerFamily;

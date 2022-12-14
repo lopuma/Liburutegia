@@ -3,9 +3,9 @@ const connection = require("../../../database/db");
 const bookController = {
     noExistBook: async (req, res, next) => {
         try {
-            const id_book = req.params.idBook;
-            const sqlSelect = "SELECT * FROM books WHERE id_book = ?";
-            await connection.query(sqlSelect, [id_book], (err, results) => {
+            const bookID = req.params.idBook;
+            const sqlSelect = "SELECT * FROM books WHERE bookID = ?";
+            await connection.query(sqlSelect, [bookID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -18,7 +18,7 @@ const bookController = {
                     return res.status(404).send({
                         success: false,
                         exists: false,
-                        errorMessage: `Error there is no book with ID BOOK: ${id_book}`
+                        errorMessage: `Error there is no book with ID BOOK: ${bookID}`
                     });
                 } else {
                     next();
@@ -52,8 +52,8 @@ const bookController = {
     // SHOW ONLY BOOK FOR ID
     getBook: async (req, res) => {
         try {
-            const id_book = req.params.id_book;
-            let sql = `SELECT * FROM books WHERE id_book = ${id_book}`;
+            const bookID = req.params.bookID;
+            let sql = `SELECT * FROM books WHERE bookID = ${bookID}`;
             await connection.query(sql, (err, results) => {
                 if (err || results.length === 0) {
                     return res.status(404).send({
@@ -65,7 +65,7 @@ const bookController = {
                 res.send(
                     JSON.stringify({
                         success: true,
-                        message: `Successfully found book with ID : ${results[0].id_book}`,
+                        message: `Successfully found book with ID : ${results[0].bookID}`,
                         data: results[0]
                     })
                 );
@@ -80,14 +80,14 @@ const bookController = {
     // UDATE BOOK FOR ID
     putBook: async (req, res) => {
         try {
-            id_book = req.params.id_book;
+            bookID = req.params.bookID;
             title = req.body.title_book;
             author = req.body.author;
             type = req.body.type;
             language = req.body.language;
             let sql =
-                "UPDATE books SET title = ?, author = ?, type = ?, language = ? WHERE id_book = ?";
-            connection.query(sql, [title, author, type, language, id_book], function (
+                "UPDATE books SET title = ?, author = ?, type = ?, language = ? WHERE bookID = ?";
+            connection.query(sql, [title, author, type, language, bookID], function (
                 error,
                 result
             ) {
@@ -106,19 +106,19 @@ const bookController = {
     },
     // TODO ✅ ENTREGA BOOK
     deliverBook: async (req, res) => {
-        const idBook = req.params.id_book;
+        const idBook = req.params.bookID;
         const { idBooking, score, review, deliver_date_review } = req.body;
 
         const sql = [`UPDATE books SET 
-                    reserved=0 WHERE id_book=${idBook}`, `UPDATE ratings SET ratings.num_votes = ratings.num_votes + 1,
-                    total_score = total_score + ${score},
-                    rating = total_score / ratings.num_votes WHERE bookID=${idBook}`, `UPDATE bookings SET deliver=1 WHERE id_booking=${idBooking}`, "INSERT INTO votes SET ?"];
+                    reserved=0 WHERE bookID=${idBook}`, 
+                    `UPDATE bookings SET deliver=1 WHERE bookingID=${idBooking}`, 
+                    "INSERT INTO votes SET ?"];
 
         await connection.query(
             sql.join(";"),
             {
-                book_id: idBook,
-                id_booking: idBooking,
+                bookID: idBook,
+                bookingID: idBooking,
                 score,
                 review,
                 deliver_date_review
@@ -142,7 +142,7 @@ const bookController = {
     // TODO DELETE
     deleteBook: async (req, res) => {
         const idBook = req.params.idBook;
-        sql = "DELETE FROM books WHERE id_book=?";
+        sql = "DELETE FROM books WHERE bookID=?";
         connection.query(sql, [idBook], (err, results) => {
             if (err) {
                 throw err;

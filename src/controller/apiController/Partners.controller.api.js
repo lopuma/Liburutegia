@@ -171,7 +171,7 @@ const partnerController = {
                     });
                 }
                 const sqlBookin =
-                    "SELECT p.partnerID, p.dni, p.name, bk.id_booking, bk.book_id, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.id_booking id_booking_review, v.score, v.review, v.deliver_date_review FROM partners p LEFT OUTER JOIN bookings bk ON p.dni=bk.partner_dni INNER JOIN books b ON bk.book_id=b.id_book LEFT OUTER JOIN votes v ON bk.id_booking=v.id_booking WHERE p.dni = ?";
+                    "SELECT p.partnerID, p.dni, p.name, bk.bookingID, bk.bookID, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.bookingID bookingID_review, v.score, v.review, v.deliver_date_review FROM partners p LEFT OUTER JOIN bookings bk ON p.dni=bk.partnerDNI INNER JOIN books b ON bk.bookID=b.bookID LEFT OUTER JOIN votes v ON bk.bookingID=v.bookingID WHERE p.dni = ?";
                 const dni = results[0].dni;
                 await connection.query(sqlBookin, [dni], async (err, results) => {
                     if (err) {
@@ -183,7 +183,7 @@ const partnerController = {
                         });
                     }
                     if (results.length === 0) {
-                        return res.send({
+                        return res.status(200).send({
                             success: false,
                             data: results,
                             errorMessage: `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
@@ -331,7 +331,6 @@ const partnerController = {
         try {
             const partnerID = req.params.idPartner;
             deleteBookins = [
-                `DELETE bookings FROM bookings JOIN partners ON partners.dni = bookings.partner_dni WHERE partners.partnerID = ${partnerID}`,
                 `DELETE FROM partners WHERE partnerID =  ${partnerID}`
             ];
             await connection.query(deleteBookins.join(";"), async (err, results) => {
@@ -342,7 +341,7 @@ const partnerController = {
                     "messageUpdate",
                     `Partner successfully delete, with PARTNERS ID : ${partnerID}`
                 );
-                return res.redirect("/workspace/partners");
+                return res.status(200).redirect("/workspace/partners");
             });
         } catch (error) {
             console.error(error);

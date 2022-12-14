@@ -30,6 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: start;
+    flex-direction: column;
     text-align: center;
     padding: 1em;
     width: 50%;
@@ -38,6 +39,10 @@
 .Family-links span {
     width: 100% !important;
     font-size: 1em;
+}
+
+.Family-links label{
+    color: gray;
 }
 
 .Family-links {

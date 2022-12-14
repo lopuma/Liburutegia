@@ -1,14 +1,56 @@
-
 const spinner = document.getElementById("spinner");
 const tbodyPartners = document.getElementById("tbodyPartners");
+const familyLink = document.getElementById("familyLink");
+const selectDni = document.getElementById("selectDni");
+const inputDniCheck = document.getElementById("dniCheck");
+const inputDni = document.getElementById("inputDni");
+const inputPartnerID = document.getElementById("partnerID");
+const inputScanner = document.getElementById("inputScanner");
+const inputName = document.getElementById("inputName");
+const inputLastname = document.getElementById("inputLastname");
+const inputDirection = document.getElementById("inputDirection");
+const inputPopulation = document.getElementById("inputPopulation");
+const inputPhone = document.getElementById("inputPhone");
+const inputPhoneLandline = document.getElementById("inputPhoneLandline");
+const inputEmail = document.getElementById("inputEmail");
 
-//TODO CLOSE LOADING
+
+$(".modal-title").text("EDIT PARTNER").css("font-weight", "600");
+
+// TODO 👌 CREDIT github @THuRStoN
+function formatNumberLength(num, length) {
+    var r = "" + num;
+    while (r.length < length) {
+        r = "0" + r;
+    }
+    return r;
+}
+// TODO 👌 CREDIT github @THuRStoN
+function charDNI(dni) {
+    var chain = "TRWAGMYFPDXBNJZSQVHLCKET";
+    var pos = dni % 23;
+    var letter = chain.substring(pos, pos + 1);
+    return letter;
+}
+// TODO 👌 CREDIT github @THuRStoN
+function rand_dni() {
+    num = Math.floor(Math.random() * 100000000);
+    sNum = formatNumberLength(num, 8);
+    return sNum + charDNI(sNum);
+}
+
+//TODO ✅ CLOSE LOADING
 setTimeout(() => {
     loadData();
-    try{
+    try {
         spinner.style.display = "none";
-    } catch (error) {}
+    } catch (error) { }
 }, "1600");
+
+//TODO ✅ SELECT 
+$(document).ready(function () {
+    theme: "bootstrap4", $(".js-example-basic-single").select2();
+});
 
 //TODO ✅ LOAD PARTNER
 async function loadData() {
@@ -40,7 +82,7 @@ async function loadData() {
                 { data: "email" },
                 {
                     data: null,
-                    render: function (data, type) {
+                    render: function (data) {
                         return (
                             `
                             <div class="ui buttons">
@@ -57,37 +99,13 @@ async function loadData() {
     });
 }
 
-//TODO INFO PARTNER
+//TODO ✅ INFO PARTNER
 async function infoPartner(partnerID) {
     const idPartner = partnerID;
     window.location = `/workspace/partners/info/${idPartner}`;
 }
 
-//TODO EDIT PARTNER
-async function edit(partnerID) {
-    opcion = 'edit';
-    const idPartner = partnerID;
-    const url = `/api/partners/${idPartner}`;
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            $("#partnerID").val(data.partnerID);
-            $("#inputDni").val(data.dni);
-            $("#inputScanner").val(data.scanner);
-            $("#inputName").val(data.name);
-            $("#inputLastname").val(data.lastname);
-            $("#inputDirection").val(data.direction);
-            $("#inputPopulation").val(data.population);
-            $("#inputPhone").val(data.phone1);
-            $("#inputPhoneLandline").val(data.phone2);
-            $("#inputEmail").val(data.email);
-            $(".modal-header").css("background-color", "var(--Background-Color-forms-partner)");
-            $(".modal-header").css("color", "white");
-            $(".modal-title").text("EDIT PARTNER").css("font-weight", "700");
-        })
-}
-
-//TODO DELETE
+//TODO ✅ DELETE PARTMNER
 async function partnerDelete(idPartner) {
     const url = `/api/partners/delete/${idPartner}`
     fetch(url).then(() => {
@@ -96,6 +114,115 @@ async function partnerDelete(idPartner) {
         setTimeout(() => {
             loadData();
         }, 500);
+    });
+}
+
+//TODO ✅ EDIT PARTNER
+async function edit(partnerID) {
+    opcion = "edit";
+    const idPartner = partnerID;
+    const urlGetPartner = `/api/partners/${idPartner}`;
+    let checked = false;
+    let partner_DNI = "";
+    fetch(urlGetPartner)
+        .then(response => response.json())
+        .then(data => {
+            const check = data.activeFamily;
+            if (check === 1) {
+                checked = true;
+                const urlGetDniFamily = `/api/family/${data.dni}`;
+                fetch(urlGetDniFamily)
+                    .then(response => response.json())
+                    .then(async data => {
+                        partner_DNI = data.data.partnerDni;
+                        activeSelectDniFamily(partner_DNI);
+                    });
+            } else {
+                checked = false;
+                $("#selectDni").html("");
+                familyLink.classList.remove("isEnable");
+                inputDni.focus();
+            }
+            inputPartnerID.value = data.partnerID;
+            inputDni.value = data.dni;
+            inputScanner.value = data.scanner;
+            inputName.value = data.name;
+            inputLastname.value = data.lastname;
+            inputDirection.value = data.direction;
+            inputPopulation.value = data.population;
+            inputPhone.value = data.phone1;
+            inputPhoneLandline.value = data.phone2;
+            inputEmail.value = data.email;
+            inputDniCheck.checked = checked;
+            $(".modal-header").css(
+                "background-color",
+                "var(--Background-Color-forms-partner)"
+            );
+            $(".modal-header").css("color", "white");
+        });
+}
+
+async function activeSelectDniFamily(partner_DNI) {
+    const urlSelectDni = "/api/partners/";
+    if (inputDniCheck.checked) {
+        setTimeout(() => {
+            fetch(urlSelectDni, {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json; charset=utf-8"
+                }
+            })
+                .then(response => response.json())
+                .then(async data => await obtenerDni(data, partner_DNI))
+                .catch(() =>
+                    window.alert(
+                        "There is no record in partners, to associate."
+                    )
+                );
+        }, 500);
+        familyLink.classList.add("isEnable");
+    } else {
+        $("#selectDni").html("");
+        familyLink.classList.remove("isEnable");
+        //inputDni.value = "";
+        inputDni.focus();
+    }
+}
+
+inputDniCheck.addEventListener("change", () => {
+    activeSelectDniFamily();
+});
+
+async function myFunction() {
+    const index = selectDni.selectedIndex;
+    if (index !== 0) {
+        if (inputDni.value === "") {
+            inputDni.value = rand_dni();
+            selectDni.focus();
+        } else {
+            selectDni.focus();
+        }
+    }
+};
+
+// TODO AÑADE DNI DE PARTNERS
+async function obtenerDni(data, partner_DNI) {
+    selectDni.innerHTML =
+        '<option value="" disabled selected hidden>Select family member\'s DNI</option>';
+    data.forEach(partner => {
+        let option = document.createElement("option");
+        option.value = partner.partnerID;
+        option.text = partner.dni;
+        selectDni.add(option);
+        let sel = document.getElementById("selectDni");
+        for (let i = 0; i < sel.length; i++) {
+            let opt = sel[i];
+            if (opt.text === partner_DNI) {
+                $("#selectDni").val(opt.value);
+                return;
+            }
+        }
     });
 }
 

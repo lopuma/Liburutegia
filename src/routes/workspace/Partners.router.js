@@ -14,8 +14,10 @@ const {
 // TODO 👌 
 const routerParters = require("express").Router();
     
-    routerParters.get("/new", isAuthenticated, getNew);
+    //routerParters.get("/new", isAuthenticated, getNew);
+    routerParters.get("/new", getNew);
 
-    routerParters.get("/info/:idPartner", isAuthenticated, noExistPartner, getInfo);
+    //routerParters.get("/info/:idPartner", isAuthenticated, noExistPartner, getInfo);
+    routerParters.get("/info/:idPartner", noExistPartner, getInfo);
 
 module.exports = routerParters;
