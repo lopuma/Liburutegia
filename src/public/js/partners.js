@@ -1,4 +1,3 @@
-const spinner = document.getElementById("spinner");
 const tbodyPartners = document.getElementById("tbodyPartners");
 const familyLink = document.getElementById("familyLink");
 const selectDni = document.getElementById("selectDni");
@@ -43,8 +42,8 @@ function rand_dni() {
 setTimeout(() => {
     loadData();
     try {
-        spinner.style.display = "none";
-    } catch (error) { }
+        document.getElementById("spinner").style.display = "none";
+    } catch (error) {}
 }, "1600");
 
 //TODO ✅ SELECT 
@@ -106,15 +105,37 @@ async function infoPartner(partnerID) {
 }
 
 //TODO ✅ DELETE PARTMNER
-async function partnerDelete(idPartner) {
-    const url = `/api/partners/delete/${idPartner}`
-    fetch(url).then(() => {
+async function apiDelete(idPartner) {
+    const urlDelete = `/api/partners/delete/${idPartner}`;
+    fetch(urlDelete).then(() => {
         myTable.destroy();
         tbodyPartners.innerHTML = "";
         setTimeout(() => {
             loadData();
         }, 500);
     });
+}
+async function deletePartner(partnerID) {
+    opcion = 'delete';
+    const idPartner = partnerID;
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Are you sure you want to delete the PARTNER!",
+        icon: 'warning',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    })
+        .then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Removed! partner with ID: " + idPartner,
+                    "Your Partner has been deleted.",
+                    "success",
+                    apiDelete(idPartner));
+            }
+        });
 }
 
 //TODO ✅ EDIT PARTNER
@@ -194,7 +215,7 @@ inputDniCheck.addEventListener("change", () => {
     activeSelectDniFamily();
 });
 
-async function myFunction() {
+async function selectChange() {
     const index = selectDni.selectedIndex;
     if (index !== 0) {
         if (inputDni.value === "") {
@@ -225,59 +246,3 @@ async function obtenerDni(data, partner_DNI) {
         }
     });
 }
-
-async function deletePartner(partnerID) {
-    opcion = 'delete';
-    const idPartner = partnerID;
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "Are you sure you want to delete the PARTNER!",
-        icon: 'warning',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    })
-        .then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire("Removed! partner with ID: " + idPartner, "Your Partner has been deleted.", "success", partnerDelete(idPartner));
-            }
-        });
-}
-
-//TODO UPDATE PARTNER
-$('#formu').submit(async function (e) {
-    e.preventDefault();
-    const url = `/api/partners/update/${partnerID}`
-    let data = {
-        partnerID: $.trim($('#partnerID').val()),
-        inputDni: $.trim($('#inputDni').val()),
-        inputName: $.trim($('#inputName').val()),
-        inputScanner: $.trim($('#inputScanner').val()),
-        inputLastname: $.trim($('#inputLastname').val()),
-        inputDirection: $.trim($('#inputDirection').val()),
-        inputPopulation: $.trim($('#inputPopulation').val()),
-        inputPhone: $.trim($('#inputPhone').val()),
-        inputPhoneLandline: $.trim($('#inputPhoneLandline').val()),
-        inputEmail: $.trim($('#inputEmail').val()),
-    }
-    if (opcion === 'edit') {
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
-            .then(response => response.json())
-            .then(data => responseAddPartner(data))
-            .catch(error => console.error(error));
-    }
-    $("#modalPartner").modal("hide");
-    myTable.destroy();
-    tbodyPartners.innerHTML = "";
-    setTimeout(() => {
-        loadData();
-    }, 500);
-});

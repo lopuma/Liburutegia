@@ -1,28 +1,29 @@
-
 let activeEyePassword = false;
 let activeEyePasswordRepeat = false;
-const url = '/register';
-const inputPassNew          = document.getElementById  ( "inputPassNew"         );
-const inputPassNewRepeat    = document.getElementById  ( "inputPassNewRepeat"   );
-const btnAccept             = document.getElementById  ( "btnAccept"            );
-const btnCancel             = document.getElementById  ( "btnCancel"            );
-const btnEyePassword        = document.getElementById  ( "btnEyePassword"       );
-const btnEyePasswordRepeat  = document.getElementById  ( "btnEyePasswordRepeat" );
-const formRegister          = document.getElementById  ( "formRegister"         );
-const inputEmailNew         = document.getElementById  ( 'inputEmailNew'        );
-const inputUsername         = document.getElementById  ( 'inputUsername'        );
-const inputFullName         = document.getElementById  ( 'inputFullName'        );
-const inputs                = document.querySelectorAll( "#formRegister input"  );
-const infos                 = document.querySelectorAll( ".Animation-info"      );
-const closeInfos            = document.querySelectorAll( ".Animation-closeInfo" );
-const fieldErrs             = document.querySelectorAll( ".fieldErr"            );
-const fieldErrTexts         = document.querySelectorAll( ".fieldErrText"        );
-const fields = {
+const urlAddUser = '/register';
+const inputPassNew = document.getElementById("inputPassNew");
+const inputPassNewRepeat = document.getElementById("inputPassNewRepeat");
+const btnAccept = document.getElementById("btnAccept");
+const btnCancel = document.getElementById("btnCancel");
+const btnEyePassword = document.getElementById("btnEyePassword");
+const btnEyePasswordRepeat = document.getElementById("btnEyePasswordRepeat");
+const formRegister = document.getElementById("formRegister");
+const inputEmailNew = document.getElementById('inputEmailNew');
+const inputUsername = document.getElementById('inputUsername');
+const inputFullName = document.getElementById('inputFullName');
+const inputs = document.querySelectorAll("#formRegister input");
+const infos = document.querySelectorAll(".Animation-info");
+const closeInfos = document.querySelectorAll(".Animation-closeInfo");
+const fieldErrs = document.querySelectorAll(".fieldErr");
+const fieldErrTexts = document.querySelectorAll(".fieldErrText");
+
+const field = {
     email: false,
     username: false,
     fullname: false,
     pass: false
 }
+
 const expresiones = {
     username: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     fullname: /^[a-zA-ZÀ-ÿ\s]{4,40}$/, // Letras y espacios, pueden llevar acentos.
@@ -32,17 +33,24 @@ const expresiones = {
     //phone: /^\d{7,14}$/ // 7 a 14 numeros.
 };
 
+const textError = {
+    username: "[ ERROR ] : The format Email address is incorrect, the email can only contain letters, numbers, periods, hyphens and underscores.",
+    fullname: "[ ERROR ] : The username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces.",
+    password: "[ ERROR ] : Full Name must have 4 to 40 digits and can contain letters, accents and spaces, cannot contain special characters.",
+    email: "[ ERROR ] : The password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.",
+};
+
 const validarPassword = () => {
     if (inputPassNew.value !== inputPassNewRepeat.value) {
         document.getElementById('validationPassRepeat').classList.add('isActive');
         document.getElementById('errorPassRepeat').innerHTML = "Passwords do not match.";
         inputPassNewRepeat.classList.add('isError');
-        fields['pass'] = false;
+        field['pass'] = false;
     } else {
         document.getElementById('validationPassRepeat').classList.remove('isActive');
         document.getElementById('errorPassRepeat').innerHTML = "";
         inputPassNewRepeat.classList.remove('isError');
-        fields['pass'] = true;
+        field['pass'] = true;
     }
 }
 
@@ -50,6 +58,7 @@ async function cancel() {
     window.location = '/workspace/admin'
 }
 
+//TODO ✅ RESPONSE ADD USER
 async function responseRegister(data) {
     const exists = data.exists;
     if (!exists) {
@@ -72,7 +81,6 @@ async function responseRegister(data) {
         }).then(() => {
             formRegister.reset();
             inputEmailNew.focus();
-            inputEmailNew.select();
         });
     } else {
         Swal.fire({
@@ -98,65 +106,94 @@ async function responseRegister(data) {
     }
 }
 
-async function validateField(expresion, input, fieldError, fieldErrorText, textError, field, info, closeInfo) {
+//TODO ✅ VALIDAR FIELDS
+async function validateField(
+    expresion,
+    input,
+    fieldError,
+    fieldErrorText,
+    textError,
+    inputField,
+    info,
+    closeInfo
+) {
     if (!expresion.test(input.value.trim())) {
-        input.classList.add('isError');
-        document.getElementById(info).classList.add('isVisible');
-        fields[field] = false;
+        input.classList.add("isError");
+        document.getElementById(info).classList.add("isVisible");
+        field[inputField] = false;
     } else {
-        document.getElementById(fieldError).classList.remove('isActive');
+        document.getElementById(fieldError).classList.remove("isActive");
         document.getElementById(fieldErrorText).innerHTML = "";
-        input.classList.remove('isError');
-        document.getElementById(info).classList.remove('isVisible');
-        document.getElementById(closeInfo).classList.remove('isVisible');
-        fields[field] = true;
+        input.classList.remove("isError");
+        document.getElementById(info).classList.remove("isVisible");
+        document.getElementById(closeInfo).classList.remove("isVisible");
+        field[inputField] = true;
     }
-    infos.forEach((info, i) => {
-        infos[i].addEventListener('click', () => {
-            fieldErrs[i].classList.add('isActive');
+
+    infos.forEach((_info, i) => {
+        infos[i].addEventListener("click", () => {
+            fieldErrs[i].classList.add("isActive");
             fieldErrTexts[i].innerHTML = textError;
-            closeInfos[i].classList.add('isVisible');
+            infos[i].classList.remove("isVisible");
+            closeInfos[i].classList.add("isVisible");
         });
     });
-    closeInfos.forEach((info, i) => {
-        closeInfos[i].addEventListener('click', () => {
-            fieldErrs[i].classList.remove('isActive');
+
+    closeInfos.forEach((_info, i) => {
+        closeInfos[i].addEventListener("click", () => {
+            fieldErrs[i].classList.remove("isActive");
             fieldErrTexts[i].innerHTML = "";
-            closeInfos[i].classList.remove('isVisible');
+            closeInfos[i].classList.remove("isVisible");
         });
     });
 }
 
-async function fieldEmpty(expression, input, errorDivValidation, errorInputText, textEmailError, field, info, closeInfo) {
+//TODO ✅ VALIDACIONES EXPRESSIONES
+async function fieldEmpty(
+    expression, // EXPRESION DEL INPUT
+    input, // EL IMPUT
+    errorDivValidation, //EL DIV DODE MUESTRA EL ERROR
+    errorInputText, // EL LABEL DEL ERROR
+    textError, // EL TEXTO DEL ERROR
+    inputField, //SI EL FIELD INPUT SEA TRUE O FALSE
+    info, //BOTON QUE MUESTRA EL ERROR
+    closeInfo // BOTON QUE CIERRA EL ERROR
+) {
     if (input.value.trim() !== "") {
-        await validateField(expression, input, errorDivValidation, errorInputText, textEmailError, field, info, closeInfo);
+        await validateField(
+            expression,
+            input,
+            errorDivValidation,
+            errorInputText,
+            textError,
+            inputField,
+            info,
+            closeInfo
+        );
     } else {
-        document.getElementById(errorDivValidation).classList.remove('isActive');
+        document.getElementById(errorDivValidation).classList.remove("isActive");
         document.getElementById(errorInputText).innerHTML = "";
-        input.classList.remove('isError');
-        document.getElementById(info).classList.remove('isVisible');
-        document.getElementById(closeInfo).classList.remove('isVisible');
+        input.classList.remove("isError");
+        document.getElementById(info).classList.remove("isVisible");
+        document.getElementById(closeInfo).classList.remove("isVisible");
     }
     return;
 }
 
+//TODO ✅ VALIDACIONES INPUTS NEW USER
 const validateForms = async (e) => {
     switch (e.target.name) {
         case "inputEmailNew":
-            let textEmailError = "Error: The format Email address is incorrect, the email can only contain letters, numbers, periods, hyphens and underscores.";
-            await fieldEmpty(expresiones.email, e.target, 'validationEmailNew', 'errorEmailNew', textEmailError, 'email', 'infoEmail', 'closeInfoEmail');
+            await fieldEmpty(expresiones.email, e.target, 'validationEmailNew', 'errorEmailNew', textError.email, 'emailI', 'infoEmail', 'closeInfoEmail');
             break;
         case "inputUsername":
-            let textErrorUsername = "Error: The username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces.";
-            await fieldEmpty(expresiones.username, e.target, 'validationUserName', 'errorUserName', textErrorUsername, 'username', 'infoUsername', 'closeInfoUsername');
+            await fieldEmpty(expresiones.username, e.target, 'validationUserName', 'errorUserName', textError.username, 'username', 'infoUsername', 'closeInfoUsername');
             break;
         case "inputFullName":
-            let textErrorFullname = "Error: Full Name must have 4 to 40 digits and can contain letters, accents and spaces, cannot contain special characters.";
-            await fieldEmpty(expresiones.fullname, e.target, 'validationFullName', 'errorFullName', textErrorFullname, 'fullname', 'infoFullname', 'closeInfoFullname');
+            await fieldEmpty(expresiones.fullname, e.target, 'validationFullName', 'errorFullName', textError.fullname, 'fullname', 'infoFullname', 'closeInfoFullname');
             break;
         case "inputPassNew":
-            let textErrorPassNew = "Error: The password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.";
-            await fieldEmpty(expresiones.password, e.target, 'validationPassNew', 'errorPassNew', textErrorPassNew, 'pass', 'infoPass', 'closeInfoPass');
+            await fieldEmpty(expresiones.password, e.target, 'validationPassNew', 'errorPassNew', textError.password, 'pass', 'infoPass', 'closeInfoPass');
             validarPassword();
             break;
         case "inputPassNewRepeat":
@@ -165,7 +202,8 @@ const validateForms = async (e) => {
     }
 };
 
-inputs.forEach(input => {
+//TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
+inputs.forEach(_input => {
     inputs.forEach(input => {
         input.addEventListener("blur", validateForms);
         input.addEventListener("keyup", validateForms);
@@ -179,7 +217,7 @@ inputs.forEach(input => {
 
 async function correctForms(e) {
     e.preventDefault();
-    if (fields.email && fields.username && fields.fullname && fields.pass) {
+    if (field.email && field.username && field.fullname && field.pass) {
         const data = {
             email: inputEmailNew.value,
             username: inputUsername.value,
@@ -187,37 +225,28 @@ async function correctForms(e) {
             rol: document.getElementById("rol").value,
             pass: inputPassNew.value
         };
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => responseRegister(data))
-            .catch((error) => console.error(error));
+        addNewUser(data);
     } else {
         window.alert("There are items required your attention.")
-        if (!fields.email) {
+        if (!field.email) {
             inputEmailNew.focus();
             inputEmailNew.select();
             inputEmailNew.classList.add('isError');
             document.getElementById('infoEmail').classList.add('isVisible');
             return;
-        } else if (!fields.username) {
+        } else if (!field.username) {
             inputUsername.focus();
             inputUsername.select();
             inputUsername.classList.add('isError');
             document.getElementById('infoUsername').classList.add('isVisible');
             return;
-        } else if (!fields.fullname) {
+        } else if (!field.fullname) {
             inputFullName.focus();
             inputFullName.select();
             inputFullName.classList.add('isError');
             document.getElementById('infoFullname').classList.add('isVisible');
             return;
-        } else if (!fields.pass) {
+        } else if (!field.pass) {
             inputPassNew.focus();
             inputPassNew.select();
             inputPassNew.classList.add('isError');
@@ -225,6 +254,20 @@ async function correctForms(e) {
             return;
         }
     }
+}
+
+//TODO ✅ ADD NEW USER
+async function addNewUser(data) {
+    fetch(urlAddUser, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+        }
+    })
+        .then(response => response.json())
+        .then(data => responseRegister(data))
+        .catch(error => console.error(error));
 }
 
 // TODO FUNCION PARA MOSTRAR O OCULTAR PASSWORD

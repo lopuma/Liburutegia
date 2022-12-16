@@ -207,7 +207,7 @@ const partnerController = {
     addPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const {
+            let {
                 inputDni: dni,
                 inputScanner: scanner,
                 inputName: name,
@@ -216,17 +216,12 @@ const partnerController = {
                 inputPopulation: population,
                 inputEmail: email,
                 actualDate: date,
-                idPartnerFamily,
-                dniFamily,
+                updateDate,
+                partnerID,
+                partnerDni,
                 inputPhone: phone1,
                 inputPhoneLandline: phone2
             } = req.body;
-            // if (!dni || !name || !lastname) {
-            //     return res.status(400).send({
-            //         success: false,
-            //         errorMessage: `Missing data to complete, can not be empty`
-            //     });
-            // }
             if (!errors.isEmpty()) {
                 return res.status(300).send({
                     success: false,
@@ -241,11 +236,9 @@ const partnerController = {
                     });
                 }
             }
-
             let phonea = phone1 ? parseInt(phone1) : null;
             let phoneb = phone2 ? parseInt(phone2) : null;
             let activeFamily = 0;
-
             let dataAddPartner = [
                 {
                     dni,
@@ -258,18 +251,19 @@ const partnerController = {
                     phone2: phoneb,
                     email,
                     date,
+                    updateDate,
                     activeFamily
                 }
             ];
             if (
-                dniFamily === null ||
-                idPartnerFamily === null ||
-                dniFamily === "null" ||
-                idPartnerFamily === "null" ||
-                dniFamily === "" ||
-                idPartnerFamily === "" ||
-                dniFamily === undefined ||
-                idPartnerFamily === undefined
+                partnerDni === null ||
+                partnerID === null ||
+                partnerDni === "null" ||
+                partnerID === "null" ||
+                partnerDni === "" ||
+                partnerID === "" ||
+                partnerDni === undefined ||
+                partnerID === undefined
             ) {
                 const updatedDataAddPartner = dataAddPartner.map(data => ({
                     ...data,
@@ -282,8 +276,8 @@ const partnerController = {
                     sqlInsertFamily,
                     {
                         familyDni: dni,
-                        partnerDNI: dniFamily,
-                        partnerID: idPartnerFamily
+                        partnerDni,
+                        partnerID
                     },
                     async err => {
                         if (err) {
@@ -353,32 +347,161 @@ const partnerController = {
     putPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const partnerID = req.params.idPartner;
-            const partner = ({
+            const idPartner = req.params.idPartner;
+            const sqlUpdate = `UPDATE partners SET ? WHERE partnerID = ${idPartner}`;
+            const {
+                inputDni: dni,
+                inputScanner: scanner,
+                inputName: name,
+                inputLastname: lastname,
+                inputDirection: direction,
+                inputPopulation: population,
+                inputEmail: email,
+                updateDate,
+                partnerID,
+                partnerDni,
+                inputPhone: phone1,
+                inputPhoneLandline: phone2
+            } = req.body;
+            
+            let phonea = phone1 ?  parseInt(phone1) : null;
+            let phoneb = phone2 ? parseInt(phone2) : null;
+            let activeFamily = 0;
+            let partnerDataUpdate = [{
                 dni,
                 scanner,
                 name,
                 lastname,
                 direction,
                 population,
-                phone1,
-                phone2,
-                email
-            } = req.body);
-            const sql = "UPDATE partners SET ? WHERE partnerID = ?";
-            await connection.query(sql, [partner, partnerID], (err, results) => {
-                if (err) {
-                    throw err;
+                phone1: phonea,
+                phone2: phoneb,
+                email,
+                updateDate,
+                activeFamily
+            }];
+
+            if (
+                partnerDni === null ||
+                partnerID === null ||
+                partnerDni === "null" ||
+                partnerID === "null" ||
+                partnerDni === "" ||
+                partnerID === "" ||
+                partnerDni === undefined ||
+                partnerID === undefined
+            ) { 
+                console.log("ANTES DE INSERT", partnerDataUpdate);
+                const updatedDataAddPartner = partnerDataUpdate.map(data => ({
+                    ...data,
+                    activeFamily: 0
+                }));
+
+                console.log("DESPUES ANTES DE INSERT", partnerDataUpdate);
+
+                console.log("---->------->----->");
+                console.log(dni, partnerDni, updatedDataAddPartner[0].activeFamily);
+                console.log("---->------->----->");
+
+                if (updatedDataAddPartner[0].activeFamily === 0) {
+                    const sqlDeleteFamily = " DELETE FROM familys WHERE familyDni=? AND partnerDni=?";
+                    await connection.query(sqlDeleteFamily, [dni, partnerDni], async (err, results) => {
+                        if (err) {
+                            console.error("[ DB ]", err.sqlMessage);
+                            return res.status(400).send({
+                                success: false,
+                                messageErrBD: err,
+                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                            });
+                        }
+
+                        console.log("RESULT DELETE ==> ", results)
+
+                    });
                 }
-                req.flash(
-                    "messageUpdate",
-                    `Partner successfully update, with PARTNERS ID : ${partnerID}`
-                );
-                res.send({
-                    success: true,
-                    messageUpdate: `Partner successfully update, with PARTNERS ID : ${partnerID}`
+                await connection.query(sqlUpdate, updatedDataAddPartner, (err, results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res.status(400).send({
+                            success: false,
+                            messageErrBD: err,
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                        });
+                    }
+                    res.status(200).send({
+                        success: true,
+                        messageSuccess: `Partner successfully UPDATE, with PARTNERS ID : ${idPartner}`
+                    });
                 });
-            });
+            } else {
+
+                const sqlExistsFamily = "SELECT * from familys WHERE familyDni=? AND partnerDni=?";
+                const sqlInsertFamily = "INSERT INTO familys SET ?";
+                
+                console.log(" CUANDO => ", {
+                    partnerDni, 
+                    dni
+                });
+
+                await connection.query(
+                    sqlExistsFamily, [dni, partnerDni], async (err, exists) => {
+                        if (err) {
+                            console.error("[ DB ]", err.sqlMessage);
+                            return res.status(400).send({
+                                success: false,
+                                messageErrBD: err,
+                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                            });
+                        }
+
+                        console.log("exists.length", exists.length);
+                        
+                        if(exists.length === 0) {
+                            await connection.query(
+                                sqlInsertFamily,
+                                {
+                                    familyDni: dni,
+                                    partnerDNI: partnerDni,
+                                    partnerID
+                                },
+                                async (err) => {
+                                    if (err) {
+                                        console.error("[ DB ]", err.sqlMessage);
+                                        return res.status(400).send({
+                                            succes: false,
+                                            messageErrBD: err,
+                                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                        });
+                                    }
+                                }
+                            );
+                        }
+                        console.log("DENTRO DE INSERT", partnerDataUpdate);
+
+                        const updatedDataPartner = partnerDataUpdate.map(data => ({
+                            ...data,
+                            activeFamily: 1
+                        }));
+
+                        console.log(" DESPUES DE INSERT => ", updatedDataPartner);
+
+                        await connection.query(sqlUpdate, updatedDataPartner, (err, results) => {
+                            if (err) {
+                                console.error("[ DB ]", err.sqlMessage);
+                                return res.status(400).send({
+                                    success: false,
+                                    messageErrBD: err,
+                                    errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                });
+                            }
+                            res.status(200).send({
+                                success: true,
+                                messageSuccess: `Partner successfully UPDATE, with PARTNERS ID : ${idPartner}`
+                            });
+                        });
+                    }
+                );  
+            }
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");

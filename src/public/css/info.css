@@ -207,7 +207,7 @@
 
 .Info-bloque.isAuto {
     height: auto;
-    max-height: 65em;
+    /* max-height: 65em; */
     overflow-x: auto;
     overflow-y: auto;
     opacity: 1;
@@ -239,10 +239,28 @@
     text-align: start;
 }
 
+.Personal-data.isButton {
+    padding: .5em 0;
+    margin: 0;
+}
+
+.Personal-data.isButton .ColumnA {
+    flex: 40%;
+    padding: 0;
+    margin: 0;
+}
+
+.Personal-data.isButton .ColumnB {
+    flex: 60%;
+    padding: 0;
+    margin: 0;
+}
+
 .ColumnA,
 .ColumnB {
     display: flex;
     /* justify-content: space-between; */
+
     align-items: center;
     width: 50%;
 }
@@ -255,11 +273,6 @@
     margin: 0 1em 0 0;
     padding: 0 1em;
     justify-content: flex-end;
-}
-
-.ColumnB.isButtons {
-    padding: 0;
-    margin: 0;
 }
 
 .ColumnA button {
@@ -280,6 +293,7 @@
 }
 
 .Column-span {
+    color: var(--Color-texto-gray);
     padding: .5em;
     margin: 0 .5em;
     font-size: 1em;
@@ -444,6 +458,26 @@
         flex: 50%;
         text-align: start;
     }
+
+    .Personal-data.isButton .ColumnA {
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: flex-start;
+    }
+
+    .Personal-data.isButton .ColumnB {
+        margin: .5em 0;
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+        .Personal-data.isButton .ColumnB button{
+            margin: .5em 0;
+        }
 }
 
 @media screen and (max-width: 550px) {

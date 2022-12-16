@@ -12,17 +12,16 @@
             <div class="modal-header">
                 <h1 class="modal-title" id="modalPartnerLabel"></h5>
             </div>
-
             <div class="New">
-                <form class="New-form" id="formu">
+                <form class="New-form" id="formEditPartner" name"formEditPartner">
 
                     {{> formPartner}}
 
                     <div class="Input-button">
                         <button type="button" class="Button-cancel"
                             data-dismiss="modal" tabindex="10">Cancel</button>
-                        <button type="button" id="btnUpdate"
-                            class="Button-accept" tabindex="11">Save</button>
+                        <input class="Button-accept" id="btnUpdate" type="submit"
+                            value='UPDATE' tabindex="11"></input>
                     </div>
 
                 </form>
@@ -34,12 +33,24 @@
 
 </div>
 
-<script type="text/javascript" defer>
+<!--<script defer src="/scripts/partners.js"></script>-->
 
-    const btnUpdate = document.getElementById("btnUpdate");
+<script defer src="/scripts/formPartner.js"></script>
 
-    btnUpdate.addEventListener( 'click', (event) => {
-        console.log(event.target, "click update");
-    });
+<script defer>
+    const formEditPartner = document.getElementById("formEditPartner");
+    const inputs = document.querySelectorAll("#formEditPartner input");
+
+    // TODO ✅ EVENTO AL ENVIAR FORMULARIO
+    try {
+        document.addEventListener("DOMContentLoaded", function () {
+            formEditPartner.addEventListener("submit", correctForms);
+        });
+    } catch(error) {}
+
+    try {
+        inputNEW.checked = false;
+        console.log("3 ==>", inputNEW.checked);
+    } catch (error) { }
 
 </script>

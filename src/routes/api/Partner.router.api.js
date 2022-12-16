@@ -31,14 +31,14 @@ const routerPartners = require("express").Router();
 
     routerPartners.get(
         "/delete/:idPartner",
-        isAuthenticated,
+        //isAuthenticated,
         noExistPartner,
         deletePartner
     );
 
     routerPartners.post(
         "/update/:idPartner",
-        isAuthenticated,
+        //isAuthenticated,
         noExistPartner,
         validate,
         putPartner

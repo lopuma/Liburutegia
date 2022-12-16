@@ -47,21 +47,26 @@
 }
 
 .Input-boxes {
-    width: 70%;
+    width: 100%;
     height: 100%;
     font-size: inherit;
     margin: 0;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
 
 .Box {
     height: 3.75em;
-    width: 100%;
+    width: 70%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 3em 0 0;
+    margin: 2em 0 1em;
 }
 
 .Box-i {
@@ -324,6 +329,11 @@
         margin: 0;
         padding: 0;
     }
+
+    .Box {
+        width: 100%;
+    }
+
 }
 
 @media all and (max-width: 550px) {

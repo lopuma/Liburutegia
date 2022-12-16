@@ -11,7 +11,7 @@
 
     <div class="Family-links" id="familyLink">
         <label>Partner DNI Family</label>
-        <select class="js-example-basic-single" id="selectDni" onchange="myFunction()">
+        <select class="js-example-basic-single" id="selectDni" onchange="selectChange()">
         </select>
     </div>
 
@@ -20,6 +20,8 @@
 <!-- TODO CONTENIDO DEL FORMULARIO DE PARTNER -->
 <div class="New-content">
     
+    <input type="checkbox" id="inputNEW" hidden>
+
     <input type="text" class="form-control" id="partnerID" tabindex="0" hidden>
     
     <div class="New-boxes">
@@ -39,7 +41,7 @@
                         id="closeInfoDni"><i class="fa-solid fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
+            <div class="Input-error Error fieldErr" id="validationDni">
                 <div class="Error-icon">
                     <svg fill="currentColor" focusable="false" width="16px"
                         height="16px" viewBox="0 0 24 24"
@@ -51,7 +53,7 @@
                     </svg>
                 </div>
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Dni cannot be
+                    <span id="errorDni" class="fieldErrText">Dni cannot be
                         empty.</span>
                 </div>
             </div>
@@ -109,7 +111,7 @@
                         id="closeInfoName"><i class="fa-solid fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
+            <div class="Input-error Error fieldErr" id="validationName">
                 <div class="Error-icon">
                     <svg fill="currentColor" focusable="false" width="16px"
                         height="16px" viewBox="0 0 24 24"
@@ -121,12 +123,12 @@
                     </svg>
                 </div>
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Name cannot be
+                    <span id="errorName" class="fieldErrText">Name cannot be
                         empty.</span>
                 </div>
             </div>
         </div>
-        <!-- TODO SURNAME -->
+        <!-- TODO LASTNAME -->
         <div class="Input-box">
             <div class="Box">
                 <i class="Box-i fa-solid fa-user"></i>
@@ -144,7 +146,7 @@
                             fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
+            <div class="Input-error Error fieldErr" id="validationLastname">
                 <div class="Error-icon">
                     <svg fill="currentColor" focusable="false" width="16px"
                         height="16px" viewBox="0 0 24 24"
@@ -156,7 +158,7 @@
                     </svg>
                 </div>
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Lastname
+                    <span id="errorLastname" class="fieldErrText">Lastname
                         cannot be empty.</span>
                 </div>
             </div>

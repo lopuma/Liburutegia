@@ -73,15 +73,25 @@
     flex-flow: row wrap;
     justify-content: space-between;
     width: 100%;
-    padding: 1.5em 2em 2em;
+    padding: 1.5em 2em 0;
     align-items: center;
     overflow: hidden;
 }
 
 .Input-box {
     width: 50%;
+    /* height: 150px; */
     display: flex;
+    align-items: center;
     flex-direction: column;
+    margin-bottom: 2em;
+    /* justify-content: space-between; */
+    /* margin: 3em 0 0; */
+}
+
+.Input-box.isActiveError {
+    height: 9.375em;
+    margin: 0;
 }
 
 .Box {
@@ -304,11 +314,16 @@
 
     .Input-box {
         width: 100%;
-        padding: .5em 0;
+        padding: 1em 0;
+        margin: 0;
     }
 
+    .Input-box.isActiveError{
+        height: auto;
+    }
+    
     .Box {
-        margin: 1em 0;
+        margin: .5em 0;
     }
 
     .New-h1 {
