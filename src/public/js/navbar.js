@@ -12,10 +12,6 @@ const btnBookSidemenu = document.getElementById('btnBookSidemenu');
 const btnBookingSidemenu = document.getElementById('btnBookingSidemenu');
 const btnPartnerSidemenu = document.getElementById('btnPartnerSidemenu');
 const btnLoginSidemenu = document.getElementById('btnLoginSidemenu');
-const alert = document.getElementById('alert');
-const btnCloseAlert = document.getElementById('btnCloseAlert');
-const alertReset = document.getElementById('alert2');
-const btnCloseAlert2 = document.getElementById('btnCloseAlert2');
 const btnLogout = document.getElementById('btnLogout');
 
 try {
@@ -25,37 +21,6 @@ try {
     localStorage.removeItem('emailLocalReset');
   });
 } catch (error) {}
-
-function closeAlert() {
-  try {
-    alert.remove();
-  } catch (error) {}
-}
-
-function closeAlert2() {
-  try {
-    alertReset.classList.remove('isEnable');
-  } catch (error) {}
-}
-
-try {
-  btnCloseAlert2.addEventListener('click', () => {
-    closeAlert2();
-  })
-} catch (error) {}
-
-if (alert !== null) {
-  try {
-    setTimeout(() => {
-      closeAlert();
-    }, "5000")
-  } catch (error) {}
-  try {
-    btnCloseAlert.addEventListener('click', () => {
-      closeAlert();
-    })
-  } catch (error) {}
-}
 
 // TODO CARGA FUNCION DE MARCADO DE PANTALLA
 window.onload = onLoad();
@@ -68,9 +33,7 @@ function onLoad() {
       btnHome.classList.add('isSelected');
       btnHomeSidemenu.classList.add('isSelected');
     }
-  } catch (error) {
-    throw error
-  }
+  } catch (error) { }
 
   try {
     // LOGIN
@@ -78,9 +41,7 @@ function onLoad() {
       btnLoginSidemenu.classList.add('isSelect');
       btnNavLogin.classList.add('isSelect');
     }
-  } catch (error) {
-    throw error
-  }
+  } catch (error) { }
 
   try {
     // BOOKS
@@ -88,9 +49,7 @@ function onLoad() {
       btnBook.classList.add('isSelected');
       btnBookSidemenu.classList.add('isSelected');
     }
-  } catch (error) {
-    throw error
-  }
+  } catch (error) { }
 
   try {
     // BOOKINGS
@@ -98,9 +57,7 @@ function onLoad() {
       btnBooking.classList.add('isSelected');
       btnBookingSidemenu.classList.add('isSelected');
     }
-  } catch (error) {
-    throw error
-  }
+  } catch (error) { }
 
   try {
     // ADMIN
@@ -108,18 +65,14 @@ function onLoad() {
       btnAdmin.classList.add('isSelected');
       btnAdminSidemenu.classList.add('isSelected');
     }
-  } catch (error) {
-    throw error
-  }
+  } catch (error) { }
 
   try {
     // RECORD
     if ($('#stateRecord').val() === '') { // 
       btnRecord.classList.add('isSelected');
     }
-  } catch (error) {
-    throw error
-  }
+  } catch (error) { }
 
   try {
     //PARTNERS
@@ -127,9 +80,7 @@ function onLoad() {
       btnPartner.classList.add('isSelected');
       btnPartnerSidemenu.classList.add('isSelected');
     }
-  } catch (error) {
-    throw error
-  }
+  } catch (error) { }
 }
 
 // <---- Mostrar MENU en modo responsive ---->
@@ -193,12 +144,9 @@ function addClassSideMenu() {
 }
 
 function showCloseCover(act, actFunct, Funct) {
-  console.log("act ", act)
   act = true;
-  console.log("act ", act)
   addClassSideMenu();
   Cover();
-  console.log("actfunc", actFunct);
   if (actFunct) {
     Funct();
   }
@@ -206,7 +154,6 @@ function showCloseCover(act, actFunct, Funct) {
 
 // siguiente es el código para cambiar el botón de la barra lateral
 function menuBtnChangeSide() {
-  console.log(clickInterSide);
   if (clickInterSide) {
     try {
       i.className = i.classList.contains('fa-bars') ? 'fa-solid fa-bars-staggered' : i.getAttribute('data-original');

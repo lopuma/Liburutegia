@@ -31,6 +31,8 @@ let activeEyePasswordNew = false;
 let activeEyePasswordRepeat = false;
 let emailLocal = localStorage.getItem("emailLocal");
 let emailLocalReset = localStorage.getItem("emailLocalReset");
+const btnCloseAlert = document.getElementById('btnCloseAlert');
+const alertReset = document.getElementById('alert2');
 
 
 try {
@@ -56,6 +58,22 @@ try {
         inputEmailReset.value = "";
     }
 } catch (error) { }
+
+//TODO CERRAR MENSAGE VALIDATIONS
+function closeAlert() {
+    try {
+        alertReset.classList.remove('isEnable');
+    } catch (error) { }
+}
+try {
+    btnCloseAlert.addEventListener('click', () => {
+        closeAlert();
+    })
+    setTimeout(() => {
+        closeAlert();
+    }, 5000);
+} catch (error) { }
+
 
 // TODO FUNCION PARA MOSTRAR O OCULTAR PASSWORD
 async function showPassword(btnEye, elementInput) {

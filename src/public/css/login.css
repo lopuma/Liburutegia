@@ -445,13 +445,6 @@ hr {
     font-weight: 400;
 }
 
-#alert2{
-    display: none;
-}
-
-#alert2.isEnable{
-    display: block;
-}
 /* Móviles en vertical
      ------------------------------------------------------------------------- */
 @media screen and (max-width: 59.375em) {

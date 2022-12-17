@@ -6,7 +6,6 @@ setTimeout(() => {
 }, "1600");
 
 async function loadData() {
-  console.log("loading");
     $(document).ready(function() {
       $("#tableBooking").DataTable({
         responsive: true,
@@ -42,7 +41,6 @@ async function loadData() {
     //         {
     //           data: 'fecha_entrega',
     //           render: function (data, type) {
-    //             console.log(data)
     //             var fecha = new Date(data);
     //             return fecha.getFullYear() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getDate();
     //           }
@@ -118,7 +116,6 @@ async function loadData() {
         dni = $.trim($('#dni').val());
         deliver_date = $.trim($('#deliver_date').val());
         if (opcion == 'edit') {
-          console.log("EDITAR");
           $.ajax({
             url: url + bookingID,
             method: 'put',

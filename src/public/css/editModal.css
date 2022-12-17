@@ -4,6 +4,15 @@
     border-radius: var(--Radius);
 }
 
+.modal-dialog {
+    overflow-y: initial !important
+}
+
+.modal-body {
+    height: 250px;
+    overflow-y: auto;
+}
+
 @media screen and (max-width: 950px) {
 
 .show

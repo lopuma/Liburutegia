@@ -92,18 +92,6 @@
         const deliver_date_review = new Intl.DateTimeFormat("en-US").format(fecha);
         let dateActual = new Date();
         dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
-        console.log({
-            activoFijo,
-            fecha,
-            idBook,
-            idBooking,
-            score,
-            review,
-            url,
-            deliver_date_review,
-            dateActual,
-            valueCount
-        });
         const data = {
             idBooking,
             score,

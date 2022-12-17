@@ -4,6 +4,10 @@ const fieldErrs = document.querySelectorAll(".fieldErr");
 const fieldErrTexts = document.querySelectorAll(".fieldErrText");
 const inputBox = document.querySelectorAll(".Input-box");
 const inputNEW = document.getElementById("inputNEW");
+var chageDni = false;
+var chageName = false;
+var chageLastname = false;
+let optionForm = "";
 
 const field = {
     dni: false,
@@ -36,57 +40,12 @@ const textError = {
         "[ ERROR ] : The username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces."
 };
 
-async function dataPartner() {
-    const index = selectDni.selectedIndex;
-    const actualDate = new Date();
-    const date = moment(actualDate).format("YYYY-MM-DD HH:mm");
-    const data = { 
-        inputPartnerID: $.trim($("#partnerID").val()),
-        inputDni: $.trim($("#inputDni").val()), 
-        inputName: $.trim($("#inputName").val()), 
-        inputScanner: $.trim($("#inputScanner").val()), 
-        inputLastname: $.trim($("#inputLastname").val()), 
-        inputDirection: $.trim($("#inputDirection").val()), 
-        inputPopulation: $.trim($("#inputPopulation").val()), 
-        inputPhone: $.trim($("#inputPhone").val()), 
-        inputPhoneLandline: $.trim($("#inputPhoneLandline").val()), 
-        inputEmail: $.trim($("#inputEmail").val()), 
-        actualDate: date, 
-        updateDate: date };
-    if (inputDniCheck.checked) {
-        if (index === -1 || index === undefined) return;
-        if (index === 0) {
-            window.alert("Please select a DNI, to add to your partner list.");
-            return;
-        }
-        const opcionSeleccionada = selectDni.options[index];
-        let idPartnerFamily = opcionSeleccionada.value;
-        let dniPartner = opcionSeleccionada.text;
-        data.partnerID = idPartnerFamily;
-        data.partnerDni = dniPartner;
-        addNewPartner(data);
-        selectDni.focus();
-    } else {
-        //const opcionSeleccionada = selectDni.options[index];
-        let idPartnerFamily = null
-
-        //TODO AQUI CAMBIAR 🍒
-        let dniPartner = "73275889M";
-        data.partnerID = idPartnerFamily;
-        data.partnerDni = dniPartner;
-        addNewPartner(data);
-    }
-}
-
-var chageDni = false;
-var chageName = false;
-var chageLastname = false;
-
 // TODO ✅ VALIDAR FORMULARIOS
 async function correctForms(e) {
     e.preventDefault();
     if (inputNEW.checked) {
         if (field.dni && field.name && field.lastname) {
+            optionForm = 'newPartner';
             dataPartner();
         } else {
             window.alert("There are items required your attention.");
@@ -122,6 +81,7 @@ async function correctForms(e) {
         });
         if (chageDni || chageName || chageLastname) {
             if (field.dni || field.name || field.lastname) {
+                optionForm = 'updatePartner';
                 dataPartner();
             } else {
                 window.alert("There are items required your attention.");
@@ -152,16 +112,58 @@ async function correctForms(e) {
                 }
             }
         } else {
+            optionForm = 'updatePartner';
             dataPartner();
         }
     }
 }
 
-//TODO ✅ ADD NEW PARTNER
+// TODO ✅ OBTENER DATA FORMULARIOS PARA ADD
+async function dataPartner() {
+    const index = selectDni.selectedIndex;
+    const actualDate = new Date();
+    const date = moment(actualDate).format("YYYY-MM-DD HH:mm");
+    const data = {
+        inputPartnerID: $.trim($("#partnerID").val()),
+        inputDni: $.trim($("#inputDni").val()),
+        inputName: $.trim($("#inputName").val()),
+        inputScanner: $.trim($("#inputScanner").val()),
+        inputLastname: $.trim($("#inputLastname").val()),
+        inputDirection: $.trim($("#inputDirection").val()),
+        inputPopulation: $.trim($("#inputPopulation").val()),
+        inputPhone: $.trim($("#inputPhone").val()),
+        inputPhoneLandline: $.trim($("#inputPhoneLandline").val()),
+        inputEmail: $.trim($("#inputEmail").val()),
+        actualDate: date,
+        updateDate: date
+    };
+    if (inputDniCheck.checked) {
+        if (index === -1 || index === undefined) return;
+        if (index === 0) {
+            window.alert("Please select the DNI of the associated family member.");
+            return;
+        }
+        const opcionSeleccionada = selectDni.options[index];
+        const idPartnerFamily = opcionSeleccionada.value;
+        const dniPartner = opcionSeleccionada.text;
+        data.partnerID = idPartnerFamily;
+        data.partnerDni = dniPartner;
+        addNewPartner(data);
+        selectDni.focus();
+    } else {
+        const idPartnerFamily = null
+        const dniPartner = partnerActiveCheck;
+        data.partnerID = idPartnerFamily;
+        data.partnerDni = dniPartner;
+        addNewPartner(data);
+    }
+}
+
+//TODO ✅ ADD / UPDATE PARTNER
 async function addNewPartner(data) {
     let idPartner = data.idPartnerFamily;
     let partnerID = data.inputPartnerID;
-    if (inputNEW.checked) {
+    if (optionForm === 'newPartner') {
         const urlAddPartner = `/api/partners/add/${idPartner}`;
         fetch(urlAddPartner, {
             method: "POST",
@@ -173,8 +175,7 @@ async function addNewPartner(data) {
             .then(response => response.json())
             .then(data => responseAddPartner(data))
             .catch(error => console.error(error));
-    } else {
-        console.log("UPDATE", data);
+    } else if (optionForm === 'updatePartner') {
         const urlUpdate = `/api/partners/update/${partnerID}`;
         fetch(urlUpdate, {
             method: "POST",
@@ -198,7 +199,7 @@ async function responseAddPartner(data) {
             title: "Success",
             text: data.messageSuccess,
             backdrop: "#2C3333",
-            timer: 5000,
+            timer: 1500,
             showCancelButton: false,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#474E68",
@@ -220,6 +221,23 @@ async function responseAddPartner(data) {
             familyLink.classList.remove("isEnable");
             inputDni.focus();
         });
+        try {
+            setTimeout(() => {
+                $('#modalEditPartner').hide();
+                $('.modal-backdrop').hide();
+                $('#modalEditPartner').modal('hide');
+                dataTablePartners.ajax.reload();
+                $(document).on('hidden.bs.modal', function (event) {
+                    console.log({event})
+                });
+                if ($('.modal:visible').length === 0) {
+                    $('body').removeClass('modal-open');
+                    document.querySelector('.Body').style = "";
+                }
+                //TODO ===><<<<<< AQUII
+                //location.reload();
+            }, 1000);
+        } catch (error) { }
     } else {
         Swal.fire({
             icon: "error",

@@ -1,0 +1,7 @@
+#alert2 {
+    display: none;
+}
+
+#alert2.isEnable {
+    display: block;
+}

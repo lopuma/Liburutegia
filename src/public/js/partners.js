@@ -12,7 +12,7 @@ const inputPopulation = document.getElementById("inputPopulation");
 const inputPhone = document.getElementById("inputPhone");
 const inputPhoneLandline = document.getElementById("inputPhoneLandline");
 const inputEmail = document.getElementById("inputEmail");
-
+var partnerActiveCheck = "";
 
 $(".modal-title").text("EDIT PARTNER").css("font-weight", "600");
 
@@ -55,7 +55,7 @@ $(document).ready(function () {
 async function loadData() {
     const urlLoad = "/api/partners/";
     $(document).ready(() => {
-        myTable = $("#tablePartner").DataTable({
+        dataTablePartners = $("#tablePartner").DataTable({
             ajax: {
                 url: urlLoad,
                 dataSrc: "",
@@ -86,7 +86,7 @@ async function loadData() {
                             `
                             <div class="ui buttons">
                                 <button id="btnInfoPartner" onClick=infoPartner(` + data.partnerID + `) class="btn btn-outline-warning" title="Info Partner"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                                <button id="btnEditPartner" onClick=edit(` + data.partnerID + `) type="button"  class="btn btn-outline-primary" title="Edit Partner" data-toggle="modal" data-target="#modalPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button id="btnEditPartner" onClick=edit(` + data.partnerID + `) type="button"  class="btn btn-outline-primary" title="Edit Partner" data-toggle="modal" data-target="#modalEditPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
                                 <button id="btnDeletePartner" onClick=deletePartner(` + data.partnerID + `) class="btn btn-outline-danger" title="Delete Partner"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                             `
@@ -108,11 +108,16 @@ async function infoPartner(partnerID) {
 async function apiDelete(idPartner) {
     const urlDelete = `/api/partners/delete/${idPartner}`;
     fetch(urlDelete).then(() => {
-        myTable.destroy();
-        tbodyPartners.innerHTML = "";
-        setTimeout(() => {
-            loadData();
-        }, 500);
+    //     dataTablePartners.destroy();
+    //     tbodyPartners.innerHTML = "";
+    //     setTimeout(() => {
+            
+    //         loadData();
+    //     }, 500);
+        dataTablePartners.ajax.reload();
+       // setTimeout(() => {
+        //    //window.location = '/workspace/partners';
+        //}, 1000);
     });
 }
 async function deletePartner(partnerID) {
@@ -128,12 +133,13 @@ async function deletePartner(partnerID) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
     })
-        .then((result) => {
+        .then(async (result) => {
             if (result.isConfirmed) {
                 Swal.fire("Removed! partner with ID: " + idPartner,
-                    "Your Partner has been deleted.",
+                    "The partner has been REMOVED.",
                     "success",
-                    apiDelete(idPartner));
+                    "showConfirmButton",
+                    await apiDelete(idPartner));
             }
         });
 }
@@ -156,6 +162,7 @@ async function edit(partnerID) {
                     .then(response => response.json())
                     .then(async data => {
                         partner_DNI = data.data.partnerDni;
+                        partnerActiveCheck = data.data.partnerDni;
                         activeSelectDniFamily(partner_DNI);
                     });
             } else {
@@ -206,28 +213,30 @@ async function activeSelectDniFamily(partner_DNI) {
     } else {
         $("#selectDni").html("");
         familyLink.classList.remove("isEnable");
-        //inputDni.value = "";
         inputDni.focus();
     }
 }
 
+// TODO ✅ AL CAM
 inputDniCheck.addEventListener("change", () => {
     activeSelectDniFamily();
 });
 
+// TODO ✅ AÑADE UN DNI ALEATORIO AL INPUT DNI
 async function selectChange() {
     const index = selectDni.selectedIndex;
     if (index !== 0) {
         if (inputDni.value === "") {
             inputDni.value = rand_dni();
-            selectDni.focus();
+            inputDni.focus();
+            inputDni.select();
         } else {
             selectDni.focus();
         }
     }
 };
 
-// TODO AÑADE DNI DE PARTNERS
+// TODO ✅ AÑADE DNI DE PARTNERS AL SELECT
 async function obtenerDni(data, partner_DNI) {
     selectDni.innerHTML =
         '<option value="" disabled selected hidden>Select family member\'s DNI</option>';

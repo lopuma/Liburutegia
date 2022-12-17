@@ -8,7 +8,6 @@ setTimeout(() => {
 //TODO RESERVED
 async function reservedBook(bookID) {
   const idBook = bookID;
-  console.log(idBook);
 }
 
 // TODO EDITAR
@@ -80,7 +79,6 @@ async function deleteBook(bookID, count) {
 //TODO INFO
 async function infoBook(bookID) {
   const idBook = bookID;
-  console.log(idBook);
 }
 //TODO MOSTRAR
 async function loadData() {
