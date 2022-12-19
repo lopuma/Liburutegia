@@ -3,69 +3,116 @@ const closeInfos = document.querySelectorAll(".Animation-closeInfo");
 const fieldErrs = document.querySelectorAll(".fieldErr");
 const fieldErrTexts = document.querySelectorAll(".fieldErrText");
 const inputBox = document.querySelectorAll(".Input-box");
-const inputNEW = document.getElementById("inputNEW");
+const labelDniCheck = document.getElementById("labelDniCheck");
 var chageDni = false;
 var chageName = false;
 var chageLastname = false;
 let optionForm = "";
-
+var checkedNew = false;
 const field = {
     dni: false,
     //scanner: false,
     name: false,
-    lastname: false
+    lastname: false,
     //direction: false,
     //population: false,
-    //modile: false,
-    //landline: false,
-    //email: false,
+    mobile: true,
+    landline: true,
+    email: true,
 };
 
 const expresiones = {
     dni: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     name: /^[a-zA-ZÀ-ÿ\s]{4,40}$/, // Letras, numeros, guion y guion_bajo
-    lastname: /^[a-zA-ZÀ-ÿ\s]{4,40}$/ // Letras y espacios, pueden llevar acentos.
+    lastname: /^[a-zA-ZÀ-ÿ\s]{4,40}$/,// Letras y espacios, pueden llevar acentos.
     //password: /^.{5,20}$/, // 4 a 20 digitos.
     //email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    //email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    //phone: /^\d{7,14}$/ // 7 a 14 numeros.
+    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    mobile: /^\(?([0-9]{3})\)?([0-9]{3})?([0-9]{3})$/,
 };
 
 const textError = {
     dni:
-        "[ ERROR ] : The username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces.",
+        "[ ERROR ] : DNI",
     name:
-        "[ ERROR ] : The format Email address is incorrect, the email can only contain letters, numbers, periods, hyphens and underscores.",
+        "[ ERROR ] : Name field must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers.",
     lastname:
-        "[ ERROR ] : The username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces."
+        "[ ERROR ] : Last Name field It must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers.",
+    email: 
+        "[ ERROR ] : Password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.",
+    mobile:
+        "[ ERROR ] : Mobile field cannot contain letters or special characters, it must only contain [ 9 ] digits or empty.",
+    landline:
+        "[ ERROR ] : Landline field cannot contain letters or special characters, it must only contain [ 9 ] digits or empty.",
+    
 };
+
+//TODO ACTIVE CHECK DESDE EL LABEL
+labelDniCheck.addEventListener('click', () => {
+    inputDniCheck.checked ? inputDniCheck.checked = false : inputDniCheck.checked = true;
+    activeSelectDniFamily();
+});
+
+
+//TODO ACTIVAR CHECK SI ES VENTA NEW PARTNER
+try {
+    if ($('#stateNewPartner').val() === '') { // 
+        checkedNew = true;
+    }
+} catch (error) { }
+try {
+    if ($('#modalEditPartner').val() === '') { // 
+        checkedNew = false;
+    }
+} catch (error) { }
 
 // TODO ✅ VALIDAR FORMULARIOS
 async function correctForms(e) {
     e.preventDefault();
-    if (inputNEW.checked) {
-        if (field.dni && field.name && field.lastname) {
+    if (checkedNew) {
+        console.log("EMAIL : => ", field.email)
+        console.log("MOBILE : => ", field.mobile)
+        console.log("LANDLINE : => ", field.landline)
+        if (field.dni && field.name && field.lastname && field.email && field.mobile && field.landline) {
             optionForm = 'newPartner';
             dataPartner();
         } else {
             window.alert("There are items required your attention.");
             if (!field.dni) {
-                inputDni.focus();
-                inputDni.select();
-                inputDni.classList.add("isError");
+                document.getElementById("inputDni").focus();
+                document.getElementById("inputDni").select();
+                document.getElementById("inputDni").classList.add("isError");
                 document.getElementById("infoDni").classList.add("isVisible");
                 return;
             } else if (!field.name) {
-                inputName.focus();
-                inputName.select();
-                inputName.classList.add("isError");
+                document.getElementById("inputName").focus();
+                document.getElementById("inputName").select();
+                document.getElementById("inputName").classList.add("isError");
                 document.getElementById("infoName").classList.add("isVisible");
                 return;
             } else if (!field.lastname) {
-                inputLastname.focus();
-                inputLastname.select();
-                inputLastname.classList.add("isError");
+                document.getElementById("inputLastname").focus();
+                document.getElementById("inputLastname").select();
+                document.getElementById("inputLastname").classList.add("isError");
                 document.getElementById("infoLastname").classList.add("isVisible");
+                return;
+            } else if (!field.email) {
+                inputEmailPartner.classList.add("isError");
+                document.getElementById("infoEmail").classList.add("isVisible");
+                document.getElementById("inputEmail").focus();
+                document.getElementById("inputEmail").select();
+                return;
+            } else if (!field.mobile) {
+                inputPhone.classList.add("isError");
+                document.getElementById("infoMobile").classList.add("isVisible");
+                document.getElementById("inputPhone").focus();
+                document.getElementById("inputPhone").select();
+                return;
+            } else if (!field.landline) {
+                inputPhoneLandline.classList.add("isError");
+                document.getElementById("infoPhoneLandline").classList.add("isVisible");
+                document.getElementById("inputPhoneLandline").focus();
+                document.getElementById("inputPhoneLandline").select();
                 return;
             }
         }
@@ -211,6 +258,7 @@ async function responseAddPartner(data) {
                 popup: "animate__animated animate__fadeOutUp"
             }
         }).then(response => {
+            
             $("#selectDni").html("");
             try {
                 formAddPartner.reset();
@@ -228,14 +276,16 @@ async function responseAddPartner(data) {
                 $('#modalEditPartner').modal('hide');
                 dataTablePartners.ajax.reload();
                 $(document).on('hidden.bs.modal', function (event) {
-                    console.log({event})
+                    console.log("EVENT ==> ",{event})
                 });
                 if ($('.modal:visible').length === 0) {
                     $('body').removeClass('modal-open');
                     document.querySelector('.Body').style = "";
                 }
                 //TODO ===><<<<<< AQUII
-                //location.reload();
+                if (!statePartner){
+                    location.reload();
+                }
             }, 1000);
         } catch (error) { }
     } else {
@@ -289,7 +339,12 @@ async function validateField(
     infos.forEach((info, i) => {
         infos[i].addEventListener("click", () => {
             inputBox[i].classList.add("isActiveError");
-            inputBox[i + 1].classList.add("isActiveError");
+            try {
+                inputBox[i + 1].classList.add("isActiveError");
+            } catch (error) { }
+            // try {
+            //     inputBox[i - 1].classList.add("isActiveError");
+            // } catch (error) { }
             fieldErrs[i].classList.add("isActive");
             fieldErrTexts[i].innerHTML = textError;
             infos[i].classList.remove("isVisible");
@@ -300,7 +355,12 @@ async function validateField(
     closeInfos.forEach((info, i) => {
         closeInfos[i].addEventListener("click", () => {
             inputBox[i].classList.remove("isActiveError");
-            inputBox[i + 1].classList.remove("isActiveError");
+            try {
+                inputBox[i + 1].classList.remove("isActiveError");
+            } catch (error) { }
+            // try {
+            //     inputBox[i - 1].classList.remove("isActiveError");
+            // } catch (error) { }
             fieldErrs[i].classList.remove("isActive");
             fieldErrTexts[i].innerHTML = "";
             closeInfos[i].classList.remove("isVisible");
@@ -336,6 +396,7 @@ async function fieldEmpty(
         input.classList.remove("isError");
         document.getElementById(info).classList.remove("isVisible");
         document.getElementById(closeInfo).classList.remove("isVisible");
+        field[inputField] = true;
     }
     return;
 }
@@ -379,17 +440,43 @@ const validateForms = async e => {
                 "closeInfoLastname"
             );
             break;
-        /*
-            case "inputPassNew":
-                let textErrorPassNew = "Error: The password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.";
-                await fieldEmpty(expresiones.password, e.target, 'validationPassNew', 'errorPassNew', textErrorPassNew, 'pass', 'infoPass', 'closeInfoPass');
-                validarPassword();
-                break;
-            case "inputPassNewRepeat":
-                validarPassword();
-                break;
-            */
-    }
+        case "inputEmail":
+            await fieldEmpty(
+                expresiones.email,
+                e.target,
+                "validationEmail",
+                "errorEmail",
+                textError.email,
+                "email",
+                "infoEmail",
+                "closeInfoEmail"
+            );
+            break;
+        case "inputPhone":
+            await fieldEmpty(
+                expresiones.mobile,
+                e.target,
+                "validationMobile",
+                "errorMobile",
+                textError.mobile,
+                "mobile",
+                "infoMobile",
+                "closeInfoMobile"
+            );
+            break;
+        case "inputPhoneLandline":
+            await fieldEmpty(
+                expresiones.mobile,
+                e.target,
+                "validationLandline",
+                "errorLandline",
+                textError.landline,
+                "landline",
+                "infoPhoneLandline",
+                "closeInfoPhoneLandline"
+            );
+            break;
+        }
 };
 
 //TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO

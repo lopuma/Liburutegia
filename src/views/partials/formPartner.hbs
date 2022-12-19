@@ -6,7 +6,7 @@
     <div class="Family-check">
         <input class="Family-checkbox" type="checkbox" id="dniCheck"
             name="dniCheck">
-        <label class="Family-label">Is it a relative?</label>
+        <label class="Family-label" id="labelDniCheck">Is it a relative?</label>
     </div>
 
     <div class="Family-links" id="familyLink">
@@ -19,8 +19,6 @@
 
 <!-- TODO CONTENIDO DEL FORMULARIO DE PARTNER -->
 <div class="New-content">
-    
-    <input type="checkbox" id="inputNEW" hidden>
 
     <input type="text" class="form-control" id="partnerID" tabindex="0" hidden>
     
@@ -249,12 +247,12 @@
                     <label class="Animation-label" for="inputPhone">Enter Phone
                         (Mobile)</label>
                     <label class="Animation-info" for="inputPhone"
-                        id="infoPhone"><i class="fa-solid fa-circle-info"></i></label>
+                        id="infoMobile"><i class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo" for="inputPhone"
-                        id="closeInfoPhone"><i class="fa-solid fa-circle-info"></i></label>
+                        id="closeInfoMobile"><i class="fa-solid fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
+            <div class="Input-error Error fieldErr" id="validationMobile">
                 <div class="Error-icon">
                     <svg fill="currentColor" focusable="false" width="16px"
                         height="16px" viewBox="0 0 24 24"
@@ -266,7 +264,7 @@
                     </svg>
                 </div>
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Mobile cannot
+                    <span id="errorMobile" class="fieldErrText">Mobile cannot
                         be empty.</span>
                 </div>
             </div>
@@ -290,7 +288,7 @@
                             fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
+            <div class="Input-error Error fieldErr" id="validationLandline">
                 <div class="Error-icon">
                     <svg fill="currentColor" focusable="false" width="16px"
                         height="16px" viewBox="0 0 24 24"
@@ -302,7 +300,7 @@
                     </svg>
                 </div>
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Mobile cannot
+                    <span id="errorLandline" class="fieldErrText">Mobile cannot
                         be empty.</span>
                 </div>
             </div>
@@ -325,7 +323,7 @@
                         id="closeInfoEmail"><i class="fa-solid fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
+            <div class="Input-error Error fieldErr" id="validationEmail">
                 <div class="Error-icon">
                     <svg fill="currentColor" focusable="false" width="16px"
                         height="16px" viewBox="0 0 24 24"
@@ -337,7 +335,7 @@
                     </svg>
                 </div>
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Email cannot
+                    <span id="errorEmail" class="fieldErrText">Email cannot
                         be empty.</span>
                 </div>
             </div>

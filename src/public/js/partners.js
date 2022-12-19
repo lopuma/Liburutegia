@@ -11,8 +11,15 @@ const inputDirection = document.getElementById("inputDirection");
 const inputPopulation = document.getElementById("inputPopulation");
 const inputPhone = document.getElementById("inputPhone");
 const inputPhoneLandline = document.getElementById("inputPhoneLandline");
-const inputEmail = document.getElementById("inputEmail");
+const inputEmailPartner = document.getElementById("inputEmail");
 var partnerActiveCheck = "";
+let statePartner = false;
+//TODO ACTIVAR CHECK SI ESTA ACTIVA VENTANA PARTNER
+try {
+    if ($('#statePartners').val() === '') { // 
+        statePartner = true;
+    }
+} catch (error) { }
 
 $(".modal-title").text("EDIT PARTNER").css("font-weight", "600");
 
@@ -43,7 +50,7 @@ setTimeout(() => {
     loadData();
     try {
         document.getElementById("spinner").style.display = "none";
-    } catch (error) {}
+    } catch (error) { }
 }, "1600");
 
 //TODO ✅ SELECT 
@@ -108,16 +115,14 @@ async function infoPartner(partnerID) {
 async function apiDelete(idPartner) {
     const urlDelete = `/api/partners/delete/${idPartner}`;
     fetch(urlDelete).then(() => {
-    //     dataTablePartners.destroy();
-    //     tbodyPartners.innerHTML = "";
-    //     setTimeout(() => {
-            
-    //         loadData();
-    //     }, 500);
-        dataTablePartners.ajax.reload();
-       // setTimeout(() => {
-        //    //window.location = '/workspace/partners';
-        //}, 1000);
+        dataTablePartners.ajax.reload( null, false );
+        setTimeout(() => {
+            try {
+                if ($('#stateInfoPartner').val() === '') { // 
+                    window.location = `/workspace/partners/`;
+                }
+            } catch (error) { }
+        }, 1000);
     });
 }
 async function deletePartner(partnerID) {
@@ -218,9 +223,9 @@ async function activeSelectDniFamily(partner_DNI) {
 }
 
 // TODO ✅ AL CAM
-inputDniCheck.addEventListener("change", () => {
-    activeSelectDniFamily();
-});
+// inputDniCheck.addEventListener("change", () => {
+//     activeSelectDniFamily();
+// });
 
 // TODO ✅ AÑADE UN DNI ALEATORIO AL INPUT DNI
 async function selectChange() {

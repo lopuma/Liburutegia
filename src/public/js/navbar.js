@@ -28,7 +28,6 @@ window.onload = onLoad();
 function onLoad() {
   try {
     // HOME
-
     if ($('#stateHome').val() === '') { // 
       btnHome.classList.add('isSelected');
       btnHomeSidemenu.classList.add('isSelected');

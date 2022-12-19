@@ -1,12 +1,11 @@
 <link rel="stylesheet" href="/style/new.css">
 
-<div class="New">
+<div class="New" id="stateNewPartner">
     <!-- TODO TITTLE FLAG NEW `PARTNER` -->
     <div class="New-title">
         <h1 class="New-h1">Add New Partner</h1>
     </div>
     <div class="New-flag"></div>
-
     <!-- TODO FORMULARIO DE AÑADIR NUEVO PARTNER -->
     <form class="New-form" id="formAddPartner" name"formAddPartner">
 
@@ -38,9 +37,4 @@
             formAddPartner.addEventListener("submit", correctForms);
         });
     } catch(error) {}
-
-    try {
-        inputNEW.checked = true;
-    } catch (error) { }
-
 </script>

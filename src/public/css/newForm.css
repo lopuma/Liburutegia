@@ -21,6 +21,12 @@
     width: 50%;
 }
 
+.Family-check input,
+.Family-check label {
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .Family-label {
     margin: 0 1em;
     padding: 0;
@@ -90,7 +96,7 @@
 }
 
 .Input-box.isActiveError {
-    height: 9.375em;
+    height: 11em;
     margin: 0;
 }
 

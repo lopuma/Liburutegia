@@ -19,7 +19,7 @@ const partnerController = {
             .withMessage("please enter only letters")
             .isLength({ min: 4, max: 40 })
             .withMessage(
-                "Full Name must have 4 to 40 digits and can contain letters, accents and spaces, cannot contain special characters."
+                "The Names field must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers."
             ),
         body("inputLastname")
             .trim()
@@ -30,7 +30,7 @@ const partnerController = {
             .withMessage("please enter only letters")
             .isLength({ min: 4, max: 40 })
             .withMessage(
-                "Full Name must have 4 to 40 digits and can contain letters, accents and spaces, cannot contain special characters."
+                "The Last Name field It must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers."
             )
     ],
 
@@ -325,11 +325,11 @@ const partnerController = {
     deletePartner: async (req, res) => {
         try {
             const partnerID = req.params.idPartner;
-            deleteBookins = [
-                `SELECT dni FROM partners WHERE partnerID = ${partnerID}`,
-                `DELETE FROM partners WHERE partnerID = ${partnerID}`
-            ];
-            await connection.query(deleteBookins.join(";"), async (err, results) => {
+            var dniPartner = "";
+            var dniFamily = "";
+            // Obtiene el dni del partner a ELIMINAR
+            const sqlDniPartner = `SELECT dni FROM partners WHERE partnerID = ${partnerID}`;
+            await connection.query(sqlDniPartner, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -338,23 +338,92 @@ const partnerController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                if(results.length !== 0) {
-                    const familyDni = results[0][0].dni;
-                    const sqlDeleteFamily = "DELETE FROM familys WHERE familyDni=?";
-                    await connection.query(sqlDeleteFamily, familyDni, (err, results) => {
-                        if (err) {
-                            console.error("[ DB ]", err.sqlMessage);
-                            return res.status(400).send({
-                                success: false,
-                                messageErrBD: err,
-                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                dniPartner = results[0].dni;
+                //Obtiene el dni de los familiares que tenia asignado
+                const sqlDniFamily = 'SELECT f.familyDni as familyDni FROM familys f INNER JOIN partners p ON p.dni=f.partnerDni WHERE p.dni=?';
+                await connection.query(sqlDniFamily, dniPartner, async (err, results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res.status(400).send({
+                            success: false,
+                            messageErrBD: err,
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                        });
+                    }
+                    //UPDATE ACTIVE FAMILY SI NO TIENE MAS RELACION
+                    if (results.length === 1) {
+                        dniFamily = results[0].familyDni;
+                        const sqlExistFamily = "SELECT * FROM familys WHERE familyDni=?";
+                        connection.query(sqlExistFamily, dniFamily, async (err, results) => {
+                            if (err) {
+                                console.error("[ DB ]", err.sqlMessage);
+                                return res.status(400).send({
+                                    success: false,
+                                    messageErrBD: err,
+                                    errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                });
+                            };
+                            if (results.length === 0){
+                                const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
+                                await connection.query(sqlUpdateActiveFamily, dniFamily, (err, results) => {
+                                    if (err) {
+                                        console.error("[ DB ]", err.sqlMessage);
+                                        return res.status(400).send({
+                                            success: false,
+                                            messageErrBD: err,
+                                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                        });
+                                    };
+                                });
+                            };
+                        });
+                    };
+                    //UPDATE ACTIVE FAMILY SI NO TIENE MAS RELACION
+                    if (results.length >= 2) {
+                        dniFamily = results[0].familyDni;
+                        let dataFamilys = results;                        
+                        dataFamilys.forEach(async (element) => {
+                            const sqlExistFamily = "SELECT * FROM familys WHERE familyDni=?";
+                            await connection.query(sqlExistFamily, element.familyDni, async (err, results) => {
+                                if (err) {
+                                    console.error("[ DB ]", err.sqlMessage);
+                                    return res.status(400).send({
+                                        success: false,
+                                        messageErrBD: err,
+                                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                    });
+                                };
+                                if (results.length === 0){
+                                    const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
+                                    await connection.query(sqlUpdateActiveFamily, element.familyDni, (err, results) => {
+                                        if (err) {
+                                            console.error("[ DB ]", err.sqlMessage);
+                                            return res.status(400).send({
+                                                success: false,
+                                                messageErrBD: err,
+                                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                            });
+                                        }
+                                    });
+                                }
                             });
-                        }
+                        });
+                    };
+                });
+                sqlDeletePartner = `DELETE FROM partners WHERE partnerID = ${partnerID}`;
+                await connection.query(sqlDeletePartner, async (err, results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res.status(400).send({
+                            success: false,
+                            messageErrBD: err,
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                        });
+                    }
+                    return res.status(200).send({
+                        succes: true,
+                        messageSuccess: `The partner has been REMOVED, with ID: ${partnerID}`
                     });
-                }
-                return res.status(200).send({
-                    succes: true,
-                    messageSuccess: `The partner has been REMOVED, with ID: ${partnerID}`
                 });
             });
         } catch (error) {
@@ -368,7 +437,9 @@ const partnerController = {
         try {
             const errors = validationResult(req);
             const idPartner = req.params.idPartner;
+
             const sqlUpdate = `UPDATE partners SET ? WHERE partnerID = ${idPartner}`;
+
             const {
                 inputDni: dni,
                 inputScanner: scanner,
@@ -383,8 +454,8 @@ const partnerController = {
                 inputPhone: phone1,
                 inputPhoneLandline: phone2
             } = req.body;
-            
-            let phonea = phone1 ?  parseInt(phone1) : null;
+
+            let phonea = phone1 ? parseInt(phone1) : null;
             let phoneb = phone2 ? parseInt(phone2) : null;
             let activeFamily = 0;
             let partnerDataUpdate = [{
@@ -409,7 +480,7 @@ const partnerController = {
                 partnerID === "" ||
                 partnerDni === undefined ||
                 partnerID === undefined
-            ) { 
+            ) {
                 const updatedDataAddPartner = partnerDataUpdate.map(data => ({
                     ...data,
                     activeFamily: 0
@@ -436,7 +507,7 @@ const partnerController = {
                                 });
                             }
                             if (results.length !== 0) {
-                                sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=1 WHERE dni=?";
+                                const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=1 WHERE dni=?";
                                 await connection.query(sqlUpdateActiveFamily, dni, (err, results) => {
                                     if (err) {
                                         console.error("[ DB ]", err.sqlMessage);
@@ -478,7 +549,7 @@ const partnerController = {
                                 errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                             });
                         }
-                        if(exists.length === 0) {
+                        if (exists.length === 0) {
                             await connection.query(
                                 sqlInsertFamily,
                                 {
@@ -517,7 +588,7 @@ const partnerController = {
                             });
                         });
                     }
-                );  
+                );
             }
         } catch (error) {
             console.error(error);
