@@ -8,7 +8,7 @@ const inputPasswordRepeat = document.getElementById('inputPasswordRepeat');
 const inputEmailReset = document.getElementById('inputEmailReset');
 const formReset = document.getElementById('formReset');
 const validationEmail = document.getElementById("validationEmail");
-const email = document.getElementById('email');
+const inputEmailLogin = document.getElementById('inputEmailLogin');
 const validationEmailReset = document.getElementById('validationEmailReset');
 const validationPassword = document.getElementById("validationPassword");
 const validationPasswordNew = document.getElementById('validationPasswordNew');
@@ -37,15 +37,15 @@ const alertReset = document.getElementById('alert2');
 
 try {
     if (emailLocal) {
-        email.value = emailLocal;
-        email.focus();
-        email.select();
+        inputEmailLogin.value = emailLocal;
+        inputEmailLogin.focus();
+        inputEmailLogin.select();
     } else if (emailLocalReset) {
-        email.value = emailLocalReset;
-        email.focus();
-        email.select();
+        inputEmailLogin.value = emailLocalReset;
+        inputEmailLogin.focus();
+        inputEmailLogin.select();
     } else {
-        email.value = "";
+        inputEmailLogin.value = "";
     }
 } catch (error) { }
 
@@ -119,7 +119,7 @@ async function showPasswordRepeat(btnEye, elementInput) {
             elementInput.type = 'password';
             btnEye.classList.replace('fa-eye-slash', 'fa-eye');
             activeEyePasswordRepeat = false;
-        }, [1 * 60] * 1000);
+        }, [1 * 60] * 1000); // 1 minuto
     } else if (activeEyePasswordRepeat) {
         elementInput.type = 'password';
         btnEye.classList.replace('fa-eye-slash', 'fa-eye');
@@ -182,14 +182,14 @@ linkForgot.addEventListener('click', () => {
     btnReset.classList.remove('isEnable')
     btnReset.classList.add('isDisable')
     clearInputs();
-    email.value = "";
-    email.focus();
+    inputEmailLogin.value = "";
+    inputEmailLogin.focus();
 });
 
 // TODO VALIDATE ALL INPUTS
 function validationsInputs() {
     if (inputEmailReset.value.length === 0 && inputsExists.classList.contains('isExists')) {
-        errorEmailReset.innerHTML = 'The email cannot be empty.';
+        errorEmailReset.innerHTML = 'Email cannot be empty.';
         validationEmailReset.classList.add('isActive');
         inputEmailReset.classList.add('isError');
         validationPasswordRepeat.classList.remove('isActive');
@@ -202,14 +202,14 @@ function validationsInputs() {
     }
     // TODO CHECK
     if (inputEmailReset.value.length === 0 && !inputsExists.classList.contains('isExists')) {
-        errorEmailReset.innerHTML = 'The email cannot be empty.';
+        errorEmailReset.innerHTML = 'Email cannot be empty.';
         validationEmailReset.classList.add('isActive');
         inputEmailReset.classList.add('isError');
         inputEmailReset.focus();
         formReset.style.height = '27em';
         return false;
     } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(inputEmailReset.value) && !inputsExists.classList.contains('isExists')) {
-        messageValidation.innerHTML = 'The format email address is incorrect.';
+        messageValidation.innerHTML = 'The Format Email address is incorrect.';
         alert2.classList.add('isEnable');
         validationEmailReset.classList.remove('isActive');
         inputEmailReset.classList.remove('isError')
@@ -274,7 +274,7 @@ function validationsInputs() {
 async function checkedUser() {
     try {
         const data = {
-            emailReset: inputEmailReset.value
+            emailReset: inputEmailReset.value.toLowerCase().trim()
         }
         fetch(url, {
             method: 'POST',
@@ -395,15 +395,15 @@ async function resetResponse(data) {
         })
         try {
             validationEmail.classList.remove("isActive");
-            email.classList.remove("isError");
+            inputEmailLogin.classList.remove("isError");
         } catch (error) { }
         try {
             validationPassword.classList.remove("isActive");
             inputPassword.classList.remove("isError");
         } catch (error) { }
-        email.value = emailLocalReset;
-        email.focus();
-        email.select();
+        inputEmailLogin.value = emailLocalReset;
+        inputEmailLogin.focus();
+        inputEmailLogin.select();
         return;
     }
 };
@@ -420,7 +420,7 @@ btnReset.addEventListener('click', async (e) => {
 });
 
 botonLogin.addEventListener('click', (e) => {
-    emailError = email.value;
+    emailError = inputEmailLogin.value;
     localStorage.setItem("emailLocal", emailError);
 });
 

@@ -105,6 +105,7 @@ async function loadData() {
     });
 }
 
+var _PARTNERID = "";
 //TODO ✅ INFO PARTNER
 async function infoPartner(partnerID) {
     const idPartner = partnerID;

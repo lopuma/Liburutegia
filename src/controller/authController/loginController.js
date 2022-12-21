@@ -9,7 +9,7 @@ const { body, validationResult } = require('express-validator');
 const loginController = {
     // TODO ✅ VALIDA USUER E MAIL
     validate: [
-        body("email", "The format email address is incorrect.").exists().isEmail(),
+        body("inputEmailLogin", "The format email address is incorrect,\nFormat correct is 'example@example.com' and without space please.").exists().isEmail().trim(),
         body(
             "inputPassword",
             "Password must contain the following: Minimun 5 characters."
@@ -49,16 +49,15 @@ const loginController = {
         }
     },
 
-    userExists: async (req, res) => {
-
-    },
-
     // TODO ✅ AUTHENTICATION Y REDIRIGE A LA RUTA DEPENDE EL ROL
     postLogin: async (req, res) => {
         try {
             const errors = validationResult(req);
-            const { email, inputPassword: pass } = req.body;
-
+            const { inputEmailLogin: email, inputPassword: pass } = req.body;
+            console.log({
+                email,
+                pass
+            })
             if (!errors.isEmpty()) {
                 req.flash("errorValidation", errors.array());
                 return res.status(300).redirect("/login");

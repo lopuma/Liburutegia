@@ -109,7 +109,7 @@
     background-color: var(--Color-texto-blanco);
     margin-right: 2.5em;
     animation: text-anim 1s ease;
-    height: 31em;
+    height: 34em;
 }
 
 .Reset {

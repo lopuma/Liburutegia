@@ -1,10 +1,7 @@
-const { isAuthenticated } = require('../../controller/authController/loginController')
-
 const {
     validate,
     getLogin,
     postLogin,
-    userExists
 } = require("../../controller/authController/loginController");
 
 // TODO 👌 

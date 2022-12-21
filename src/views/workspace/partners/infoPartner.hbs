@@ -83,7 +83,19 @@
                     {{#each partner}}
                         <div class="ColumnA">
                             <h3 class="Column-h3">Partner ID: </h3>
-                            <span class="Column-span">0000{{this.partnerID}}</span>
+                            <span class="Column-span" id="zerosID">
+                                <script>
+                                    function fillZeros(id){
+                                        let num = id.toString()
+                                        let large = 12
+                                        for(let i = 0;i<(large-num.length);i++){
+                                            num="0"+num
+                                        }
+                                        return num
+                                    }
+                                    document.getElementById("zerosID").innerHTML = fillZeros({{this.partnerID}});
+                                </script>
+                            <span>
                         </div>
                         <div class="ColumnB">
                             <h3 class="Column-h3">Created At: </h3>
@@ -295,8 +307,7 @@
 
 <script defer src="/scripts/partners.js"></script>
 
-<script>
-    const editBtn = document.querySelector(".edit");
+<script defer>
     const sliderCard = document.querySelectorAll(".Slider-card");
     const sliderButton = document.querySelectorAll(".Slider-a");
     const linesButton = document.querySelectorAll(".Slider-btn");
@@ -307,6 +318,7 @@
     const infoBloqueActive = document.getElementById("infoBloqueActive");
     const bloqueInfo = document.getElementById("bloqueInfo");
     let indice = 1;
+
 
     //TODO ✅ CARGA DATA FAMILY
     $(document).ready(function () {
@@ -658,6 +670,6 @@
 
     async function reservedBook(partnerID) {
         const idPartner = partnerID;
-    }
-
+        console.log({ idPartner });
+    };
 </script>

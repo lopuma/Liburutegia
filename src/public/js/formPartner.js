@@ -235,16 +235,16 @@ async function dataPartner() {
     const actualDate = new Date();
     const date = moment(actualDate).format("YYYY-MM-DD HH:mm");
     const data = {
-        inputPartnerID: $.trim($("#partnerID").val()),
-        inputDni: $.trim($("#inputDni").val()),
-        inputName: $.trim($("#inputName").val()),
-        inputScanner: $.trim($("#inputScanner").val()),
-        inputLastname: $.trim($("#inputLastname").val()),
-        inputDirection: $.trim($("#inputDirection").val()),
-        inputPopulation: $.trim($("#inputPopulation").val()),
-        inputPhone: $.trim($("#inputPhone").val()),
-        inputPhoneLandline: $.trim($("#inputPhoneLandline").val()),
-        inputEmail: $.trim($("#inputEmail").val()),
+        inputPartnerID: $.trim($("#partnerID").val().trim()),
+        inputDni: $.trim($("#inputDni").val().toUpperCase().trim()),
+        inputName: $.trim($("#inputName").val().trim()),
+        inputScanner: $.trim($("#inputScanner").val().trim()),
+        inputLastname: $.trim($("#inputLastname").val().trim()),
+        inputDirection: $.trim($("#inputDirection").val().trim()),
+        inputPopulation: $.trim($("#inputPopulation").val().trim()),
+        inputPhone: $.trim($("#inputPhone").val().trim()),
+        inputPhoneLandline: $.trim($("#inputPhoneLandline").val().trim()),
+        inputEmail: $.trim($("#inputEmail").val().toLowerCase().trim()),
         actualDate: date,
         updateDate: date
     };

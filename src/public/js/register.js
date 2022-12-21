@@ -69,7 +69,7 @@ async function responseRegister(data) {
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: data.message,
+            text: data.messageSuccess,
             backdrop: '#2C3333',
             timer: 5000,
             showCancelButton: false,
@@ -90,7 +90,7 @@ async function responseRegister(data) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: data.message,
+            text: data.messageError,
             backdrop: '#2C3333',
             timer: 5000,
             showCancelButton: false,
@@ -188,7 +188,7 @@ async function fieldEmpty(
 const validateForms = async (e) => {
     switch (e.target.name) {
         case "inputEmailNew":
-            await fieldEmpty(expresiones.email, e.target, 'validationEmailNew', 'errorEmailNew', textError.email, 'emailI', 'infoEmail', 'closeInfoEmail');
+            await fieldEmpty(expresiones.email, e.target, 'validationEmailNew', 'errorEmailNew', textError.email, 'email', 'infoEmail', 'closeInfoEmail');
             break;
         case "inputUsername":
             await fieldEmpty(expresiones.username, e.target, 'validationUserName', 'errorUserName', textError.username, 'username', 'infoUsername', 'closeInfoUsername');
@@ -223,20 +223,20 @@ async function correctForms(e) {
     e.preventDefault();
     if (field.email && field.username && field.fullname && field.pass) {
         const data = {
-            email: inputEmailNew.value,
-            username: inputUsername.value,
-            fullname: inputFullName.value,
+            email: inputEmailNew.value.trim(),
+            username: inputUsername.value.toUpperCase().trim(),
+            fullname: inputFullName.value.trim(),
             rol: document.getElementById("rol").value,
-            pass: inputPassNew.value
+            pass: inputPassNew.value.trim()
         };
         addNewUser(data);
     } else {
         window.alert("There are items required your attention.")
         if (!field.email) {
+            document.getElementById('inputEmailNew').classList.add('isError');
+            document.getElementById('infoEmail').classList.add('isVisible');
             inputEmailNew.focus();
             inputEmailNew.select();
-            inputEmailNew.classList.add('isError');
-            document.getElementById('infoEmail').classList.add('isVisible');
             return;
         } else if (!field.username) {
             inputUsername.focus();
