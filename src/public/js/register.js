@@ -34,10 +34,14 @@ const expresiones = {
 };
 
 const textError = {
-    username: "[ ERROR ] : The format Email address is incorrect, the email can only contain letters, numbers, periods, hyphens and underscores.",
-    fullname: "[ ERROR ] : The username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces.",
-    password: "[ ERROR ] : Full Name must have 4 to 40 digits and can contain letters, accents and spaces, cannot contain special characters.",
-    email: "[ ERROR ] : The password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.",
+    username: 
+        "[ ERROR ] : Username must be between 4 and 16 digits and can only contain numbers, letters, and underscores and cannot contain spaces.",
+    fullname: 
+        "[ ERROR ] : Full name field must be between 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers.",
+    password: 
+        "[ ERROR ] : Password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.",    
+    email: 
+        "[ ERROR ] : The format Email address is incorrect, the Email can only contain letters, numbers, periods, hyphens and underscores."
 };
 
 const validarPassword = () => {

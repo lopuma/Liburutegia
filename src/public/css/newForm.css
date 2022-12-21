@@ -42,6 +42,12 @@
     width: 50%;
 }
 
+.Family-links {
+    display: none;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+
 .Family-links span {
     width: 100% !important;
     font-size: 1em;
@@ -51,12 +57,9 @@
     color: gray;
 }
 
-.Family-links {
-    display: none;
-}
-
 .Family-links.isEnable {
     display: flex;
+    opacity: 1;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
@@ -96,7 +99,7 @@
 }
 
 .Input-box.isActiveError {
-    height: 11em;
+    height: 13em;
     margin: 0;
 }
 
@@ -223,7 +226,8 @@
 
 .Error {
     width: 100%;
-    margin: .5em 0 0;
+    height: auto;
+    margin: 1em 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -311,6 +315,8 @@
         padding: 1em 0;
     }
 
+    
+
     .New-boxes {
         width: 100%;
         padding: 0;
@@ -351,6 +357,7 @@
     .Family {
         padding: 1em 0 1em .5em;
         flex-direction: column;
+        height: auto;
     }
 
     .Family-check,

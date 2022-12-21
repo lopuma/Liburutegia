@@ -26,26 +26,93 @@ const expresiones = {
     name: /^[a-zA-ZÀ-ÿ\s]{4,40}$/, // Letras, numeros, guion y guion_bajo
     lastname: /^[a-zA-ZÀ-ÿ\s]{4,40}$/,// Letras y espacios, pueden llevar acentos.
     //password: /^.{5,20}$/, // 4 a 20 digitos.
-    //email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+    //email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     mobile: /^\(?([0-9]{3})\)?([0-9]{3})?([0-9]{3})$/,
 };
 
 const textError = {
     dni:
-        "[ ERROR ] : DNI",
+        "[ ERROR ] : The DNI must be written in full, with the initial [8] digits and the final letter, without spaces or hyphens. Example 73523821F and not 73523821-F.<br/>[ ERROR ] : The NIE must be written with the initial X or T, all the numbers and the final letter, without spaces or hyphens.Example: X0523821F.",
     name:
-        "[ ERROR ] : Name field must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers.",
+        "[ ERROR ] : Name field must be between 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers.",
     lastname:
-        "[ ERROR ] : Last Name field It must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers.",
+        "[ ERROR ] : Last Name field must be between 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers.",
     email: 
-        "[ ERROR ] : Password does not meet the requirements of the password policy, it must be between 5 and 20 digits, it can contain letters, numbers and special characters.",
+        "[ ERROR ] : The format Email address is incorrect, the Email can only contain letters, numbers, periods, hyphens and underscores.",
     mobile:
         "[ ERROR ] : Mobile field cannot contain letters or special characters, it must only contain [ 9 ] digits or empty.",
     landline:
         "[ ERROR ] : Landline field cannot contain letters or special characters, it must only contain [ 9 ] digits or empty.",
     
 };
+
+//TODO ✅ VALIDAR DNI ESPAÑOL
+async function checkElement(elemID) {
+    var elem = document.getElementById(elemID);
+    document
+        .getElementById("infoDni")
+        .addEventListener("click", () => {
+            inputBox[0].classList.add("isActiveError");
+            inputBox[1].classList.add("isActiveError");
+            document.getElementById("validationDni").classList.add("isActive");
+            document.getElementById("errorDni").innerHTML = textError.dni;
+            document
+                .getElementById("infoDni").classList.remove("isVisible");
+            document
+                .getElementById("closeInfoDni").classList.add("isVisible");
+        });
+    document
+        .getElementById("closeInfoDni")
+        .addEventListener("click", () => {
+            inputBox[0].classList.remove("isActiveError");
+            inputBox[1].classList.remove("isActiveError");            document.getElementById("validationDni").classList.remove("isActive");
+            document.getElementById("errorDni").innerHTML = "";
+            document
+                .getElementById("closeInfoDni").classList.remove("isVisible");
+            document
+                .getElementById("infoDni").classList.add("isVisible");
+        });
+    if (validateDni(elem.value.trim(), elemID) || elem.value.trim() == "") {
+        elem.classList.remove("isError");
+        document.getElementById('infoDni').classList.remove("isVisible");
+        field['dni'] = true;
+        return true;
+    } else {
+        elem.classList.add("isError");
+        document.getElementById('infoDni').classList.add("isVisible");
+        field['dni'] = false;
+        $('errorDni').innerHTML = textError.dni;
+        return false;
+    }
+    
+}
+function validateDni(value, elemID) {
+
+    if (elemID == "inputDni") {
+
+        var validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
+        var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+        var nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+        var str = value.toString().toUpperCase();
+
+        if (!nifRexp.test(str) && !nieRexp.test(str)) return false;
+
+        var nie = str
+            .replace(/^[X]/, '0')
+            .replace(/^[Y]/, '1')
+            .replace(/^[Z]/, '2');
+
+        var letter = str.substr(-1);
+        var charIndex = parseInt(nie.substr(0, 8)) % 23;
+
+        if (validChars.charAt(charIndex) === letter) return true;
+
+        return false;
+    } else {
+        return /^[a-z]{3}[0-9]{6}[a-z]?$/i.test(value);
+    }
+}
 
 //TODO ACTIVE CHECK DESDE EL LABEL
 labelDniCheck.addEventListener('click', () => {
@@ -70,9 +137,6 @@ try {
 async function correctForms(e) {
     e.preventDefault();
     if (checkedNew) {
-        console.log("EMAIL : => ", field.email)
-        console.log("MOBILE : => ", field.mobile)
-        console.log("LANDLINE : => ", field.landline)
         if (field.dni && field.name && field.lastname && field.email && field.mobile && field.landline) {
             optionForm = 'newPartner';
             dataPartner();
@@ -223,10 +287,17 @@ async function addNewPartner(data) {
             .then(data => responseAddPartner(data))
             .catch(error => console.error(error));
     } else if (optionForm === 'updatePartner') {
+        const realDate = document.getElementById("actualDate").value;
+        const dateReal = moment(realDate).format("YYYY-MM-DD 00:00");
         const urlUpdate = `/api/partners/update/${partnerID}`;
+        let partnerDataUpdate = [data];
+        const updatedDataPartner = partnerDataUpdate.map(data => ({
+            ...data,
+            actualDate: dateReal
+        }));
         fetch(urlUpdate, {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify(updatedDataPartner),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
@@ -275,14 +346,10 @@ async function responseAddPartner(data) {
                 $('.modal-backdrop').hide();
                 $('#modalEditPartner').modal('hide');
                 dataTablePartners.ajax.reload();
-                $(document).on('hidden.bs.modal', function (event) {
-                    console.log("EVENT ==> ",{event})
-                });
                 if ($('.modal:visible').length === 0) {
                     $('body').removeClass('modal-open');
                     document.querySelector('.Body').style = "";
                 }
-                //TODO ===><<<<<< AQUII
                 if (!statePartner){
                     location.reload();
                 }
@@ -336,35 +403,40 @@ async function validateField(
         field[inputField] = true;
     }
 
+
     infos.forEach((info, i) => {
-        infos[i].addEventListener("click", () => {
-            inputBox[i].classList.add("isActiveError");
-            try {
-                inputBox[i + 1].classList.add("isActiveError");
-            } catch (error) { }
-            // try {
-            //     inputBox[i - 1].classList.add("isActiveError");
-            // } catch (error) { }
-            fieldErrs[i].classList.add("isActive");
-            fieldErrTexts[i].innerHTML = textError;
-            infos[i].classList.remove("isVisible");
-            closeInfos[i].classList.add("isVisible");
-        });
+        if (infos[i].getAttribute('id') !== 'infoDni') {
+            infos[i].addEventListener("click", () => {
+                inputBox[i].classList.add("isActiveError");
+                try {
+                    inputBox[i + 1].classList.add("isActiveError");
+                } catch (error) { }
+                // try {
+                //     inputBox[i - 1].classList.add("isActiveError");
+                // } catch (error) { }
+                fieldErrs[i].classList.add("isActive");
+                fieldErrTexts[i].innerHTML = textError;
+                infos[i].classList.remove("isVisible");
+                closeInfos[i].classList.add("isVisible");
+            });
+        }
     });
 
     closeInfos.forEach((info, i) => {
-        closeInfos[i].addEventListener("click", () => {
-            inputBox[i].classList.remove("isActiveError");
-            try {
-                inputBox[i + 1].classList.remove("isActiveError");
-            } catch (error) { }
-            // try {
-            //     inputBox[i - 1].classList.remove("isActiveError");
-            // } catch (error) { }
-            fieldErrs[i].classList.remove("isActive");
-            fieldErrTexts[i].innerHTML = "";
-            closeInfos[i].classList.remove("isVisible");
-        });
+        if (closeInfos[i].getAttribute('id') !== 'closeInfoDni') {
+            closeInfos[i].addEventListener("click", () => {
+                inputBox[i].classList.remove("isActiveError");
+                try {
+                    inputBox[i + 1].classList.remove("isActiveError");
+                } catch (error) { }
+                // try {
+                //     inputBox[i - 1].classList.remove("isActiveError");
+                // } catch (error) { }
+                fieldErrs[i].classList.remove("isActive");
+                fieldErrTexts[i].innerHTML = "";
+                closeInfos[i].classList.remove("isVisible");
+            });
+        }
     });
 }
 
@@ -405,16 +477,7 @@ async function fieldEmpty(
 const validateForms = async e => {
     switch (e.target.name) {
         case "inputDni":
-            await fieldEmpty(
-                expresiones.dni,
-                e.target,
-                "validationDni",
-                "errorDni",
-                textError.dni,
-                "dni",
-                "infoDni",
-                "closeInfoDni"
-            );
+            await checkElement('inputDni');
             break;
         case "inputName":
             await fieldEmpty(
@@ -496,8 +559,3 @@ function cerrar() {
     window.location.href = "/workspace/partners";
 }
 
-try {
-    inputDniCheck.addEventListener("change", () => {
-        activeSelectDniFamily();
-    });
-} catch (error) { }

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/style/newForm.css">
 
 
-<div class="New-family Family">
+<div class="New-family Family" id="Family">
 
     <div class="Family-check">
         <input class="Family-checkbox" type="checkbox" id="dniCheck"
@@ -20,8 +20,33 @@
 <!-- TODO CONTENIDO DEL FORMULARIO DE PARTNER -->
 <div class="New-content">
 
-    <input type="text" class="form-control" id="partnerID" tabindex="0" hidden>
     
+    <div class="New-boxes" id="newBoxesID" hidden>
+        <!-- TODO PARTNER ID -->
+        <div class="Input-box" hidden>
+            <div class="Box">
+                <i class="Box-i fa-solid fa-key"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input"  type="text" id="partnerID" tabindex="0" readonly value="null">
+                    <label class="Animation-label" for="partnerID">Your Partner ID</label>
+                    <label class="Animation-info" for="partnerID" id="infoID"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="partnerID"
+                        id="closeinfoID"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+        </div>
+        <!-- TODO PARTNER ID -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="fa-solid fa-calendar-days"></i>
+                <div class="Box-animation Animation Creation-date" id="creationDate">
+                    <!-- aqui va la fecha de creacion -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="New-boxes">
         <!-- TODO DNI -->
         <div class="Input-box">
@@ -40,16 +65,6 @@
                 </div>
             </div>
             <div class="Input-error Error fieldErr" id="validationDni">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
                 <div class="Error-text">
                     <span id="errorDni" class="fieldErrText">Dni cannot be
                         empty.</span>
@@ -74,22 +89,6 @@
                             fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
-                <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Scanner cannot
-                        be empty.</span>
-                </div>
-            </div>
         </div>
     </div>
     <div class="New-boxes">
@@ -110,16 +109,6 @@
                 </div>
             </div>
             <div class="Input-error Error fieldErr" id="validationName">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
                 <div class="Error-text">
                     <span id="errorName" class="fieldErrText">Name cannot be
                         empty.</span>
@@ -145,16 +134,6 @@
                 </div>
             </div>
             <div class="Input-error Error fieldErr" id="validationLastname">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
                 <div class="Error-text">
                     <span id="errorLastname" class="fieldErrText">Lastname
                         cannot be empty.</span>
@@ -181,19 +160,9 @@
                             fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
+            <div class="Input-error Error fieldErr" id="validationDirection">
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Direction
+                    <span id="errorDirection" class="fieldErrText">Direction
                         cannot be empty.</span>
                 </div>
             </div>
@@ -216,19 +185,9 @@
                             fa-circle-info"></i></label>
                 </div>
             </div>
-            <div class="Input-error Error fieldErr" id="validationEmailNew">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
+            <div class="Input-error Error fieldErr" id="validationPopulation">
                 <div class="Error-text">
-                    <span id="errorEmailNew" class="fieldErrText">Population
+                    <span id="errorPopulation" class="fieldErrText">Population
                         cannot be empty.</span>
                 </div>
             </div>
@@ -253,16 +212,6 @@
                 </div>
             </div>
             <div class="Input-error Error fieldErr" id="validationMobile">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
                 <div class="Error-text">
                     <span id="errorMobile" class="fieldErrText">Mobile cannot
                         be empty.</span>
@@ -289,16 +238,6 @@
                 </div>
             </div>
             <div class="Input-error Error fieldErr" id="validationLandline">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
                 <div class="Error-text">
                     <span id="errorLandline" class="fieldErrText">Mobile cannot
                         be empty.</span>
@@ -324,16 +263,6 @@
                 </div>
             </div>
             <div class="Input-error Error fieldErr" id="validationEmail">
-                <div class="Error-icon">
-                    <svg fill="currentColor" focusable="false" width="16px"
-                        height="16px" viewBox="0 0 24 24"
-                        xmlns="https://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
-                            10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z">
-                        </path>
-                    </svg>
-                </div>
                 <div class="Error-text">
                     <span id="errorEmail" class="fieldErrText">Email cannot
                         be empty.</span>

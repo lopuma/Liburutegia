@@ -439,7 +439,6 @@ const partnerController = {
             const idPartner = req.params.idPartner;
 
             const sqlUpdate = `UPDATE partners SET ? WHERE partnerID = ${idPartner}`;
-
             const {
                 inputDni: dni,
                 inputScanner: scanner,
@@ -448,12 +447,13 @@ const partnerController = {
                 inputDirection: direction,
                 inputPopulation: population,
                 inputEmail: email,
+                actualDate: date,
                 updateDate,
                 partnerID,
                 partnerDni,
                 inputPhone: phone1,
                 inputPhoneLandline: phone2
-            } = req.body;
+            } = req.body[0];
 
             let phonea = phone1 ? parseInt(phone1) : null;
             let phoneb = phone2 ? parseInt(phone2) : null;
@@ -468,6 +468,7 @@ const partnerController = {
                 phone1: phonea,
                 phone2: phoneb,
                 email,
+                date,
                 updateDate,
                 activeFamily
             }];

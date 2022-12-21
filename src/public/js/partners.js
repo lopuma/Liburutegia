@@ -158,7 +158,7 @@ async function edit(partnerID) {
     let partner_DNI = "";
     fetch(urlGetPartner)
         .then(response => response.json())
-        .then(data => {
+        .then(async (data) => {
             const check = data.activeFamily;
             if (check === 1) {
                 checked = true;
@@ -172,9 +172,7 @@ async function edit(partnerID) {
                     });
             } else {
                 checked = false;
-                $("#selectDni").html("");
-                familyLink.classList.remove("isEnable");
-                inputDni.focus();
+                await disabledFamilyLink();
             }
             inputPartnerID.value = data.partnerID;
             inputDni.value = data.dni;
@@ -187,12 +185,25 @@ async function edit(partnerID) {
             inputPhoneLandline.value = data.phone2;
             inputEmail.value = data.email;
             inputDniCheck.checked = checked;
+            if(!checkedNew) {
+                document.getElementById('newBoxesID').removeAttribute('hidden');
+                document.getElementById("creationDate").innerHTML = `
+                    <input class="Animation-input" type="date" id="actualDate" value='${moment(data.date).format("YYYY-MM-DD")}'>
+                    <label class="Animation-label" for="date">Creation Date</label>
+                `;
+            }
             $(".modal-header").css(
                 "background-color",
                 "var(--Background-Color-forms-partner)"
             );
             $(".modal-header").css("color", "white");
         });
+}
+
+async function disabledFamilyLink() {
+    $("#selectDni").html("");
+    familyLink.classList.remove("isEnable");
+    inputDni.focus();
 }
 
 async function activeSelectDniFamily(partner_DNI) {
@@ -213,19 +224,19 @@ async function activeSelectDniFamily(partner_DNI) {
                         "There is no record in partners, to associate."
                     )
                 );
-        }, 500);
-        familyLink.classList.add("isEnable");
+            familyLink.classList.add("isEnable");
+            }, 500);
     } else {
-        $("#selectDni").html("");
-        familyLink.classList.remove("isEnable");
-        inputDni.focus();
+        await disabledFamilyLink();
     }
 }
 
-// TODO ✅ AL CAM
-// inputDniCheck.addEventListener("change", () => {
-//     activeSelectDniFamily();
-// });
+// TODO ✅ AL CAMBIAR CHECK
+try {
+    inputDniCheck.addEventListener("change", () => {
+        activeSelectDniFamily();
+    });
+} catch (error) { }
 
 // TODO ✅ AÑADE UN DNI ALEATORIO AL INPUT DNI
 async function selectChange() {
