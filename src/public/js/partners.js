@@ -99,7 +99,43 @@ async function loadData() {
                             `
                         );
                     }
-                }
+                },
+            ],
+            'dom': 'Bfrtip',
+            buttons: [
+                'pageLength',
+                {
+                    extend: 'copyHtml5',
+                    text: '<i class="fa fa-files-o"></i>',
+                    titleAttr: 'Copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    },
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: '<i class="fa-solid fa-file-csv"></i>',
+                    titleAttr: 'Export CSV',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                    titleAttr: 'Export Excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fa-solid fa-file-pdf"></i>',
+                    titleAttr: 'Export PDF',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
             ]
         });
     });
@@ -163,7 +199,7 @@ async function edit(partnerID) {
             const check = data.activeFamily;
             if (check === 1) {
                 checked = true;
-                const urlGetDniFamily = `/api/family/${data.dni}`;
+                const urlGetDniFamily = `/api/familys/${data.dni}`;
                 fetch(urlGetDniFamily)
                     .then(response => response.json())
                     .then(async data => {

@@ -195,6 +195,7 @@
                                         <th>NAME</th>
                                         <th>LASTNAME</th>
                                         <th>CREATED AT</th>
+                                        <th>ACTIONS</th>
                                     </tr>
                                 </thead>
                                 <tbody id="familyData">
@@ -204,6 +205,7 @@
                                         <td>{{this.partnerName}}</td>
                                         <td>{{this.partnerLastname}}</td>
                                         <td>{{this.partnerRecordDate}}</td>
+                                        <td><button type="button" class="btn btn-info" onClick="desvincular({{this.partnerID}}, '{{this.partnerDni}}', '{{this.familyDni}}')">Desvincular</button></td>
                                     </tr>
                                     {{/each}}
                                 </tbody>
@@ -213,6 +215,7 @@
                                         <th>NAME</th>
                                         <th>LASTNAME</th>
                                         <th>CREATED AT</th>
+                                        <th>ACTIONS</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -314,19 +317,115 @@
     const bloque = document.querySelectorAll(".Info-bloque");
     const tbodyHistory = document.getElementById("historyData");
     const tbodyActive = document.getElementById("activeData");
+    const tbodyfamilyData = document.getElementById("familyData");
     const infoBloqueHistory = document.getElementById("infoBloqueHistory");
     const infoBloqueActive = document.getElementById("infoBloqueActive");
     const bloqueInfo = document.getElementById("bloqueInfo");
     let indice = 1;
-
-
+    // TODO ✅ DESVINCULAR PARTNER FAMILY
+    async function desvincular(familyID, familyDni, partnerDni) {
+        const idFamily = familyID;
+        const dniFamily = familyDni;
+        const dniPartner = partnerDni;
+        console.log({
+            familyID,
+            familyDni,
+            partnerDni
+        });
+        const data = {
+            familyDni,
+            partnerDni
+        };
+        const urlDesvincular = `/api/familys/unbind/${idFamily}`;
+        fetch(urlDesvincular, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                responseDesvincular(data);
+            });
+    };
+    async function responseDesvincular(data) {
+        const message = data.messageSuccess;
+        const success = data.success;
+        console.log({
+            data,
+            message,
+            success
+        });
+        if (success) {
+            Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: message,
+                backdrop: "#2C3333",
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#474E68",
+                confirmButtonText: "OK",
+                showClass: {
+                    popup: "animate__animated animate__fadeInDown"
+                },
+                hideClass: {
+                    popup: "animate__animated animate__fadeOutUp"
+                }
+            }).then((response) => {
+                location.reload();
+            });
+        }
+    };
+    
     //TODO ✅ CARGA DATA FAMILY
     $(document).ready(function () {
-        tableC = $("#tablePartnerFamily").DataTable({
-            ordering: true,
-            responsive: true,
-            order: [[0, "desc"]],
-            retrieve: true
+        tablePartnerFamilys = $("#tablePartnerFamily").DataTable({
+            'ordering': true,
+            'destroy' : true,
+            'paging': true,
+            'responsive': true,
+            'order': [[0, "desc"]],
+            'searching': true,
+            'info': true,
+            'lengthChange': true,
+            'autoWidth': false,
+            'select': true,
+            'retrieve': true,
+            'dom': 'Bfrtip',
+            lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
+            pageLength: 15,
+            deferRender: true,
+            buttons: [
+            'pageLength',
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                }
+            },
+            {
+                extend: 'csvHtml5',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                }
+            },
+        ]
         });
     });
 
@@ -360,7 +459,7 @@
                 const idBooking = bookingID;
                 const urlDeliver = `/api/books/deliver/${idBook}`;
                 let dateActual = new Date();
-                dateActual = new Intl.DateTimeFormat("az").format(dateActual).replace("/", "-");
+                dateActual = moment(dateActual).format("YYYY-MM-DD HH:mm");
                 Swal.fire({
                     title: 'Deliver',
                     text: `Do you want to add a review, for the book : ${idBook} ?`,

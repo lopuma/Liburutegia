@@ -99,7 +99,7 @@ app.use("/workspace/books", require("./routes/workspace/Books.router"));
 app.use('/api/books',    require( './routes/api/Book.router.api'    ))
 app.use('/api/bookings', require( './routes/api/Booking.router.api' ))
 app.use("/api/partners", require("./routes/api/Partner.router.api"));
-app.use("/api/family", require("./routes/api/Family.router.api"));
+app.use("/api/familys", require("./routes/api/Family.router.api"));
 app.use('/api/votes',    require( './routes/api/Vote.router.api'    ))
 
 // 12.2 - ROUTES AUTH
