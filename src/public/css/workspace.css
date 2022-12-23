@@ -30,7 +30,7 @@
   justify-content: space-between;
   flex-flow: row wrap;
   position: absolute;
-  top: calc(0% - 2.5em);
+  top: calc(0% - 2em);
   left: 5%;
 }
 
@@ -133,13 +133,15 @@
   .Workspace-fieldset {
     padding: 0;
   }
-
+  
   .Workspace-legend {
     justify-content: center;
+    padding: .5em 0;
   }
 
   .Username {
     font-size: 0.75em;
+    margin: 1em 0 0;
   }
 
 }

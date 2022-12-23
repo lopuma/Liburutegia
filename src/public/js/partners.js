@@ -70,22 +70,28 @@ async function loadData() {
             language: {
                 emptyTable: "No data available in table Partners"
             },
+            stateSave: true,
             searching: true,
             ordering: true,
             info: true,
             responsive: true,
             order: [[0, "desc"]],
-            lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
+            lengthMenu: [[ 5, 10, 15, 25, 50, -1 ], [ 5, 10, 15, 25, 50, 'ALL' ]],
             pageLength: 15,
             deferRender: true,
             columns: [
                 { data: "partnerID", visible: false },
                 { data: "dni" },
+                { data: "scanner", visible: false },
                 { data: "name" },
                 { data: "lastname" },
+                { data: "direction", visible: false },
+                { data: "population", visible: false },
                 { data: "phone1" },
                 { data: "phone2" },
                 { data: "email" },
+                { data: "date", visible: false },
+                { data: "updateDate", visible: false  },
                 {
                     data: null,
                     render: function (data) {
@@ -102,42 +108,51 @@ async function loadData() {
                 },
             ],
             'dom': 'Bfrtip',
+            'autoWidth': true,
+            lengthChange: false,
             buttons: [
                 'pageLength',
                 {
                     extend: 'copyHtml5',
                     text: '<i class="fa fa-files-o"></i>',
                     titleAttr: 'Copy',
+                    className: "buttonCopy",
                     exportOptions: {
-                        columns: [0, 1, 2, 3]
+                        columns: [0, ':visible']
                     },
                 },
                 {
-                    extend: 'csvHtml5',
+                    extend: 'csv',
                     text: '<i class="fa-solid fa-file-csv"></i>',
                     titleAttr: 'Export CSV',
+                    className: "buttonCsv",
                     exportOptions: {
-                        columns: [0, 1, 2, 3]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     }
                 },
                 {
                     extend: 'excelHtml5',
                     text: '<i class="fa fa-file-excel-o"></i>',
                     titleAttr: 'Export Excel',
+                    className: "buttonExcel",
                     exportOptions: {
-                        columns: [0, 1, 2, 3]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     }
                 },
                 {
                     extend: 'pdfHtml5',
                     text: '<i class="fa-solid fa-file-pdf"></i>',
                     titleAttr: 'Export PDF',
+                    className: "buttonPdf",
                     exportOptions: {
-                        columns: [0, 1, 2, 3]
+                        columns: [0, ':visible']
                     }
                 },
+                'colvis'
             ]
         });
+        dataTablePartners.buttons().container()
+            .appendTo($('div.column.is-half', dataTablePartners.table().container()).eq(0));
     });
 }
 
