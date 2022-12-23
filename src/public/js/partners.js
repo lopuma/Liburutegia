@@ -88,6 +88,8 @@ async function loadData() {
             lengthMenu: [[ 5, 10, 15, 25, 50, -1 ], [ 5, 10, 15, 25, 50, 'ALL' ]],
             pageLength: 15,
             deferRender: true,
+            colReorder: true,
+            select: true,
             columns: [
                 { 
                     data: null,
@@ -97,8 +99,12 @@ async function loadData() {
                 },
                 { data: "dni" },
                 { data: "scanner", visible: false },
-                { data: "name" },
-                { data: "lastname" },
+                {
+                    data: null, render: function (data, type, row) {
+                        // Combine the first and last names into a single table field
+                        return data.name + ' ' + data.lastname;
+                    }
+                },
                 { data: "direction", visible: false },
                 { data: "population", visible: false },
                 { data: "phone1" },
@@ -141,47 +147,74 @@ async function loadData() {
             'autoWidth': true,
             lengthChange: false,
             buttons: [
-                'pageLength',
                 {
-                    extend: 'copy',
-                    text: '<i class="fa fa-files-o"></i>',
-                    titleAttr: 'Copy',
-                    className: "buttonCopy",
-                    exportOptions: {
-                        columns: [0, ':visible']
-                    },
+                    extend: 'pageLength',
                 },
                 {
-                    extend: 'csv',
-                    text: '<i class="fa-solid fa-file-csv"></i>',
-                    titleAttr: 'Export CSV',
-                    className: "buttonCsv",
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                    }
+                    extend: 'colvis',
                 },
                 {
-                    extend: 'excel',
-                    text: '<i class="fa fa-file-excel-o"></i>',
-                    titleAttr: 'Export Excel',
-                    className: "buttonExcel",
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                    }
+                extend: 'collection',
+                text: 'Export Data',
+                autoClose: true,
+                buttons: [
+                        //TODO COPY
+                        {
+                            extend: 'copy',
+                            text: '<i class="fa fa-files-o"></i> Copy',
+                            titleAttr: 'Copy',
+                            className: "buttonCopy",
+                            exportOptions: {
+                                columns: [0, ':visible']
+                            },
+                        },
+                        //TODO CSV
+                        {
+                            extend: 'csv',
+                            text: '<i class="fa-solid fa-file-csv"></i> CSV',
+                            titleAttr: 'Export CSV',
+                            className: "buttonCsv",
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            }
+                        },
+                        //TODO EXCEL
+                        {
+                            extend: 'excel',
+                            text: '<i class="fa fa-file-excel-o"></i> Excel',
+                            titleAttr: 'Export Excel',
+                            className: "buttonExcel",
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            }
+                        },
+                        //TODO PDF
+                        {
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            text: '<i class="fa-solid fa-file-pdf"></i> PDF',
+                            titleAttr: 'Export PDF',
+                            className: "buttonPdf",
+                            exportOptions: {
+                                columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa-solid fa-print"></i> Print',
+                            titleAttr: 'Print',
+                            className: "buttonPrint",
+                            exportOptions: {
+                                columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
+                            }
+                        }
+                    ]
                 },
-                {
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL',
-                    text: '<i class="fa-solid fa-file-pdf"></i>',
-                    titleAttr: 'Export PDF',
-                    className: "buttonPdf",
-                    exportOptions: {
-                        columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-                    }
-                },
-                'colvis'
-            ]
+            ],
+        });
+        $('#tablePartner tbody').on('click', 'tr', function () {
+            $(this).toggleClass('selected');
         });
         dataTablePartners.buttons().container()
             .appendTo($('div.column.is-half', dataTablePartners.table().container()).eq(0));

@@ -73,6 +73,10 @@
     background-color: rgba(235, 235, 235, 0.671)
 }
 
+.selected{
+    background-color: #A5C9CA;
+    color: #000;
+}
 /* TODO ✅ DATATABLE STYLE FOR NO  dom: ' Bfrtip' */
 .col-sm-12 {
     padding: 1em;
@@ -152,7 +156,7 @@ div.dt-buttons .dt-button {
 div.dataTables_wrapper div.dataTables_filter {
     float: right;
     width: 50%;
-    margin: 1em 0;
+    margin: 2em 0;
 }
 
 div.dataTables_wrapper div.dataTables_filter label {
@@ -176,13 +180,27 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 .dt-buttons .dt-button {
-    border-radius: var(--Radius);
-    background-color: inherit;
-    color: inherit;
-    background-image: none !important;
+    background-image: linear-gradient(to right, #383838 0%, #5a5a5a 51%, #383838 100%) !important;
+    margin: 1em .5em;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.dt-buttons .dt-button:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
 }
 
 .dt-buttons .dt-button.buttonCopy {
+    background-image: none !important;
+    border-radius: var(--Radius);
     background-color: #2B3A55;
     color: #E8C4C4;
     transform: all 5s ease;
@@ -190,10 +208,12 @@ div.dataTables_wrapper div.dataTables_info {
 
 .dt-buttons .dt-button.buttonCopy:hover {
     background-color: #2B3A55;
-    color: #F2E5E5;
+    color: #00ABB3;
 }
 
 .dt-buttons .dt-button.buttonCsv {
+    background-image: none !important;
+    border-radius: var(--Radius);
     background-color: #A2B5BB;
     color: #2B3A55;
     transform: all 5s ease;
@@ -205,6 +225,8 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 .dt-buttons .dt-button.buttonExcel {
+    background-image: none !important;
+    border-radius: var(--Radius);
     background-color: #68B984;
     color: #CFFDE1;
     transform: all 5s ease;
@@ -216,6 +238,8 @@ div.dataTables_wrapper div.dataTables_info {
 }
 
 .dt-buttons .dt-button.buttonPdf {
+    background-image: none !important;
+    border-radius: var(--Radius);
     background-color: #CF0A0A;
     color: #EEEEEE;
     transform: all 5s ease;
@@ -223,7 +247,52 @@ div.dataTables_wrapper div.dataTables_info {
 
 .dt-buttons .dt-button.buttonPdf:hover {
     background-color: #CF0A0A;
-    color: #FAD9A1;
+    color: #DC5F00;
+}
+
+.dt-buttons .dt-button.buttonPrint {
+    background-image: none !important;
+    border-radius: var(--Radius);
+    background-color: #3C4048;
+    color: #EEEEEE;
+    margin-bottom: 1.5em;
+    transform: all 5s ease;
+}
+
+.dt-buttons .dt-button.buttonPrint:hover {
+    background-color: #3C4048;
+    color: #CF0A0A;
+}
+
+/* TODO ESTILO PARA LA COLLECTIONS */
+div.dt-button-collection {
+    background-image: none !important;
+    padding: .5em 1em 0 0;
+    width: 15.625rem;
+}
+
+div.dt-button-collection .button-page-length,
+div.dt-button-collection .buttons-columnVisibility {
+    background-image: none !important;
+    background-color: #B2B2B2;
+    color: #3C4048;
+}
+
+div.dt-button-collection .button-page-length:hover,
+div.dt-button-collection .buttons-columnVisibility:hover {
+    background-image: none !important;
+    background-color: #B2B2B2;
+    color: #395B64;
+}
+
+div.dt-button-collection .active {
+    background-image: none !important;
+    background-color: #395B64 !important;
+    color: #eee !important;
+}
+
+div.dt-button-collection .active:hover {
+    color: #B2B2B2 !important;
 }
 
 @media screen and (max-width: 980px) {
@@ -238,7 +307,7 @@ div.dataTables_wrapper div.dataTables_info {
     }
 }
 
-@media screen and (max-width: 59.375em) {
+@media screen and (max-width: 950px) {
     .Dashboard-a {
         margin-top: 4em;
     }
@@ -253,23 +322,34 @@ div.dataTables_wrapper div.dataTables_info {
         width: 100%;
     }
 
+
+
+    div.dataTables_wrapper div.dataTables_filter {
+        width: 100%;
+    }
+
+    div.dt-buttons {
+        width: 100%;
+        float: none;
+    }
+}
+
+@media screen and (max-width: 550px) {
     div.dt-buttons {
         width: 100%;
         margin-bottom: 1.5em;
+        float: none !important;
     }
 
     div.dt-buttons .dt-button:nth-child(1) {
         width: 100%;
-        margin: 0 0 1.5em;
     }
 
-    div.dt-buttons .dt-button:nth-child(6) {
+    div.dt-buttons .dt-button:nth-child(2) {
         width: 100%;
-        margin: 1.5em 0 0;
     }
 
-    div.dataTables_wrapper div.dataTables_filter {
-        float: none;
+    div.dt-buttons .dt-button:nth-child(3) {
         width: 100%;
     }
 }
