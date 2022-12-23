@@ -504,8 +504,13 @@
         display: block;
         margin: 0;
     }
+    
+    .Info-bloque {
+        padding: 1em 1.5em;
+    }
 
     .Info-bloque.isAuto {
         max-height: 100%;
-    } 
+    }
+
 }

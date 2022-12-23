@@ -58,6 +58,15 @@ $(document).ready(function () {
     theme: "bootstrap4", $(".js-example-basic-single").select2();
 });
 
+function fillZeros(id) {
+    let num = id.toString()
+    let large = 12
+    for (let i = 0; i < (large - num.length); i++) {
+        num = "0" + num
+    }
+    return num
+}
+
 //TODO ✅ LOAD PARTNER
 async function loadData() {
     const urlLoad = "/api/partners/";
@@ -80,7 +89,12 @@ async function loadData() {
             pageLength: 15,
             deferRender: true,
             columns: [
-                { data: "partnerID", visible: false },
+                { 
+                    data: null,
+                    render: (data) => {
+                        return (fillZeros(data.partnerID));
+                    }, visible: false
+                },
                 { data: "dni" },
                 { data: "scanner", visible: false },
                 { data: "name" },
@@ -90,8 +104,24 @@ async function loadData() {
                 { data: "phone1" },
                 { data: "phone2" },
                 { data: "email" },
-                { data: "date", visible: false },
-                { data: "updateDate", visible: false  },
+                { 
+                    data: null,
+                    render : (data) => {
+                        return (
+                            moment(data.date).format("MMMM Do, YYYY HH:mm A")
+                            );   
+                    }                    
+                    , visible: false 
+                },
+                {
+                    data: null,
+                    render: (data) => {
+                        return (
+                            moment(data.dateUpdate).format("MMMM Do, YYYY HH:mm A")
+                        );
+                    }
+                    , visible: false
+                },
                 {
                     data: null,
                     render: function (data) {
@@ -113,7 +143,7 @@ async function loadData() {
             buttons: [
                 'pageLength',
                 {
-                    extend: 'copyHtml5',
+                    extend: 'copy',
                     text: '<i class="fa fa-files-o"></i>',
                     titleAttr: 'Copy',
                     className: "buttonCopy",
@@ -131,7 +161,7 @@ async function loadData() {
                     }
                 },
                 {
-                    extend: 'excelHtml5',
+                    extend: 'excel',
                     text: '<i class="fa fa-file-excel-o"></i>',
                     titleAttr: 'Export Excel',
                     className: "buttonExcel",
@@ -141,11 +171,13 @@ async function loadData() {
                 },
                 {
                     extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
                     text: '<i class="fa-solid fa-file-pdf"></i>',
                     titleAttr: 'Export PDF',
                     className: "buttonPdf",
                     exportOptions: {
-                        columns: [0, ':visible']
+                        columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     }
                 },
                 'colvis'
