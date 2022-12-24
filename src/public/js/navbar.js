@@ -19,6 +19,8 @@ try {
     localStorage.removeItem('flip');
     localStorage.removeItem('emailLocal');
     localStorage.removeItem('emailLocalReset');
+    localStorage.removeItem('DataTables_tablePartner_/workspace/partners');
+    localStorage.clear();
   });
 } catch (error) {}
 

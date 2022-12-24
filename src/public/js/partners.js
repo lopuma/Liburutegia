@@ -167,6 +167,7 @@ async function loadData() {
                             exportOptions: {
                                 columns: [0, ':visible']
                             },
+                        copyKeys: 'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>To cancel, click this message or press escape.'
                         },
                         //TODO CSV
                         {

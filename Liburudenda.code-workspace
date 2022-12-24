@@ -1,37 +1,37 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"sqltools.connections": [
-			{
-				"mysqlOptions": {
-					"authProtocol": "default"
-				},
-				"previewLimit": 50,
-				"server": "localhost",
-				"port": 3306,
-				"askForPassword": true,
-				"driver": "MySQL",
-				"name": "ConneSanmiguel",
-				"database": "sanmiguel",
-				"username": "root"
-			},
-			{
-				"mysqlOptions": {
-					"authProtocol": "default"
-				},
-				"previewLimit": 50,
-				"server": "localhost",
-				"port": 3306,
-				"driver": "MySQL",
-				"name": "ConnectionSanmiguel",
-				"database": "sanmiguel",
-				"username": "lopuma",
-				"password": "Dopracau4000lopo"
-			}
-		]
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "sqltools.connections": [
+      {
+        "mysqlOptions": {
+          "authProtocol": "default"
+        },
+        "previewLimit": 50,
+        "server": "localhost",
+        "port": 3306,
+        "askForPassword": true,
+        "driver": "MySQL",
+        "name": "ConneSanmiguel",
+        "database": "sanmiguel",
+        "username": "root"
+      },
+      {
+        "mysqlOptions": {
+          "authProtocol": "default"
+        },
+        "previewLimit": 50,
+        "server": "localhost",
+        "port": 3306,
+        "driver": "MySQL",
+        "name": "ConnectionSanmiguel",
+        "database": "sanmiguel",
+        "username": "lopuma",
+        "password": "Dopracau4000lopo"
+      }
+    ]
+  }
 }

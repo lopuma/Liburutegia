@@ -37,7 +37,7 @@
 
 .Dashboard-row {
     width: 100%;
-    margin: 1.5em 0;
+    margin: 0;
     overflow: hidden;
 }
 
@@ -69,84 +69,68 @@
     justify-content: space-between;
 }
 
+tbody tr td button,
+.ui.buttons button {
+    margin: 0 .5em;
+    border-radius: var(--Radius) !important;
+}
+
 .even {
     background-color: rgba(235, 235, 235, 0.671)
 }
 
-.selected{
+.selected {
     background-color: #A5C9CA;
-    color: #000;
-}
-/* TODO ✅ DATATABLE STYLE FOR NO  dom: ' Bfrtip' */
-.col-sm-12 {
-    padding: 1em;
-    display: flex;
-    align-items: center;
-}
-
-.dataTables_wrapper .row .dataTables_length {
-    font-size: 1.2em;
-}
-
-.dataTables_wrapper .row .dataTables_length label {
-    padding: 0;
-    margin: 0;
-}
-
-.dataTables_wrapper .row .dataTables_filter {
-    font-size: 1em;
-    width: 100%;
-}
-
-.dataTables_wrapper .row .dataTables_filter label {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
-.dataTables_wrapper .row .dataTables_filter input {
-    border: solid 1px var(--Color-outline);
-}
-
-/* TODO SELECT NUMERO DE ITEMS */
-.form-select {
-    border: 2px solid var(--Color-outline);
-    border-radius: var(--Radius);
-    padding: 1em 2em;
-    margin: 0 1em;
+    color: var(--Color-texto-negro);
 }
 
 /*TODO ✅ PIE DATATABLE STYLE FOR NO dom: ' Bfrtip' */
-.row:nth-child(3) {
+
+.small-6 .dataTables_length {
     width: 100%;
-    margin: 0;
-    padding: .5em;
-    display: block;
+    height: 100%;
 }
 
-.row:nth-child(3) .col-md-5 {
-    display: block;
+.small-6 .dataTables_length label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
     padding: 0;
-    margin: 0;
-    max-width: 100%;
 }
 
-.row:nth-child(3) .col-md-7 {
-    display: block;
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
+.small-6 .dataTables_length label select {
+    color: var(--Color-texto-negro);
+    border: 2px solid var(--Color-outline);
+    border-radius: var(--Radius);
+    margin: 0 1em;
+}
+
+.small-6 .dataTables_filter {
+    width: 100% !important;
+    height: 100%;
+}
+
+.small-6 .dataTables_filter label {
+    text-align: center !important;
+}
+
+.small-6 {
+    padding: 1em;
+}
+
+.small-6 .dataTables_paginate {
+    margin: 1em 0 !important;
 }
 
 /* TODO ✅ DATATABLE STYLE FOR dom: ' Bfrtip' */
 div.dt-buttons {
     width: 50%;
-    margin: 1em 0;
-    display: flex;
-    /* justify-content: space-between; */
-    flex-flow: row wrap;
-    align-items: center;
-    text-align: center;
+    float: left;
+    margin: 0;
 }
 
 div.dt-buttons .dt-button {
@@ -156,22 +140,23 @@ div.dt-buttons .dt-button {
 div.dataTables_wrapper div.dataTables_filter {
     float: right;
     width: 50%;
-    margin: 2em 0;
+    margin: 1em 0 2em;
 }
 
 div.dataTables_wrapper div.dataTables_filter label {
     text-align: right;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
-div.dataTables_wrapper div.dataTables_filter label input {
-    width: 80%;
+div.dataTables_wrapper div.dataTables_filter input {
+    width: 70% !important;
     border: solid 1px var(--Color-outline);
     font-size: 1.2em;
 }
 
-/*TODO  PIE DE TABLE */
+/*TODO ✅ DATATABLE STYLE FOR dom: ' Bfrtip' >>> PIE DE TABLE */
 div.dataTables_wrapper div.dataTables_info {
     text-align: start;
     font-weight: 600;
@@ -179,16 +164,17 @@ div.dataTables_wrapper div.dataTables_info {
     padding: 0;
 }
 
+/*TODO ✅ ESTILOS APRA BUTTONS */
 .dt-buttons .dt-button {
     background-image: linear-gradient(to right, #383838 0%, #5a5a5a 51%, #383838 100%) !important;
-    margin: 1em .5em;
+    margin: 1em .5em 2em;
     text-align: center;
     text-transform: uppercase;
     transition: 0.5s;
     background-size: 200% auto;
     color: white;
     box-shadow: 0 0 20px #eee;
-    border-radius: 10px;
+    border-radius: var(--Radius);
     display: block;
 }
 
@@ -264,25 +250,24 @@ div.dataTables_wrapper div.dataTables_info {
     color: #CF0A0A;
 }
 
-/* TODO ESTILO PARA LA COLLECTIONS */
+/*TODO ✅ ESTILO PARA LA COLLECTIONS */
 div.dt-button-collection {
-    background-image: none !important;
-    padding: .5em 1em 0 0;
-    width: 15.625rem;
+    padding: 1em;
+    width: auto;
 }
 
 div.dt-button-collection .button-page-length,
 div.dt-button-collection .buttons-columnVisibility {
     background-image: none !important;
-    background-color: #B2B2B2;
     color: #3C4048;
+    border-radius: var(--Radius);
 }
 
 div.dt-button-collection .button-page-length:hover,
 div.dt-button-collection .buttons-columnVisibility:hover {
     background-image: none !important;
-    background-color: #B2B2B2;
-    color: #395B64;
+    background-color: #FED049;
+    color: #3D5656;
 }
 
 div.dt-button-collection .active {
@@ -328,28 +313,16 @@ div.dt-button-collection .active:hover {
         width: 100%;
     }
 
-    div.dt-buttons {
-        width: 100%;
-        float: none;
-    }
 }
 
 @media screen and (max-width: 550px) {
     div.dt-buttons {
         width: 100%;
-        margin-bottom: 1.5em;
-        float: none !important;
+        display: table-row-group;
+        padding: 0 0.5em;
     }
 
-    div.dt-buttons .dt-button:nth-child(1) {
-        width: 100%;
-    }
-
-    div.dt-buttons .dt-button:nth-child(2) {
-        width: 100%;
-    }
-
-    div.dt-buttons .dt-button:nth-child(3) {
+    .grid-x>.small-6 {
         width: 100%;
     }
 }

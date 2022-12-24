@@ -396,36 +396,9 @@
             'select': true,
             'retrieve': true,
             //'dom': 'Bfrtip',
-            lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
-            pageLength: 15,
+            lengthMenu: [[5, 10, 15], [5, 10, 15]],
+            pageLength: 5,
             deferRender: true,
-            buttons: [
-            'pageLength',
-            {
-                extend: 'copyHtml5',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
-                }
-            },
-            {
-                extend: 'csvHtml5',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
-                }
-            },
-        ]
         });
     });
 

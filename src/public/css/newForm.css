@@ -14,10 +14,7 @@
 }
 
 .Family-check {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    text-align: center;
+    text-align: start;
     width: 50%;
 }
 
