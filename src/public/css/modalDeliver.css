@@ -1,4 +1,8 @@
 /* TODO STARs */
+.Deliver-modal {
+    max-width: 45% !important;
+    border-radius: var(--Radius);
+}
 
 .Modal-header {
     display: flex;

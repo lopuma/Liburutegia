@@ -190,11 +190,10 @@ const partnerController = {
                             errorMessage: `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
                         });
                     }
-                    const data = results;
+                    const data = results;                    
                     res.status(200).send({
                         success: true,
-                        data,
-                        messageSuccess: `Success`
+                        data
                     });
                 });
             });

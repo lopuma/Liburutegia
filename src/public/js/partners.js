@@ -85,13 +85,13 @@ async function loadData() {
             info: true,
             responsive: true,
             order: [[0, "desc"]],
-            lengthMenu: [[ 5, 10, 15, 25, 50, -1 ], [ 5, 10, 15, 25, 50, 'ALL' ]],
+            lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, 'ALL']],
             pageLength: 15,
             deferRender: true,
             colReorder: true,
             select: true,
             columns: [
-                { 
+                {
                     data: null,
                     render: (data) => {
                         return (fillZeros(data.partnerID));
@@ -110,14 +110,14 @@ async function loadData() {
                 { data: "phone1" },
                 { data: "phone2" },
                 { data: "email" },
-                { 
+                {
                     data: null,
-                    render : (data) => {
+                    render: (data) => {
                         return (
                             moment(data.date).format("MMMM Do, YYYY HH:mm A")
-                            );   
-                    }                    
-                    , visible: false 
+                        );
+                    }
+                    , visible: false
                 },
                 {
                     data: null,
@@ -145,7 +145,6 @@ async function loadData() {
             ],
             'dom': 'Bfrtip',
             'autoWidth': true,
-            lengthChange: false,
             buttons: [
                 {
                     extend: 'pageLength',
@@ -154,10 +153,10 @@ async function loadData() {
                     extend: 'colvis',
                 },
                 {
-                extend: 'collection',
-                text: 'Export Data',
-                autoClose: true,
-                buttons: [
+                    extend: 'collection',
+                    text: 'Export Data',
+                    autoClose: true,
+                    buttons: [
                         //TODO COPY
                         {
                             extend: 'copy',
@@ -167,7 +166,7 @@ async function loadData() {
                             exportOptions: {
                                 columns: [0, ':visible']
                             },
-                        copyKeys: 'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>To cancel, click this message or press escape.'
+                            title: 'Liburutegia SAN MIGUEL: PARTNERS',
                         },
                         //TODO CSV
                         {
@@ -177,7 +176,8 @@ async function loadData() {
                             className: "buttonCsv",
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            }
+                            },
+                            title: 'Liburutegia SAN MIGUEL: PARTNERS',
                         },
                         //TODO EXCEL
                         {
@@ -187,7 +187,8 @@ async function loadData() {
                             className: "buttonExcel",
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            }
+                            },
+                            title: 'Liburutegia SAN MIGUEL: PARTNERS',
                         },
                         //TODO PDF
                         {
@@ -195,11 +196,27 @@ async function loadData() {
                             orientation: 'landscape',
                             pageSize: 'LEGAL',
                             text: '<i class="fa-solid fa-file-pdf"></i> PDF',
+                            customize: function (doc) {
+                                doc.defaultStyle =
+                                {
+                                    font: 'Cairo',
+                                };
+                            },
                             titleAttr: 'Export PDF',
                             className: "buttonPdf",
                             exportOptions: {
                                 columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
-                            }
+                            },
+                            title: 'Liburutegia SAN MIGUEL: PARTNERS',
+                            customize: function (doc) {
+                                doc.styles.title = {
+                                    width: '100',
+                                    color: 'black',
+                                    fontSize: '16',
+                                    background: '#CEEDC7',
+                                    alignment: 'center'
+                                }
+                            },
                         },
                         {
                             extend: 'print',
@@ -208,7 +225,8 @@ async function loadData() {
                             className: "buttonPrint",
                             exportOptions: {
                                 columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10]
-                            }
+                            },
+                            title: 'Liburutegia SAN MIGUEL: PARTNERS',
                         }
                     ]
                 },
@@ -233,7 +251,7 @@ async function infoPartner(partnerID) {
 async function apiDelete(idPartner) {
     const urlDelete = `/api/partners/delete/${idPartner}`;
     fetch(urlDelete).then(() => {
-        dataTablePartners.ajax.reload( null, false );
+        dataTablePartners.ajax.reload(null, false);
         setTimeout(() => {
             try {
                 if ($('#stateInfoPartner').val() === '') { // 
@@ -303,7 +321,7 @@ async function edit(partnerID) {
             inputPhoneLandline.value = data.phone2;
             inputEmail.value = data.email;
             inputDniCheck.checked = checked;
-            if(!checkedNew) {
+            if (!checkedNew) {
                 document.getElementById('newBoxesID').removeAttribute('hidden');
                 document.getElementById("creationDate").innerHTML = `
                     <input class="Animation-input" type="date" id="actualDate" value='${moment(data.date).format("YYYY-MM-DD")}'>
@@ -343,7 +361,7 @@ async function activeSelectDniFamily(partner_DNI) {
                     )
                 );
             familyLink.classList.add("isEnable");
-            }, 500);
+        }, 500);
     } else {
         await disabledFamilyLink();
     }

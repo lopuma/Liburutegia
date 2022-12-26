@@ -107,8 +107,9 @@ const bookController = {
     // TODO ✅ ENTREGA BOOK
     deliverBook: async (req, res) => {
         const idBook = req.params.bookID;
+        
         const { idBooking, score, review, deliver_date_review } = req.body;
-
+        
         const sql = [`UPDATE books SET 
                     reserved=0 WHERE bookID=${idBook}`, 
                     `UPDATE bookings SET deliver=1 WHERE bookingID=${idBooking}`, 
@@ -123,7 +124,7 @@ const bookController = {
                 review,
                 deliver_date_review
             },
-            err => {
+            (err) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({

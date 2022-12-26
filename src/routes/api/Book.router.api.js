@@ -20,7 +20,7 @@ const routerBooks = require('express').Router();
     routerBooks.get("/:id_book", getBook);
 
     // DELIVER
-    routerBooks.post("/deliver/:id_book", isAuthenticated, deliverBook);
+routerBooks.post("/deliver/:bookID", deliverBook);
 
     //ADD
     //routerBooks.post("/add", addBook);
