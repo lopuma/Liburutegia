@@ -82,9 +82,15 @@ tbody tr td button,
     background-color: rgba(235, 235, 235, 0.671)
 }
 
-.selected {
-    background-color: #A5C9CA;
+.odd.selected {
+    background-color: #eb7302;
     color: var(--Color-texto-negro);
+}
+
+table.dataTable tbody tr.selected {
+    color: white;
+    background-color: #eeeeee;
+    /* Not working */
 }
 
 /*TODO ✅ PIE DATATABLE STYLE FOR NO dom: ' Bfrtip' */

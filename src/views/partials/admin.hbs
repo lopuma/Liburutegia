@@ -3,64 +3,62 @@
     <div id="spinner" class="spinnerUser">
         {{> loading}}
     </div>
-<div class="Cards">
-    {{#each users}}
-        <div class="Cards-data" id='{{this.id}}'>
-            
-            <div class="imgBx">
-                {{!-- <img src=".../../../../resources/img/user.png"> --}}
-                <div class="card-head"><span>00000{{this.id}}</span></div>
-            </div>
-            
-            <div class="Cards-content">
-                <div class="Cards-details">
-                    <h2>{{this.username}}<br><span>{{this.rol}}</span></h2>
-                    
-                    <div class="data">
-                        <h3>Lastname: </h3><span>{{this.fullname}}</span>
-                    </div>
-                    
-                    <div class="data">
-                        <h3>Email: </h3><span>{{this.email}}</span>
-                    </div>
-                    
-                    <div class="Cards-actionBtn" id="card-button{{this.id}}">
-                        <div class="Cards-actionBtn-main" id="actionBtn">
-                            <button class="btnCardEdit" id="btnCardEdit" value="{{this.id}}" onclick="editUser(this)"
-                                title="Edit User" style="--i:#56CCF2; --j:#2F80ED">
-                                <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
-                                <span class="title">Edit</span>
-                            </button>
-                            <button class="btnCardDelete" id="btnCardDelete" value="{{this.id}}"
-                                onclick="deleteUser(this)" title="Delete User" style="--i:#D9534F; --j:#F32424">
-                                <span class="icon"><i class="fa-solid fa-user-minus"></i></span>
-                                <span class="title">Delete</span>
-                            </button>
-                            <button class="btnCardReset" id="btnCardReset" value="{{this.id}}" onclick="resetUser(this)"
-                                title="Reset password User" style="--i:#FF9966; --j:#FF5E62">
-                                <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
-                                <span class="title">Reset Password</span>
-                            </button>
-                        </div>
-                    </div>
-
+    <div class="Cards">
+        {{#each users}}
+            <div class="Cards-data" id='{{this.id}}'>
+                
+                <div class="imgBx">
+                    {{!-- <img src=".../../../../resources/img/user.png"> --}}
+                    <div class="card-head"><span>00000{{this.id}}</span></div>
                 </div>
+                
+                <div class="Cards-content">
+                    <div class="Cards-details">
+                        <h2>{{this.username}}<br><span>{{this.rol}}</span></h2>
+                        
+                        <div class="data">
+                            <h3>Lastname: </h3><span>{{this.fullname}}</span>
+                        </div>
+                        
+                        <div class="data">
+                            <h3>Email: </h3><span>{{this.email}}</span>
+                        </div>
+                        
+                        <div class="Cards-actionBtn" id="card-button{{this.id}}">
+                            <div class="Cards-actionBtn-main" id="actionBtn">
+                                <button class="btnCardEdit" id="btnCardEdit" value="{{this.id}}" onclick="editUser(this)"
+                                    title="Edit User" style="--i:#56CCF2; --j:#2F80ED">
+                                    <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
+                                    <span class="title">Edit</span>
+                                </button>
+                                <button class="btnCardDelete" id="btnCardDelete" value="{{this.id}}"
+                                    onclick="deleteUser(this)" title="Delete User" style="--i:#D9534F; --j:#F32424">
+                                    <span class="icon"><i class="fa-solid fa-user-minus"></i></span>
+                                    <span class="title">Delete</span>
+                                </button>
+                                <button class="btnCardReset" id="btnCardReset" value="{{this.id}}" onclick="resetUser(this)"
+                                    title="Reset password User" style="--i:#FF9966; --j:#FF5E62">
+                                    <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
+                                    <span class="title">Reset Password</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            
             </div>
-        
-        </div>
-    {{/each}}
-</div>
+        {{/each}}
+    </div>
 
 <script>
-const spinner = document.getElementById("spinner");
-
-//TODO CLOSE LOADING
-setTimeout(() => {
-    loadData();
-}, "1600");
-
-async function loadData() {
-    document.querySelector(".Cards").classList.add("isVisible");
-    spinner.style.display = "none";
-}
+    const spinner = document.getElementById("spinner");
+    //TODO CLOSE LOADING
+    setTimeout(() => {
+        loadData();
+    }, "1600");
+    async function loadData() {
+        document.querySelector(".Cards").classList.add("isVisible");
+        spinner.style.display = "none";
+    }
 </script>

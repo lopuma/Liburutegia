@@ -100,7 +100,7 @@ async function loadData() {
                 { data: "dni" },
                 { data: "scanner", visible: false },
                 {
-                    data: null, render: function (data, type, row) {
+                    data: null, render: function (data, _type, _row) {
                         // Combine the first and last names into a single table field
                         return data.name + ' ' + data.lastname;
                     }
@@ -135,7 +135,7 @@ async function loadData() {
                             `
                             <div class="ui buttons">
                                 <button id="btnInfoPartner" onClick=infoPartner(` + data.partnerID + `) class="btn btn-outline-warning" title="Info Partner"><i class="fa-sharp fa-solid fa-eye"></i></button>
-                                <button id="btnEditPartner" onClick=edit(` + data.partnerID + `) type="button"  class="btn btn-outline-primary" title="Edit Partner" data-toggle="modal" data-target="#modalEditPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button id="btnEditPartner" onClick=edit(` + data.partnerID + `) type="button"  class="btn btn-outline-dark" title="Edit Partner" data-toggle="modal" data-target="#modalEditPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
                                 <button id="btnDeletePartner" onClick=deletePartner(` + data.partnerID + `) class="btn btn-outline-danger" title="Delete Partner"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                             `
@@ -273,16 +273,18 @@ async function deletePartner(partnerID) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-    })
-        .then(async (result) => {
-            if (result.isConfirmed) {
-                Swal.fire("Removed! partner with ID: " + idPartner,
-                    "The partner has been REMOVED.",
-                    "success",
-                    "showConfirmButton",
-                    await apiDelete(idPartner));
-            }
-        });
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: `Removed! partner with ID: ${idPartner}`,
+                text: "The partner has been REMOVED.",
+                icon: 'success',
+                timer: 2000,
+                confirmButtonText: 'OK',
+            });
+            await apiDelete(idPartner);
+        }
+    });
 }
 
 //TODO ✅ EDIT PARTNER

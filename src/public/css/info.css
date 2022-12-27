@@ -171,9 +171,11 @@
 /* TODO BLOQUE CONTENT */
 .Info-subcontenedor {
     padding: 1em;
+    min-height: 31em;
 }
 
 .Info-bloque {
+    min-height: 28em;
     margin: 1em;
     padding: 1em 2em;
     border: solid 1px var(--Color-outline);
@@ -206,6 +208,7 @@
 }
 
 .Info-bloque.isAuto {
+    min-height: 37em;
     height: auto;
     /* max-height: 65em; */
     overflow-x: auto;

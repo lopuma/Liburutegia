@@ -1,21 +1,19 @@
-const infos = document.querySelectorAll(".Animation-info");
-const closeInfos = document.querySelectorAll(".Animation-closeInfo");
-const fieldErrs = document.querySelectorAll(".fieldErr");
-const fieldErrTexts = document.querySelectorAll(".fieldErrText");
-const inputBox = document.querySelectorAll(".Input-box");
+const infos = document.querySelectorAll(".Animation-btnInfo");
+const closeInfos = document.querySelectorAll(".Animation-btnCloseInfo");
+const fieldErrs = document.querySelectorAll(".divFieldErr");
+const fieldErrTexts = document.querySelectorAll(".divFieldErrText");
+const inputBox = document.querySelectorAll(".Input-boxError");
 const labelDniCheck = document.getElementById("labelDniCheck");
 var chageDni = false;
 var chageName = false;
 var chageLastname = false;
 let optionForm = "";
 var checkedNew = false;
+
 const field = {
     dni: false,
-    //scanner: false,
     name: false,
     lastname: false,
-    //direction: false,
-    //population: false,
     mobile: true,
     landline: true,
     email: true,
@@ -44,8 +42,16 @@ const textError = {
         "[ ERROR ] : Mobile field cannot contain letters or special characters, it must only contain [ 9 ] digits or empty.",
     landline:
         "[ ERROR ] : Landline field cannot contain letters or special characters, it must only contain [ 9 ] digits or empty.",
-    
 };
+
+const fieldChange = {
+    dni: false,
+    name: false,
+    lastname: false,
+    email: false,
+    mobile: false,
+    landline: false,
+}
 
 //TODO ✅ VALIDAR DNI ESPAÑOL
 async function checkElement(elemID) {
@@ -53,8 +59,8 @@ async function checkElement(elemID) {
     document
         .getElementById("infoDni")
         .addEventListener("click", () => {
-            inputBox[0].classList.add("isActiveError");
-            inputBox[1].classList.add("isActiveError");
+            document.getElementById('inputBoxDni').classList.add("isActiveError");
+            document.getElementById('inputBoxScanner').classList.add("isActiveError");
             document.getElementById("validationDni").classList.add("isActive");
             document.getElementById("errorDni").innerHTML = textError.dni;
             document
@@ -65,17 +71,26 @@ async function checkElement(elemID) {
     document
         .getElementById("closeInfoDni")
         .addEventListener("click", () => {
-            inputBox[0].classList.remove("isActiveError");
-            inputBox[1].classList.remove("isActiveError");            document.getElementById("validationDni").classList.remove("isActive");
+            document.getElementById('inputBoxDni').classList.remove("isActiveError");
+            document.getElementById('inputBoxScanner').classList.remove("isActiveError");
+            document.getElementById("validationDni").classList.remove("isActive");
             document.getElementById("errorDni").innerHTML = "";
             document
                 .getElementById("closeInfoDni").classList.remove("isVisible");
             document
                 .getElementById("infoDni").classList.add("isVisible");
         });
+    
     if (validateDni(elem.value.trim(), elemID) || elem.value.trim() == "") {
         elem.classList.remove("isError");
         document.getElementById('infoDni').classList.remove("isVisible");
+        document.getElementById('inputBoxDni').classList.remove("isActiveError");
+        document.getElementById('inputBoxScanner').classList.remove("isActiveError");
+        document.getElementById("validationDni").classList.remove("isActive");
+        document.getElementById("errorDni").innerHTML = "";
+        document
+            .getElementById("closeInfoDni").classList.remove("isVisible");
+        document
         field['dni'] = true;
         return true;
     } else {
@@ -114,14 +129,14 @@ function validateDni(value, elemID) {
     }
 }
 
-//TODO ACTIVE CHECK DESDE EL LABEL
+//TODO ✅ ACTIVE CHECK DESDE EL LABEL
 labelDniCheck.addEventListener('click', () => {
     inputDniCheck.checked ? inputDniCheck.checked = false : inputDniCheck.checked = true;
     activeSelectDniFamily();
 });
 
 
-//TODO ACTIVAR CHECK SI ES VENTA NEW PARTNER
+//TODO ✅ ACTIVAR CHECK SI ES VENTA NEW PARTNER
 try {
     if ($('#stateNewPartner').val() === '') { // 
         checkedNew = true;
@@ -132,6 +147,12 @@ try {
         checkedNew = false;
     }
 } catch (error) { }
+
+if (!checkedNew) {
+    field['dni'] = true;
+    field['name'] = true;
+    field['lastname'] = true;
+}
 
 // TODO ✅ VALIDAR FORMULARIOS
 async function correctForms(e) {
@@ -179,52 +200,6 @@ async function correctForms(e) {
                 document.getElementById("inputPhoneLandline").select();
                 return;
             }
-        }
-    } else {
-        $("#inputDni").on("change", () => {
-            chageDni = true;
-        });
-        $("#inputName").on("change", () => {
-            chageName = true;
-        });
-        $("#inputLastname").on("change", () => {
-            chageLastname = true;
-        });
-        if (chageDni || chageName || chageLastname) {
-            if (field.dni || field.name || field.lastname) {
-                optionForm = 'updatePartner';
-                dataPartner();
-            } else {
-                window.alert("There are items required your attention.");
-                if (!field.dni) {
-                    inputDni.focus();
-                    inputDni.select();
-                    inputDni.classList.add("isError");
-                    document
-                        .getElementById("infoDni")
-                        .classList.add("isVisible");
-                    return;
-                } else if (!field.name) {
-                    inputName.focus();
-                    inputName.select();
-                    inputName.classList.add("isError");
-                    document
-                        .getElementById("infoName")
-                        .classList.add("isVisible");
-                    return;
-                } else if (!field.lastname) {
-                    inputLastname.focus();
-                    inputLastname.select();
-                    inputLastname.classList.add("isError");
-                    document
-                        .getElementById("infoLastname")
-                        .classList.add("isVisible");
-                    return;
-                }
-            }
-        } else {
-            optionForm = 'updatePartner';
-            dataPartner();
         }
     }
 }
@@ -353,7 +328,13 @@ async function responseAddPartner(data) {
                 if (!statePartner){
                     location.reload();
                 }
+                fieldChange['dni'] = false;
+                fieldChange['name'] = false;
+                fieldChange['lastname'] = false;
             }, 1000);
+            fieldChange['dni'] = false;
+            fieldChange['name'] = false;
+            fieldChange['lastname'] = false;
         } catch (error) { }
     } else {
         Swal.fire({
@@ -401,40 +382,41 @@ async function validateField(
         document.getElementById(info).classList.remove("isVisible");
         document.getElementById(closeInfo).classList.remove("isVisible");
         field[inputField] = true;
+        inputBox.forEach((info, i) => {
+            inputBox[i].classList.remove("isActiveError");
+        });
     }
 
-
     infos.forEach((info, i) => {
-        if (infos[i].getAttribute('id') !== 'infoDni') {
-            infos[i].addEventListener("click", () => {
-                inputBox[i].classList.add("isActiveError");
-                try {
-                    inputBox[i + 1].classList.add("isActiveError");
-                } catch (error) { }
-                // try {
-                //     inputBox[i - 1].classList.add("isActiveError");
-                // } catch (error) { }
-                fieldErrs[i].classList.add("isActive");
-                fieldErrTexts[i].innerHTML = textError;
-                infos[i].classList.remove("isVisible");
-                closeInfos[i].classList.add("isVisible");
-            });
-        }
+        infos[i].addEventListener("click", () => {
+            inputBox[i].classList.add("isActiveError");
+            try {
+                inputBox[i + 1].classList.add("isActiveError");
+            } catch (error) { }
+            //try {
+            //    inputBox[i - 1].classList.add("isActiveError");
+            //} catch (error) { }
+            fieldErrs[i].classList.add("isActive");
+            fieldErrTexts[i].innerHTML = textError;
+            infos[i].classList.remove("isVisible");
+            closeInfos[i].classList.add("isVisible");
+        });
     });
 
     closeInfos.forEach((info, i) => {
-        if (closeInfos[i].getAttribute('id') !== 'closeInfoDni') {
+        if (closeInfos[i].getAttribute('id') !== 'closeInfoDni' || closeInfos[i].getAttribute('id') !== 'infoID') {
             closeInfos[i].addEventListener("click", () => {
                 inputBox[i].classList.remove("isActiveError");
                 try {
                     inputBox[i + 1].classList.remove("isActiveError");
                 } catch (error) { }
-                // try {
-                //     inputBox[i - 1].classList.remove("isActiveError");
-                // } catch (error) { }
+                //try {
+                //    inputBox[i - 1].classList.remove("isActiveError");
+                //} catch (error) { }
                 fieldErrs[i].classList.remove("isActive");
                 fieldErrTexts[i].innerHTML = "";
                 closeInfos[i].classList.remove("isVisible");
+                infos[i].classList.add("isVisible");
             });
         }
     });
@@ -469,9 +451,26 @@ async function fieldEmpty(
         document.getElementById(info).classList.remove("isVisible");
         document.getElementById(closeInfo).classList.remove("isVisible");
         field[inputField] = true;
+        inputBox.forEach((info, i) => {
+            inputBox[i].classList.remove("isActiveError");
+        });
     }
     return;
 }
+
+
+function changeField(e, fieldChage) {
+    fieldChange[fieldChage] = true;
+    field[fieldChage] = false;
+    e.addEventListener("blur", validateForms);
+    e.addEventListener("keyup", validateForms);
+    e.addEventListener("keypress", k => {
+        if (k.key === "Enter") {
+            validateForms;
+        }
+    });
+};
+
 
 //TODO ✅ VALIDACIONES INPUTS PARTNERS
 const validateForms = async e => {
@@ -541,19 +540,6 @@ const validateForms = async e => {
             break;
         }
 };
-
-//TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
-inputs.forEach((input, i) => {
-    inputs.forEach((input, i) => {
-        input.addEventListener("blur", validateForms);
-        input.addEventListener("keyup", validateForms);
-        input.addEventListener("keypress", e => {
-            if (e.key === "Enter") {
-                validateForms;
-            }
-        });
-    });
-});
 
 function cerrar() {
     window.location.href = "/workspace/partners";

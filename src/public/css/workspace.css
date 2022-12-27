@@ -8,6 +8,7 @@
 
 .Workspace-fieldset {
   width: 100%;
+  min-height: 38em;
   height: auto;
   border: 1px solid var(--Background-Color-forms-admin);
   margin-top: 12em;

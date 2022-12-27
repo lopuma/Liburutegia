@@ -54,10 +54,6 @@ const loginController = {
         try {
             const errors = validationResult(req);
             const { inputEmailLogin: email, inputPassword: pass } = req.body;
-            console.log({
-                email,
-                pass
-            })
             if (!errors.isEmpty()) {
                 req.flash("errorValidation", errors.array());
                 return res.status(300).redirect("/login");

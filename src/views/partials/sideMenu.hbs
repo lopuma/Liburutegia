@@ -1,73 +1,72 @@
+<link rel="stylesheet" href="/style/sidemenu.css">
+
 <div class="Sidemenu menu-collapsed" id="sidemenu">
 
     {{#if loggedIn}}
-
-    <div class="Sidemenu-profile">
-        <div class="Sidemenu-name--profile"><span>{{ userName }}</span></div>
-    </div>
-    <div class="Sidemenu-container--items">
-        {{#if rolAdmin}}
-        <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide" href="/workspace/admin" title="USER MANAGER" id="btnAdminSidemenu">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-gear"></i></div>
-                <div class="Sidemenu-title--item" ><span >User Manager</span></div>
-            </a>
+        <div class="Sidemenu-profile">
+            <div class="Sidemenu-name--profile"><span>{{ userName }}</span></div>
         </div>
-        {{/if}}
-        <div class="Sidemenu-separator"></div>
-        <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide" href="/workspace/books" title="BOOK" id="btnBookSidemenu">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-book"></i></div>
-                <div class="Sidemenu-title--item"><span>Books</span></div>
-            </a>
+        <div class="Sidemenu-container--items">
+            {{#if rolAdmin}}
+            <div class="Sidemenu-item">
+                <a class="Sidemenu-a isFocusSide" href="/workspace/admin" title="USER MANAGER" id="btnAdminSidemenu">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-gear"></i></div>
+                    <div class="Sidemenu-title--item" ><span >User Manager</span></div>
+                </a>
+            </div>
+            {{/if}}
+            <div class="Sidemenu-separator"></div>
+            <div class="Sidemenu-item">
+                <a class="Sidemenu-a isFocusSide" href="/workspace/books" title="BOOK" id="btnBookSidemenu">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-book"></i></div>
+                    <div class="Sidemenu-title--item"><span>Books</span></div>
+                </a>
+            </div>
+            <div class="Sidemenu-separator"></div>
+            <div class="Sidemenu-item">
+                <a class="Sidemenu-a isFocusSide" href="/workspace/bookings" title="BOOKINGS" id="btnBookingSidemenu">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="Sidemenu-title--item"><span>Bookings</span></div>
+                </a>
+            </div>
+            <div class="Sidemenu-separator"></div>
+            <div class="Sidemenu-item">
+                <a class="Sidemenu-a isFocusSide" href="/workspace/partners" title="PARTNERS" id="btnPartnerSidemenu">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-people-group"></i></div>
+                    <div class="Sidemenu-title--item"><span>Partners</span></div>
+                </a>
+            </div>
+            <div class="Sidemenu-separator"></div>
+            <div class="Sidemenu-item">
+                <a class="Sidemenu-a" href="#" title="TO PRINT">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-print"></i></div>
+                    <div class="Sidemenu-title--item"><span>Print</span></div>
+                </a>
+            </div>
+            <div class="Sidemenu-separator"></div>
+            <div class="Sidemenu-item ">
+                <a class="Sidemenu-a isActiveLogout isNoPadding" href="/logout" title="LOGOUT">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                    <div class="Sidemenu-title--item "><span>Logout</span></div>
+                </a>
+            </div>
         </div>
-        <div class="Sidemenu-separator"></div>
-        <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide" href="/workspace/bookings" title="BOOKINGS" id="btnBookingSidemenu">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-calendar-check"></i></div>
-                <div class="Sidemenu-title--item"><span>Bookings</span></div>
-            </a>
-        </div>
-        <div class="Sidemenu-separator"></div>
-        <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide" href="/workspace/partners" title="PARTNERS" id="btnPartnerSidemenu">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-people-group"></i></div>
-                <div class="Sidemenu-title--item"><span>Partners</span></div>
-            </a>
-        </div>
-        <div class="Sidemenu-separator"></div>
-        <div class="Sidemenu-item">
-            <a class="Sidemenu-a" href="#" title="TO PRINT">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-print"></i></div>
-                <div class="Sidemenu-title--item"><span>Print</span></div>
-            </a>
-        </div>
-        <div class="Sidemenu-separator"></div>
-        <div class="Sidemenu-item ">
-            <a class="Sidemenu-a isActiveLogout isNoPadding" href="/logout" title="LOGOUT">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-                <div class="Sidemenu-title--item "><span>Logout</span></div>
-            </a>
-        </div>
-    </div>
     {{else}}
-    <div class="Sidemenu-container--items">
-        <div class="Sidemenu-separator"></div>
-        <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide" href="/" title="HOME" id="btnHomeSidemenu">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-house"></i></div>
-                <div class="Sidemenu-title--item"><span>Home</span></div>
-            </a>
+        <div class="Sidemenu-container--items">
+            <div class="Sidemenu-separator"></div>
+            <div class="Sidemenu-item">
+                <a class="Sidemenu-a isFocusSide" href="/" title="HOME" id="btnHomeSidemenu">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-house"></i></div>
+                    <div class="Sidemenu-title--item"><span>Home</span></div>
+                </a>
+            </div>
+            <div class="Sidemenu-separator"></div>
+            <div class="Sidemenu-item">
+                <a class="Sidemenu-a isFocusSide isActiveLogin isNoPadding" href="/login" title="SINGIN" id="btnLoginSidemenu">
+                    <div class="Sidemenu-icon--item"><i class="fa-solid fa-right-to-bracket"></i></div>
+                    <div class="Sidemenu-title--item"><span>Login</span></div>
+                </a>
+            </div>
         </div>
-        <div class="Sidemenu-separator"></div>
-        <div class="Sidemenu-item">
-            <a class="Sidemenu-a isFocusSide isActiveLogin isNoPadding" href="/login" title="SINGIN" id="btnLoginSidemenu">
-                <div class="Sidemenu-icon--item"><i class="fa-solid fa-right-to-bracket"></i></div>
-                <div class="Sidemenu-title--item"><span>Login</span></div>
-            </a>
-        </div>
-    </div>
     {{/if}}
 </div>
-
-<link rel="stylesheet" href="/style/sidemenu.css">

@@ -4,7 +4,6 @@ const familyController = {
 
     getFamily: async (req, res) => {
         const dni = req.params.dniPartner;
-        console.log({dni})
         try {
             const sqlSelect = " SELECT p.dni as partnerDni FROM familys f LEFT JOIN partners p ON f.partnerDNI=p.dni WHERE f.familyDni=?";
             await connection.query(sqlSelect, dni, (err, results) => {
@@ -41,11 +40,7 @@ const familyController = {
         try {
             const familyID = req.params.idFamily;
             const { familyDni, partnerDni } = req.body;
-            console.log("=>", { 
-                familyID,
-                familyDni,
-                partnerDni
-            });
+
             const sqlUnbind = "DELETE FROM familys WHERE familyDni=? AND partnerDni=?";
             await connection.query(sqlUnbind, [ partnerDni, familyDni ], async (err, results) => {
                 if (err) {
@@ -66,9 +61,7 @@ const familyController = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                     }
-                    console.log(results.length);
                     if (results.length === 0) {
-                        console.log("QUITAMOS EL 1")
                         const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
                         await connection.query(sqlUpdateActiveFamily, partnerDni, (err, results) => {
                             if (err) {
