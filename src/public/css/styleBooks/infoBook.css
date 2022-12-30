@@ -1,0 +1,280 @@
+@charset "UTF-8";
+.Info-contenedor {
+    margin: var(--Margin-top-forms) auto;
+    width: 90%;
+    height: 100%;
+    padding: 0.5em;
+    color: var(--Color-negro);
+    -webkit-transition: all 0.4s ease;
+    transition: all .5s ease;
+    background-color: var(--Color-blanco);
+    box-shadow: var(--Box-shadow-forms);
+    border-radius: var(--Radius);
+}
+
+.Info-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+}
+
+.Info-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+}
+
+.Info-cover {
+    flex: 20%;
+}
+
+.Cover-upload {
+    background-color: var(--Color-texto-blanco);
+    padding: 2em 2em;
+}
+
+.Upload-group {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    width: 220px;
+    height: 322px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 6px #22A39F solid;
+}
+
+.Upload-file {
+    display: none;
+}
+
+.Upload-icon {
+    position: absolute;
+    width: 60px;
+    height: auto;
+    bottom: 100px;
+    left: 50%;
+    top: 90%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+.Upload-icon {
+    background-color: var(--Color-texto-blanco);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 2em;
+    text-align: center;
+    transition: all .3s ease;
+}
+
+.Upload-icon i {
+    text-align: center;
+}
+
+.Upload-icon:hover {
+    color: var(--Color-texto-blanco);
+}
+
+.Upload-icon::after {
+    content: "";
+    background: #22A39F;
+    /* color de fondo hover */
+    position: absolute;
+    z-index: -1;
+    padding: 16px 20px;
+    display: block;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 50%;
+    transform: scale(0, 0);
+    transition: all 0.3s ease;
+}
+
+.Upload-icon:hover::after {
+    transition: all 0.3s ease-out;
+    transform: scale(1, 1);
+}
+
+.Upload-btn {
+    margin: 3em 0 1em;
+}
+
+.Upload-btn input {
+    border-radius: var(--Radius);
+}
+
+.Info-contents {
+    flex: 70%;
+    width: 100%;
+    height: auto;
+}
+
+.Contents-data {
+    display: flex;
+}
+
+.Contents-information {
+    flex: 70%;
+    background-color: white;
+}
+
+.Information-title {
+    display: flex;
+    margin: 1.5em 0 0;
+    align-items: center;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.Title-i {
+    margin: 0 1em;
+    font-size: 1.7em;
+    color: #faab3c;
+}
+
+.Title-h1 {
+    margin: 0;
+    padding: 0.2em 0;
+    font-size: 1.7em;
+    font-weight: 700;
+    width: 100%;
+    display: flex;
+    align-items: self-start;
+    text-align: start;
+    flex-wrap: wrap;
+}
+
+.Author {
+    text-align: start;
+    padding: 0 2em;
+}
+
+.Author span {
+    font-weight: 700;
+}
+
+.Information-subtitle {
+    padding: 0 .5em;
+    text-align: start;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 1em 0 .5em;
+}
+
+
+.Information-boxes {
+    text-align: start;
+    margin: .5em 0;
+    padding: 0.5em 0.5em 0.5em 2em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Information-row {
+    flex: 40%;
+    color: var(--Color-texto-negro);
+    font-weight: 400;
+}
+
+.Information-h3 {
+    margin: 0;
+    padding: .5em 0;
+}
+
+.Information-cell {
+    flex: 60%;
+    color : var(--Color-texto-gray);
+    display: flex;
+    padding: 0.5em 1em;
+    align-items: center;
+}
+
+.Information-cell.isObservation{
+    height: auto;
+}
+
+
+.Contents-totalReview {
+    flex: 30%;
+    padding: 1em;
+}
+
+.Review-header {
+    background-color: rgba(216, 216, 216, 0.33);
+    box-shadow: var(--Box-shadow-forms);
+    margin: 1em 0 0;
+    padding: .5em;
+    text-align: start;
+    border-radius: var(--Radius);
+    display: flex;
+    flex-direction: column;
+}
+
+.Review-star span {
+    margin: 0 .5em;
+    font-size: .8em;
+    font-weight: 700;
+}
+
+.Review-content {
+    margin: .5em 0;
+}
+
+.Review-span {
+    color: #007185;
+    font-size: 1em;
+}
+
+.Review-span:hover {
+    cursor: pointer;
+    color: #C7511F;
+    text-decoration: underline;
+}
+
+/* TODO STAR */
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    cursor: pointer;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: gold;
+}
+
+.Info-container{
+    width: 100%;
+    height: 150px;
+    background-color: cadetblue;
+}
+
+@media screen and (max-width: 550px) {
+
+    .Info-contenedor {
+        width: 95%;
+        padding: .5em 0;
+    }
+
+}

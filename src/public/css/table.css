@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* TODO CSS PARA TABLE */
 .Dashboard {
     margin: 3em 0;
@@ -82,17 +84,6 @@ tbody tr td button,
     background-color: rgba(235, 235, 235, 0.671)
 }
 
-.odd.selected {
-    background-color: #eb7302;
-    color: var(--Color-texto-negro);
-}
-
-table.dataTable tbody tr.selected {
-    color: white;
-    background-color: #eeeeee;
-    /* Not working */
-}
-
 /*TODO ✅ PIE DATATABLE STYLE FOR NO dom: ' Bfrtip' */
 
 .small-6 .dataTables_length {
@@ -137,13 +128,13 @@ table.dataTable tbody tr.selected {
 
 /* TODO ✅ DATATABLE STYLE FOR dom: ' Bfrtip' */
 div.dt-buttons {
-    width: 50%;
+    /* width: 50%; */
     float: left;
     margin: 0;
 }
 
 div.dt-buttons .dt-button {
-    font-size: 1em;
+    font-size: .9em;
 }
 
 div.dataTables_wrapper div.dataTables_filter {
@@ -176,7 +167,8 @@ div.dataTables_wrapper div.dataTables_info {
 /*TODO ✅ ESTILOS APRA BUTTONS */
 .dt-buttons .dt-button {
     background-image: linear-gradient(to right, #383838 0%, #5a5a5a 51%, #383838 100%) !important;
-    margin: 1em .5em 2em;
+    margin: 0 0.5em;
+    padding: 0.5em;
     text-align: center;
     text-transform: uppercase;
     transition: 0.5s;
@@ -191,6 +183,11 @@ div.dataTables_wrapper div.dataTables_info {
     background-position: right center;
     color: #fff;
     text-decoration: none;
+}
+
+div.button-group.stacked.dropdown-pane a.button {
+    margin: 1em 0;
+    width: 100%;
 }
 
 .dt-buttons .dt-button.buttonCopy {
@@ -261,7 +258,6 @@ div.dataTables_wrapper div.dataTables_info {
 
 /*TODO ✅ ESTILO PARA LA COLLECTIONS */
 div.dt-button-collection {
-    padding: 1em;
     width: auto;
 }
 
@@ -328,10 +324,29 @@ div.dt-button-collection .active:hover {
     div.dt-buttons {
         width: 100%;
         display: table-row-group;
-        padding: 0 0.5em;
+    }
+
+    div.dt-buttons .dt-button {
+        margin: 1em 0;
     }
 
     .grid-x>.small-6 {
         width: 100%;
     }
+}
+
+table.dataTable.stripe>tbody>tr.odd.selected>*,
+table.dataTable.display>tbody>tr.odd.selected>* {
+    box-shadow: inset 0 0 0 9999px #5A8F7B;
+}
+
+table.dataTable.stripe>tbody>tr.even.selected>*,
+table.dataTable.display>tbody>tr.even.selected>* {
+    box-shadow: inset 0 0 0 9999px #5A8F7B;
+}
+
+table.dataTable.hover>tbody>tr.selected:hover>*,
+table.dataTable.display>tbody>tr.selected:hover>* {
+    box-shadow: inset 0 0 0 9999px #81CACF;
+    color: var(--Color-texto-negro);
 }

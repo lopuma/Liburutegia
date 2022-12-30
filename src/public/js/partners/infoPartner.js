@@ -581,4 +581,5 @@ linesButton.forEach((cadaLi, i) => {
 
 async function reservedBook(partnerID) {
     const idPartner = partnerID;
+    console.log("SE VA A RESERVAR ESTE LIBRO ==> ", idPartner);
 };

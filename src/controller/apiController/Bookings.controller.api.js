@@ -2,6 +2,7 @@ const { body, validationResult } = require("express-validator");
 const connection = require("../../../database/db");
 const flash = require("connect-flash");
 
+
 const bookingController = {
     //TODO VALIDATIONS
     validate: [body("email", "The format email address is incorrect.").isEmail()],

@@ -1,1 +1,186 @@
-<div class="Info" style="margin-top: 150px; color:red">INFO BOOK</div>
+<link href="/style/styleBooks/infoBook.css" rel="stylesheet" />
+
+<div class="Info-contenedor" id="stateInfoBook">
+    {{#each book}}
+        <script>
+            var _BOOKID = {{this.bookID}};
+            var _RATING = {{#if this.rating}}{{this.rating}}{{else}}0{{/if}};
+        </script>
+    {{/each}}
+    <div class="Info-header">
+        <div class="Info-cover">    
+            <div class="Cover-upload Upload" >
+                <form action="/api/books/frontPage" enctype="multipart/form-data" method="post">
+                    <!--<div class="Upload-group" id="imgBox" style="background-image: url('/img/covers/{{this.cover}}')"> -->
+                    <div class="Upload-group" id="imgBox">
+                        <input type="file" class="Upload-file" name="coverImage" accept="image/*" id="coverImage" onchange="loadFile(event)">
+                        <label for="coverImage" class="Upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></label>
+                    </div>
+                    <label id="successUpload"></label>
+                    <div class="New-boxes" id="newBoxesID" hidden>
+                        <div class="Input-box">
+                            <div class="Box-animation Animation">
+                                <div class="Box">
+                                    {{#each book}}
+                                        <input type="text" class="Animation-input form-control" id="bookCoverID" name="idBook" value={{this.bookID}}>
+                                        <label class="Animation-label" for="idBook">Number of Book ID *</label>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Upload-btn">
+                        <input type="submit" value="Save Cover !" class="btn btn-dark">            
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="Info-contents Contents">
+            <div class="Contents-data">
+                {{#each book}}
+                    <div class="Contents-information Information">
+                        <div class="Information-title Title">
+                            <i class="Title-i fa-solid fa-book-open"></i>
+                            <h1 class="Title-h1">
+                                {{this.title}}
+                            </h1>
+                        </div>
+                        <div class="Information-author Author">
+                            <label>by <span>{{this.author}}</span></label>
+                        </div>
+                        <h2 class="Information-subtitle">Bibliographic Record</h2>
+                        <hr>
+                        <!-- TODO FECHA COMPRA -->
+                        <div class="Information-boxes">
+                            <div class="Information-row">
+                                <h3 class="Information-h3">
+                                    Date of purchase:
+                                </h3>
+                            </div>
+                            <div class="Information-cell">
+                                <span class="Information-span">
+                                    {{this.purchase_date}}
+                                </span>
+                            </div>
+                        </div>
+                        <!-- TODO ISBN -->
+                        <div class="Information-boxes">
+                            <div class="Information-row">
+                                <h3 class="Information-h3">
+                                    Print ISBN:
+                                </h3>
+                            </div>
+                            <div class="Information-cell">
+                                <span class="Information-span">
+                                    {{this.isbn}}
+                                </span>
+                            </div>
+                        </div>
+                        <!-- TODO COLLECTION -->
+                        <div class="Information-boxes">
+                            <div class="Information-row">
+                                <h3 class="Information-h3">
+                                    Collection:
+                                </h3>
+                            </div>
+                            <div class="Information-cell">
+                                <span class="Information-span">
+                                    {{this.collection}}
+                                </span>
+                            </div>
+                        </div>
+                        <!-- TODO FECHA TYPE -->
+                        <div class="Information-boxes">
+                            <div class="Information-row">
+                                <h3 class="Information-h3">
+                                    Category:
+                                </h3>
+                            </div>
+                            <div class="Information-cell">
+                                <span class="Information-span">
+                                    {{this.type}}
+                                </span>
+                            </div>
+                        </div>
+                        <!-- TODO FECHA LANGUAGE -->
+                        <div class="Information-boxes">
+                            <div class="Information-row">
+                                <h3 class="Information-h3">
+                                    Language:
+                                </h3>
+                            </div>
+                            <div class="Information-cell">
+                                <span class="Information-span">
+                                    {{this.language}}
+                                </span>
+                            </div>
+                        </div>
+                        <!-- TODO FECHA OBSERVATIONS -->
+                        <div class="Information-boxes">
+                            <div class="Information-row">
+                                <h3 class="Information-h3">
+                                    Observations:
+                                </h3>
+                            </div>
+                            <div class="Information-cell isObservation">
+                                <span class="Information-span">
+                                    {{this.observations}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Contents-totalReview Review">
+                        <div class="Review-header">
+                            <div class="Review-star">
+                                <div class="stars-outer">
+                                    <div class="stars-inner" id="totalScore" cursor: pointer" title="Total score {{this.rating}} star">
+                                    </div>
+                                </div>
+                                <span>{{#if this.rating}}{{this.rating}} of 5{{else}}0 of 5{{/if}}</span>
+                            </div>
+                            <div class="Review-content">
+                                <a href="#customerReviews"><span class="Review-span">{{this.numVotes}} Overall Ratings</span></a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="Info-container" name="customerReviews" id="customerReviews">
+    <hr>
+        <div class="Info-review">
+
+        </div>
+    </div>
+</div>
+
+<script defer>
+
+    const starPercentage = _RATING / 5 * 100;
+    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+    console.log({starPercentageRounded});
+    document.getElementById('totalScore').style.width = starPercentageRounded;
+
+    const imgBox = document.getElementById('imgBox');
+    const urlBook = `/workspace/books/infoCover/${_BOOKID}`
+
+    fetch(urlBook)
+        .then((resp) => resp.json())
+        .then(function(data) {
+            let nameCover = data[0].cover;
+            if(nameCover !== null) {
+                imgBox.style.backgroundImage = `url(/img/covers/${nameCover})`;
+            } else {
+                imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
+            }
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+
+    var loadFile = (event) => {
+        imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
+    };
+
+</script>

@@ -84,10 +84,6 @@ app.engine('.hbs', exphbs.engine({
 }))
 app.set('view engine', '.hbs'); 
 
-// Creamos usuario inicial
-//const userDef = require('../src/routes/db/userDefault');
-//userDef();
-
 // 12 - ROUTERS VIEWS
 app.use('/', require('./routes/IndexRouter')); // PAGINA PRICIPAL
 app.use('/profile', require('./routes/profile/ProfileRouter'));

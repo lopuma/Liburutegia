@@ -12,6 +12,7 @@
     position: absolute;
     top: -1em;
     left: -4em;
+    width: 100%;
     z-index: 1;
 }
 
@@ -26,13 +27,13 @@
     border-top-right-radius: var(--Radius);
     border-top-left-radius: var(--Radius);
     border-bottom-right-radius: var(--Radius);
-    width: fit-content;
+    width: 50%;
     border-bottom: 1px solid var(--Color-outline);
 }
 
 .New-flag {
     position: absolute;
-    top: 3.4em;
+    top: 3.8em;
     left: -4em;
     width: 2em;
     height: 2em;

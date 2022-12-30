@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/style/new.css">
+
+<div class="New" id="stateNewBook">
+    <div class="New-title">
+        <h1 class="New-h1">Add New Book</h1>
+    </div>
+    <div class="New-flag"></div>
+
+    <!-- TODO FORMULARIO DE AÑADIR NUEVO Book -->
+    <form class="New-form" id="formAddBook" name"formAddBook">
+        
+        {{> formBook }}
+        
+        <div class="Input-button">
+            <input class="Button-cancel" onClick="cerrar()" id="btnCancel"
+                type="button" value='CANCEL' tabindex="10" />
+            <input class="Button-accept" id="btnAccept" type="submit"
+                value='ACCEPT' tabindex="11" />
+        </div>
+
+    </form>
+
+</div>
+
+
+<script>
+    function cerrar() {
+        window.location.href = "/workspace/books"
+    }
+</script>

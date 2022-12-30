@@ -12,11 +12,13 @@ Procfile
 docker-compose PRO.yml
 docker-compose_DEV.yml
 .gitignore
-.env/.env
 otros/
 *.csv
 exec/
 addData*.js
-env/
 compose*
 .git/
+scriptAutomatizacion/
+env/
+.env
+.env/.env

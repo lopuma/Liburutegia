@@ -1,5 +1,5 @@
+@charset "UTF-8";
 @import url("table.css");
-
 .Workspace-container {
   margin: var(--Margin-top-forms) auto 4em;
   width: 100%;

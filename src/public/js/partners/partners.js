@@ -59,7 +59,7 @@ $(document).ready(function () {
 });
 
 function fillZeros(id) {
-    let num = id.toString()
+    let num = id;
     let large = 12
     for (let i = 0; i < (large - num.length); i++) {
         num = "0" + num
@@ -102,7 +102,7 @@ async function loadData() {
                 {
                     data: null, render: function (data, _type, _row) {
                         // Combine the first and last names into a single table field
-                        return data.name + ' ' + data.lastname;
+                        return data.lastname + ', ' + data.name;
                     }
                 },
                 { data: "direction", visible: false },

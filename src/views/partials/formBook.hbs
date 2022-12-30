@@ -1,52 +1,75 @@
 <div class="New-content">
-    <input type="text" class="form-control" id="bookID" tabindex="0" hidden>
-    <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="text" name="dni" id="dni" value="" tabindex="2" autofocus required>
-            <label for="dni" class="Input-new">Enter Dni *</label>
 
+    <div class="New-boxes" id="newBoxesID">
+        <!-- TODO BOOK ID -->
+        <div class="Input-box" hidden>
+            <div class="Box">
+                <i class="Box-i fa-solid fa-key"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input"  type="text" id="bookID" tabindex="0" readonly value="null">
+                    <label class="Animation-label" for="bookID">Your Partner ID</label>
+                    <label class="Animation-info" for="bookID" id="infoID"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="bookID"
+                        id="closeinfoID"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
         </div>
-        <div class="New-box">
-            <input class="New-input" type="text" name="scanner" id="scanner" value="" tabindex="3">
-            <label for="scanner" class="Input-new">Enter Scanner</label>
-        </div>
-    </div>
-    <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="text" name="name" id="name" value="" tabindex="4" required>
-            <label for="name" class="Input-new">Enter Name *</label>
-        </div>
-        <div class="New-box">
-            <input class="New-input" type="text" name="lastname" id="lastname" value="" tabindex="5" required>
-            <label for="lastname" class="Input-new">Enter Last name *</label>
-        </div>
-    </div>
-    <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="text" name="population" id="population" value="" tabindex="6">
-            <label for="population" class="Input-new">Enter Population</label>
-        </div>
-        <div class="New-box">
-            <input class="New-input" type="text" name="direction" id="direction" value="" tabindex="7">
-            <label for="direction" class="Input-new">Enter Direction</label>
-        </div>
-    </div>
-    <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="tel" name="phone1" id="phone1" value="" tabindex="8" placeholder="123456789">
-            <label for="phone1" class="Input-new">Enter Phone (mobile)</label>
-        </div>
-        <div class="New-box">
-            <input class="New-input" type="tel" name="phone2" id="phone2" value="" tabindex="9">
-            <label for="phone2" class="Input-new">Enter Phone (ladline)</label>
+        <!-- TODO PURCHASE DATE -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="fa-solid fa-calendar-days"></i>
+                <div class="Box-animation Animation Creation-date" id="purchaseDate">
+                    <input class="Animation-input" type="date" id="actualPurchaseDate">
+                    <label class="Animation-label" for="date">Creation Date</label>
+                </div>
+            </div>
         </div>
     </div>
     <div class="New-boxes">
-        <div class="New-box">
-            <input class="New-input" type="email" name="email" id="email" value="" tabindex="10">
-            <label for="email" class="Input-new">Enter Email</label>
+        <!-- TODO Title -->
+        <div class="Input-box" id="inputBoxTitle">
+            <div class="Box">
+                <i class="Box-i fa-regular fa-address-card"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputTitle" id="inputTitle"
+                        type="text"
+                        placeholder=" " autocomplete="valorNoValido"
+                        required="required" tabindex="1" autofocus onChange="changeField(this, 'Title')">
+                    <label class="Animation-label" for="inputTitle">Enter Title *</label>
+                    <label class="Animation-info" for="inputTitle" id="infoTitle"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputTitle"
+                        id="closeInfoTitle"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationTitle">
+                <div class="Error-text">
+                    <span id="errorTitle" class="fieldErrText">Title cannot be
+                        empty.</span>
+                </div>
+            </div>
+        </div>
+        <!-- TODO ISBN -->
+        <div class="Input-box" id="inputBoxISBN">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-qrcode"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputISBN"
+                        id="inputISBN" type="text"
+                        placeholder=" " autocomplete="valorNoValido"
+                        tabindex="2" >
+                    <label class="Animation-label" for="inputISBN">Enter
+                        ISBN</label>
+                    <label class="Animation-info" for="inputISBN"
+                        id="infoISBN"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputISBN"
+                        id="closeInfoISBN"><i class="fa-solid
+                            fa-circle-info"></i></label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<link href="/style/new.css" rel="stylesheet">
+<link rel="stylesheet" href="/style/newForm.css">

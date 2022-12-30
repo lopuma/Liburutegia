@@ -1,5 +1,5 @@
 upstream application {
-    server 127.0.0.1:3000;
+    server application:3000;
 }
 
 proxy_cache_path /var keys_zone=cache1:1000m;
@@ -12,6 +12,7 @@ server {
         index index.html index.htm index.nginx-debian.html;
 
         server_name ${NGINX_HOST};
+        #return 301 https://www.liburutegia-sanmiguel,com;
         access_log  /var/log/nginx/${NGINX_HOST}.access.log;
         error_log  /var/log/nginx/${NGINX_HOST}.error.log;
 
@@ -25,4 +26,18 @@ server {
                 proxy_set_header Host $host;
                 proxy_cache_bypass $http_upgrade;
         }
+        #location /admin {
+        #        proxy_cache cache1;
+        #        proxy_cache_valid any 30m;
+        #
+        #        rewrite ^/(.*) /$1 break;
+        #        proxy_pass http://application;
+        #}
+        #location /login {
+        #        proxy_cache cache1;
+        #        proxy_cache_valid any 30m;
+        #
+        #        rewrite ^/login(.*) /$1 break;
+        #        proxy_pass http://application;
+        #}
 }

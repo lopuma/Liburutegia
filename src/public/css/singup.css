@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* TODO CONTENEDOR DE LOGIN*/
 .Singup {
     margin: var(--Margin-top-forms) auto 4em;
@@ -234,6 +235,7 @@
     text-align: center;
     padding: 1em;
     width: 50%;
+    height: 3.75em;
     color: var(--Color-texto-negro);
     letter-spacing: 5px;
     cursor: pointer;

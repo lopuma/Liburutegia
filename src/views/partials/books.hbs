@@ -1,41 +1,33 @@
-<!--TODO Modal para CRUD-->
-<div id="modalBook" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalBookLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalBookLabel"></h5>
-      </div>
-      <div class="New">
-        <form class="New-form" id="formu">
-          {{> formBook}}
-          <div class="modal-footer">
-            <button type="button" class="Button-cancel btn btn-secondary" data-dismiss="modal" tabindex="10">Cancel</button>
-            <button type="submit" id="btnGuardar" class="Button-accept btn btn-dark" tabindex="11">Save</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+{{> modalEditBook}}
 
 <!-- TODO DATA BOOKS FOR LIBURUTEGIA-->
-<div class="Dashboard">
+<div class="Dashboard" id="stateBooks">
+  
   <a class="Dashboard-a" href="/workspace/books/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Book</a>
+  
   <div class="Dashboard-row">
+
       <!-- TODO LOADING -->
       <div id="spinner">
         {{> loading}}
       </div>
+
       <!-- TODO TABLE BOOKS -->
-      <table id="tableBook" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
+      <table class="Dashboard-table table table-bordered display wrap" cellspacing="0" width="100%" id="tableBook">
         <thead  class="Dashboard-head">
           <tr>
-            <th>bookID</th>
+            <th>BOOK ID</th>
             <th>TITLE</th>
-            <th>ISBN</th>
             <th>AUTHOR</th>
+            <th>EDITORIAL</th>
+            <th>ISBN</th>
+            <th>TYPE</th>
             <th>LANGUAGE</th>
+            <th>COLLECTION</th>
+            <th>PURCHASE DATE</th>
+            <th>OBSERVATIONS</th>
             <th>RESERVED</th>
+            <th>COMENTS</th>
             <th>ACTIONS</th>
           </tr>
         </thead>
@@ -43,12 +35,18 @@
         </tbody>
         <tfoot  class="Dashboard-foot">
           <tr>
-            <th>bookID</th>
+            <th>BOOK ID</th>
             <th>TITLE</th>
-            <th>ISBN</th>
             <th>AUTHOR</th>
+            <th>EDITORIAL</th>
+            <th>ISBN</th>
+            <th>TYPE</th>
             <th>LANGUAGE</th>
+            <th>COLLECTION</th>
+            <th>PURCHASE DATE</th>
+            <th>OBSERVATIONS</th>
             <th>RESERVED</th>
+            <th>COMENTS</th>
             <th>ACTIONS</th>
           </tr>
         </tfoot>
@@ -56,4 +54,4 @@
   </div>
 </div>
 
-<script defer src="/scripts/books.js"></script>
+<script defer src="/scripts/books/books.js" type="text/javascript"></script>
