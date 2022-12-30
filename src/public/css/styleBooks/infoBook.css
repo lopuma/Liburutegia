@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 .Info-contenedor {
     margin: var(--Margin-top-forms) auto;
     width: 90%;
@@ -44,6 +45,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     border: 6px #22A39F solid;
+    border-radius: var(--Radius);
 }
 
 .Upload-file {
@@ -52,9 +54,9 @@
 
 .Upload-icon {
     position: absolute;
-    width: 60px;
+    width: 3.75em;
     height: auto;
-    bottom: 100px;
+    bottom: 6.25em;
     left: 50%;
     top: 90%;
     transform: translateX(-50%);
@@ -63,8 +65,8 @@
 
 .Upload-icon {
     background-color: var(--Color-texto-blanco);
-    width: 60px;
-    height: 60px;
+    width: 2em;
+    height: 2em;
     border-radius: 50%;
     font-size: 2em;
     text-align: center;
@@ -85,7 +87,7 @@
     /* color de fondo hover */
     position: absolute;
     z-index: -1;
-    padding: 16px 20px;
+    padding: 1em;
     display: block;
     left: 0;
     right: 0;
@@ -106,6 +108,8 @@
 }
 
 .Upload-btn input {
+    background-color: #22A39F;
+    color: var(--Color-texto-negro);
     border-radius: var(--Radius);
 }
 
@@ -167,6 +171,19 @@
     margin: 1em 0 .5em;
 }
 
+.Information-summary {
+    font-weight: 600;
+    padding: 0 .5em;
+    text-align: start;
+    box-shadow: rgba(110, 110, 114, 0.25) 0px 50px 100px -20px, rgba(70, 70, 70, 0.3) 0px 30px 60px -30px, rgba(90, 90, 90, 0.35) 0px -2px 6px 0px inset;
+    transition: all .5s ease;
+}
+
+details[open] summary {
+    box-shadow: none;
+}
+
+
 
 .Information-boxes {
     text-align: start;
@@ -189,27 +206,33 @@
 }
 
 .Information-cell {
-    flex: 60%;
-    color : var(--Color-texto-gray);
+    flex: 65%;
+    color: var(--Color-texto-gray);
     display: flex;
     padding: 0.5em 1em;
     align-items: center;
 }
 
-.Information-cell.isObservation{
+.Information-cell.isObservation {
     height: auto;
 }
 
 
-.Contents-totalReview {
-    flex: 30%;
+.Review {
+    flex: 35%;
     padding: 1em;
 }
 
+.Review h3 {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.Review-actions,
 .Review-header {
-    background-color: rgba(216, 216, 216, 0.33);
+    background-color: rgba(236, 236, 236, 0.33);
     box-shadow: var(--Box-shadow-forms);
-    margin: 1em 0 0;
+    margin: 1em 0 3em;
     padding: .5em;
     text-align: start;
     border-radius: var(--Radius);
@@ -217,15 +240,56 @@
     flex-direction: column;
 }
 
+.Review-actions {
+    height: 18.75em;
+    align-items: center;
+    position: relative;
+}
+
+.Action-btn {
+    margin: 1em 0;
+    border-radius: var(--Radius);
+    width: 80%;
+
+}
+
+.Action-btn.isDelete {
+    position: absolute;
+    margin: 1em auto;
+    width: 75%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.Review-star,
+.Review-total {
+    margin: 1em;
+}
+.Review-total {
+    display: flex;
+    flex-direction: row;
+}
+
+.Review-total i {
+    margin-right: 1em ;
+}
+
 .Review-star span {
     margin: 0 .5em;
-    font-size: .8em;
+    font-size: 1em;
     font-weight: 700;
 }
 
-.Review-content {
-    margin: .5em 0;
+.Review-reserved {
+    font-weight: 700;
+    padding: 0.5em 1em;
 }
+
+.Review-reserved .badge {
+    margin: 0 .5em;
+    padding: 0.5em;
+} 
 
 .Review-span {
     color: #007185;
@@ -264,9 +328,9 @@
     color: gold;
 }
 
-.Info-container{
+.Info-container {
     width: 100%;
-    height: 150px;
+    height: 9.375em;
     background-color: cadetblue;
 }
 

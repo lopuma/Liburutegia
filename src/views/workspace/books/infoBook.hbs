@@ -50,6 +50,19 @@
                         </div>
                         <h2 class="Information-subtitle">Bibliographic Record</h2>
                         <hr>
+                        <!-- TODO BOOK ID -->
+                        <div class="Information-boxes">
+                            <div class="Information-row">
+                                <h3 class="Information-h3">
+                                    Book ID:
+                                </h3>
+                            </div>
+                            <div class="Information-cell">
+                                <span class="Information-span">
+                                    {{this.bookID}}
+                                </span>
+                            </div>
+                        </div>
                         <!-- TODO FECHA COMPRA -->
                         <div class="Information-boxes">
                             <div class="Information-row">
@@ -76,60 +89,65 @@
                                 </span>
                             </div>
                         </div>
-                        <!-- TODO COLLECTION -->
-                        <div class="Information-boxes">
-                            <div class="Information-row">
-                                <h3 class="Information-h3">
-                                    Collection:
-                                </h3>
+                        <details class="Information-details">
+                            <summary class="Information-summary"><dfn>More Details<dfn></summary>
+                            <!-- TODO COLLECTION -->
+                            <div class="Information-boxes">
+                                <div class="Information-row">
+                                    <h3 class="Information-h3">
+                                        Collection:
+                                    </h3>
+                                </div>
+                                <div class="Information-cell">
+                                    <span class="Information-span">
+                                        {{this.collection}}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="Information-cell">
-                                <span class="Information-span">
-                                    {{this.collection}}
-                                </span>
+                            <!-- TODO FECHA TYPE -->
+                            <div class="Information-boxes">
+                                <div class="Information-row">
+                                    <h3 class="Information-h3">
+                                        Category:
+                                    </h3>
+                                </div>
+                                <div class="Information-cell">
+                                    <span class="Information-span">
+                                        {{this.type}}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <!-- TODO FECHA TYPE -->
-                        <div class="Information-boxes">
-                            <div class="Information-row">
-                                <h3 class="Information-h3">
-                                    Category:
-                                </h3>
+                            <!-- TODO FECHA LANGUAGE -->
+                            <div class="Information-boxes">
+                                <div class="Information-row">
+                                    <h3 class="Information-h3">
+                                        Language:
+                                    </h3>
+                                </div>
+                                <div class="Information-cell">
+                                    <span class="Information-span">
+                                        {{this.language}}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="Information-cell">
-                                <span class="Information-span">
-                                    {{this.type}}
-                                </span>
+                            <!-- TODO FECHA OBSERVATIONS -->
+                            <div class="Information-boxes">
+                                <div class="Information-row">
+                                    <h3 class="Information-h3">
+                                        Observations:
+                                    </h3>
+                                </div>
+                                <div class="Information-cell isObservation">
+                                    <span class="Information-span">
+                                        {{this.observations}}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <!-- TODO FECHA LANGUAGE -->
-                        <div class="Information-boxes">
-                            <div class="Information-row">
-                                <h3 class="Information-h3">
-                                    Language:
-                                </h3>
-                            </div>
-                            <div class="Information-cell">
-                                <span class="Information-span">
-                                    {{this.language}}
-                                </span>
-                            </div>
-                        </div>
-                        <!-- TODO FECHA OBSERVATIONS -->
-                        <div class="Information-boxes">
-                            <div class="Information-row">
-                                <h3 class="Information-h3">
-                                    Observations:
-                                </h3>
-                            </div>
-                            <div class="Information-cell isObservation">
-                                <span class="Information-span">
-                                    {{this.observations}}
-                                </span>
-                            </div>
-                        </div>
+                        </details>
                     </div>
                     <div class="Contents-totalReview Review">
+                        <h3>CUSTOMER REVIEWS</h3>
+                        <hr>
                         <div class="Review-header">
                             <div class="Review-star">
                                 <div class="stars-outer">
@@ -138,11 +156,28 @@
                                 </div>
                                 <span>{{#if this.rating}}{{this.rating}} of 5{{else}}0 of 5{{/if}}</span>
                             </div>
-                            <div class="Review-content">
-                                <a href="#customerReviews"><span class="Review-span">{{this.numVotes}} Overall Ratings</span></a>
+                            <div class="Review-total">
+                                <i class="fa-solid fa-chart-line"></i> <a href="#customerReviews"><span class="Review-span">{{this.numVotes}} Overall Ratings</span></a>
+                            </div>
+                            <div class="Review-reserved">
+                                {{#if this.reserved}}                                
+                                    <i class="fa-solid fa-book"></i> The book is  <span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em">Not available</span>
+                                {{else}}
+                                    <i class="fa-solid fa-book"></i> The book is  <span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em">Available</span>
+                                {{/if}}
                             </div>
                         </div>
+                        <h3>ACTIONS</h3>
+                        <hr>
+                        <div class="Review-actions">
+                            <button id="btnEditBook" onClick=editBook({{this.bookID}}) type="button"  class="Action-btn btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
+                            {{#unless this.reserved}}
+                                <button id="btnReserveBook" onClick=reserveBook({{this.bookID}}) class="Action-btn btn btn-secondary" title="Reserve a Book"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
+                            {{/unless}}
+                            <button id="btnDeleteBook" class="Action-btn isDelete btn btn-danger" onClick=deleteBook({{this.bookID}})  type="button">Delete</button>
+                        </div>
                     </div>
+                    
                 {{/each}}
             </div>
         </div>
@@ -159,28 +194,50 @@
 
     const starPercentage = _RATING / 5 * 100;
     const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-    console.log({starPercentageRounded});
-    document.getElementById('totalScore').style.width = starPercentageRounded;
-
     const imgBox = document.getElementById('imgBox');
     const urlBook = `/workspace/books/infoCover/${_BOOKID}`
+    const btnEditBook = document.getElementById('btnEditBook');
+    const btnReserveBook = document.getElementById('btnReserveBook');
+    const btnDeletetBook = document.getElementById('btnDeletetBook');
 
-    fetch(urlBook)
-        .then((resp) => resp.json())
-        .then(function(data) {
-            let nameCover = data[0].cover;
-            if(nameCover !== null) {
-                imgBox.style.backgroundImage = `url(/img/covers/${nameCover})`;
-            } else {
-                imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
-            }
-        })
-        .catch(function(error) {
-            console.error(error);
-        });
+    //TODO ✅ AÑADIR TOTAL SCORE AL LIBRO
+    try{
+        document.getElementById('totalScore').style.width = starPercentageRounded;
+    } catch (error) { }
 
-    var loadFile = (event) => {
-        imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
-    };
+    //TODO ✅ ASIGNAR COVER AL LIBRO
+    try{ 
+        fetch(urlBook)
+            .then((resp) => resp.json())
+            .then(function(data) {
+                let nameCover = data[0].cover;
+                if(nameCover !== null) {
+                    imgBox.style.backgroundImage = `url(/img/covers/${nameCover})`;
+                } else {
+                    imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
+                }
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
 
+        var loadFile = (event) => {
+            imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
+        };
+    } catch (error) { }
+
+    // TODO ✅ EDITAR LIBRO
+    async function editBook(idBook){
+        const bookID = idBook;
+    }
+
+    // TODO ✅ RESERVAR LIBRO
+    async function reserveBook(idBook){
+        const bookID = idBook;
+    }
+
+    // TODO ✅ ELIMNAR LIBRO
+    async function deleteBook(idBook){
+        const bookID = idBook;
+    }
 </script>

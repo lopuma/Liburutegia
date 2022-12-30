@@ -117,10 +117,10 @@ async function loadData() {
             if (type === "display") {
               if (data === 1) {
                 reserved =
-                  '<span class="badge badge-warning" style="cursor: pointer; color: black; font-size: 1em">Unavailable</span>';
+                  '<span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em; padding: 0.5em 1em;">Unavailable</span>';
               } else {
                 reserved =
-                  '<span class="badge badge-success" style="cursor: pointer; font-size: 1em">Available</span>';
+                  '<span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em; padding: 0.5em 1em;">Available</span>';
               }
               return reserved;
             }
