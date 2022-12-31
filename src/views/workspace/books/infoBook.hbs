@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <details class="Information-details">
-                            <summary class="Information-summary"><dfn>More Details<dfn></summary>
+                            <summary class="Information-summary"><dfn>....more details<dfn></summary>
                             <!-- TODO COLLECTION -->
                             <div class="Information-boxes">
                                 <div class="Information-row">
@@ -156,6 +156,9 @@
                                 </div>
                                 <span>{{#if this.rating}}{{this.rating}} of 5{{else}}0 of 5{{/if}}</span>
                             </div>
+                            <div class="Review-lastupdate Update">
+                                <i class="fa-regular fa-pen-to-square"></i><span class="Update-span">Last Update </span><strong>{{this.lastUpdate}}</strong>
+                            </div>
                             <div class="Review-total">
                                 <i class="fa-solid fa-chart-line"></i> <a href="#customerReviews"><span class="Review-span">{{this.numVotes}} Overall Ratings</span></a>
                             </div>
@@ -182,9 +185,13 @@
             </div>
         </div>
     </div>
-    <div class="Info-container" name="customerReviews" id="customerReviews">
-    <hr>
-        <div class="Info-review">
+    <div class="Info-container Container" name="customerReviews" id="customerReviews">
+        <div class="Container-header">
+            <i class="Container-i fa-solid fa-message"></i>
+            <span class="Container-span">Reviews</span>
+        </div>
+        <hr class="Container-hr">
+        <div class="Container-review">
 
         </div>
     </div>

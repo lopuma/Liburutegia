@@ -124,8 +124,7 @@
 }
 
 .Contents-information {
-    flex: 70%;
-    background-color: white;
+    flex: 75%;
 }
 
 .Information-title {
@@ -171,19 +170,40 @@
     margin: 1em 0 .5em;
 }
 
+.Information-details {
+    position: relative;
+}
+
 .Information-summary {
     font-weight: 600;
     padding: 0 .5em;
     text-align: start;
-    box-shadow: rgba(110, 110, 114, 0.25) 0px 50px 100px -20px, rgba(70, 70, 70, 0.3) 0px 30px 60px -30px, rgba(90, 90, 90, 0.35) 0px -2px 6px 0px inset;
+    /* box-shadow: rgba(110, 110, 114, 0.25) 0px 50px 100px -20px, rgba(70, 70, 70, 0.3) 0px 30px 60px -30px, rgba(90, 90, 90, 0.35) 0px -2px 6px 0px inset; */
+    letter-spacing: .1em;
     transition: all .5s ease;
 }
 
 details[open] summary {
     box-shadow: none;
+    position: absolute;
+    bottom: 6.25em;
+    left: 10%;
+    top: 100%;
+    margin-top: 2em;
+    transform: translateX(-50%);
 }
 
+details[open] summary dfn {
+    content: " ";
+    visibility: hidden;
+    display: none;
+}
 
+details[open] summary::before {
+    content: "....less details"; 
+    font-style: italic;
+    visibility: visible;
+}
 
 .Information-boxes {
     text-align: start;
@@ -206,7 +226,7 @@ details[open] summary {
 }
 
 .Information-cell {
-    flex: 65%;
+    flex: 60%;
     color: var(--Color-texto-gray);
     display: flex;
     padding: 0.5em 1em;
@@ -217,10 +237,10 @@ details[open] summary {
     height: auto;
 }
 
-
 .Review {
-    flex: 35%;
+    flex: 50%;
     padding: 1em;
+    margin-top: 1em;
 }
 
 .Review h3 {
@@ -233,7 +253,7 @@ details[open] summary {
     background-color: rgba(236, 236, 236, 0.33);
     box-shadow: var(--Box-shadow-forms);
     margin: 1em 0 3em;
-    padding: .5em;
+    padding: 1em .5em;
     text-align: start;
     border-radius: var(--Radius);
     display: flex;
@@ -262,15 +282,19 @@ details[open] summary {
     bottom: 0;
 }
 
+.Review-lastupdate,
 .Review-star,
 .Review-total {
     margin: 1em;
 }
+
 .Review-total {
     display: flex;
     flex-direction: row;
 }
 
+
+.Review-lastupdate i,
 .Review-total i {
     margin-right: 1em ;
 }
@@ -282,8 +306,10 @@ details[open] summary {
 }
 
 .Review-reserved {
+    text-align: start;
     font-weight: 700;
-    padding: 0.5em 1em;
+    padding: 0.5em;
+    margin-left: 0.5em;
 }
 
 .Review-reserved .badge {
@@ -294,6 +320,10 @@ details[open] summary {
 .Review-span {
     color: #007185;
     font-size: 1em;
+}
+
+.Update-span {
+    font-weight: 700;
 }
 
 .Review-span:hover {
@@ -328,10 +358,24 @@ details[open] summary {
     color: gold;
 }
 
-.Info-container {
-    width: 100%;
+.Container {
+    width: 90%;
     height: 9.375em;
-    background-color: cadetblue;
+}
+
+.Container-hr {
+    border-color: #CC9544;
+    margin: 1em;
+}
+
+.Container-header {
+    text-align: start;
+    padding: .5em 2em 0;
+    font-size: 2em;
+}
+
+.Container-i {
+    margin-right: 1em;
 }
 
 @media screen and (max-width: 550px) {

@@ -18,25 +18,21 @@ const {
     isAuthenticated
 } = require("../../controller/authController/loginController");
 
-
+// TODO 👌 
 const routerBooks = require('express').Router();
 
-routerBooks.get("/", getBooks);
+    routerBooks.get("/", getBooks);
 
-routerBooks.get("/:idBook", getBook);
+    routerBooks.get("/:idBook", noExistBook, getBook);
 
-// DELIVER
-routerBooks.post("/deliver/:bookID", deliverBook);
+    routerBooks.post("/deliver/:bookID", deliverBook);
 
-//ADD
-//routerBooks.post("/add", addBook);
+    //routerBooks.post("/add", addBook);
 
-//DELETE
-routerBooks.get("/delete/:idBook", deleteBook);
+    routerBooks.get("/delete/:idBook", deleteBook);
 
-// UPDATE
-//routerBooks.put("/update/:id_book", noExistBook, putBook);
+    //routerBooks.put("/update/:id_book", noExistBook, putBook);
 
-routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
+    routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
 
 module.exports = routerBooks;

@@ -1,4 +1,5 @@
 const connection = require("../../../database/db");
+const moment = require('moment');
 
 const booksController = {
 
@@ -37,8 +38,14 @@ const booksController = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
-                const book = results;
-                console.log(book);
+                const purchase = moment(results[0].purchase_date).format("MMMM Do, YYYY");
+                const update = moment(results[0].lastUpdate).format("MMMM Do, YYYY HH:mm A");
+                const book = results.map(results => ({
+                    ...results,
+                    purchase_date: purchase,
+                    lastUpdate: update
+                }));
+
                 res.status(200).render("workspace/books/infoBook", {
                     loggedIn,
                     rolAdmin,

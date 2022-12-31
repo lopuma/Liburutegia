@@ -4,6 +4,8 @@ const fs = require('fs')
 const path = require('path');
 
 const bookController = {
+
+    // TODO ✅ NO EXISTE ID BOOKS
     noExistBook: async (req, res, next) => {
         try {
             const bookID = req.params.idBook;
@@ -18,10 +20,10 @@ const bookController = {
                     });
                 }
                 if (results.length === 0) {
-                    return res.status(404).send({
+                    return res.status(403).send({
                         success: false,
                         exists: false,
-                        errorMessage: `Error there is no book with ID BOOK: ${bookID}`
+                        errorMessage: `[ ERROR ], The BOOK with ID : ${bookID} does not exist`
                     });
                 } else {
                     next();
@@ -32,79 +34,53 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
+    // TODO ✅ SHOW ALL BOOKS
     getBooks: async (_req, res) => {
         try {
             await connection.query("SELECT * FROM books", (err, results) => {
-                if (err || results.length === 0) {
-                    return res.status(200).send({
-                        success: true,
-                        message: "No data found for BOOKS"
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                res.status(200).send({
-                    data: results
-                });
+                if (results.length === 0) {
+                    return res.status(200).send({
+                        success: false,
+                        messageNotFound:
+                            "There are no data in the table partners, Liburutegia.",
+                        data: null
+                    });
+                }
+                let data = results;
+                res.status(200).send(data);
             });
         } catch (error) {
-            throw res.status(400).send({
-                success: false,
-                message: error.message
-            });
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
-    // SHOW ONLY BOOK FOR ID
+    //TODO ✅ SHOW ONLY PARTNERS FOR ID
     getBook: async (req, res) => {
         try {
             const bookID = req.params.idBook;
             const sqlSelectBook = `SELECT b.*, FORMAT(AVG(v.score), 2) AS rating, COUNT(v.score) AS numVotes, SUM(v.score) AS totalScore, cb.nameCover as cover FROM votes v RIGHT JOIN books b ON b.bookID=v.bookID LEFT JOIN coverBooks cb ON cb.bookID=b.bookID WHERE b.bookID= ${bookID}`;
             await connection.query(sqlSelectBook, (err, results) => {
-                if (err || results.length === 0) {
-                    return res.status(404).send({
-                        success: true,
-                        message: "No data found for BOOKS",
-                        error: err
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                res.send(
-                    JSON.stringify({
-                        success: true,
-                        message: `Successfully found book with ID : ${results[0].bookID}`,
-                        data: results[0]
-                    })
-                );
+                return res.status(200).send(results[0]);
             });
         } catch (error) {
-            return res.status(400).send({
-                success: false,
-                message: error.message
-            });
-        }
-    },
-    // UDATE BOOK FOR ID
-    putBook: async (req, res) => {
-        try {
-            bookID = req.params.bookID;
-            title = req.body.title_book;
-            author = req.body.author;
-            type = req.body.type;
-            language = req.body.language;
-            let sql =
-                "UPDATE books SET title = ?, author = ?, type = ?, language = ? WHERE bookID = ?";
-            connection.query(sql, [title, author, type, language, bookID], function (
-                error,
-                result
-            ) {
-                if (error) {
-                    throw error;
-                } else {
-                    res.send(result);
-                }
-            });
-        } catch (error) {
-            return res.status(400).send({
-                success: false,
-                message: error.message
-            });
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
     // TODO ✅ ENTREGA BOOK
@@ -142,21 +118,8 @@ const bookController = {
                 });
             }
         );
-    },
-    // TODO DELETE
-    deleteBook: async (req, res) => {
-        const idBook = req.params.idBook;
-        sql = "DELETE FROM books WHERE bookID=?";
-        connection.query(sql, [idBook], (err, _results) => {
-            if (err) {
-                throw err;
-            }
-            res.status(200).send({
-                success: true,
-                message: `The book with id ${idBook} has been successfully deleted`
-            });
-        });
     }, 
+    // TODO ✅ SI EXISTE LA IMAGEN
     existsCover: async (req, res, next) => {
         try {
             const { idBook } = req.body;
@@ -179,9 +142,10 @@ const bookController = {
                         const nameColverOld = results[0].nameCover;
                         const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
                         fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
-                        console.log(`Imagen actualizada, y se ha elimninado la anterior imagen ${nameColverOld}, del libro ${idBook}.`);
-                    } catch (error) { 
-                        console.error(`No se ha eliminado la imagen, porque no existe, se procede a actualizar la imagen del libro ${idBook}.`);
+                        console.info(`Imagen actualizada, y se ha elimninado la anterior imagen ${nameColverOld}, del libro ${idBook}.`);
+                    } catch (error) {
+                        console.error(error);
+                        res.status(500).redirect("/");
                     }
                     //TODO ATUALIZA LA IMAGEN AL EXISTOR UN REGISTRO EN LA BD.
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
@@ -226,6 +190,44 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
+    putBook: async (req, res) => {
+        try {
+            bookID = req.params.bookID;
+            title = req.body.title_book;
+            author = req.body.author;
+            type = req.body.type;
+            language = req.body.language;
+            let sql =
+                "UPDATE books SET title = ?, author = ?, type = ?, language = ? WHERE bookID = ?";
+            connection.query(sql, [title, author, type, language, bookID], function (
+                error,
+                result
+            ) {
+                if (error) {
+                    throw error;
+                } else {
+                    res.send(result);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
+    // TODO ✅ DELETE BOOK
+    deleteBook: async (req, res) => {
+        const idBook = req.params.idBook;
+        sql = "DELETE FROM books WHERE bookID=?";
+        connection.query(sql, [idBook], (err, _results) => {
+            if (err) {
+                throw err;
+            }
+            res.status(200).send({
+                success: true,
+                message: `The book with id ${idBook} has been successfully deleted`
+            });
+        });
+    }
 };
 
 module.exports = bookController;
