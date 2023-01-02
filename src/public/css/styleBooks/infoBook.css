@@ -200,7 +200,7 @@ details[open] summary dfn {
 }
 
 details[open] summary::before {
-    content: "....less details"; 
+    content: "....less details";
     font-style: italic;
     visibility: visible;
 }
@@ -296,7 +296,7 @@ details[open] summary::before {
 
 .Review-lastupdate i,
 .Review-total i {
-    margin-right: 1em ;
+    margin-right: 1em;
 }
 
 .Review-star span {
@@ -315,7 +315,7 @@ details[open] summary::before {
 .Review-reserved .badge {
     margin: 0 .5em;
     padding: 0.5em;
-} 
+}
 
 .Review-span {
     color: #007185;
@@ -360,7 +360,7 @@ details[open] summary::before {
 
 .Container {
     width: 90%;
-    height: 9.375em;
+    height: auto;
 }
 
 .Container-hr {
@@ -376,6 +376,98 @@ details[open] summary::before {
 
 .Container-i {
     margin-right: 1em;
+}
+
+.Container-review {
+    width: 100%;
+    height: 100%;
+    padding: 2em 0;
+}
+
+.Review-box {
+    border: 1px solid var(--Color-outline);
+    margin: 1em auto;
+    border-radius: var(--Radius);
+    display: flex;
+    justify-content: start;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    text-align: start;
+    padding: 1em 2em;
+    grid-gap: 0.5em;
+    letter-spacing: .1em;
+}
+
+.Review-name {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.Review-score {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.Review-rate {
+    margin: 0 1em;
+    font-size: .9em;
+    font-weight: 600;
+}
+
+.Review-icon {
+    margin: 0 1em 0 0;
+    font-size: 1.3em;
+}
+
+.Review-fullname {
+    color: gray;
+    font-weight: 400;
+}
+
+.Review-dateReview {
+    color: rgb(77, 77, 77);
+    font-weight: 100;
+    font-size: 0.9em;
+}
+
+.Review-content {
+    display: grid;
+    grid-gap: .5em;
+    font-size: 1.1em;
+}
+
+.Review-message {
+    margin-top: 1em;
+    font-weight: 400;
+}
+
+h2 {
+    font: 1.1em sans-serif;
+    margin-top: .5em;
+    text-align: center;
+}
+
+h2.linea {
+    position: relative;
+    z-index: 1;
+}
+
+h2.linea:before {
+    border-top: 1px solid rgb(34, 163, 159);
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+h2.linea span {
+    background: var(--Color-texto-blanco);
+    padding: 0 1em;
 }
 
 @media screen and (max-width: 550px) {

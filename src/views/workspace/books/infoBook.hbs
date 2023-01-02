@@ -151,7 +151,7 @@
                         <div class="Review-header">
                             <div class="Review-star">
                                 <div class="stars-outer">
-                                    <div class="stars-inner" id="totalScore" cursor: pointer" title="Total score {{this.rating}} star">
+                                    <div class="stars-inner" id="totalScore" style="cursor: pointer" title="Total score {{this.rating}} star">
                                     </div>
                                 </div>
                                 <span>{{#if this.rating}}{{this.rating}} of 5{{else}}0 of 5{{/if}}</span>
@@ -191,25 +191,32 @@
             <span class="Container-span">Reviews</span>
         </div>
         <hr class="Container-hr">
-        <div class="Container-review">
+        <div class="Container-review" id="containerReview">
 
         </div>
     </div>
 </div>
 
-<script defer>
+<script defer type="text/javascript">
 
-    const starPercentage = _RATING / 5 * 100;
-    const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+    
     const imgBox = document.getElementById('imgBox');
     const urlBook = `/workspace/books/infoCover/${_BOOKID}`
     const btnEditBook = document.getElementById('btnEditBook');
     const btnReserveBook = document.getElementById('btnReserveBook');
     const btnDeletetBook = document.getElementById('btnDeletetBook');
+    const containerReview =  document.getElementById('containerReview');
 
-    //TODO ✅ AÑADIR TOTAL SCORE AL LIBRO
+    // TODO ✅ FUNCTION PARA MOSTRAR EL PORCENTAJE DE ESTRELLAS
+    function obtenerPorcentaje(_RATING_) {
+        const starPercentage = _RATING_ / 5 * 100;
+        const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+        return starPercentageRounded;
+    }
+
+    // TODO ✅ AÑADIR TOTAL SCORE AL LIBRO
     try{
-        document.getElementById('totalScore').style.width = starPercentageRounded;
+        document.getElementById('totalScore').style.width = obtenerPorcentaje(_RATING);
     } catch (error) { }
 
     //TODO ✅ ASIGNAR COVER AL LIBRO
@@ -247,4 +254,93 @@
     async function deleteBook(idBook){
         const bookID = idBook;
     }
+
+    (async ( ) => {
+        const bookID = _BOOKID;
+        const urlReviews = `/api/books/info/reviews/${bookID}` 
+        fetch(urlReviews, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => createCardReview(data));
+    }) ( )
+
+    function generarNuevoColor(){
+        var simbolos, color;
+        simbolos = "0123456789ABCDEF";
+        color = "#";
+
+        for(var i = 0; i < 6; i++){
+            color = color + simbolos[Math.floor(Math.random() * 16)];
+        }
+
+        return color;
+    }
+
+    // TODO  CREATE CARDS REVIEWS 
+    async function createCardReview(data){
+        try {
+            if(data.success) {
+                const reviws = data.data;
+                let valores = Object.values(reviws); //
+                let textRate = "";
+                let colorStar = "";
+                let textShadow = "";
+                for(let i=0; i< valores.length; i++){
+                    const color = generarNuevoColor();
+                    const score = obtenerPorcentaje(valores[i].score);
+                    const dateReview = moment(valores[i].dateReview).format("MMMM Do, YYYY HH:mm A");
+                    const review = valores[i].review;
+                    const fullName = valores[i].fullName;
+                    if(score === "100%") {
+                        textRate =  "I'm lovin it ";
+                        colorStar = "#fe7";
+                        textShadow = "0 0 10px #006E7F";
+                        
+                    } else if(score === '80%') {
+                        textRate =  "I like it! ";
+                    } else if(score === '60%') {
+                        textRate =  "Alright! ";
+                    } else if(score === '40%') {
+                        textRate =  "i like little ";
+                    } else {
+                        textRate =  "I don't like it ";
+                    }
+                    template  = `
+                        <div class='Review-box'>
+                            <div class='Review-name'>
+                                <div class='Review-icon'>
+                                    <i class='fa-solid fa-circle-user' style='color: ${color}'></i><br>
+                                </div>
+                                <div class='Review-fullname'>${fullName}</div>
+                            </div>
+                            <div class='Review-dateReview'>
+                                <span class='Review-date'>Revised on ${dateReview}</span>
+                            </div>
+                            <div class='Review-content'>
+                                <div class='Review-score'>
+                                    <div class='stars-outer'>
+                                        <div class='stars-inner' id='totalScore' style='width: ${score}' title='Total score ${valores[i].score} star'>
+                                        </div>
+                                    </div>
+                                    <div class='Review-rate'>
+                                        ${textRate}
+                                    </div>
+                                </div>
+                                <div class='Review-message'>${review}</div>
+                            </div>
+                        </div>
+                    `;
+                    containerReview.innerHTML += template;
+                }
+            } else { 
+                template = `<h2 class="linea"><span>There are currently no reviews</span></h2>`;
+                containerReview.innerHTML = template;
+            }
+        } catch (error) { }
+    }
+
 </script>

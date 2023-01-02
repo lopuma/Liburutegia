@@ -162,7 +162,6 @@ async function loadData() {
 
 }
 
-
 //UPDATE
 $("#formuBook").submit(function(e) {
   e.preventDefault();

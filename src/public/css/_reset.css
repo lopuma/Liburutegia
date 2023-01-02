@@ -1,16 +1,19 @@
 @charset "UTF-8";
+
 * {
   margin: 0;
   padding: 0;
   border: 0;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   vertical-align: baseline;
 }
-font{
+
+font {
   vertical-align: baseline;
   width: 100%;
 }
+
 img,
 picture,
 video,
@@ -20,16 +23,16 @@ figure {
   width: 100%;
   display: block;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: center center;
-     object-position: center center;
+  object-position: center center;
 }
 
 th {
   font-weight: 100;
 }
 
-hr{
+hr {
   margin: 1em 0;
 }
 
@@ -40,7 +43,7 @@ a {
   font-size: inherit;
 }
 
-a:hover{
+a:hover {
   text-decoration: none;
 }
 
@@ -84,7 +87,7 @@ q:after {
 
 ::-moz-selection {
   background-color: rgb(0, 56, 109);
-    color: #fff;
+  color: #fff;
 }
 
 ::selection {
@@ -136,12 +139,12 @@ body {
   font-size: 100%;
   font-family: var(--Font-family-principal);
   color: var(--Color-negro);
-    /* opcional */
-      line-height: 1.4em;
-      /* opcional */
-      -webkit-hyphens: auto;
-      -ms-hyphens: auto;
-      hyphens: auto;
+  /* opcional */
+  line-height: 1.4em;
+  /* opcional */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
   font-smooth: always;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

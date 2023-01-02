@@ -12,6 +12,7 @@ const {
     existsCover,
     uploadFile,
     putBook,
+    infoReviews
 } = require('../../controller/apiController/Books.controller.api');
 
 const {
@@ -34,5 +35,7 @@ const routerBooks = require('express').Router();
     //routerBooks.put("/update/:id_book", noExistBook, putBook);
 
     routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
+
+    routerBooks.get("/info/reviews/:idBook", infoReviews);
 
 module.exports = routerBooks;

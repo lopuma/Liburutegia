@@ -4,8 +4,16 @@ const btnCloseModal = document.getElementById("closeModal");
 const modalInputPartnerID = document.getElementById("deliverPartnerID");
 const modalInputBookID = document.getElementById("bookID");
 const modalInputBookingID = document.getElementById("bookingID");
-const textarea = document.querySelector("#textarea");
 const formDeliver = document.getElementById("formDeliver");
+const textarea = document.getElementById('mensaje');
+const contador = document.getElementById('contador');
+
+textarea.addEventListener('input', function (e) {
+    const target = e.target;
+    const longitudMax = target.getAttribute('maxlength');
+    const longitudAct = target.value.length;
+    contador.innerHTML = `${longitudAct} / ${longitudMax}`;
+});
 
 function resetRadioButtons(groupName) {
     var arRadioBtn = document.getElementsByName(groupName);
@@ -30,7 +38,6 @@ async function correctFormDeliver(e) {
     let activoFijo = $('input[name="rate"]:checked').val();
     const fecha = new Date();
     const idBook = $.trim($('#bookID').val());
-    const valuePartnerID = modalInputPartnerID.value;
     const idBooking = $.trim($('#bookingID').val());
     const score = activoFijo;
     const review = textarea.value;
@@ -50,11 +57,39 @@ async function correctFormDeliver(e) {
             "Content-Type": "application/json; charset=UTF-8"
         }
     })
-    widget.style.display = "none";
-    post.style.display = "block";
-    $('#modalStar').modal('hide');
-    resetRadioButtons("rate");
-    inforActive(valuePartnerID);
+        .then((response) => response.json())
+        .then((data) => responseDeliver(data));
+
+}
+
+async function responseDeliver(data) {
+    console.log(data);
+    const menssage = data.messageSuccess;
+
+    const valuePartnerID = modalInputPartnerID.value;
+    console.log({
+        valuePartnerID,
+        menssage
+    });
+    Swal.fire({
+        icon: 'success',
+        title: menssage,
+        showConfirmButton: true,
+        timer: 1500,
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+    }).then((result) => { 
+        widget.style.display = "none";
+        post.style.display = "block";
+        $('#modalStar').modal('hide');
+        resetRadioButtons("rate");
+        inforActive(valuePartnerID);
+        contador.innerHTML = '0 / 100'
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -27,7 +27,7 @@
     border-top-right-radius: var(--Radius);
     border-top-left-radius: var(--Radius);
     border-bottom-right-radius: var(--Radius);
-    width: 50%;
+    width: 60%;
     border-bottom: 1px solid var(--Color-outline);
 }
 

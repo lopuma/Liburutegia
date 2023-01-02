@@ -1,5 +1,5 @@
 .New-form {
-    margin-top: 1em;
+    margin-top: 1.89em;
     background-color: var(--Color-texto-blanco);
     position: relative;
     z-index: 2;
@@ -313,8 +313,6 @@
         padding: 1em 0;
     }
 
-    
-
     .New-boxes {
         width: 100%;
         padding: 0;
@@ -338,15 +336,16 @@
 
     .New-h1 {
         font-size: 1.7em;
+        width: 70%;
     }
 
     .New-flag {
-        top: 2.80em;
+        top: 3.1em;
     }
 
     .New-form {
         padding: 1em 1em 1em 2em;
-        margin-top: .75em;
+        margin-top: 1.1em;
     }
 }
 

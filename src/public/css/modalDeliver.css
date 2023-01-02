@@ -10,10 +10,10 @@
     justify-content: space-between;
     align-items: center;
     padding: .5em 1em;
-    font-size: 1.2em;
-    font-weight: 400;
-    color: var(--Color-texto-negro);
-    background-color: var(--Color-texto-blanco);
+    font-size: 1.5em;
+    font-weight: 600;
+    background-color: #F8CB2E;
+    color: #006E7F;
     border-bottom: 1px solid var(--Color-outline);
     box-shadow: var(--Box-shadow-nav);
 }
@@ -53,6 +53,30 @@
     color: var(--Color-texto-negro);
 }
 
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: gold;
+}
+
 .Widget {
     width: 100%;
     margin: 1em 0;
@@ -85,7 +109,7 @@
 
 .Widget-input#rate-5:checked~.Widget-label {
     color: #fe7;
-    text-shadow: 0 0 20px rgb(119, 90, 67);
+    text-shadow: 0 0 10px #006E7F;
 }
 
 #rate-1:checked~.Star-header::before {
@@ -114,7 +138,7 @@
     justify-content: center;
     align-items: center;
     flex-flow: column nowrap;
-    padding: 0 .5em .5em;
+    padding: 0 .5em;
     display: none;
 }
 
@@ -126,10 +150,11 @@
     height: auto;
     width: 100%;
     overflow: hidden;
-    padding: 1em;
+    padding: 1em 0;
+    margin: 1em 0 0;
 }
 
-.Form-textarea span {
+.Form-textarea div {
     width: 100%;
     display: flex;
     text-align: end;
@@ -139,7 +164,7 @@
 
 .Form-textarea textarea {
     width: 100%;
-    height: 7em;
+    height: 8em;
     outline: none;
     border: 1px solid #333;
     border-radius: var(--Radius);

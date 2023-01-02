@@ -49,8 +49,8 @@ const bookController = {
                 if (results.length === 0) {
                     return res.status(200).send({
                         success: false,
-                        messageNotFound:
-                            "There are no data in the table partners, Liburutegia.",
+                        errorMessage:
+                            "[ ERROR ], There are no data in the table partners, Liburutegia.",
                         data: null
                     });
                 }
@@ -141,8 +141,10 @@ const bookController = {
                     try {
                         const nameColverOld = results[0].nameCover;
                         const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
-                        fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
-                        console.info(`Imagen actualizada, y se ha elimninado la anterior imagen ${nameColverOld}, del libro ${idBook}.`);
+                        if (fs.existsSync(`${pathCoverBooks}/${nameColverOld}`)) {
+                            fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
+                            console.info(`Imagen actualizada, y se ha elimninado la anterior imagen ${nameColverOld}, del libro ${idBook}.`);
+                        }
                     } catch (error) {
                         console.error(error);
                         res.status(500).redirect("/");
@@ -153,7 +155,7 @@ const bookController = {
                         return res.status(200).send({
                             success: true,
                             exists: true,
-                            errorSucces: `Book ${idBook}, cover uploaded successfully`
+                            messageSuccess: `Book ${idBook}, cover uploaded successfully`
                         });
                     });
                 } else {
@@ -182,7 +184,7 @@ const bookController = {
                 return res.status(200).send({
                     success: true,
                     exists: false,
-                    errorSucces: `Book ${idBook}, cover uploaded successfully`
+                    messageSuccess: `Book ${idBook}, cover uploaded successfully`
                 });
             });
         } catch (error) {
@@ -227,6 +229,38 @@ const bookController = {
                 message: `The book with id ${idBook} has been successfully deleted`
             });
         });
+    },
+    // TODO
+    infoReviews: async (req, res) => {
+        try {
+            const bookID = req.params.idBook;
+            const selectReviews = "SELECT v.score, v.deliver_date_review as dateReview, v.review, CONCAT(p.lastname, \", \", p.name) AS fullName FROM votes v RIGHT JOIN bookings bk ON bk.bookingID=v.bookingID RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE v.bookID=?";
+            await connection.query(selectReviews, [bookID], (err, results) => { 
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        code: 400,
+                        message: err
+                    });
+                }
+                if (results.length === 0) {
+                    return res.status(200).send({
+                        success: false,
+                        errorMessage: "[ ERROR ], No results",
+                        data: null
+                    });
+                }
+                const data = results;
+                res.status(200).send({
+                    success: true,
+                    messageSuccess: "Success",
+                    data
+                });
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
     }
 };
 
