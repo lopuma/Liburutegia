@@ -39,7 +39,7 @@ const partnersController = {
                 }
                 const created = results[0].date;
                 const update = results[0].updateDate;
-                const recordDatePartner = moment(created).format("MMMM Do, YYYY HH:mm A");
+                const recordDatePartner = moment(created).format("MMMM Do, YYYY");
                 const updateDatePartner = moment(update).format("MMMM Do, YYYY HH:mm A");
                 const resDataPartners = results.map(data => ({
                     ...data,

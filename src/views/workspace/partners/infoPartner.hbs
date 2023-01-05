@@ -200,13 +200,13 @@
                                 </thead>
                                 <tbody id="familyData">
                                     {{#each infoFamily}}
-                                    <tr>
-                                        <td><a href=/workspace/partners/info/{{this.partnerID}} style='color: blue'">{{this.partnerDni}}</a></td>
-                                        <td>{{this.partnerName}}</td>
-                                        <td>{{this.partnerLastname}}</td>
-                                        <td>{{this.partnerRecordDate}}</td>
-                                        <td><button type="button" class="btn btn-info" onClick="desvincular({{this.partnerID}}, '{{this.partnerDni}}', '{{this.familyDni}}')">Desvincular</button></td>
-                                    </tr>
+                                        <tr>
+                                            <td><a href=/workspace/partners/info/{{this.partnerID}} style='color: blue'>{{this.partnerDni}}</a></td>
+                                            <td>{{this.partnerName}}</td>
+                                            <td>{{this.partnerLastname}}</td>
+                                            <td>{{this.partnerRecordDate}}</td>
+                                            <td><button type="button" class="btn btn-info" onClick="desvincular('{{this.partnerID}}', '{{this.partnerDni}}', '{{this.familyDni}}')">Unlink</button></td>
+                                        </tr>
                                     {{/each}}
                                 </tbody>
                                 <tfoot class="Dashboard-foot">
@@ -307,7 +307,5 @@
     </div>
 
 </div>
-
-<!--<script defer src="/scripts/partners/partners.js"></script>-->
 
 <script defer src="/scripts/partners/infoPartner.js"></script>

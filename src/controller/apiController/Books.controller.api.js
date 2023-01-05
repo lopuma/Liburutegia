@@ -88,21 +88,12 @@ const bookController = {
         const idBook = req.params.bookID;
         
         const { idBooking, score, review, deliver_date_review } = req.body;
-        
         const sql = [`UPDATE books SET 
                     reserved=0 WHERE bookID=${idBook}`, 
                     `UPDATE bookings SET deliver=1 WHERE bookingID=${idBooking}`, 
-                    "INSERT INTO votes SET ?"];
-
+                    `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner) VALUES (${idBook}, ${idBooking}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${idBooking}))`];
         await connection.query(
             sql.join(";"),
-            {
-                bookID: idBook,
-                bookingID: idBooking,
-                score,
-                review,
-                deliver_date_review
-            },
             (err) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -234,8 +225,7 @@ const bookController = {
     infoReviews: async (req, res) => {
         try {
             const bookID = req.params.idBook;
-            const selectReviews = "SELECT v.score, v.deliver_date_review as dateReview, v.review, CONCAT(p.lastname, \", \", p.name) AS fullName FROM votes v RIGHT JOIN bookings bk ON bk.bookingID=v.bookingID RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE v.bookID=?";
-            await connection.query(selectReviews, [bookID], (err, results) => { 
+            const selectReviews = "SELECT score, deliver_date_review as dateReview, review, fullnamePartner AS fullName FROM votes WHERE bookID=?";            await connection.query(selectReviews, [bookID], (err, results) => { 
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({

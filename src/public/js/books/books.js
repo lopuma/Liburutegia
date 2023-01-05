@@ -1,11 +1,16 @@
-const spinner = document.getElementById("spinner");
+//TODO ✅ FETCH LOADING DATA
+(async () => {
+  const urlLoad = "/api/books/";
+  const datos = await fetch(urlLoad)
+    .then((response) => response.json())
+    .then((datos) => datos);
+  loadDataBooks(datos)
+  try {
+    document.getElementById("spinnerBook").style.display = "none";
+  } catch (error) { }
+})();
 
-//TODO CLOSE LOADING
-setTimeout(() => {
-    loadData();
-}, "1600");
-
-//TODO RESERVED
+//TODO ✅ RESERVED
 async function reservedBook(bookID) {
   const idBook = bookID;
 }
@@ -43,11 +48,12 @@ async function edit(bookID) {
 async function bookDelete(idBook) {
   const url = `/api/books/delete/${idBook}`;
   fetch(url).then(() => {
-    const table = $("#tableBook").DataTable();
-    table.destroy();
-    setTimeout(() => {
-      loadData();
-    }, 500);
+    console.log("DELETEBOOK", idBook);
+    //const table = $("#tableBook").DataTable();
+    //table.destroy();
+    //setTimeout(() => {
+    //  loadData();
+    //}, 500);
   });
 }
 
@@ -81,67 +87,85 @@ async function infoBook(bookID) {
   const idBook = bookID;
   window.location = `/workspace/books/info/${idBook}`;
 }
-//TODO MOSTRAR
-async function loadData() {
 
-  $(document).ready(async function(e) {
-    const url = "/api/books/";
-    myTable = $("#tableBook").DataTable({
-      ajax: {
-        url: url,
-        dataSrc: ""
+//TODO ✅ MOSTRAR datos en la TABLA BOOK
+async function loadDataBooks(data) {
+    dataTableBooks = $("#tableBook").DataTable({
+    data: data,
+    deferRender: true,
+    searching: true,
+    "info": true,
+    "paging": true,
+    "orderClasses": false,
+    destroy: true,
+    language: {
+      emptyTable: "No data available in table Books"
+    },
+    stateSave: true,
+    responsive: true,
+    order: [[9, "desc"]],
+    lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, 'ALL']],
+    pageLength: 15,
+    select: true,
+    autoWidth: false,
+    columns: [
+      {
+        data: null, "searchable": false,
+        render: (data) => {
+          return (fillZeros(data.bookID));
+        }
       },
-      searching: true,
-      ordering: true,
-      info: true,
-      responsive: true,
-      order: [[0, "desc"]],
-      lengthMenu: [[5, 10, 15, 25, 50], [5, 10, 15, 25, 50]],
-      pageLength: 15,
-      deferRender: true,
-      columns: [
-        { data: "bookID", visible: false },
-        { data: "title" },
-        { data: "isbn" },
-        { data: "author" },
-        { data: "language" },
-        { data: "author" },
-        { data: "language" },
-        { data: "author" },
-        { data: "language" },
-        { data: "author" },
-        { data: "language" },
-        {
-          data: "reserved",
-          render: function(data, type) {
-            if (type === "display") {
-              if (data === 1) {
-                reserved =
-                  '<span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em; padding: 0.5em 1em;">Unavailable</span>';
-              } else {
-                reserved =
-                  '<span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em; padding: 0.5em 1em;">Available</span>';
-              }
-              return reserved;
+      { data: "title" },
+      { data: "author" },
+      { data: "editorial", visible: false },
+      { data: "isbn" },
+      { data: "type", visible: false },
+      { data: "language", visible: false },
+      { data: "collection", visible: false },
+      {
+        data: "purchase_date", "searchable": false,
+        render: (data) => {
+          return (moment(data).format("MMMM Do, YYYY A"));
+        }
+      },
+      {
+        data: "lastUpdate", visible: false, "searchable": false,
+        render: (data) => {
+          return (moment(data).format("MMMM Do, YYYY HH:mm A"));
+        }
+      },
+      { data: "observations", visible: false },
+      {
+        data: "reserved",
+        render: function (data, type) {
+          if (type === "display") {
+            if (data === 1) {
+              reserved =
+                '<span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em; padding: 0.5em 1em;">Not available</span>';
+            } else {
+              reserved =
+                '<span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em; padding: 0.5em 1em;">Available</span>';
             }
-            return data;
+            return reserved;
           }
-        },
-        {
-          data: null,
-          render: function(data, type) {
-            if (type === "display") {
-              if (data.reserved === 0) {
-                btnDisable =
-                  `<button id="btnReservedBook" onClick=reservedBook(` +
-                  data.bookID +
-                  `) class="btn btn-secondary" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
-              } else {
-                btnDisable = `<button id="btnReservedBook" class="btn btn-secondary disabled" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
-              }
+          return data;
+        }
+      },
+      {
+        data: null, "searchable": false,
+        render: function (data, type) {
+          if (type === "display") {
+            if (data.reserved === 0) {
+              btnDisable =
+                `<button id="btnReservedBook" onClick=reservedBook(` +
+                data.bookID +
+                `) class="btn btn-secondary" title="Reserved Book" style="cursor: pointer"><i class="fa-solid fa-calendar-days"></i></button>`;
+            } else {
+              btnDisable = `<button class="btn btn-secondary not-allowed" style="cursor: not-allowed" onclick="return false;"><i class="fa-solid fa-calendar-days"></i></button>`;
+            }
 
-              return (
-                `
+            return (
+              `
                 <div class="ui buttons">
                   ${btnDisable}
                   <button id="btnInfoBook" onClick=infoBook(` + data.bookID + `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
@@ -149,18 +173,95 @@ async function loadData() {
                   <button id="btnDeleteBook" onClick=deleteBook(` + data.bookID + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
                 `
-              );
-            }
-            return data;
+            );
           }
+          return data;
         }
-      ]
+      }
+    ],
+    'dom': 'Bfrtip',
+    buttons: [
+      {
+        extend: 'pageLength',
+      },
+      {
+        extend: 'colvis',
+      },
+      {
+        extend: 'collection',
+        text: 'Export Data',
+        autoClose: true,
+        buttons: [
+          //TODO COPY
+          {
+            extend: 'copy',
+            text: '<i class="fa fa-files-o"></i> Copy',
+            titleAttr: 'Copy',
+            className: "buttonCopy",
+            exportOptions: {
+              columns: [0, ':visible']
+            },
+            title: 'Liburutegia SAN MIGUEL: BOOKS',
+          },
+          //TODO CSV
+          {
+            extend: 'csv',
+            text: '<i class="fa-solid fa-file-csv"></i> CSV',
+            titleAttr: 'Export CSV',
+            className: "buttonCsv",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            },
+            title: 'Liburutegia SAN MIGUEL: BOOKS',
+          },
+          //TODO EXCEL
+          {
+            extend: 'excel',
+            text: '<i class="fa fa-file-excel-o"></i> Excel',
+            titleAttr: 'Export Excel',
+            className: "buttonExcel",
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            },
+            title: 'Liburutegia SAN MIGUEL: BOOKS',
+          },
+          //TODO PDF
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            text: '<i class="fa-solid fa-file-pdf"></i> PDF',
+            titleAttr: 'Export PDF',
+            className: "buttonPdf",
+            exportOptions: {
+              columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            },
+            title: 'Liburutegia SAN MIGUEL: BOOKS',
+            customize: function (doc) {
+              doc.styles.title = {
+                width: '100',
+                color: 'black',
+                fontSize: '16',
+                background: '#CEEDC7',
+                alignment: 'center'
+              };
+            },
+          },
+          {
+            extend: 'print',
+            text: '<i class="fa-solid fa-print"></i> Print',
+            titleAttr: 'Print',
+            className: "buttonPrint",
+            exportOptions: {
+              columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            },
+            title: 'Liburutegia SAN MIGUEL: BOOKS',
+          }
+        ]
+      },
+    ],
     });
-  });
-
-  spinner.style.display = "none";
-
-}
+};
 
 //UPDATE
 $("#formuBook").submit(function(e) {

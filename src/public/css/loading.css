@@ -1,4 +1,6 @@
 @charset "UTF-8";
+
+#spinnerBook,
 #spinner {
     margin: 3em 0;
     display: inline-block;
@@ -52,7 +54,7 @@
 .book span {
     margin-top: 5em;
 }
-
+#spinnerBook.spinnerUser,
 #spinner.spinnerUser {
     margin: 8em 0;
 }

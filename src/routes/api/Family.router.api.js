@@ -12,6 +12,6 @@ const routerFamilys = require("express").Router();
   
   routerFamilys.get("/:dniPartner", getFamily);
 
-  routerFamilys.post("/unbind/:idFamily", desFamily);
+  routerFamilys.post("/unlink/:idFamily", desFamily);
 
 module.exports = routerFamilys;

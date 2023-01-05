@@ -1,108 +1,121 @@
-const tbodyPartners = document.getElementById("tbodyPartners");
-const familyLink = document.getElementById("familyLink");
-const selectDni = document.getElementById("selectDni");
-const inputDniCheck = document.getElementById("dniCheck");
-const inputDni = document.getElementById("inputDni");
-const inputPartnerID = document.getElementById("partnerID");
-const inputScanner = document.getElementById("inputScanner");
-const inputName = document.getElementById("inputName");
-const inputLastname = document.getElementById("inputLastname");
-const inputDirection = document.getElementById("inputDirection");
-const inputPopulation = document.getElementById("inputPopulation");
-const inputPhone = document.getElementById("inputPhone");
-const inputPhoneLandline = document.getElementById("inputPhoneLandline");
-const inputEmailPartner = document.getElementById("inputEmail");
-var partnerActiveCheck = "";
-let statePartner = false;
-//TODO ACTIVAR CHECK SI ESTA ACTIVA VENTANA PARTNER
-try {
-    if ($('#statePartners').val() === '') { // 
-        statePartner = true;
-    }
-} catch (error) { }
+const tbodyPartners       = document.getElementById( "tbodyPartners"      );
+const familyLink          = document.getElementById( "familyLink"         );
+const selectDni           = document.getElementById( "selectDni"          );
+const inputDniCheck       = document.getElementById( "dniCheck"           );
+const inputDni            = document.getElementById( "inputDni"           );
+const inputPartnerID      = document.getElementById( "partnerID"          );
+const inputScanner        = document.getElementById( "inputScanner"       );
+const inputName           = document.getElementById( "inputName"          );
+const inputLastname       = document.getElementById( "inputLastname"      );
+const inputDirection      = document.getElementById( "inputDirection"     );
+const inputPopulation     = document.getElementById( "inputPopulation"    );
+const inputPhone          = document.getElementById( "inputPhone"         );
+const inputPhoneLandline  = document.getElementById( "inputPhoneLandline" );
+const inputEmailPartner   = document.getElementById( "inputEmail"         );
+let partnerActiveCheck = "";
+let _STATEPARTNER = false;
+let opcion = "";
 
-$(".modal-title").text("EDIT PARTNER").css("font-weight", "600");
-
-// TODO 👌 CREDIT github @THuRStoN
-function formatNumberLength(num, length) {
-    var r = "" + num;
-    while (r.length < length) {
-        r = "0" + r;
-    }
-    return r;
-}
-// TODO 👌 CREDIT github @THuRStoN
-function charDNI(dni) {
-    var chain = "TRWAGMYFPDXBNJZSQVHLCKET";
-    var pos = dni % 23;
-    var letter = chain.substring(pos, pos + 1);
-    return letter;
-}
-// TODO 👌 CREDIT github @THuRStoN
-function rand_dni() {
-    num = Math.floor(Math.random() * 100000000);
-    sNum = formatNumberLength(num, 8);
-    return sNum + charDNI(sNum);
-}
-
-//TODO ✅ CLOSE LOADING
-setTimeout(() => {
-    loadData();
+//TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA PARTNER
     try {
-        document.getElementById("spinner").style.display = "none";
+        if ($('#statePartners').val() === '') { // 
+            _STATEPARTNER = true;
+        }
     } catch (error) { }
-}, "1600");
+
+
+//TODO ✅ FETCH LOADING DATA
+    const reloadData = async () => {
+        if (_STATEPARTNER) {
+            const urlLoad = "/api/partners/";
+            const data = await fetch(urlLoad)
+                .then((response) => response.json())
+                .then((datos) => datos);
+            loadData(data);
+        }
+    }
+    (async () => {
+        await reloadData();    
+        try {
+            document.getElementById("spinner").style.display = "none";
+        } catch (error) { }
+    })();
+
+// TODO 👌 CREDIT github @THuRStoN
+    function formatNumberLength(num, length) {
+        var r = "" + num;
+        while (r.length < length) {
+            r = "0" + r;
+        }
+        return r;
+    }
+// TODO 👌 CREDIT github @THuRStoN
+    function charDNI(dni) {
+        var chain = "TRWAGMYFPDXBNJZSQVHLCKET";
+        var pos = dni % 23;
+        var letter = chain.substring(pos, pos + 1);
+        return letter;
+    }
+// TODO 👌 CREDIT github @THuRStoN
+    function rand_dni() {
+        num = Math.floor(Math.random() * 100000000);
+        sNum = formatNumberLength(num, 8);
+        return sNum + charDNI(sNum);
+    }
 
 //TODO ✅ SELECT 
-$(document).ready(function () {
-    theme: "bootstrap4", $(".js-example-basic-single").select2();
-});
+    (async function loadSelect() {
+        await $(".js-example-basic-single").select2();
+    })();
 
-function fillZeros(id) {
-    let num = id;
-    let large = 12
-    for (let i = 0; i < (large - num.length); i++) {
-        num = "0" + num
-    }
-    return num
-}
+//TODO ✅ FUNCION PARA CAMBIAR LAS TILDES
+    const accentNeutralise = function (data) {
+        return !data ?
+            '' :
+            typeof data === 'string' ?
+                data
+                    .replace(/\n/g, ' ')
+                    .replace(/[áâàä]/g, 'a')
+                    .replace(/[éêèë]/g, 'e')
+                    .replace(/[íîìï]/g, 'i')
+                    .replace(/[óôòö]/g, 'o')
+                    .replace(/[úûùü]/g, 'u')
+                    .replace(/ç/g, 'c') :
+                data;
+    };
 
 //TODO ✅ LOAD PARTNER
-async function loadData() {
-    const urlLoad = "/api/partners/";
-    $(document).ready(() => {
+    async function loadData(data) {
         dataTablePartners = $("#tablePartner").DataTable({
-            ajax: {
-                url: urlLoad,
-                dataSrc: "",
-            },
+            data: data,
+            deferRender: true,
+            searching: true,
+            "info": true,
+            "paging": true,
+            "orderClasses": false,
+            destroy: true,
             language: {
                 emptyTable: "No data available in table Partners"
             },
             stateSave: true,
-            searching: true,
-            ordering: true,
-            info: true,
             responsive: true,
-            order: [[0, "desc"]],
+            order: [[1, "desc"]],
             lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, 'ALL']],
             pageLength: 15,
-            deferRender: true,
-            colReorder: true,
             select: true,
+            autoWidth: false,
             columns: [
                 {
                     data: null,
                     render: (data) => {
                         return (fillZeros(data.partnerID));
-                    }, visible: false
+                    }, visible: false, "searchable": false
                 },
                 { data: "dni" },
                 { data: "scanner", visible: false },
                 {
                     data: null, render: function (data, _type, _row) {
-                        // Combine the first and last names into a single table field
-                        return data.lastname + ', ' + data.name;
+                        return accentNeutralise(data.lastname) + ', ' + accentNeutralise(data.name);
                     }
                 },
                 { data: "direction", visible: false },
@@ -111,7 +124,7 @@ async function loadData() {
                 { data: "phone2" },
                 { data: "email" },
                 {
-                    data: null,
+                    data: null, "searchable": false,
                     render: (data) => {
                         return (
                             moment(data.date).format("MMMM Do, YYYY HH:mm A")
@@ -120,7 +133,7 @@ async function loadData() {
                     , visible: false
                 },
                 {
-                    data: null,
+                    data: null, "searchable": false,
                     render: (data) => {
                         return (
                             moment(data.dateUpdate).format("MMMM Do, YYYY HH:mm A")
@@ -129,7 +142,7 @@ async function loadData() {
                     , visible: false
                 },
                 {
-                    data: null,
+                    data: null, "searchable": false,
                     render: function (data) {
                         return (
                             `
@@ -144,7 +157,6 @@ async function loadData() {
                 },
             ],
             'dom': 'Bfrtip',
-            'autoWidth': true,
             buttons: [
                 {
                     extend: 'pageLength',
@@ -232,123 +244,123 @@ async function loadData() {
                 },
             ],
         });
-        $('#tablePartner tbody').on('click', 'tr', function () {
-            $(this).toggleClass('selected');
-        });
-        dataTablePartners.buttons().container()
-            .appendTo($('div.column.is-half', dataTablePartners.table().container()).eq(0));
-    });
-}
+    }
 
-var _PARTNERID = "";
 //TODO ✅ INFO PARTNER
-async function infoPartner(partnerID) {
-    const idPartner = partnerID;
-    window.location = `/workspace/partners/info/${idPartner}`;
-}
+    async function infoPartner(partnerID) {
+        const idPartner = partnerID;
+        window.location = `/workspace/partners/info/${idPartner}`;
+    }
 
 //TODO ✅ DELETE PARTMNER
-async function apiDelete(idPartner) {
-    const urlDelete = `/api/partners/delete/${idPartner}`;
-    fetch(urlDelete).then(() => {
-        dataTablePartners.ajax.reload(null, false);
-        setTimeout(() => {
+    async function apiDelete(idPartner) {
+        const urlDelete = `/api/partners/delete/${idPartner}`;
+        await fetch(urlDelete).then(async () => {
             try {
                 if ($('#stateInfoPartner').val() === '') { // 
                     window.location = `/workspace/partners/`;
                 }
+                else {
+                    reloadData();
+                }
             } catch (error) { }
-        }, 1000);
-    });
-}
-async function deletePartner(partnerID) {
-    opcion = 'delete';
-    const idPartner = partnerID;
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "Are you sure you want to delete the PARTNER!",
-        icon: 'warning',
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: `Removed! partner with ID: ${idPartner}`,
-                text: "The partner has been REMOVED.",
-                icon: 'success',
-                timer: 2000,
-                confirmButtonText: 'OK',
-            });
-            await apiDelete(idPartner);
-        }
-    });
-}
+        });
+    }
+    async function deletePartner(partnerID) {
+        opcion = 'delete';
+        const idPartner = partnerID;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you sure you want to delete the PARTNER!",
+            icon: 'warning',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: `Removed! partner with ID: ${idPartner}`,
+                    text: "The partner has been REMOVED.",
+                    icon: 'success',
+                    timer: 2000,
+                    confirmButtonText: 'OK',
+                }).then(async () => {
+                    await apiDelete(idPartner);
+                }
+                )
+            }
+        });
+    }
 
 //TODO ✅ EDIT PARTNER
-async function edit(partnerID) {
-    opcion = "edit";
-    const idPartner = partnerID;
-    const urlGetPartner = `/api/partners/${idPartner}`;
-    let checked = false;
-    let partner_DNI = "";
-    fetch(urlGetPartner)
-        .then(response => response.json())
-        .then(async (data) => {
-            const check = data.activeFamily;
-            if (check === 1) {
-                checked = true;
-                const urlGetDniFamily = `/api/familys/${data.dni}`;
-                fetch(urlGetDniFamily)
-                    .then(response => response.json())
-                    .then(async data => {
-                        partner_DNI = data.data.partnerDni;
-                        partnerActiveCheck = data.data.partnerDni;
-                        activeSelectDniFamily(partner_DNI);
-                    });
-            } else {
-                checked = false;
-                await disabledFamilyLink();
-            }
-            inputPartnerID.value = data.partnerID;
-            inputDni.value = data.dni;
-            inputScanner.value = data.scanner;
-            inputName.value = data.name;
-            inputLastname.value = data.lastname;
-            inputDirection.value = data.direction;
-            inputPopulation.value = data.population;
-            inputPhone.value = data.phone1;
-            inputPhoneLandline.value = data.phone2;
-            inputEmail.value = data.email;
-            inputDniCheck.checked = checked;
-            if (!checkedNew) {
-                document.getElementById('newBoxesID').removeAttribute('hidden');
-                document.getElementById("creationDate").innerHTML = `
-                    <input class="Animation-input" type="date" id="actualDate" value='${moment(data.date).format("YYYY-MM-DD")}'>
-                    <label class="Animation-label" for="date">Creation Date</label>
-                `;
-            }
-            $(".modal-header").css(
-                "background-color",
-                "var(--Background-Color-forms-partner)"
-            );
-            $(".modal-header").css("color", "white");
-        });
-}
-
-async function disabledFamilyLink() {
-    $("#selectDni").html("");
-    familyLink.classList.remove("isEnable");
-    inputDni.focus();
-}
-
-async function activeSelectDniFamily(partner_DNI) {
-    const urlSelectDni = "/api/partners/";
-    if (inputDniCheck.checked) {
-        setTimeout(() => {
-            fetch(urlSelectDni, {
+    async function edit(partnerID) {
+        opcion = "edit";
+        const idPartner = partnerID;
+        const urlGetPartner = `/api/partners/${idPartner}`;
+        let checked = false;
+        let _partnerDNI = "";
+        await fetch(urlGetPartner)
+            .then(response => response.json())
+            .then(async (data) => {
+                const check = data.activeFamily;
+                if (check === 1) {
+                    checked = true;
+                    inputDniCheck.checked = checked;
+                    const urlGetDniFamily = `/api/familys/${data.dni}`;
+                    await fetch(urlGetDniFamily)
+                        .then(response => response.json())
+                        .then(async (data) => {
+                            _partnerDNI = data.data.partnerDni;
+                            partnerActiveCheck = data.data.partnerDni;
+                            await activeSelectDniFamily(_partnerDNI);
+                        });
+                } else {
+                    checked = false;
+                    inputDniCheck.checked = checked;
+                    await disabledFamilyLink();
+                }
+                inputPartnerID.value = data.partnerID;
+                inputDni.value = data.dni;
+                inputScanner.value = data.scanner;
+                inputName.value = data.name;
+                inputLastname.value = data.lastname;
+                inputDirection.value = data.direction;
+                inputPopulation.value = data.population;
+                inputPhone.value = data.phone1;
+                inputPhoneLandline.value = data.phone2;
+                inputEmail.value = data.email;
+                inputDniCheck.checked = checked;
+                if (!checkedNew) {
+                    document.getElementById('newBoxesID').removeAttribute('hidden');
+                    document.getElementById("creationDate").innerHTML = `
+                        <input class="Animation-input" type="date" id="actualDate" value='${moment(data.date).format("YYYY-MM-DD")}' tabindex=0>
+                        <label class="Animation-label" for="date">Creation Date</label>
+                    `;
+                }
+                $(".modal-header").css(
+                    "background-color",
+                    "var(--Background-Color-forms-partner)"
+                );
+                $(".modal-title").text("EDIT PARTNER").css({
+                    "font-weight": "600",
+                    "font-size": "1.3em",
+                    "color": "#006E7F"
+                });
+            });
+    }
+    async function disabledFamilyLink() {
+        $("#selectDni").html("");
+        familyLink.classList.remove("isEnable");
+        inputDni.focus();
+        inputDni.select();
+    }
+    async function activeSelectDniFamily(_partnerDNI) {
+        const partnerDni = _partnerDNI;
+        const urlSelectDni = "/api/partners/";
+        if (inputDniCheck.checked) {
+            await fetch(urlSelectDni, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -356,56 +368,54 @@ async function activeSelectDniFamily(partner_DNI) {
                 }
             })
                 .then(response => response.json())
-                .then(async data => await obtenerDni(data, partner_DNI))
+                .then(async data => await obtenerDni(data, partnerDni))
                 .catch(() =>
                     window.alert(
                         "There is no record in partners, to associate."
                     )
                 );
             familyLink.classList.add("isEnable");
-        }, 500);
-    } else {
-        await disabledFamilyLink();
+            selectDni.focus();
+        } else {
+            await disabledFamilyLink();
+        }
     }
-}
 
 // TODO ✅ AL CAMBIAR CHECK
-try {
-    inputDniCheck.addEventListener("change", () => {
-        activeSelectDniFamily();
-    });
-} catch (error) { }
+    try {
+        inputDniCheck.addEventListener("change", async () => {
+            await activeSelectDniFamily();
+        });
+    } catch (error) { }
 
 // TODO ✅ AÑADE UN DNI ALEATORIO AL INPUT DNI
-async function selectChange() {
-    const index = selectDni.selectedIndex;
-    if (index !== 0) {
-        if (inputDni.value === "") {
-            inputDni.value = rand_dni();
-            inputDni.focus();
-            inputDni.select();
-        } else {
-            selectDni.focus();
-        }
-    }
-};
-
-// TODO ✅ AÑADE DNI DE PARTNERS AL SELECT
-async function obtenerDni(data, partner_DNI) {
-    selectDni.innerHTML =
-        '<option value="" disabled selected hidden>Select family member\'s DNI</option>';
-    data.forEach(partner => {
-        let option = document.createElement("option");
-        option.value = partner.partnerID;
-        option.text = partner.dni;
-        selectDni.add(option);
-        let sel = document.getElementById("selectDni");
-        for (let i = 0; i < sel.length; i++) {
-            let opt = sel[i];
-            if (opt.text === partner_DNI) {
-                $("#selectDni").val(opt.value);
-                return;
+    async function selectChange() {
+        const index = await selectDni.selectedIndex;
+        if (index !== 0) {
+            if (inputDni.value === "") {
+                inputDni.value = rand_dni();
+            } else {
+                selectDni.focus();
             }
         }
-    });
-}
+    };
+
+// TODO ✅ AÑADE DNI DE PARTNERS AL SELECT
+    async function obtenerDni(data, _partnerDNI) {
+        const partnerDNI = _partnerDNI;
+        selectDni.innerHTML = '<option value="" disabled selected hidden>Select family member\'s DNI</option>';
+        data.forEach(partner => {
+            let option = document.createElement("option");
+            option.value = partner.partnerID;
+            option.text = partner.dni;
+            selectDni.add(option);
+            let sel = document.getElementById("selectDni");
+            for (let i = 0; i < sel.length; i++) {
+                let opt = sel[i];
+                if (opt.text === partnerDNI) {
+                    $("#selectDni").val(opt.value);
+                    return;
+                }
+            }
+        });
+    }

@@ -40,7 +40,11 @@ const familyController = {
         try {
             const familyID = req.params.idFamily;
             const { familyDni, partnerDni } = req.body;
-
+            console.log({
+                familyID,
+                familyDni,
+                partnerDni
+            });
             const sqlUnbind = "DELETE FROM familys WHERE familyDni=? AND partnerDni=?";
             await connection.query(sqlUnbind, [ partnerDni, familyDni ], async (err, results) => {
                 if (err) {

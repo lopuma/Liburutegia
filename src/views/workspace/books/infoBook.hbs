@@ -199,9 +199,7 @@
 
 <script defer type="text/javascript">
 
-    
     const imgBox = document.getElementById('imgBox');
-    const urlBook = `/workspace/books/infoCover/${_BOOKID}`
     const btnEditBook = document.getElementById('btnEditBook');
     const btnReserveBook = document.getElementById('btnReserveBook');
     const btnDeletetBook = document.getElementById('btnDeletetBook');
@@ -221,6 +219,7 @@
 
     //TODO ✅ ASIGNAR COVER AL LIBRO
     try{ 
+        const urlBook = `/workspace/books/infoCover/${_BOOKID}`
         fetch(urlBook)
             .then((resp) => resp.json())
             .then(function(data) {
@@ -255,6 +254,7 @@
         const bookID = idBook;
     }
 
+    // TODO ✅ FUNCION AUTOEJECUTABLE PARA EXTRAER LOS REVIEWS
     (async ( ) => {
         const bookID = _BOOKID;
         const urlReviews = `/api/books/info/reviews/${bookID}` 
@@ -268,6 +268,7 @@
             .then((data) => createCardReview(data));
     }) ( )
 
+    // TODO ✅ GENERAR COLOR ICONO USER
     function generarNuevoColor(){
         var simbolos, color;
         simbolos = "0123456789ABCDEF";
@@ -280,9 +281,10 @@
         return color;
     }
 
-    // TODO  CREATE CARDS REVIEWS 
+    // TODO ✅ CREATE CARDS REVIEWS 
     async function createCardReview(data){
         try {
+            console.log(data.success);
             if(data.success) {
                 const reviws = data.data;
                 let valores = Object.values(reviws); //
