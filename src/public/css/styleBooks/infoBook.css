@@ -207,7 +207,7 @@ details[open] summary::before {
 
 .Information-boxes {
     text-align: start;
-    margin: .5em 0;
+    margin: 0;
     padding: 0.5em 0.5em 0.5em 2em;
     width: 100%;
     display: flex;

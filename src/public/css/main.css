@@ -69,6 +69,7 @@
 
 .Main-cover.isShow {
   background-color: rgb(41, 41, 41);
+  height: 1000px;
   visibility: visible;
 }
 

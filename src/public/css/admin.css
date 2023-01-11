@@ -20,7 +20,7 @@
     position: relative;
     width: 300px;
     height: 200px;
-    background: #fff;
+    background: var(--Color-texto-blanco);;
         border: #000 solid 1px;
     /* border: solid 1px var(--color-background-shadow-botton); */
     border-radius: 5px;
@@ -163,7 +163,7 @@
     position: relative;
     width: 40px;
     height: 40px;
-    background: #fff;
+    background: var(--Color-texto-blanco);;
     border-radius: 40px;
     cursor: pointer;
     display: flex;
@@ -204,7 +204,7 @@
 }
 
 .Cards-actionBtn .Cards-actionBtn-main button .title {
-    color: #fff;
+    color: var(--Color-texto-blanco);;
     font-size: 15px;
     font-family: 'Roboto', sans-serif;
     text-transform: uppercase;
@@ -215,7 +215,7 @@
 }
 
 .Cards-actionBtn .Cards-actionBtn-main button:nth-child(3) .title {
-    color: #fff;
+    color: var(--Color-texto-blanco);;
     font-size: 12px;
     font-family: 'Roboto', sans-serif;
     text-transform: uppercase;

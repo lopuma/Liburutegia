@@ -21,7 +21,7 @@
     margin: 1em 0;
     border-radius: var(--Radius);
     background-color: #1746A2;
-    color: #fff;
+    color: var(--Color-texto-blanco);;
     font-size: 1em;
     transition: all 0.5s ease;
 }
@@ -48,17 +48,17 @@
 
 .Dashboard-head {
     background-color: #222831;
-    color: #fff;
+    color: var(--Color-texto-blanco);;
     border: none;
     position: sticky;
     top: 0;
     z-index: 97;
-    font-size: 1em;
+    font-size: .9em;
 }
 
 .Dashboard-foot {
     background-color: #222831;
-    color: #fff;
+    color: var(--Color-texto-blanco);;
     border: none;
     font-size: 1em;
 }
@@ -173,15 +173,15 @@ div.dataTables_wrapper div.dataTables_info {
     text-transform: uppercase;
     transition: 0.5s;
     background-size: 200% auto;
-    color: white;
-    box-shadow: 0 0 20px #eee;
+    color: var(--Color-texto-blanco);
+    box-shadow: 0 0 20px var(--Color-texto-blanco);;
     border-radius: var(--Radius);
     display: block;
 }
 
 .dt-buttons .dt-button:hover {
     background-position: right center;
-    color: #fff;
+    color: var(--Color-texto-blanco);;
     text-decoration: none;
 }
 
@@ -285,6 +285,9 @@ div.dt-button-collection .active:hover {
     color: #B2B2B2 !important;
 }
 
+.select-info {
+    color: #1746A2;
+}
 @media screen and (max-width: 980px) {
 
     .Dashboard {

@@ -1,5 +1,7 @@
 <link href="/style/styleBooks/infoBook.css" rel="stylesheet" />
 
+{{> modalEditBook}}
+
 <div class="Info-contenedor" id="stateInfoBook">
     {{#each book}}
         <script>
@@ -139,7 +141,7 @@
                                 </div>
                                 <div class="Information-cell isObservation">
                                     <span class="Information-span">
-                                        {{this.observations}}
+                                        {{this.observation}}
                                     </span>
                                 </div>
                             </div>
@@ -173,7 +175,7 @@
                         <h3>ACTIONS</h3>
                         <hr>
                         <div class="Review-actions">
-                            <button id="btnEditBook" onClick=editBook({{this.bookID}}) type="button"  class="Action-btn btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
+                            <button id="btnEditBook" onClick=_editBook({{this.bookID}}) type="button" class="Action-btn btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
                             {{#unless this.reserved}}
                                 <button id="btnReserveBook" onClick=reserveBook({{this.bookID}}) class="Action-btn btn btn-secondary" title="Reserve a Book"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
                             {{/unless}}
@@ -197,6 +199,8 @@
     </div>
 </div>
 
+<script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
+
 <script defer type="text/javascript">
 
     const imgBox = document.getElementById('imgBox');
@@ -204,6 +208,13 @@
     const btnReserveBook = document.getElementById('btnReserveBook');
     const btnDeletetBook = document.getElementById('btnDeletetBook');
     const containerReview =  document.getElementById('containerReview');
+
+//TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA BOOK
+    try {
+        if ($('#stateInfoBook').val() === '') { // 
+            _STATEINFOBOOK = true;
+        }
+    } catch (error) { }
 
     // TODO ✅ FUNCTION PARA MOSTRAR EL PORCENTAJE DE ESTRELLAS
     function obtenerPorcentaje(_RATING_) {
@@ -240,18 +251,22 @@
     } catch (error) { }
 
     // TODO ✅ EDITAR LIBRO
-    async function editBook(idBook){
+    async function _editBook(idBook) {
+        opcion = 'edit';
         const bookID = idBook;
+        await globalEditBook(bookID);
     }
 
     // TODO ✅ RESERVAR LIBRO
     async function reserveBook(idBook){
         const bookID = idBook;
+        console.log(bookID);
     }
 
     // TODO ✅ ELIMNAR LIBRO
     async function deleteBook(idBook){
         const bookID = idBook;
+        globalDeleteBook(bookID);
     }
 
     // TODO ✅ FUNCION AUTOEJECUTABLE PARA EXTRAER LOS REVIEWS
@@ -267,8 +282,6 @@
             .then((response) => response.json())
             .then((data) => createCardReview(data));
     }) ( )
-
-    // TODO ✅ GENERAR COLOR ICONO USER
     function generarNuevoColor(){
         var simbolos, color;
         simbolos = "0123456789ABCDEF";
@@ -280,11 +293,8 @@
 
         return color;
     }
-
-    // TODO ✅ CREATE CARDS REVIEWS 
     async function createCardReview(data){
         try {
-            console.log(data.success);
             if(data.success) {
                 const reviws = data.data;
                 let valores = Object.values(reviws); //

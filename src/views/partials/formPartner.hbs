@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/style/newForm.css">
+
 <div class="New-family Family" id="Family">
 
     <div class="Family-check">
@@ -8,7 +10,7 @@
 
     <div class="Family-links" id="familyLink">
         <label>DNI associated with a family member.</label>
-        <select class="js-example-basic-single" id="selectDni" onchange="selectChange()">
+        <select class="js-example-basic-single" id="selectDni" name="selectDni" onChange="selectChange()" style="width:100%" size="5">
         </select>
     </div>
 
@@ -50,8 +52,8 @@
                     <input class="Animation-input" name="inputDni" id="inputDni"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        required="required" tabindex="1" autofocus onChange="changeField(this, 'dni')">
-                    <label class="Animation-label" for="inputDni">Enter Dni / Nie  *</label>
+                        required="required" tabindex="1" autofocus onkeydown="changeField(this, 'dni')">
+                    <label class="Animation-label" for="inputDni">Dni / Nie  *</label>
                     <label class="Animation-info" for="inputDni" id="infoDni"><i
                             class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo" for="inputDni"
@@ -74,8 +76,7 @@
                         id="inputScanner" type="text"
                         placeholder=" " autocomplete="valorNoValido"
                         tabindex="2" >
-                    <label class="Animation-label" for="inputScanner">Enter
-                        Scanner</label>
+                    <label class="Animation-label" for="inputScanner">Scanner</label>
                     <label class="Animation-info" for="inputScanner"
                         id="infoScanner"><i class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo" for="inputScanner"
@@ -94,8 +95,8 @@
                     <input class="Animation-input" name="inputName"
                         id="inputName" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        required="required" tabindex="3" onChange="changeField(this, 'name')">
-                    <label class="Animation-label" for="inputName">Enter Name *</label>
+                        required="required" tabindex="3" onkeydown="changeField(this, 'name')">
+                    <label class="Animation-label" for="inputName">Name *</label>
                     <label class="Animation-info Animation-btnInfo" for="inputName" id="infoName"><i
                             class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputName"
@@ -117,9 +118,8 @@
                     <input class="Animation-input" name="inputLastname"
                         id="inputLastname" type="text"
                         placeholder=" " autocomplete="valorNoValido" required
-                        tabindex="4" onChange="changeField(this, 'lastname')">
-                    <label class="Animation-label" for="inputLastname">Enter
-                        Lastname *</label>
+                        tabindex="4" onkeydown="changeField(this, 'lastname')">
+                    <label class="Animation-label" for="inputLastname">Lastname *</label>
                     <label class="Animation-info Animation-btnInfo" for="inputLastname"
                         id="infoLastname"><i class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputLastname"
@@ -145,8 +145,7 @@
                         id="inputDirection" type="text"
                         placeholder=" " autocomplete="valorNoValido"
                         tabindex="5">
-                    <label class="Animation-label" for="inputDirection">Enter
-                        Address</label>
+                    <label class="Animation-label" for="inputDirection">Address, portal, floor, letters</label>
                     <label class="Animation-info Animation-btnInfo" for="inputDirection"
                         id="infoDirection"><i class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputDirection"
@@ -170,8 +169,7 @@
                         id="inputPopulation" type="text"
                         placeholder=" " autocomplete="valorNoValido"
                         tabindex="6">
-                    <label class="Animation-label" for="inputPopulation">Enter
-                        City</label>
+                    <label class="Animation-label" for="inputPopulation">City</label>
                     <label class="Animation-info Animation-btnInfo" for="inputPopulation"
                         id="infoPopulation"><i class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputPopulation"
@@ -196,8 +194,8 @@
                     <input class="Animation-input" name="inputPhone"
                         id="inputPhone" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="7" minlength="9" onChange="changeField(this, 'mobile')">
-                    <label class="Animation-label" for="inputPhone">Enter Phone
+                        tabindex="7" minlength="9" onkeydown="changeField(this, 'mobile')">
+                    <label class="Animation-label" for="inputPhone">Phone
                         (Mobile)</label>
                     <label class="Animation-info Animation-btnInfo" for="inputPhone"
                         id="infoMobile"><i class="fa-solid fa-circle-info"></i></label>
@@ -220,9 +218,8 @@
                     <input class="Animation-input" name="inputPhoneLandline"
                         id="inputPhoneLandline" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="8" minlength="9" onChange="changeField(this, 'landline')">
-                    <label class="Animation-label" for="inputPhoneLandline">Enter
-                        Phone (Landline)</label>
+                        tabindex="8" minlength="9" onkeydown="changeField(this, 'landline')">
+                    <label class="Animation-label" for="inputPhoneLandline">Phone (Landline)</label>
                     <label class="Animation-info Animation-btnInfo" for="inputPhoneLandline"
                         id="infoPhoneLandline"><i class="fa-solid
                             fa-circle-info"></i></label>
@@ -248,8 +245,8 @@
                     <input class="Animation-input" name="inputEmail"
                         id="inputEmail" type="email"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="9" onChange="changeField(this, 'email')">
-                    <label class="Animation-label" for="inputEmail">Enter Email</label>
+                        tabindex="9" onkeydown="changeField(this, 'email')">
+                    <label class="Animation-label" for="inputEmail">Email</label>
                     <label class="Animation-info Animation-btnInfo" for="inputEmail"
                         id="infoEmail"><i class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputEmail"
@@ -266,7 +263,7 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="/style/newForm.css">
+<script defer src="/scripts/Globals/funcGlobals.js"></script>
 
 <script defer src="/scripts/partners/partners.js"></script>
 

@@ -265,6 +265,11 @@ const partnerController = {
                 }));
                 await addNewPartner(updatedDataAddPartner);
             } else {
+                console.log({
+                    familyDni: dni,
+                    partnerDni,
+                    partnerID
+                })
                 const sqlInsertFamily = "INSERT INTO familys SET ?";
                 await connection.query(
                     sqlInsertFamily,
@@ -402,7 +407,7 @@ const partnerController = {
                         });
                     };
                 });
-                sqlDeletePartner = `DELETE FROM partners WHERE partnerID = ${partnerID}`;
+                const sqlDeletePartner = `DELETE FROM partners WHERE partnerID = ${partnerID}`;
                 await connection.query(sqlDeletePartner, async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
@@ -514,6 +519,7 @@ const partnerController = {
                         });
                     });
                 }
+                console.log(updatedDataAddPartner)
                 await connection.query(sqlUpdate, updatedDataAddPartner, (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);

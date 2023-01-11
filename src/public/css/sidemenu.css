@@ -61,6 +61,7 @@
 
 .Sidemenu-a.isActiveLogout {
     background-color: var(--Unsuccess);
+    color: var(--Color-texto-blanco);
     border: 1px solid var(--Color-outline);
     transition-property: border, box-shadow;
     transition-duration: .5s;
@@ -139,7 +140,7 @@
   font-size: inherit;
   font-weight: 600;
   font-family: var(--Font-family-menu);
-  letter-spacing: 3px;
+  /* letter-spacing: 3px; */
 }
 
 .Sidemenu-icon--item {
@@ -165,7 +166,7 @@
 }
 
 .menu-expanded .Sidemenu-title--item span {
-  color: var(--Color-negro);
+  /* color: var(--Color-negro); */
   opacity: 1;
 }
 

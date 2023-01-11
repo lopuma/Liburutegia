@@ -40,8 +40,8 @@ const contador              = document.getElementById( 'contador'           );
     async function correctFormDeliver(e) {
         e.preventDefault();
         let activoFijo = $('input[name="rate"]:checked').val();
-        const idBook = $.trim($('#bookID').val());
-        const idBooking = $.trim($('#bookingID').val());
+        const idBook = $('#bookID').val();
+        const idBooking = $('#bookingID').val();
         const score = activoFijo;
         const review = textarea.value;
         const urlDeliver = `/api/books/deliver/${idBook}`;

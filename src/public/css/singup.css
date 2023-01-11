@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /* TODO CONTENEDOR DE LOGIN*/
 .Singup {
     margin: var(--Margin-top-forms) auto 4em;
@@ -104,6 +105,7 @@
     outline: none;
     transition: all 0.3s ease;
 }
+
 .Animation-closeInfo,
 .Animation-info,
 .Animation-label {
@@ -112,7 +114,7 @@
     top: calc(50% - .7em);
     left: 1em;
     cursor: text;
-    font-size: 1em;
+    font-size: .8em;
     letter-spacing: .2em;
     color: var(--Color-texto-negro);
     transition-property: top, font-size, color, background-color, border-radius, padding, left, width;
@@ -125,7 +127,7 @@
 .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
     top: -1.4em;
     left: 3em;
-    font-size: .7em;
+    font-size: .6em;
     color: var(--Color-texto-blanco);
     background-color: var(--Color-texto-negro);
     border-radius: var(--Radius);
@@ -149,9 +151,9 @@
 .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
     left: 0.5em;
     top: -.65em;
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: var(--Color-invalid);
-    background-color: #fff;
+    background-color: var(--Color-texto-blanco);;
     border-radius: var(--Radius);
     padding: 0;
     text-align: start;
@@ -265,8 +267,8 @@
 
 .Button-cancel,
 .Button-accept {
-    width: 100%;
-    border: 1px solid var(--Color-outline);
+    width: 50%;
+    width: -webkit-fill-available;
     border-radius: var(--Radius);
     font-size: var(--Size-font-button);
     font-weight: 700;
@@ -274,13 +276,15 @@
     letter-spacing: var(--Letter-spacing);
     text-align: center;
     padding: 1em;
+    margin: 0 1em;
     background-color: var(--Success);
+    border: 1px solid var(--Color-outline);
     transition-property: color, box-shadow, border, transform;
     transition-duration: .5s;
     transition-timing-function: ease;
     color: var(--Brown);
-    margin: 1em 2em;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .Button-cancel {
@@ -320,8 +324,7 @@
         width: 100%;
     }
 
-    TODO Reggistros
-    .Register-content {
+    TODO Reggistros .Register-content {
         width: 100%;
         margin: 0;
     }
@@ -353,12 +356,6 @@
         margin: 0;
     }
 
-    .Animation-label {
-        letter-spacing: .1em;
-        font-size: .9em;
-        left: 1em;
-    }
-
     .Animation-input:focus~.Animation-label,
     .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
         top: -1.6em;
@@ -372,7 +369,6 @@
     .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-closeInfo,
     .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
         top: -.6em;
-        font-size: 1.6em;
         padding: 0;
     }
 
@@ -380,13 +376,8 @@
         width: 100%;
     }
 
-    .Input-button {
-        width: 100%;
-    }
-
     .Button-cancel,
     .Button-accept {
-        width: 100%;
         margin: 1em 0.5em;
     }
 }

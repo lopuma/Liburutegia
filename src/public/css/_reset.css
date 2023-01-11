@@ -11,7 +11,8 @@
 
 font {
   vertical-align: baseline;
-  width: 100%;
+  width: auto;
+  width: -webkit-fill-available;
 }
 
 img,
@@ -87,12 +88,12 @@ q:after {
 
 ::-moz-selection {
   background-color: rgb(0, 56, 109);
-  color: #fff;
+  color: var(--Color-texto-blanco);;
 }
 
 ::selection {
   background-color: rgb(0, 56, 109);
-  color: #fff;
+  color: var(--Color-texto-blanco);;
 }
 
 

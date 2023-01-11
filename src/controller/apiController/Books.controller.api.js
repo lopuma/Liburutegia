@@ -2,6 +2,7 @@ const connection = require("../../../database/db");
 const sharp = require('sharp');
 const fs = require('fs')
 const path = require('path');
+const moment = require('moment');
 
 const bookController = {
 
@@ -66,8 +67,8 @@ const bookController = {
     getBook: async (req, res) => {
         try {
             const bookID = req.params.idBook;
-            const sqlSelectBook = `SELECT b.*, FORMAT(AVG(v.score), 2) AS rating, COUNT(v.score) AS numVotes, SUM(v.score) AS totalScore, cb.nameCover as cover FROM votes v RIGHT JOIN books b ON b.bookID=v.bookID LEFT JOIN coverBooks cb ON cb.bookID=b.bookID WHERE b.bookID= ${bookID}`;
-            await connection.query(sqlSelectBook, (err, results) => {
+            const sqlSelectBook = `SELECT * FROM books WHERE bookID = ?`;
+            await connection.query(sqlSelectBook, [bookID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -86,12 +87,12 @@ const bookController = {
     // TODO ✅ ENTREGA BOOK
     deliverBook: async (req, res) => {
         const idBook = req.params.bookID;
-        
+
         const { idBooking, score, review, deliver_date_review } = req.body;
         const sql = [`UPDATE books SET 
-                    reserved=0 WHERE bookID=${idBook}`, 
-                    `UPDATE bookings SET deliver=1 WHERE bookingID=${idBooking}`, 
-                    `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner) VALUES (${idBook}, ${idBooking}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${idBooking}))`];
+                    reserved=0 WHERE bookID=${idBook}`,
+        `UPDATE bookings SET deliver=1 WHERE bookingID=${idBooking}`,
+        `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner) VALUES (${idBook}, ${idBooking}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${idBooking}))`];
         await connection.query(
             sql.join(";"),
             (err) => {
@@ -109,7 +110,7 @@ const bookController = {
                 });
             }
         );
-    }, 
+    },
     // TODO ✅ SI EXISTE LA IMAGEN
     existsCover: async (req, res, next) => {
         try {
@@ -126,7 +127,7 @@ const bookController = {
                 }
                 if (results.length === 1) {
                     const nameCover = await saveImageServer(req, res);
-                    const coverID = results[0].coverID ;
+                    const coverID = results[0].coverID;
                     const bookID = idBook;
                     //TODO ELIMINAR IMAGEN ANTERIOR
                     try {
@@ -168,8 +169,9 @@ const bookController = {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
-                        code: 400,
-                        message: err
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
                 return res.status(200).send({
@@ -183,9 +185,57 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
+    addBook: async (req, res) => { 
+        console.log("TODO OK ADD", req.body);
+        res.status(200).send({
+            messageSuccess: "TODO OK ADD"
+        });
+    },
     putBook: async (req, res) => {
         try {
-            bookID = req.params.bookID;
+            const bookID = req.params.idBook;
+            const {
+                inputTitle: title,
+                inputAuthor: author,
+                inputISBN: isbn,
+                inputPurchaseDate: purchase_date,
+                inputEditorial: editorial,
+                inputType: type,
+                inputLanguage: language,
+                inputCollection: collection,
+                inputObservation: observation
+            } = req.body;
+            const date = new Date();
+            const lastUpdate = moment(date).format("YYYY-MM-DD HH:mm:ss");
+            const sqlUpdateBook = `UPDATE books SET ? WHERE bookID = ${bookID}`;
+            let purchase = purchase_date ? purchase_date : null;
+            console.log("TODOW, purchase date: " + purchase);
+            await connection.query(sqlUpdateBook, {
+                title,
+                author,
+                editorial,
+                isbn,
+                type,
+                language,
+                collection,
+                purchase_date: purchase,
+                observation,
+                lastUpdate
+            }, (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
+                }
+                console.log(results);
+                res.status(200).send({
+                    messageSuccess: "TODO OK ACTUALIZADO"
+                });
+            })
+            /*
             title = req.body.title_book;
             author = req.body.author;
             type = req.body.type;
@@ -202,6 +252,7 @@ const bookController = {
                     res.send(result);
                 }
             });
+            */
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
@@ -209,28 +260,59 @@ const bookController = {
     },
     // TODO ✅ DELETE BOOK
     deleteBook: async (req, res) => {
-        const idBook = req.params.idBook;
-        sql = "DELETE FROM books WHERE bookID=?";
-        connection.query(sql, [idBook], (err, _results) => {
-            if (err) {
-                throw err;
-            }
-            res.status(200).send({
-                success: true,
-                message: `The book with id ${idBook} has been successfully deleted`
-            });
-        });
-    },
-    // TODO
-    infoReviews: async (req, res) => {
         try {
             const bookID = req.params.idBook;
-            const selectReviews = "SELECT score, deliver_date_review as dateReview, review, fullnamePartner AS fullName FROM votes WHERE bookID=?";            await connection.query(selectReviews, [bookID], (err, results) => { 
+            const sqlSelect = "SELECT title FROM books WHERE bookID=?";
+            await connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
-                        code: 400,
-                        message: err
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
+                }
+                if (results.length === 0) {
+                    return res.status(403).send({
+                        success: false,
+                        exists: false,
+                        errorMessage: `[ ERROR ], The BOOK with ID : ${bookID} does not exist`
+                    });
+                }
+                const title = results[0].title;
+                console.log({ title });
+                const sqlDelete = "DELETE FROM books WHERE bookID=?";
+                await connection.query(sqlDelete, [bookID], (err, _results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res.status(400).send({
+                            success: false,
+                            messageErrBD: err,
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                        });
+                    }
+                    res.status(200).send({
+                        success: true,
+                        messageSuccess: `The Book with ID: '${bookID}', TITLE : '${title}' has been successfully deleted`
+                    });
+                });
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
+    // TODO ✅ INFO REVIEW
+    infoReviews: async (req, res) => {
+        try {
+            const bookID = req.params.idBook;
+            const selectReviews = "SELECT score, deliver_date_review as dateReview, review, fullnamePartner AS fullName FROM votes WHERE bookID=?"; await connection.query(selectReviews, [bookID], (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
                 if (results.length === 0) {
@@ -255,46 +337,49 @@ const bookController = {
 };
 
 module.exports = bookController;
-function generateCoverRand(length, type) {
-    switch (type) {
-        case 'num':
-            characters = "0123456789";
-            break;
-        case 'alf':
-            characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            break;
-        case 'rand':
-            //FOR ↓
-            break;
-        default:
-            characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            break;
+
+// TODO ✅ GENERAR NOMBRE DEL COVER
+    function generateCoverRand(length, type) {
+        switch (type) {
+            case 'num':
+                characters = "0123456789";
+                break;
+            case 'alf':
+                characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                break;
+            case 'rand':
+                //FOR ↓
+                break;
+            default:
+                characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                break;
+        }
+        var randNameCover = "";
+        for (i = 0; i < length; i++) {
+            if (type == 'rand') {
+                randNameCover += String.fromCharCode((Math.floor((Math.random() * 100)) % 94) + 33);
+            } else {
+                randNameCover += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+        }
+        return randNameCover;
     }
-    var randNameCover = "";
-    for (i = 0; i < length; i++) {
-        if (type == 'rand') {
-            randNameCover += String.fromCharCode((Math.floor((Math.random() * 100)) % 94) + 33);
-        } else {
-            randNameCover += characters.charAt(Math.floor(Math.random() * characters.length));
+
+// TODO ✅ GUARDAR COVER
+    async function saveImageServer(req, res) {
+        try {
+            const file = req.file;
+            const proccessImage = sharp(file.buffer).resize(200, 322, {
+                fit: 'cover',
+                background: '#fff'
+            });
+            const nameCover = generateCoverRand(15);
+            const resizeImageBuffer = await proccessImage.toBuffer();
+            const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
+            fs.writeFileSync(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer);
+            return nameCover + '.png';
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
         }
     }
-    return randNameCover;
-}
-
-async function saveImageServer(req, res) {
-    try {
-        const file = req.file;
-        const proccessImage = sharp(file.buffer).resize(200, 322, {
-            fit: 'cover',
-            background: '#fff'
-        });
-        const nameCover = generateCoverRand(15);
-        const resizeImageBuffer = await proccessImage.toBuffer();
-        const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
-        fs.writeFileSync(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer);
-        return nameCover+'.png';
-    } catch (error) {
-        console.error(error);
-        res.status(500).redirect("/");
-    }
-}

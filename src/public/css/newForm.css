@@ -1,11 +1,15 @@
 .New-form {
     margin-top: 1.89em;
     background-color: var(--Color-texto-blanco);
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
     position: relative;
     z-index: 2;
 }
 
 .Family {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,13 +54,14 @@
     font-size: 1em;
 }
 
-.Family-links label{
+.Family-links label {
     color: gray;
 }
 
 .Family-links.isEnable {
     display: flex;
     opacity: 1;
+    margin: 0 1em 0 4em;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
@@ -87,19 +92,24 @@
 
 .Input-box {
     width: 50%;
-    /* height: 150px; */
     display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-flow: column nowrap;
     margin-bottom: 2em;
-    /* justify-content: space-between; */
-    /* margin: 3em 0 0; */
+}
+
+.Input-box.isActiveErrorDni {
+    height: 15em;
+    min-height: 10em;
+    margin: 0;
 }
 
 .Input-box.isActiveError {
-    height: 13em;
+    height: auto;
+    min-height: 10em;
     margin: 0;
 }
+
 
 .Box {
     height: 3.75em;
@@ -108,6 +118,40 @@
     align-items: center;
     justify-content: space-between;
     margin: 0;
+}
+
+.select2-container {
+    height: 3.75em;
+    /* background-color: brown; */
+}
+
+.isSelectError {
+    outline: 0.1em solid var(--Color-invalid);
+    border-bottom: 3px solid var(--Color-invalid);
+}
+
+.select2-container .select2-selection--single {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    outline: 0.1em solid var(--Color-outline);
+    border-bottom: 3px solid var(--Color-Selected);
+    box-shadow: var(--Box-shadow-input);
+    border-radius: var(--Radius);
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 2em;
+    top: auto;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-family: inherit;
+    font-size: 1em;
+    color: var(--Color-texto-negro);
+    padding: 0 1em;
 }
 
 .Box-i {
@@ -140,15 +184,10 @@
     color: var(--Color-texto-negro);
     border-radius: var(--Radius);
     padding: 0 1em;
-    margin-left: .5em;
-    margin-right: .5em;
+    margin: 0 .5em;
     border-bottom: 3px solid var(--Color-outline);
     outline: none;
     transition: all 0.3s ease;
-}
-
-.Animation-label {
-    padding: 0 1em;
 }
 
 .Animation-closeInfo,
@@ -156,11 +195,11 @@
 .Animation-label {
     width: auto;
     position: absolute;
-    top: calc(50% - .7em);
+    top: calc(50% - 1em);
     left: 0.5em;
     cursor: text;
-    font-size: 1em;
     letter-spacing: .2em;
+    font-size: .8em;
     color: var(--Color-texto-tip);
     transition-property: top, font-size, color, background-color, border-radius, padding, left, width;
     transition-duration: .5s;
@@ -168,11 +207,15 @@
     vertical-align: baseline;
 }
 
+.Animation-label {
+    padding: 0 1em;
+}
+
 .Animation-input:focus~.Animation-label,
 .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
-    top: -1.4em;
+    top: -1.3em;
     left: 3em;
-    font-size: .7em;
+    font-size: .6em;
     color: var(--Color-texto-blanco);
     background-color: var(--Color-texto-negro);
     border-radius: var(--Radius);
@@ -196,9 +239,9 @@
 .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
     left: 0.5em;
     top: -.65em;
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: var(--Color-invalid);
-    background-color: #fff;
+    background-color: var(--Color-texto-blanco);
     border-radius: var(--Radius);
     padding: 0;
     text-align: start;
@@ -248,6 +291,26 @@
     border-bottom: 3px solid var(--Color-invalid);
 }
 
+.isTextarea-boxes {
+    width: 95%;
+    height: 12em;
+}
+
+.isTextarea-box {
+    height: 100%;
+}
+
+.isTextarea {
+    width: 100%;
+    height: 100%;
+}
+
+.isTextarea-input {
+    width: 100%;
+    padding: 1.5em;
+    resize: none;
+}
+
 .Error.isActive {
     display: flex;
 }
@@ -256,13 +319,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 80%;
     height: auto;
     margin: 1.5em 0;
 }
 
 .Button-cancel,
 .Button-accept {
-    width: 20%;
+    width: inherit;
     height: 3em;
     border: 1px solid var(--Color-outline);
     border-radius: var(--Radius);
@@ -326,10 +390,11 @@
         margin: 0;
     }
 
-    .Input-box.isActiveError{
+    .Input-box.isActiveErrorDni,
+    .Input-box.isActiveError {
         height: auto;
     }
-    
+
     .Box {
         margin: .5em 0;
     }
@@ -392,7 +457,6 @@
 
     .Animation-label {
         letter-spacing: .1em;
-        font-size: .9em;
         left: 1em;
         margin: 0;
     }
@@ -401,28 +465,22 @@
         padding: .5em;
     }
 
-    .Animation-input:focus~.Animation-label,
-    .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
-        top: -1.6em;
-        font-size: .6em;
-        left: 4.1em;
-    }
-
     .Animation-input:focus~.Animation-info,
     .Animation-input:focus~.Animation-closeInfo,
     .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-closeInfo,
     .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-info {
         top: -.6em;
-        font-size: 1.6em;
         padding: 0;
     }
+
     .Input-button {
         width: 100%;
     }
 
     .Button-cancel,
     .Button-accept {
-        width: 100%;
+        width: fit-content;
+        padding: 1em;
         margin: 1em 0.5em;
     }
 }

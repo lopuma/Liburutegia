@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MySqlStore = require('express-mysql-session')(session)
 const cors = require('cors');
-
 const config = require('./config');
 
 // 1 - Iniciar express
@@ -80,7 +79,7 @@ app.engine('.hbs', exphbs.engine({
 	layoutsDir: path.join(app.get('views'), 'layouts'),
 	partialsDir: path.join(app.get('views'), 'partials'),
 	extname: '.hbs',
-	helpers: require('./lib/handlebars') // EJECUTAR FUNCIONES
+	//helpers: require('./lib/handlebars') // EJECUTAR FUNCIONES
 }))
 app.set('view engine', '.hbs'); 
 

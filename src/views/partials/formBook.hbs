@@ -1,12 +1,14 @@
+<link rel="stylesheet" href="/style/newForm.css">
+
 <div class="New-content">
 
-    <div class="New-boxes" id="newBoxesID">
+    <div class="New-boxes">
         <!-- TODO BOOK ID -->
         <div class="Input-box" hidden>
             <div class="Box">
                 <i class="Box-i fa-solid fa-key"></i>
                 <div class="Box-animation Animation">
-                    <input class="Animation-input"  type="text" id="bookID" tabindex="0" readonly value="null">
+                    <input class="Animation-input"  type="text" id="bookID" tabindex="-1" readonly value="null">
                     <label class="Animation-label" for="bookID">Your Partner ID</label>
                     <label class="Animation-info" for="bookID" id="infoID"><i
                             class="fa-solid fa-circle-info"></i></label>
@@ -15,13 +17,33 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="New-boxes">
         <!-- TODO PURCHASE DATE -->
         <div class="Input-box">
             <div class="Box">
                 <i class="fa-solid fa-calendar-days"></i>
                 <div class="Box-animation Animation Creation-date" id="purchaseDate">
-                    <input class="Animation-input" type="date" id="actualPurchaseDate">
-                    <label class="Animation-label" for="date">Creation Date</label>
+                    <input class="Animation-input" type="date" id="pPurchaseDate" tabindex=0>
+                    <label class="Animation-label" for="date">Purchase  Date</label>
+                </div>
+            </div>
+        </div>
+        <!-- TODO ISBN -->
+        <div class="Input-box" id="inputBoxISBN">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-qrcode"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputISBN"
+                        id="inputISBN" type="text"
+                        placeholder=" " autocomplete="valorNoValido"
+                        tabindex="1" >
+                    <label class="Animation-label" for="inputISBN">ISBN</label>
+                    <label class="Animation-info" for="inputISBN"
+                        id="infoISBN"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputISBN"
+                        id="closeInfoISBN"><i class="fa-solid
+                            fa-circle-info"></i></label>
                 </div>
             </div>
         </div>
@@ -35,8 +57,8 @@
                     <input class="Animation-input" name="inputTitle" id="inputTitle"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        required="required" tabindex="1" autofocus onChange="changeField(this, 'Title')">
-                    <label class="Animation-label" for="inputTitle">Enter Title *</label>
+                        required="required" tabindex="2">
+                    <label class="Animation-label" for="inputTitle">Title *</label>
                     <label class="Animation-info" for="inputTitle" id="infoTitle"><i
                             class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo" for="inputTitle"
@@ -50,26 +72,241 @@
                 </div>
             </div>
         </div>
-        <!-- TODO ISBN -->
-        <div class="Input-box" id="inputBoxISBN">
+        <!-- TODO AUTHOR -->
+        <div class="Input-box" id="inputBoxAuthor">
             <div class="Box">
                 <i class="Box-i fa-solid fa-qrcode"></i>
                 <div class="Box-animation Animation">
-                    <input class="Animation-input" name="inputISBN"
-                        id="inputISBN" type="text"
+                    <input class="Animation-input" name="inputAuthor"
+                        id="inputAuthor" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="2" >
-                    <label class="Animation-label" for="inputISBN">Enter
-                        ISBN</label>
-                    <label class="Animation-info" for="inputISBN"
-                        id="infoISBN"><i class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="inputISBN"
-                        id="closeInfoISBN"><i class="fa-solid
+                        tabindex="3" required>
+                    <label class="Animation-label" for="inputAuthor">Author *</label>
+                    <label class="Animation-info" for="inputAuthor"
+                        id="infoAuthor"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputAuthor"
+                        id="closeInfoAuthor"><i class="fa-solid
                             fa-circle-info"></i></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="New-boxes">
+        <!-- TODO Collection -->
+        <div class="Input-box" id="inputBoxCollection">
+            <div class="Box">
+                <i class="Box-i fa-regular fa-address-card"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputCollection" id="inputCollection"
+                        type="text"
+                        placeholder=" " autocomplete="valorNoValido"
+                        tabindex="4">
+                    <label class="Animation-label" for="inputCollection">Collection</label>
+                    <label class="Animation-info" for="inputCollection" id="infoCollection"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputCollection"
+                        id="closeInfoCollection"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationCollection">
+                <div class="Error-text">
+                    <span id="errorCollection" class="fieldErrText">Collection cannot be
+                        empty.</span>
+                </div>
+            </div>
+        </div>
+        <!-- TODO Editorial -->
+        <div class="Input-box" id="inputBoxEditorial">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-qrcode"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputEditorial"
+                        id="inputEditorial" type="text"
+                        placeholder=" " autocomplete="valorNoValido"
+                        tabindex="5" >
+                    <label class="Animation-label" for="inputEditorial">Editorial</label>
+                    <label class="Animation-info" for="inputEditorial"
+                        id="infoEditorial"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputEditorial"
+                        id="closeInfoEditorial"><i class="fa-solid
+                            fa-circle-info"></i></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="New-boxes">
+        <!-- TODO Language -->
+        <div class="Input-box" id="inputBoxLanguage">
+            <div class="Box">
+                <i class="Box-i fa-regular fa-address-card"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputLanguage" id="inputLanguage"
+                        type="text"
+                        placeholder=" " autocomplete="valorNoValido"
+                        tabindex="6">
+                    <label class="Animation-label" for="inputLanguage">Edition language</label>
+                    <label class="Animation-info" for="inputLanguage" id="infoLanguage"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputLanguage"
+                        id="closeInfoLanguage"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationLanguage">
+                <div class="Error-text">
+                    <span id="errorLanguage" class="fieldErrText">Language cannot be
+                        empty.</span>
+                </div>
+            </div>
+        </div>
+        <!-- TODO Type -->
+        <div class="Input-box" id="inputBoxType">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-tags"></i>
+                <div class="Box-animation Animation" id="addSelect">
+                    <select class="Animation-input isSelect js-example-basic-single" id="selectCategory" name="selectCategory" style="width:100%" size="2">
+                        <option></option>
+                    </select>
+                    {{!-- <select class="Animation-input isSelect" id="selectType"  onChange="selectChangeCategory()"> --}}
+                    {{!-- <select class="Animation-input isSelect" id="selectCategory">
+                        <option></option>
+                    </select> --}}
+                    <label class="Animation-label" for="selectCategory">Select or add category</label>
+                    {{!-- <label class="Animation-info" for="inputType"
+                        id="infoType"><i class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputType"
+                        id="closeInfoType"><i class="fa-solid
+                            fa-circle-info"></i></label> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="New-boxes isTextarea-boxes">
+        <!-- TODO Observaciones -->
+        <div class="Input-box isTextarea" id="inputBoxObservation">
+            <div class="Box isTextarea-box">
+                <i class="Box-i fa-regular fa-address-card"></i>
+                <div class="Box-animation Animation">
+                    <textarea class="Animation-input isTextarea-input" name="inputObservation" id="inputObservation" tabindex="8" rows="4" cols="50" maxlength="800"></textarea>
+                    <label class="Animation-label" for="inputObservation">Observation</label>
+                    <label class="Animation-info" for="inputObservation" id="infoObservation"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo" for="inputObservation"
+                        id="closeInfoObservation"><i class="fa-solid fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationObservation">
+                <div class="Error-text">
+                    <span id="errorObservation" class="fieldErrText">Observation cannot be
+                        empty.</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<link rel="stylesheet" href="/style/newForm.css">
+{{!-- <script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script> --}}
+
+<script defer type="text/javascript">
+    const inputBookID =  document.getElementById("bookID");
+    const inputPurchaseDate =  document.getElementById("pPurchaseDate");
+    const inputISBN =  document.getElementById("inputISBN");
+    const inputTitle =  document.getElementById("inputTitle");
+    const inputAuthor =  document.getElementById("inputAuthor");
+    const inputCollection =  document.getElementById("inputCollection");
+    const inputEditorial =  document.getElementById("inputEditorial");
+    const inputLanguage =  document.getElementById("inputLanguage");
+    const inputType =  document.getElementById("selectCategory");
+    const inputObservation = document.getElementById("inputObservation");
+    
+    const fieldsFormBook = {
+        purchaseDate: true,
+        ISBN: true,
+        title: false,
+        author: false,
+        collection: true,
+        editorial: true,
+        language: true,
+        category: true,
+        observation: true,
+    };
+
+
+    // TODO ✅ CARGA LAS FUNCIONES DE SELECT2
+    (async function loadSelectTags() {
+        await $(".isSelect").select2({
+            tags: true,
+            placeholder: "Select or add category",
+        });
+    })();
+
+    // TODO ✅ OBETNER EL VALOR DE CATEGORIA
+        /* 
+        async function selectChangeCategory() {
+            const index = await document.getElementById('selectType').selectedIndex;
+            if (index !== 0) {
+                fieldsFormBook.category = true;
+                //document.querySelector('.select2-container').classList.add('isSelect');
+            }
+        };
+        */
+
+    //TODO ✅ VALIDACIONES INPUTS PARTNERS
+        const validateFormBook = async e => {
+            switch (e.target.name) {
+                case "inputTitle":
+                    fieldsFormBook.title = true;
+                    break;
+                case "inputAuthor":
+                    fieldsFormBook.author = true;
+                    break;
+                }
+        };
+
+// TODO OBTENER DATOS DEL FORMULARIO
+    async function dataBook() {
+        const index = await inputType.selectedIndex;
+        const opt = inputType[index];
+        const bookID = inputBookID.value;
+        const data = await {
+            bookID,
+            inputPurchaseDate: inputPurchaseDate.value,
+            inputISBN: capitalizeFirstLetter(inputISBN.value.trim()),
+            inputTitle: capitalizeFirstLetter(inputTitle.value.trim()),
+            inputAuthor: capitalizeFirstLetter(inputAuthor.value.trim()),
+            inputCollection: capitalizeFirstLetter(inputCollection.value.trim()),
+            inputEditorial: capitalizeFirstLetter(inputEditorial.value.trim()),
+            inputLanguage: capitalizeFirstLetter(inputLanguage.value.trim()),
+            inputType: opt.value,
+            inputObservation: capitalizeFirstLetter(inputObservation.value.trim())
+        };
+        try {
+            if(_STATEEDITBOOK) {
+                console.log("se va actualizar");
+                console.log({data});
+                const bookID = data.bookID;
+                const urlUpdateBook = `/api/books/update/${bookID}`
+                fetch(urlUpdateBook, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
+        } catch (err) { }
+        try {
+            if(_STATENEWBOOK) {
+                console.log("se va añadir");
+                console.log({data});
+                const urlADDBook = "/api/books/add/";
+                fetch(urlADDBook, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
+        } catch (err) { }
+    }
+</script>

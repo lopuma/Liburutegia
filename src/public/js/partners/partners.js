@@ -68,24 +68,9 @@ let opcion = "";
         await $(".js-example-basic-single").select2();
     })();
 
-//TODO ✅ FUNCION PARA CAMBIAR LAS TILDES
-    const accentNeutralise = function (data) {
-        return !data ?
-            '' :
-            typeof data === 'string' ?
-                data
-                    .replace(/\n/g, ' ')
-                    .replace(/[áâàä]/g, 'a')
-                    .replace(/[éêèë]/g, 'e')
-                    .replace(/[íîìï]/g, 'i')
-                    .replace(/[óôòö]/g, 'o')
-                    .replace(/[úûùü]/g, 'u')
-                    .replace(/ç/g, 'c') :
-                data;
-    };
-
 //TODO ✅ LOAD PARTNER
-    async function loadData(data) {
+async function loadData(data) {
+        console.log(data);
         dataTablePartners = $("#tablePartner").DataTable({
             data: data,
             deferRender: true,
@@ -127,7 +112,7 @@ let opcion = "";
                     data: null, "searchable": false,
                     render: (data) => {
                         return (
-                            moment(data.date).format("MMMM Do, YYYY HH:mm A")
+                            moment(data.date).format("MMMM Do, YYYY")
                         );
                     }
                     , visible: false
@@ -136,7 +121,7 @@ let opcion = "";
                     data: null, "searchable": false,
                     render: (data) => {
                         return (
-                            moment(data.dateUpdate).format("MMMM Do, YYYY HH:mm A")
+                            moment(data.updateDate).format("MMMM Do, YYYY HH:mm")
                         );
                     }
                     , visible: false
@@ -255,16 +240,26 @@ let opcion = "";
 //TODO ✅ DELETE PARTMNER
     async function apiDelete(idPartner) {
         const urlDelete = `/api/partners/delete/${idPartner}`;
-        await fetch(urlDelete).then(async () => {
-            try {
-                if ($('#stateInfoPartner').val() === '') { // 
-                    window.location = `/workspace/partners/`;
-                }
-                else {
-                    reloadData();
-                }
-            } catch (error) { }
-        });
+        await fetch(urlDelete)
+            .then((response) => response.json())
+            .then(async (data) => {
+                Swal.fire({
+                    title: `Removed! Partner with ID: ${idPartner}`,
+                    text: data.messageSuccess,
+                    icon: 'success',
+                    timer: 2000,
+                    confirmButtonText: 'OK',
+                }).then(async () => {
+                    try {
+                        if ($('#stateInfoPartner').val() === '') { // 
+                            window.location = `/workspace/partners/`;
+                        }
+                        else {
+                            await reloadData();
+                        }
+                    } catch (error) { }
+                })
+            });
     }
     async function deletePartner(partnerID) {
         opcion = 'delete';
@@ -278,18 +273,9 @@ let opcion = "";
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-        }).then(async (result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: `Removed! partner with ID: ${idPartner}`,
-                    text: "The partner has been REMOVED.",
-                    icon: 'success',
-                    timer: 2000,
-                    confirmButtonText: 'OK',
-                }).then(async () => {
-                    await apiDelete(idPartner);
-                }
-                )
+                apiDelete(idPartner);
             }
         });
     }

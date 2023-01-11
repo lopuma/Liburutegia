@@ -57,8 +57,8 @@ const fieldChange = {
         document
             .getElementById("infoDni")
             .addEventListener("click", () => {
-                document.getElementById('inputBoxDni').classList.add("isActiveError");
-                document.getElementById('inputBoxScanner').classList.add("isActiveError");
+                document.getElementById('inputBoxDni').classList.add("isActiveErrorDni");
+                document.getElementById('inputBoxScanner').classList.add("isActiveErrorDni");
                 document.getElementById("validationDni").classList.add("isActive");
                 document.getElementById("errorDni").innerHTML = textError.dni;
                 document
@@ -69,8 +69,8 @@ const fieldChange = {
         document
             .getElementById("closeInfoDni")
             .addEventListener("click", () => {
-                document.getElementById('inputBoxDni').classList.remove("isActiveError");
-                document.getElementById('inputBoxScanner').classList.remove("isActiveError");
+                document.getElementById('inputBoxDni').classList.remove("isActiveErrorDni");
+                document.getElementById('inputBoxScanner').classList.remove("isActiveErrorDni");
                 document.getElementById("validationDni").classList.remove("isActive");
                 document.getElementById("errorDni").innerHTML = "";
                 document
@@ -82,8 +82,8 @@ const fieldChange = {
         if (validateDni(elem.value.trim(), elemID) || elem.value.trim() == "") {
             elem.classList.remove("isError");
             document.getElementById('infoDni').classList.remove("isVisible");
-            document.getElementById('inputBoxDni').classList.remove("isActiveError");
-            document.getElementById('inputBoxScanner').classList.remove("isActiveError");
+            document.getElementById('inputBoxDni').classList.remove("isActiveErrorDni");
+            document.getElementById('inputBoxScanner').classList.remove("isActiveErrorDni");
             document.getElementById("validationDni").classList.remove("isActive");
             document.getElementById("errorDni").innerHTML = "";
             document
@@ -157,7 +157,7 @@ const fieldChange = {
                 optionForm = 'newPartner';
                 await dataPartner();
             } else {
-                window.alert("There are items required your attention.");
+                await window.alert("There are items required your attention.");
                 if (!field.dni) {
                     document.getElementById("inputDni").focus();
                     document.getElementById("inputDni").select();
@@ -204,17 +204,17 @@ const fieldChange = {
         const index = selectDni.selectedIndex;
         const actualDate = new Date();
         const date = moment(actualDate).format("YYYY-MM-DD HH:mm");
-        const data = {
-            inputPartnerID: $.trim($("#partnerID").val().trim()),
-            inputDni: $.trim($("#inputDni").val().toUpperCase().trim()),
-            inputName: $.trim($("#inputName").val().trim()),
-            inputScanner: $.trim($("#inputScanner").val().trim()),
-            inputLastname: $.trim($("#inputLastname").val().trim()),
-            inputDirection: $.trim($("#inputDirection").val().trim()),
-            inputPopulation: $.trim($("#inputPopulation").val().trim()),
-            inputPhone: $.trim($("#inputPhone").val().trim()),
-            inputPhoneLandline: $.trim($("#inputPhoneLandline").val().trim()),
-            inputEmail: $.trim($("#inputEmail").val().toLowerCase().trim()),
+        const data = await {
+            inputPartnerID: $("#partnerID").val().trim(),
+            inputDni: $("#inputDni").val().toUpperCase().trim(),
+            inputName: capitalizeWords($("#inputName").val().trim()),
+            inputScanner: $("#inputScanner").val().trim(),
+            inputLastname: capitalizeWords($("#inputLastname").val().trim()),
+            inputDirection: capitalizeFirstLetter($("#inputDirection").val().trim()),
+            inputPopulation: capitalizeFirstLetter($("#inputPopulation").val().trim()),
+            inputPhone: $("#inputPhone").val().trim(),
+            inputPhoneLandline: $("#inputPhoneLandline").val().trim(),
+            inputEmail: $("#inputEmail").val().toLowerCase().trim(),
             actualDate: date,
             updateDate: date
         };
@@ -352,7 +352,12 @@ const fieldChange = {
             });
         }
     }
-
+    const activesInfos = {
+        infoName: false,
+        infoLastname: false,
+        infoMobile: false,
+        infoPhoneLandline: false
+    }
 //TODO ✅ VALIDAR FIELDS
     async function validateField(
         expresion,
@@ -381,27 +386,105 @@ const fieldChange = {
         }
         infos.forEach((info, i) => {
             infos[i].addEventListener("click", () => {
-                inputBox[i].classList.add("isActiveError");
-                try {
-                    inputBox[i + 1].classList.add("isActiveError");
-                } catch (error) { }
+                // TODO ACTIVA NAME
+                if (infos[i].id === "infoName") {
+                    activesInfos.infoName = true;
+                    if (activesInfos.infoLastname) {
+                        document.getElementById("validationName").classList.add("isActive");
+                    } else {
+                        inputBox[i].classList.add("isActiveError");
+                        inputBox[i + 1].classList.add("isActiveError");
+                    }
+                }
+                // TODO ACTIVA LAST NAME
+                if (infos[i].id === "infoLastname") {
+                    activesInfos.infoLastname = true;
+                    if (activesInfos.infoName) {
+                        document.getElementById("validationLastname").classList.add("isActive");
+                    } else {
+                        inputBox[i].classList.add("isActiveError");
+                        inputBox[i - 1].classList.add("isActiveError");
+                    }
+                }
+                // TODO ACTIVA MOBILE
+                if (infos[i].id === "infoMobile") {
+                    activesInfos.infoMobile = true;
+                    if (activesInfos.infoPhoneLandline) {
+                        document.getElementById("validationMobile").classList.add("isActive");
+                    } else {
+                        inputBox[i].classList.add("isActiveError");
+                        inputBox[i + 1].classList.add("isActiveError");
+                    }
+                }
+                // TODO ACTIVA LAND LINE
+                if (infos[i].id === "infoPhoneLandline") {
+                    activesInfos.infoPhoneLandline = true;
+                    if (activesInfos.infoMobile) {
+                        document.getElementById("validationLandline").classList.add("isActive");
+                    } else {
+                        inputBox[i].classList.add("isActiveError");
+                        inputBox[i - 1].classList.add("isActiveError");
+                    }
+                }
+                // TODO ACTIVA EMAIL
+                if (infos[i].id === "infoEmail") {
+                    inputBox[i].classList.add("isActiveError");
+                }
                 fieldErrs[i].classList.add("isActive");
                 fieldErrTexts[i].innerHTML = textError;
                 infos[i].classList.remove("isVisible");
                 closeInfos[i].classList.add("isVisible");
             });
         });
-
         closeInfos.forEach((info, i) => {
             if (closeInfos[i].getAttribute('id') !== 'closeInfoDni' || closeInfos[i].getAttribute('id') !== 'infoID') {
                 closeInfos[i].addEventListener("click", () => {
-                    inputBox[i].classList.remove("isActiveError");
-                    try {
-                        inputBox[i + 1].classList.remove("isActiveError");
-                    } catch (error) { }
-                    //try {
-                    //    inputBox[i - 1].classList.remove("isActiveError");
-                    //} catch (error) { }
+                    // TODO DESACTIVA NAME
+                    if (closeInfos[i].id === "closeInfoName") {
+                        activesInfos.infoName = false;
+                        if (activesInfos.infoLastname) {
+                            document.getElementById("validationName").classList.remove("isActive");
+                            }
+                        else {
+                            inputBox[i].classList.remove("isActiveError");
+                            inputBox[i + 1].classList.remove("isActiveError");
+                        }
+                    }
+                    // TODO DESACTIVA LAST NAME
+                    if (closeInfos[i].id === "closeInfoLastname") {
+                        activesInfos.infoLastname = false;
+                        if (activesInfos.infoName){
+                            document.getElementById("validationLastname").classList.remove("isActive");
+                        } else {
+                            inputBox[i].classList.remove("isActiveError");
+                            inputBox[i - 1].classList.remove("isActiveError");
+                        }
+                    }
+                    // TODO DESACTIVA MOBILE
+                    if (closeInfos[i].id === "closeInfoMobile") {
+                        activesInfos.infoMobile = false;
+                        if (activesInfos.infoPhoneLandline) {
+                            document.getElementById("validationMobile").classList.remove("isActive");
+                        }
+                        else {
+                            inputBox[i].classList.remove("isActiveError");
+                            inputBox[i + 1].classList.remove("isActiveError");
+                        }
+                    }
+                    // TODO DESACTIVA LANDLINE
+                    if (closeInfos[i].id === "closeInfoPhoneLandline") {
+                        activesInfos.infoPhoneLandline = false;
+                        if (activesInfos.infoMobile) {
+                            document.getElementById("validationLandline").classList.remove("isActive");
+                        } else {
+                            inputBox[i].classList.remove("isActiveError");
+                            inputBox[i - 1].classList.remove("isActiveError");
+                        }
+                    }
+                    // TODO DESACTIVA EMAIL
+                    if (closeInfos[i].id === "closeInfoEmail") {
+                        inputBox[i].classList.remove("isActiveError");
+                    }
                     fieldErrs[i].classList.remove("isActive");
                     fieldErrTexts[i].innerHTML = "";
                     closeInfos[i].classList.remove("isVisible");

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/style/newForm.css">
 
 <!--TODO Modal para CRUD-->
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalEditBookLabel" aria-hidden="true" style="padding-right:0" id="modalBook">
+<div class="modal fade" role="dialog" aria-labelledby="modalEditBookLabel" aria-hidden="true" style="padding-right:0" id="modalEditBook">
   
   <div class="modal-dialog" role="document">
     
@@ -19,7 +19,7 @@
           
           <div class="Input-button">
               <button type="button" class="Button-cancel"
-                  data-dismiss="modal" tabindex="10">Cancel</button>
+                  data-dismiss="modal" tabindex="10" id="btnCancelEditBook">Cancel</button>
               <input class="Button-accept" id="btnUpdateBook" type="submit"
                   value='UPDATE' tabindex="11"></input>
           </div>
@@ -30,5 +30,46 @@
   </div>
 </div>
 
+<script type="text/javascript" defer>
+    const formEditBook = document.getElementById  ( "formEditBook"        );
+    const inputsEditBook      = document.querySelectorAll( "#formEditBook input" );
+    fieldsFormBook.title = true;
+    fieldsFormBook.author = true;
 
-<!--<script defer src="/scripts/books/modalEditBook.js" type="text/javascript"></script>-->
+//TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA PARTNER
+    try {
+        if ($('#modalEditBook').val() === '') { // 
+            _STATEEDITBOOK = true;
+        }
+    } catch (error) { }
+// TODO ✅ EVENTO AL ENVIAR ACTUALIZAR
+    try {
+        document.addEventListener("DOMContentLoaded", function () {
+            formEditBook.addEventListener("submit", correctFormsBook);
+        });
+    } catch (error) { }
+
+//TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
+    try {
+      inputsEditBook.forEach((input, i) => {
+          input.addEventListener("blur", validateFormBook);
+          input.addEventListener("keyup", validateFormBook);
+          input.addEventListener("keypress", e => {
+              if (e.key === "Enter") {
+                  validateFormBook;
+              }
+          });
+      });
+    } catch (error) { }
+
+// TODO ✅ LIMPIAR EL SELECT
+  try {
+    document.getElementById("btnCancelEditBook").addEventListener('click', async (e) => {
+      $('#selectCategory').html("");
+      console.log("cancel");
+    });
+  }
+  catch (error) { };
+
+
+</script>

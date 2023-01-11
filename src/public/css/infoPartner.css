@@ -49,13 +49,13 @@
     display: block;
     width: 1%;
     height: 300%;
-    background-color: white;
+    background-color: var(--Color-texto-blanco);
     position: absolute;
     top: -30px;
     left: 0;
     transform: scale(1.1);
     transform: rotate(45deg) translateY(-50%) translateX(-90px);
-    box-shadow: 0 0em 2em 2em white;
+    box-shadow: 0 0em 2em 2em var(--Color-texto-blanco);
     opacity: .3;
     transition: all .8s ease;
 }

@@ -112,9 +112,9 @@ async function loadData() {
       $('#formu').submit(function (e) {
         e.preventDefault();
         url = "/api/bookings/"
-        bookingID = $.trim($('#bookingID').val());
-        dni = $.trim($('#dni').val());
-        deliver_date = $.trim($('#deliver_date').val());
+        bookingID = $('#bookingID').val();
+        dni = $('#dni').val();
+        deliver_date = $('#deliver_date').val();
         if (opcion == 'edit') {
           $.ajax({
             url: url + bookingID,

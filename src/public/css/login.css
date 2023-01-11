@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /* TODO CONTENEDOR DE LOGIN*/
 .Authentication {
     margin: var(--Margin-top-forms) auto 0;
@@ -154,7 +155,7 @@
     font-size: 1.5em;
     font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: var(--Color-texto-negro);
     display: flex;
     justify-content: flex-start;
@@ -183,11 +184,11 @@
     overflow: hidden;
 }
 
-.Input-exists{
+.Input-exists {
     display: none;
 }
 
-.Input-exists.isExists{
+.Input-exists.isExists {
     display: block;
 }
 
@@ -207,7 +208,7 @@
     transition: text-shadow .5s ease;
 }
 
-.Box-i:hover{
+.Box-i:hover {
     text-shadow: 1px 1px 2px var(--Color-Selected);
 }
 
@@ -238,11 +239,13 @@
 .Animation-label {
     width: auto;
     position: absolute;
-    top: calc(50% - .7em);
-    left: 1em;
+    top: calc(50% - 1em);
+    left: 0.5em;
     cursor: text;
     letter-spacing: .2em;
-    color: var(--Color-texto-negro);
+    font-size: .8em;
+    color: var(--Color-texto-tip);
+    padding: 0 1em;
     transition-property: top, font-size, color, background-color, border-radius, padding, left, width;
     transition-duration: .5s;
     transition-timing-function: ease;
@@ -251,8 +254,9 @@
 
 .Animation-input:focus~.Animation-label,
 .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
-    top: -1.2em;
-    font-size: .7em;
+    top: -1.3em;
+    left: 0.5em;
+    font-size: .6em;
     color: var(--Color-texto-blanco);
     background-color: var(--Color-texto-negro);
     border-radius: var(--Radius);
@@ -290,7 +294,7 @@
     font-size: .9em;
 }
 
-.Animation-input.isError{
+.Animation-input.isError {
     outline: .1em solid var(--Color-invalid);
     border-bottom: 3px solid var(--Color-invalid);
 }
@@ -305,25 +309,27 @@
     align-items: center;
     justify-content: center;
     height: auto;
+    width: auto;
     margin: 1em 2em 1em;
     cursor: pointer;
 }
 
-.isText{
+.isText {
     margin: 2.5em 0 1.5em;
 }
 
-.isDisable{
+
+.isDisable {
     display: none;
 }
 
-.isEnable{
+.isEnable {
     display: flex;
 }
 
 .Reset-button,
 .Login-button {
-    width: 65%;
+    width: 100%;
     border-radius: var(--Radius);
     font-size: var(--Size-font-button);
     font-weight: 700;
@@ -398,19 +404,19 @@
     transition: all 0.3s;
 }
 
-.Alert{
+.Alert {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1em;
 }
 
-.Alert-header{
+.Alert-header {
     text-align: center;
     width: 100%;
 }
 
-.Alert-heading{
+.Alert-heading {
     font-size: 1.3em;
     font-weight: 600;
     padding: 0;
@@ -418,13 +424,13 @@
     text-align: center;
 }
 
-.Alert-close i{
+.Alert-close i {
     color: var(--Color-texto-negro);
-    text-decoration:none;
+    text-decoration: none;
     font-size: 1.5em;
 }
 
-.Alert-close i:hover{
+.Alert-close i:hover {
     color: var(--Color-texto-blanco);
 }
 
@@ -432,7 +438,7 @@ hr {
     margin: 0;
 }
 
-.Notification-content{
+.Notification-content {
     display: flex;
     justify-content: center;
     flex-flow: column nowrap;
@@ -440,7 +446,7 @@ hr {
     padding: 1em;
 }
 
-.Notification-span{
+.Notification-span {
     margin: .2em 0;
     font-size: 1em;
     font-weight: 400;
@@ -499,7 +505,7 @@ hr {
 
 
     .Reset-button,
-    .Login-button{
+    .Login-button {
         width: 100%;
     }
 }
@@ -510,7 +516,7 @@ hr {
         width: 90%;
     }
 
-    .Input-boxes{
+    .Input-boxes {
         padding: 0 0 1em;
     }
 
@@ -524,31 +530,24 @@ hr {
 
     .Animation-label {
         letter-spacing: .1em;
-        font-size: .9em;
+        margin: 0;
     }
 
-    .Animation-input:focus~.Animation-label,
-    .Animation-input:not(:placeholder-shown).Animation-input:not(:focus)~.Animation-label {
-        font-size: .6em;
-        left: 1em;
-        width: 90%;
-    }
-
-    .Box{
+    .Box {
         margin: 3em 0 0;
     }
 
-    .Error-text{
+    .Error-text {
         font-size: .7em;
     }
-    
+
     .Login-notifications {
         width: 90%;
         /* top: calc(20% - 1em); */
         left: calc(10% - 1em);
     }
 
-    .isText{
+    .isText {
         margin: 2.5em 0;
     }
 }

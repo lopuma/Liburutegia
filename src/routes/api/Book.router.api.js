@@ -12,7 +12,7 @@ const {
     existsCover,
     uploadFile,
     putBook,
-    infoReviews
+    infoReviews,
 } = require('../../controller/apiController/Books.controller.api');
 
 const {
@@ -28,11 +28,11 @@ const routerBooks = require('express').Router();
 
     routerBooks.post("/deliver/:bookID", deliverBook);
 
-    //routerBooks.post("/add", addBook);
+    routerBooks.post("/add", addBook);
 
     routerBooks.get("/delete/:idBook", deleteBook);
 
-    //routerBooks.put("/update/:id_book", noExistBook, putBook);
+    routerBooks.post("/update/:idBook", noExistBook, putBook);
 
     routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
 
