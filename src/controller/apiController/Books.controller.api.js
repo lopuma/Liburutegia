@@ -3,9 +3,22 @@ const sharp = require('sharp');
 const fs = require('fs')
 const path = require('path');
 const moment = require('moment');
+const { body, validationResult } = require("express-validator");
 
 const bookController = {
 
+    validate: [
+        body("title")
+            .trim()
+            .not()
+            .isEmpty()
+            .withMessage("This field `Title` is required"),
+        body("author")
+            .trim()
+            .not()
+            .isEmpty()
+            .withMessage("This field `Author` is required")
+    ],
     // TODO ✅ NO EXISTE ID BOOKS
     noExistBook: async (req, res, next) => {
         try {
@@ -142,12 +155,15 @@ const bookController = {
                         res.status(500).redirect("/");
                     }
                     //TODO ATUALIZA LA IMAGEN AL EXISTOR UN REGISTRO EN LA BD.
+                    console.log("SEGUNDA UPLOAD");
+
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
                     await connection.query(sqlUpdateCover, { bookID, nameCover }, (_err, _results) => {
                         return res.status(200).send({
                             success: true,
                             exists: true,
-                            messageSuccess: `Book ${idBook}, cover uploaded successfully`
+                            nameCover,
+                            messageSuccess: `Cover updated successfully.`
                         });
                     });
                 } else {
@@ -174,10 +190,12 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                console.log("PRIMERA UPLOAD");
                 return res.status(200).send({
                     success: true,
                     exists: false,
-                    messageSuccess: `Book ${idBook}, cover uploaded successfully`
+                    nameCover,
+                    messageSuccess: `Cover updated successfully.`
                 });
             });
         } catch (error) {
@@ -185,26 +203,37 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
+    // TODO ✅ ADD NEW BOOK
     addBook: async (req, res) => { 
         console.log("TODO OK ADD", req.body);
         res.status(200).send({
             messageSuccess: "TODO OK ADD"
         });
     },
+    // TODO ✅ ACTUALIZAR BOOK
     putBook: async (req, res) => {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(300).send({
+                    success: false,
+                    errorMessage: errors.array()
+                });
+            }
             const bookID = req.params.idBook;
             const {
-                inputTitle: title,
-                inputAuthor: author,
-                inputISBN: isbn,
-                inputPurchaseDate: purchase_date,
-                inputEditorial: editorial,
-                inputType: type,
-                inputLanguage: language,
-                inputCollection: collection,
-                inputObservation: observation
+                title,
+                author,
+                isbn,
+                purchase_date,
+                editorial,
+                type,
+                language,
+                collection,
+                observation
             } = req.body;
+
+            console.log(req.body);
             const date = new Date();
             const lastUpdate = moment(date).format("YYYY-MM-DD HH:mm:ss");
             const sqlUpdateBook = `UPDATE books SET ? WHERE bookID = ${bookID}`;
@@ -232,7 +261,8 @@ const bookController = {
                 }
                 console.log(results);
                 res.status(200).send({
-                    messageSuccess: "TODO OK ACTUALIZADO"
+                    success: true,
+                    messageSuccess: `The book data has been updated correctly, with ID : ${bookID}`
                 });
             })
             /*

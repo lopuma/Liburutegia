@@ -205,17 +205,17 @@ const fieldChange = {
         const actualDate = new Date();
         const date = moment(actualDate).format("YYYY-MM-DD HH:mm");
         const data = await {
-            inputPartnerID: $("#partnerID").val().trim(),
-            inputDni: $("#inputDni").val().toUpperCase().trim(),
-            inputName: capitalizeWords($("#inputName").val().trim()),
-            inputScanner: $("#inputScanner").val().trim(),
-            inputLastname: capitalizeWords($("#inputLastname").val().trim()),
-            inputDirection: capitalizeFirstLetter($("#inputDirection").val().trim()),
-            inputPopulation: capitalizeFirstLetter($("#inputPopulation").val().trim()),
-            inputPhone: $("#inputPhone").val().trim(),
-            inputPhoneLandline: $("#inputPhoneLandline").val().trim(),
-            inputEmail: $("#inputEmail").val().toLowerCase().trim(),
-            actualDate: date,
+            partnerID: $("#partnerID").val().trim(),
+            dni: $("#inputDni").val().toUpperCase().trim(),
+            name: await capitalizeWords($("#inputName").val().trim()),
+            scanner: $("#inputScanner").val().trim(),
+            lastname: await capitalizeWords($("#inputLastname").val().trim()),
+            direction: await capitalizeFirstLetter($("#inputDirection").val().trim()),
+            population: await capitalizeFirstLetter($("#inputPopulation").val().trim()),
+            phone1: $("#inputPhone").val().trim(),
+            phone2: $("#inputPhoneLandline").val().trim(),
+            email: $("#inputEmail").val().toLowerCase().trim(),
+            date: date,
             updateDate: date
         };
         if (inputDniCheck.checked) {
@@ -225,25 +225,29 @@ const fieldChange = {
                 return;
             }
             const opcionSeleccionada = selectDni.options[index];
-            const idPartnerFamily = opcionSeleccionada.value;
-            const dniPartner = opcionSeleccionada.text;
-            data.partnerID = idPartnerFamily;
-            data.partnerDni = dniPartner;
+            const partnerIDFamily = opcionSeleccionada.value;
+            const partnerDniFamily = opcionSeleccionada.text;
+            console.log({
+                partnerIDFamily,
+                partnerDniFamily
+            })
+            data.partnerIDFamily = partnerIDFamily;
+            data.partnerDniFamily = partnerDniFamily;
             await addNewPartner(data);
             selectDni.focus();
         } else {
             const idPartnerFamily = null
             const dniPartner = partnerActiveCheck;
-            data.partnerID = idPartnerFamily;
-            data.partnerDni = dniPartner;
+            data.partnerIDFamily = idPartnerFamily;
+            data.partnerDniFamily = dniPartner;
             await addNewPartner(data);
         }
     }
 
 //TODO ✅ ADD / UPDATE PARTNER
-    async function addNewPartner(data) {
-        let idPartner = data.idPartnerFamily;
-        let partnerID = data.inputPartnerID;
+async function addNewPartner(data) {
+        console.log({data});
+        let idPartner = data.partnerID;
         if (optionForm === 'newPartner') {
             const urlAddPartner = `/api/partners/add/${idPartner}`;
             await fetch(urlAddPartner, {
@@ -259,7 +263,7 @@ const fieldChange = {
         } else if (optionForm === 'updatePartner') {
             const realDate = document.getElementById("actualDate").value;
             const dateReal = moment(realDate).format("YYYY-MM-DD 00:00");
-            const urlUpdate = `/api/partners/update/${partnerID}`;
+            const urlUpdate = `/api/partners/update/${idPartner}`;
             let partnerDataUpdate = [data];
             const updatedDataPartner = partnerDataUpdate.map(data => ({
                 ...data,
@@ -316,11 +320,9 @@ const fieldChange = {
                             $('body').removeClass('modal-open');
                             document.querySelector('.Body').style = "";
                         }
-                        if (!_STATEPARTNER) {
+                        _STATEPARTNER ?
+                            reloadData() :
                             location.reload();
-                        } else {
-                            reloadData();
-                        }
                         fieldChange['dni'] = false;
                         fieldChange['name'] = false;
                         fieldChange['lastname'] = false;

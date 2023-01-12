@@ -30,9 +30,9 @@ function capitalizeFirstLetter(string) {
 }
 
 // TODO ✅ CAPITALIZAR PRIMERA LETRA DE TODAS LA PAALABRAS
-function capitalizeWords(string) {
-    return string.replace(/\b[a-z]/gi, function (char) {
-        return char.toUpperCase();
+function capitalizeWords(str) {
+    return str.replace(/(^|\s)[a-zñ]/g, function (letter) {
+        return letter.toUpperCase();
     });
 }
 

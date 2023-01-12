@@ -5,27 +5,27 @@ const flash = require("connect-flash");
 const partnerController = {
     //TODO ✅ VALIDATIONS
     validate: [
-        body("inputDni")
+        body("dni")
             .trim()
             .not()
             .isEmpty()
-            .withMessage("this field is required"),
-        body("inputName")
+            .withMessage("This field `dni` is required"),
+        body("name")
             .trim()
             .not()
             .isEmpty()
-            .withMessage("this field is required")
+            .withMessage("This field `name` is required")
             .isString()
             .withMessage("please enter only letters")
             .isLength({ min: 4, max: 40 })
             .withMessage(
                 "The Names field must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers."
             ),
-        body("inputLastname")
+        body("lastname")
             .trim()
             .not()
             .isEmpty()
-            .withMessage("this field is required")
+            .withMessage("This field `lastname` is required")
             .isString()
             .withMessage("please enter only letters")
             .isLength({ min: 4, max: 40 })
@@ -37,7 +37,7 @@ const partnerController = {
     existPartner: async (req, res, next) => {
         try {
             const sqlSelect = "SELECT * FROM partners WHERE dni = ?";
-            const dni = req.body.inputDni;
+            const dni = req.body.dni;
             await connection.query(sqlSelect, [dni], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -202,19 +202,19 @@ const partnerController = {
         try {
             const errors = validationResult(req);
             let {
-                inputDni: dni,
-                inputScanner: scanner,
-                inputName: name,
-                inputLastname: lastname,
-                inputDirection: direction,
-                inputPopulation: population,
-                inputEmail: email,
-                actualDate: date,
+                dni,
+                scanner,
+                name,
+                lastname,
+                direction,
+                population,
+                email,
+                date,
                 updateDate,
-                partnerID,
-                partnerDni,
-                inputPhone: phone1,
-                inputPhoneLandline: phone2
+                partnerIDFamily,
+                partnerDniFamily,
+                phone1,
+                phone2
             } = req.body;
             if (!errors.isEmpty()) {
                 return res.status(300).send({
@@ -250,14 +250,14 @@ const partnerController = {
                 }
             ];
             if (
-                partnerDni === null ||
-                partnerID === null ||
-                partnerDni === "null" ||
-                partnerID === "null" ||
-                partnerDni === "" ||
-                partnerID === "" ||
-                partnerDni === undefined ||
-                partnerID === undefined
+                partnerDniFamily === null ||
+                partnerIDFamily === null ||
+                partnerDniFamily === "null" ||
+                partnerIDFamily === "null" ||
+                partnerDniFamily === "" ||
+                partnerIDFamily === "" ||
+                partnerDniFamily === undefined ||
+                partnerIDFamily === undefined
             ) {
                 const updatedDataAddPartner = dataAddPartner.map(data => ({
                     ...data,
@@ -267,16 +267,16 @@ const partnerController = {
             } else {
                 console.log({
                     familyDni: dni,
-                    partnerDni,
-                    partnerID
+                    partnerDniFamily,
+                    partnerIDFamily
                 })
                 const sqlInsertFamily = "INSERT INTO familys SET ?";
                 await connection.query(
                     sqlInsertFamily,
                     {
                         familyDni: dni,
-                        partnerDni,
-                        partnerID
+                        partnerID: partnerIDFamily,
+                        partnerDni: partnerDniFamily,
                     },
                     async err => {
                         if (err) {
@@ -361,8 +361,8 @@ const partnerController = {
                                 });
                             };
                             if (results.length === 0){
-                                const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
-                                await connection.query(sqlUpdateActiveFamily, dniFamily, (err, results) => {
+                                const sqlActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
+                                await connection.query(sqlActiveFamily, dniFamily, (err, results) => {
                                     if (err) {
                                         console.error("[ DB ]", err.sqlMessage);
                                         return res.status(400).send({
@@ -391,8 +391,8 @@ const partnerController = {
                                     });
                                 };
                                 if (results.length === 0){
-                                    const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
-                                    await connection.query(sqlUpdateActiveFamily, element.familyDni, (err, results) => {
+                                    const sqlActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
+                                    await connection.query(sqlActiveFamily, element.familyDni, (err, results) => {
                                         if (err) {
                                             console.error("[ DB ]", err.sqlMessage);
                                             return res.status(400).send({
@@ -433,27 +433,31 @@ const partnerController = {
         try {
             const errors = validationResult(req);
             const idPartner = req.params.idPartner;
-
+            console.log(idPartner);
             const sqlUpdate = `UPDATE partners SET ? WHERE partnerID = ${idPartner}`;
             const {
-                inputDni: dni,
-                inputScanner: scanner,
-                inputName: name,
-                inputLastname: lastname,
-                inputDirection: direction,
-                inputPopulation: population,
-                inputEmail: email,
-                actualDate: date,
+                dni,
+                scanner,
+                name,
+                lastname,
+                direction,
+                population,
+                email,
+                date,
                 updateDate,
-                partnerID,
-                partnerDni,
-                inputPhone: phone1,
-                inputPhoneLandline: phone2
+                partnerIDFamily,
+                partnerDniFamily,
+                phone1,
+                phone2
             } = req.body[0];
+
+            console.log("1 =>> COMO VIENE", req.body[0]);
 
             let phonea = phone1 ? parseInt(phone1) : null;
             let phoneb = phone2 ? parseInt(phone2) : null;
+
             let activeFamily = 0;
+            
             let partnerDataUpdate = [{
                 dni,
                 scanner,
@@ -465,26 +469,29 @@ const partnerController = {
                 phone2: phoneb,
                 email,
                 date,
-                updateDate,
-                activeFamily
+                updateDate
             }];
+
+            console.log("2 =>> LO QUE SE GUARDA EN PARTNERS", partnerDataUpdate[0])
+            
             if (
-                partnerDni === null ||
-                partnerID === null ||
-                partnerDni === "null" ||
-                partnerID === "null" ||
-                partnerDni === "" ||
-                partnerID === "" ||
-                partnerDni === undefined ||
-                partnerID === undefined
+                partnerDniFamily === null ||
+                partnerIDFamily === null ||
+                partnerDniFamily === "null" ||
+                partnerIDFamily === "null" ||
+                partnerDniFamily === "" ||
+                partnerIDFamily === "" ||
+                partnerDniFamily === undefined ||
+                partnerIDFamily === undefined
             ) {
                 const updatedDataAddPartner = partnerDataUpdate.map(data => ({
                     ...data,
                     activeFamily: 0
                 }));
+                console.log("[ DB 3 ] =>> ", updatedDataAddPartner[0])
                 if (updatedDataAddPartner[0].activeFamily === 0) {
                     const sqlDeleteFamily = " DELETE FROM familys WHERE familyDni=? AND partnerDni=?";
-                    await connection.query(sqlDeleteFamily, [dni, partnerDni], async (err, results) => {
+                    await connection.query(sqlDeleteFamily, [dni, partnerDniFamily], async (err, results) => {
                         if (err) {
                             console.error("[ DB ]", err.sqlMessage);
                             return res.status(400).send({
@@ -493,7 +500,7 @@ const partnerController = {
                                 errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                             });
                         }
-                        sqlOtherFamily = "SELECT * FROM familys WHERE familyDni=?";
+                        const sqlOtherFamily = "SELECT * FROM familys WHERE familyDni=?";
                         await connection.query(sqlOtherFamily, dni, async (err, results) => {
                             if (err) {
                                 console.error("[ DB ]", err.sqlMessage);
@@ -504,8 +511,8 @@ const partnerController = {
                                 });
                             }
                             if (results.length !== 0) {
-                                const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=1 WHERE dni=?";
-                                await connection.query(sqlUpdateActiveFamily, dni, (err, results) => {
+                                const sqlActiveFamily = "UPDATE partners SET activeFamily=1 WHERE dni=?";
+                                await connection.query(sqlActiveFamily, dni, (err, results) => {
                                     if (err) {
                                         console.error("[ DB ]", err.sqlMessage);
                                         return res.status(400).send({
@@ -519,7 +526,6 @@ const partnerController = {
                         });
                     });
                 }
-                console.log(updatedDataAddPartner)
                 await connection.query(sqlUpdate, updatedDataAddPartner, (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
@@ -535,10 +541,10 @@ const partnerController = {
                     });
                 });
             } else {
+                console.log("ENTRO NO VACIO");
                 const sqlExistsFamily = "SELECT * from familys WHERE familyDni=? AND partnerDni=?";
-                const sqlInsertFamily = "INSERT INTO familys SET ?";
                 await connection.query(
-                    sqlExistsFamily, [dni, partnerDni], async (err, exists) => {
+                    sqlExistsFamily, [dni, partnerDniFamily], async (err, exists) => {
                         if (err) {
                             console.error("[ DB ]", err.sqlMessage);
                             return res.status(400).send({
@@ -547,13 +553,15 @@ const partnerController = {
                                 errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                             });
                         }
+                        console.log(exists.length);
                         if (exists.length === 0) {
+                            const sqlInsertFamily = "INSERT INTO familys SET ?";
                             await connection.query(
                                 sqlInsertFamily,
                                 {
                                     familyDni: dni,
-                                    partnerDNI: partnerDni,
-                                    partnerID
+                                    partnerDni: partnerDniFamily,
+                                    partnerID: partnerIDFamily
                                 },
                                 async (err) => {
                                     if (err) {
@@ -571,9 +579,10 @@ const partnerController = {
                             ...data,
                             activeFamily: 1
                         }));
+                        console.log("[ DB 3 ] =>> ", updatedDataPartner[0]);
                         await connection.query(sqlUpdate, updatedDataPartner, (err, results) => {
                             if (err) {
-                                console.error("[ DB ]", err.sqlMessage);
+                                console.error("[ DB ?]", err.sqlMessage);
                                 return res.status(400).send({
                                     success: false,
                                     messageErrBD: err,

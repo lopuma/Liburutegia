@@ -18,11 +18,11 @@
     width: max-content;
     text-align: center;
     padding: 1em;
-    margin: 1em 0;
+    margin: 1em .5em 1.5em;
     border-radius: var(--Radius);
     background-color: #1746A2;
     color: var(--Color-texto-blanco);;
-    font-size: 1em;
+    font-size: var(--Size-font-button);
     transition: all 0.5s ease;
 }
 
@@ -60,12 +60,12 @@
     background-color: #222831;
     color: var(--Color-texto-blanco);;
     border: none;
-    font-size: 1em;
+    font-size: .9em;
 }
 
 .Dashboard-table {
     width: 100%;
-    font-size: 1em;
+    font-size: .9em;
     text-align: start;
 }
 
@@ -134,7 +134,7 @@ div.dt-buttons {
 }
 
 div.dt-buttons .dt-button {
-    font-size: .9em;
+    font-size: var(--Size-font-button);
 }
 
 div.dataTables_wrapper div.dataTables_filter {

@@ -52,7 +52,7 @@
         <!-- TODO Title -->
         <div class="Input-box" id="inputBoxTitle">
             <div class="Box">
-                <i class="Box-i fa-regular fa-address-card"></i>
+                <i class="Box-i fa-solid fa-book"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputTitle" id="inputTitle"
                         type="text"
@@ -75,7 +75,7 @@
         <!-- TODO AUTHOR -->
         <div class="Input-box" id="inputBoxAuthor">
             <div class="Box">
-                <i class="Box-i fa-solid fa-qrcode"></i>
+                <i class="Box-i fa-solid fa-user-secret"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputAuthor"
                         id="inputAuthor" type="text"
@@ -95,7 +95,7 @@
         <!-- TODO Collection -->
         <div class="Input-box" id="inputBoxCollection">
             <div class="Box">
-                <i class="Box-i fa-regular fa-address-card"></i>
+                <i class="Box-i fa-solid fa-boxes-stacked"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputCollection" id="inputCollection"
                         type="text"
@@ -118,7 +118,7 @@
         <!-- TODO Editorial -->
         <div class="Input-box" id="inputBoxEditorial">
             <div class="Box">
-                <i class="Box-i fa-solid fa-qrcode"></i>
+                <i class="Box-i fa-regular fa-newspaper"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputEditorial"
                         id="inputEditorial" type="text"
@@ -138,7 +138,7 @@
         <!-- TODO Language -->
         <div class="Input-box" id="inputBoxLanguage">
             <div class="Box">
-                <i class="Box-i fa-regular fa-address-card"></i>
+                <i class="Box-i fa-solid fa-language"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputLanguage" id="inputLanguage"
                         type="text"
@@ -163,19 +163,10 @@
             <div class="Box">
                 <i class="Box-i fa-solid fa-tags"></i>
                 <div class="Box-animation Animation" id="addSelect">
-                    <select class="Animation-input isSelect js-example-basic-single" id="selectCategory" name="selectCategory" style="width:100%" size="2">
+                    <select class="Animation-input isSelect js-example-basic-single" id="selectCategory" name="selectCategory" style="width:95%" size="2">
                         <option></option>
                     </select>
-                    {{!-- <select class="Animation-input isSelect" id="selectType"  onChange="selectChangeCategory()"> --}}
-                    {{!-- <select class="Animation-input isSelect" id="selectCategory">
-                        <option></option>
-                    </select> --}}
                     <label class="Animation-label" for="selectCategory">Select or add category</label>
-                    {{!-- <label class="Animation-info" for="inputType"
-                        id="infoType"><i class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="inputType"
-                        id="closeInfoType"><i class="fa-solid
-                            fa-circle-info"></i></label> --}}
                 </div>
             </div>
         </div>
@@ -184,7 +175,7 @@
         <!-- TODO Observaciones -->
         <div class="Input-box isTextarea" id="inputBoxObservation">
             <div class="Box isTextarea-box">
-                <i class="Box-i fa-regular fa-address-card"></i>
+                <i class="Box-i fa-solid fa-message"></i>
                 <div class="Box-animation Animation">
                     <textarea class="Animation-input isTextarea-input" name="inputObservation" id="inputObservation" tabindex="8" rows="4" cols="50" maxlength="800"></textarea>
                     <label class="Animation-label" for="inputObservation">Observation</label>
@@ -239,18 +230,7 @@
         });
     })();
 
-    // TODO ✅ OBETNER EL VALOR DE CATEGORIA
-        /* 
-        async function selectChangeCategory() {
-            const index = await document.getElementById('selectType').selectedIndex;
-            if (index !== 0) {
-                fieldsFormBook.category = true;
-                //document.querySelector('.select2-container').classList.add('isSelect');
-            }
-        };
-        */
-
-    //TODO ✅ VALIDACIONES INPUTS PARTNERS
+// TODO ✅ VALIDACIONES INPUTS PARTNERS
         const validateFormBook = async e => {
             switch (e.target.name) {
                 case "inputTitle":
@@ -262,25 +242,60 @@
                 }
         };
 
-// TODO OBTENER DATOS DEL FORMULARIO
+// TODO ✅ RESET FORMS BOOKS
+    const resetFormsBook = async (e) => {
+        document.getElementById("formEditBook").reset();
+        $('#selectCategory').html("");
+    }
+
+// TODO ✅ RESPONSE DATA SUCCESS
+const responseData = (data) =>  {
+    const message = data.messageSuccess;
+    const success = data.success;
+    if(success) {
+        console.log(message, success);
+        Swal.fire({
+            icon: 'success',
+            timer: 2000,
+            title: 'Updated data...',
+            text: message,
+        }).then(async () => {
+            await resetFormsBook();
+            $('#modalEditBook').hide();
+            $('.modal-backdrop').hide();
+            $('#modalEditBook').modal('hide');
+            if ($('.modal:visible').length === 0) {
+                $('body').removeClass('modal-open');
+                document.querySelector('.Body').style = "";
+            }
+            _STATEINFOBOOK ? 
+                location.reload() :
+                reloadDataBooks();
+        });
+    }
+
+};
+// TODO ✅ OBTENER DATOS DEL FORMULARIO
     async function dataBook() {
         const index = await inputType.selectedIndex;
+        console.log({index});
         const opt = inputType[index];
+        console.log({opt});
         const bookID = inputBookID.value;
         const data = await {
             bookID,
-            inputPurchaseDate: inputPurchaseDate.value,
-            inputISBN: capitalizeFirstLetter(inputISBN.value.trim()),
-            inputTitle: capitalizeFirstLetter(inputTitle.value.trim()),
-            inputAuthor: capitalizeFirstLetter(inputAuthor.value.trim()),
-            inputCollection: capitalizeFirstLetter(inputCollection.value.trim()),
-            inputEditorial: capitalizeFirstLetter(inputEditorial.value.trim()),
-            inputLanguage: capitalizeFirstLetter(inputLanguage.value.trim()),
-            inputType: opt.value,
-            inputObservation: capitalizeFirstLetter(inputObservation.value.trim())
+            purchase_date: inputPurchaseDate.value,
+            isbn: await capitalizeFirstLetter(inputISBN.value.trim()),
+            title: await capitalizeFirstLetter(inputTitle.value.trim()),
+            author: await capitalizeWords(inputAuthor.value.trim()),
+            collection: await capitalizeFirstLetter(inputCollection.value.trim()),
+            editorial: await capitalizeFirstLetter(inputEditorial.value.trim()),
+            language: await capitalizeFirstLetter(inputLanguage.value.trim()),
+            type: opt.value,
+            observation: await capitalizeFirstLetter(inputObservation.value.trim())
         };
         try {
-            if(_STATEEDITBOOK) {
+            if(_STATEEDITBOOK || _STATEBOOK) {
                 console.log("se va actualizar");
                 console.log({data});
                 const bookID = data.bookID;
@@ -292,6 +307,8 @@
                         'Content-Type': 'application/json'
                     }
                 })
+                    .then((response) => response.json())
+                    .then(async (data) => await responseData(data));
             }
         } catch (err) { }
         try {
@@ -306,6 +323,8 @@
                         'Content-Type': 'application/json'
                     }
                 })
+                    .then((response) => response.json())
+                    .then((data) => console.log(data));
             }
         } catch (err) { }
     }

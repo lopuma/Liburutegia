@@ -44,7 +44,7 @@
     height: 322px;
     background-size: cover;
     background-repeat: no-repeat;
-    border: 6px #22A39F solid;
+    border: 6px #939B62 solid;
     border-radius: var(--Radius);
 }
 
@@ -83,7 +83,7 @@
 
 .Upload-icon::after {
     content: "";
-    background: #22A39F;
+    background: #939B62;
     /* color de fondo hover */
     position: absolute;
     z-index: -1;
@@ -108,9 +108,26 @@
 }
 
 .Upload-btn input {
-    background-color: #22A39F;
-    color: var(--Color-texto-negro);
+    background-color: #939B62;
+    color: var(--Color-texto-blanco);
     border-radius: var(--Radius);
+}
+
+.Upload-success {
+    margin-top: 2em;
+    color: var(--Success);
+    font-size: .8em;
+    font-weight: 400;
+    display: none;
+}
+
+.Upload-success.isEnable {
+    display: block;
+}
+
+.Upload-success.isEnableError {
+    display: block;
+    color: var(--Unsuccess);
 }
 
 .Info-contents {

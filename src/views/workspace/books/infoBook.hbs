@@ -12,27 +12,26 @@
     <div class="Info-header">
         <div class="Info-cover">    
             <div class="Cover-upload Upload" >
-                <form action="/api/books/frontPage" enctype="multipart/form-data" method="post">
+                <form name="formUpload" id="formUpload">
                     <!--<div class="Upload-group" id="imgBox" style="background-image: url('/img/covers/{{this.cover}}')"> -->
                     <div class="Upload-group" id="imgBox">
                         <input type="file" class="Upload-file" name="coverImage" accept="image/*" id="coverImage" onchange="loadFile(event)">
                         <label for="coverImage" class="Upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></label>
                     </div>
-                    <label id="successUpload"></label>
+                    <label class="Upload-success" id="successUpload"></label>
                     <div class="New-boxes" id="newBoxesID" hidden>
                         <div class="Input-box">
                             <div class="Box-animation Animation">
                                 <div class="Box">
                                     {{#each book}}
-                                        <input type="text" class="Animation-input form-control" id="bookCoverID" name="idBook" value={{this.bookID}}>
-                                        <label class="Animation-label" for="idBook">Number of Book ID *</label>
+                                        <input type="text" class="Animation-input form-control" id="bookCoverID" name="idBook" value={{this.bookID}} required>
                                     {{/each}}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="Upload-btn">
-                        <input type="submit" value="Save Cover !" class="btn btn-dark">            
+                        <input type="button" value="Save Cover !" class="btn btn-dark" id="btnUpload" onClick="uploadCover()">            
                     </div>
                 </form>
             </div>
@@ -208,6 +207,9 @@
     const btnReserveBook = document.getElementById('btnReserveBook');
     const btnDeletetBook = document.getElementById('btnDeletetBook');
     const containerReview =  document.getElementById('containerReview');
+    const btnUpload = document.getElementById('btnUpload');
+    const coverImage = document.getElementById('coverImage');
+    const bookCoverID = document.getElementById('bookCoverID');
 
 //TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA BOOK
     try {
@@ -228,7 +230,7 @@
         document.getElementById('totalScore').style.width = obtenerPorcentaje(_RATING);
     } catch (error) { }
 
-    //TODO ✅ ASIGNAR COVER AL LIBRO
+//TODO ✅ ASIGNAR COVER AL LIBRO
     try{ 
         const urlBook = `/workspace/books/infoCover/${_BOOKID}`
         fetch(urlBook)
@@ -250,21 +252,56 @@
         };
     } catch (error) { }
 
-    // TODO ✅ EDITAR LIBRO
+// TODO ✅ EDITAR LIBRO
     async function _editBook(idBook) {
         opcion = 'edit';
         const bookID = idBook;
         await globalEditBook(bookID);
     }
 
-    // TODO ✅ RESERVAR LIBRO
+// TODO ✅ RESERVAR LIBRO
     async function reserveBook(idBook){
         const bookID = idBook;
         console.log(bookID);
     }
 
-    // TODO ✅ ELIMNAR LIBRO
+// TODO ✅ UPLOAD COVER
+    async function uploadCover() {
+        const formData = new FormData();
+        console.log(coverImage.files[0]);
+        if(coverImage.value !== "" || coverImage.files[0] !== undefined) {
+            formData.append('idBook', bookCoverID.value);
+            formData.append('coverImage', coverImage.files[0]);
+            await fetch('/api/books/frontPage', {
+            method: 'POST',
+            body: formData
+            })
+                .then((response) =>  response.json())
+                .then((data) => {
+                    console.log(data);
+                    document.getElementById('successUpload').classList.add("isEnable");
+                    document.getElementById('successUpload').innerHTML = data.messageSuccess;
+                    imgBox.style.backgroundImage = `url(/img/covers/${data.nameCover})`;
+                });
+            setTimeout(() => {
+                document.getElementById('successUpload').classList.remove("isEnable");
+                document.getElementById('successUpload').innerHTML = "";
+            }, 2000);
+            
+        } else {
+            document.getElementById('successUpload').classList.add("isEnableError");
+            document.getElementById('successUpload').innerHTML = "No se ha selecionado, ninguna portada";
+            setTimeout(() => {
+                document.getElementById('successUpload').classList.remove("isEnableError");
+                document.getElementById('successUpload').innerHTML = "";
+            }, 5000);
+        }
+    }
+
+
+// TODO ✅ ELIMNAR LIBRO
     async function deleteBook(idBook){
+        opcion = 'delete';
         const bookID = idBook;
         globalDeleteBook(bookID);
     }

@@ -1,148 +1,178 @@
-@charset "UTF-8";
-@import url("table.css");
+@import"table.css";
+
 .Workspace-container {
-  margin: var(--Margin-top-forms) auto 4em;
-  width: 100%;
-  padding: 0 1em;
+    margin: var(--Margin-top-forms) auto 4em;
+    width: 100%;
+    padding: 0 1em
 }
 
 .Workspace-fieldset {
-  width: 100%;
-  min-height: 38em;
-  height: auto;
-  border: 1px solid var(--Background-Color-forms-admin);
-  margin-top: 12em;
-  position: relative;
-  border-radius: var(--Radius);
-  background-color: var(--Color-texto-blanco);
-  box-shadow: var(--Box-shadow-forms);
+    width: 100%;
+    min-height: 38em;
+    height: auto;
+    border: 1px solid var(--Background-Color-forms-admin);
+    margin-top: 12em;
+    position: relative;
+    border-radius: var(--Radius);
+    background-color: var(--Color-texto-blanco);
+    -webkit-box-shadow: var(--Box-shadow-forms);
+    box-shadow: var(--Box-shadow-forms)
 }
 
 .Workspace-legend {
-  width: 90%;
-  border-radius: var(--Radius);
-  padding: .5em 1em;
-  color: var(--Color-legend);
-  font-family: var(--font-family-legend);
-  font-weight: 400;
-  letter-spacing: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-flow: row wrap;
-  position: absolute;
-  top: calc(0% - 2em);
-  left: 5%;
+    width: 90%;
+    border-radius: var(--Radius);
+    padding: .5em 1em;
+    color: var(--Color-legend);
+    font-size: var(--Size-font-title);
+    font-family: var(--font-family-legend);
+    font-weight: 400;
+    letter-spacing: 3px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    position: absolute;
+    top: calc(0% - 2em);
+    left: 5%
 }
 
 .isColorAdmin {
-  background: var(--Background-Color-forms-admin);
+    background: var(--Background-Color-forms-admin)
 }
 
 .isColorBook {
-  background: var(--Background-Color-forms-book);
+    background: var(--Background-Color-forms-book)
 }
 
 .isColorBooking {
-  background: var(--Background-Color-forms-booking);
+    background: var(--Background-Color-forms-booking)
 }
 
 .isColorPartner {
-  background: var(--Background-Color-forms-partner);
+    background: var(--Background-Color-forms-partner)
 }
 
 .Workspace-span {
-  font-weight: 600;
+    font-weight: 600
 }
 
 .Username {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  /* padding: 10px; */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap
 }
 
 .Username-greeting {
-  font-weight: 200;
-  margin: 10px;
+    font-weight: 200;
+    margin: 10px
 }
 
 .Username-name {
-  font-weight: 200;
-  background: #057050;
-  padding: .5em;
-  color: #C1D5A4;
-  border-radius: var(--Radius);
-  margin: .5em;
-  text-transform: uppercase;
+    font-weight: 200;
+    background: #057050;
+    padding: .5em;
+    color: #c1d5a4;
+    border-radius: var(--Radius);
+    margin: .5em;
+    text-transform: uppercase
 }
 
+@-webkit-keyframes lds-dual-ring {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
 
-/* TODO Cargando */
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
 @keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
 
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
 }
 
 @-webkit-keyframes whirl-book {
-  0% {
-    -webkit-transform: rotateY(0deg);
-    transform: rotateY(0deg);
-  }
+    0% {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg)
+    }
 
-  50%,
-  80% {
-    -webkit-transform: rotateY(-180deg);
-    transform: rotateY(-180deg);
-  }
+    50%,
+    80% {
+        -webkit-transform: rotateY(-180deg);
+        transform: rotateY(-180deg)
+    }
 
-  90%,
-  100% {
-    opacity: 0;
-    -webkit-transform: rotateY(-180deg);
-    transform: rotateY(-180deg);
-  }
+    90%,
+    100% {
+        opacity: 0;
+        -webkit-transform: rotateY(-180deg);
+        transform: rotateY(-180deg)
+    }
 }
 
 @keyframes whirl-book {
-  0% {
-    -webkit-transform: rotateY(0deg);
-    transform: rotateY(0deg);
-  }
+    0% {
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg)
+    }
 
-  50%,
-  80% {
-    -webkit-transform: rotateY(-180deg);
-    transform: rotateY(-180deg);
-  }
+    50%,
+    80% {
+        -webkit-transform: rotateY(-180deg);
+        transform: rotateY(-180deg)
+    }
 
-  90%,
-  100% {
-    opacity: 0;
-    -webkit-transform: rotateY(-180deg);
-    transform: rotateY(-180deg);
-  }
+    90%,
+    100% {
+        opacity: 0;
+        -webkit-transform: rotateY(-180deg);
+        transform: rotateY(-180deg)
+    }
 }
 
 @media screen and (max-width: 550px) {
-  .Workspace-fieldset {
-    padding: 0;
-  }
-  
-  .Workspace-legend {
-    justify-content: center;
-    padding: .5em 0;
-  }
+    .Workspace-fieldset {
+        padding: 0
+    }
 
-  .Username {
-    font-size: 0.75em;
-    margin: 1em 0 0;
-  }
+    .Workspace-legend {
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        padding: .5em 0
+    }
 
+    .Username {
+        font-size: .75em;
+        margin: 1em 0 0
+    }
 }

@@ -41,8 +41,11 @@
   
   /* TODO OTROS */
   --Max-width: 1600px;
-  --Font-size: 2em; 
-  
+  --Size-font-text: .9em;
+  --Size-font-title: 1.2em; 
+  --Size-font-menu: .8em;
+  --Size-font-button: .8rem;
+
   /* TODO VALIDAS */
   --Margin-top-forms: calc(var(--Size-height-navBar) + 2.5em);
   --Radius: 5px;
@@ -52,7 +55,6 @@
     0 10px 10px rgba(0, 0, 0, 0.22);
   
   /* todo Button */
-  --Size-font-button: 1em;
   --Letter-spacing: 0.1875em;
   --Box-shadow-button: 8px 10px 10px 1px rgba(0, 0, 0, 0.5);
   --Box-shadow-button-success: -8px 10px 10px 1px rgba(0, 0, 0, 0.5);  
@@ -67,7 +69,6 @@
     /* TODO NAVIGATION */
   --Size-height-navBar: 80px;
   --Size-element: calc(var(--Size-height-navBar) - 20px);
-  --Size-font-menu: 1em;
 
   /* TODO SIDEMENU */
   --Size-width-sidemenu: 20em;

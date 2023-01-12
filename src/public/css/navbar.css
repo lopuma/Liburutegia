@@ -50,12 +50,11 @@
   align-items: center;
   margin: 0 auto;
   vertical-align: middle;
-  font-size: 1.5em;
 }
 
 .Header-button--toggle i,
 .Header-button--sidemenu i {
-  font-size: var(--Size-font-menu);
+  font-size: 1.5em;
   font-weight: bold;
 }
 
@@ -309,4 +308,11 @@
     margin: 0 1.25em;
   }
 
+}
+
+@media all and (max-width: 550px) { 
+  .Header-button--toggle {
+    font-size: 1.3em;
+    margin: .5em;
+  }
 }

@@ -13,6 +13,7 @@ const {
     uploadFile,
     putBook,
     infoReviews,
+    validate
 } = require('../../controller/apiController/Books.controller.api');
 
 const {
@@ -32,7 +33,7 @@ const routerBooks = require('express').Router();
 
     routerBooks.get("/delete/:idBook", deleteBook);
 
-    routerBooks.post("/update/:idBook", noExistBook, putBook);
+    routerBooks.post("/update/:idBook", noExistBook, validate, putBook);
 
     routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
 
