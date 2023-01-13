@@ -69,7 +69,7 @@ app.use('/public', express.static(__dirname + '/public'));
 app.use('/style', express.static(__dirname + '/public/css'));
 app.use('/image', express.static(__dirname + '/public/img'));
 app.use('/scripts', express.static(__dirname + '/public/js'));
-app.use('/DataTables', express.static(__dirname + '/public/frameworks/DataTables'));
+app.use('/DataTables', express.static(__dirname + '/public/lib/DataTables'));
 
 // 11 - Establecer Motor de plantilla
 app.set('views', path.join(__dirname, 'views'));
