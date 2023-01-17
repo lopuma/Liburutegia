@@ -1,40 +1,40 @@
 //TODO ✅ CEROS POR DELANTE DEL ID 
-function fillZeros(id) {
-    let num = id.toString();
-    let large = 10;
-    for (let i = 0; i < (large - num.length); i++) {
-        num = "0" + num
+    function fillZeros(id) {
+        let num = id.toString();
+        let large = 10;
+        for (let i = 0; i < (large - num.length); i++) {
+            num = "0" + num
+        }
+        return num
     }
-    return num
-}
 
 //TODO ✅ FUNCION PARA CAMBIAR LAS TILDES
-const accentNeutralise = function (data) {
-    return !data ?
-        '' :
-        typeof data === 'string' ?
-            data
-                .replace(/\n/g, ' ')
-                .replace(/[áâàä]/g, 'a')
-                .replace(/[éêèë]/g, 'e')
-                .replace(/[íîìï]/g, 'i')
-                .replace(/[óôòö]/g, 'o')
-                .replace(/[úûùü]/g, 'u')
-                .replace(/ç/g, 'c') :
-            data;
-};
+    const accentNeutralise = function (data) {
+        return !data ?
+            '' :
+            typeof data === 'string' ?
+                data
+                    .replace(/\n/g, ' ')
+                    .replace(/[áâàä]/g, 'a')
+                    .replace(/[éêèë]/g, 'e')
+                    .replace(/[íîìï]/g, 'i')
+                    .replace(/[óôòö]/g, 'o')
+                    .replace(/[úûùü]/g, 'u')
+                    .replace(/ç/g, 'c') :
+                data;
+    };
 
 // TODO ✅ CAPITALIZAR PRIMERA LETRA 
-function capitalizeFirstLetter(string) {
-    return [...string].slice(0, 1).map(c => c.toUpperCase()).concat([...string].slice(1)).join("")
-}
+    function capitalizeFirstLetter(string) {
+        return [...string].slice(0, 1).map(c => c.toUpperCase()).concat([...string].slice(1)).join("")
+    }
 
 // TODO ✅ CAPITALIZAR PRIMERA LETRA DE TODAS LA PAALABRAS
-function capitalizeWords(str) {
-    return str.replace(/(^|\s)[a-zñ]/g, function (letter) {
-        return letter.toUpperCase();
-    });
-}
+    function capitalizeWords(str) {
+        return str.replace(/(^|\s)[a-zñ]/g, function (letter) {
+            return letter.toUpperCase();
+        });
+    }
 
 // TODO ✅ FUNCT DELETE BOOK
     async function apiBookDelete(idBook) {
@@ -45,7 +45,6 @@ function capitalizeWords(str) {
                 await responseDeleteBook(data);
             });
     }
-
     const globalDeleteBook = async (idBook) => {
         Swal.fire({
             title: "Are you sure?",
@@ -100,122 +99,112 @@ function capitalizeWords(str) {
     }
 
 // TODO ✅ ACTIVA EL FOCU DEL ELEMENTO QUE TIENE ERROR
-function focusElementBooks() {
-    if (field.title === false) {
-        document.getElementById("inputTitle").focus();
-        document.getElementById("inputTitle").select();
-    } else if (!field.author) {
-        document.getElementById("inputAuthor").focus();
-        document.getElementById("inputAuthor").select();
+    function focusElementBooks() {
+        if (field.title === false) {
+            document.getElementById("inputTitle").focus();
+            document.getElementById("inputTitle").select();
+        } else if (!field.author) {
+            document.getElementById("inputAuthor").focus();
+            document.getElementById("inputAuthor").select();
+        }
+        Swal.fire('There are items required your attention.');
     }
-    Swal.fire('There are items required your attention.');
-}
 
 // TODO ✅ CORRECT FORMS
-async function correctFormsBook(e) {
-    e.preventDefault();
-    if (field.purchaseDate &&
-        field.ISBN &&
-        field.title &&
-        field.author &&
-        field.collection &&
-        field.editorial &&
-        field.language &&
-        field.category &&
-        field.observation
-    ) {
-        await dataBook();
+    async function correctFormsBook(e) {
+        e.preventDefault();
+        if (field.purchaseDate &&
+            field.ISBN &&
+            field.title &&
+            field.author &&
+            field.collection &&
+            field.editorial &&
+            field.language &&
+            field.category &&
+            field.observation
+        ) {
+            await dataBook();
 
-    } else {
-        focusElementBooks();
+        } else {
+            focusElementBooks();
+        }
     }
-}
 
 // TODO OBTENER CATEGORIAS 
-async function obtenerCategories(_category) {
-    const bookCategory = _category;
-    const urlCategory = '/api/books/'
-    let valueCategory = [];
-    await fetch(urlCategory)
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach(element => {
-                if (element.type !== null && element.type !== undefined) {
-                    if (!valueCategory.includes(element.type)) {
-                        valueCategory.push(element.type);
+    async function obtenerCategories(_category) {
+        const bookCategory = _category;
+        const urlCategory = '/api/books/'
+        let valueCategory = [];
+        $('#selectCategory').html("");
+        await fetch(urlCategory)
+            .then((response) => response.json())
+            .then((data) => {
+                data.forEach(element => {
+                    if (element.type !== null && element.type !== undefined) {
+                        if (!valueCategory.includes(element.type)) {
+                            valueCategory.push(element.type);
+                        }
                     }
-                }
-            });
-        })
-        .catch(() =>
+                });
+            })
+            .catch(() =>
             window.alert(
                 "There is no record in Catehory Book"
-            ));
-    try {
-        if (_STATEEDITBOOK || _STATEBOOK) { //
-            // TODO ✅ CARGA LAS FUNCIONES DE SELECT2
-
-        
-        
-        valueCategory.forEach(element => {
-            let option = document.createElement('option');
-            option.value = element;
-            option.text = element;
-            inputType.add(option);
-            let sel = document.getElementById("selectCategory");
-            for (let i = 0; i < sel.length; i++) {
-                let opt = sel[i];
-                if (opt.text === bookCategory) {
-                    $("#selectCategory").val(opt.value);
-                    return;
+                ));
+        try {
+            valueCategory.forEach(element => {
+                let option = document.createElement('option');
+                option.value = element;
+                option.text = element;
+                inputType.add(option);
+                
+            });
+            try {
+                if (_STATEEDITBOOK || _STATEBOOK) {
+                    let sel = document.getElementById("selectCategory");
+                    for (let i = 0; i < sel.length; i++) {
+                        let opt = sel[i];
+                        if (opt.text === bookCategory) {
+                            $("#selectCategory").val(opt.value);
+                            return true;
+                        }
+                    }
                 }
-            }
-        });
+            } catch (error) { }
+        } catch (error) { }
     }
-    } catch (error) { }
-try {
-    if (_STATENEWBOOK) { // 
-        valueCategory.forEach(element => {
-            let option = document.createElement('option');
-            option.value = element;
-            option.text = element;
-            inputType.add(option);
-        });
-    }
-} catch (error) { }
-}
 
 // TODO ✅ FUNCT EDIT BOOK
-async function globalEditBook(idBook) {
-    const bookID = idBook;
-    const urlDataEdit = `/api/books/${bookID}`;
-    await fetch(urlDataEdit)
-    .then(response => response.json())
-        .then(async (datos) => {
-        await obtenerCategories(datos.type);
-        if (datos.purchase_date !== null) {
-            purchaseDate = moment(datos.purchase_date).format("YYYY-MM-DD");
-            inputPurchaseDate.value = purchaseDate;
-        }
-        inputBookID.value = datos.bookID;
-        inputISBN.value = datos.isbn;
-        inputTitle.value = datos.title;
-        inputAuthor.value = datos.author;
-        inputEditorial.value = datos.editorial;
-        inputLanguage.value = datos.language;
-        inputCollection.value = datos.collection;
-        inputObservation.value = datos.observation;
-        $(".modal-header").css(
-            "background-color",
-            "var(--Background-Color-forms-book)"
-        );
-        $(".modal-title").text("EDIT BOOK").css({
-            "font-weight": "600",
-            "font-size": "1.3em",
-            "color": "var(--Color-forms-book)"
-        });
-        });
-}
+    async function globalEditBook(idBook) {
+        const bookID = idBook;
+        const urlDataEdit = `/api/books/${bookID}`;
+        await fetch(urlDataEdit)
+            .then(response => response.json())
+            .then(async (datos) => {
+                await obtenerCategories(datos.type);
+                if (datos.purchase_date !== null) {
+                    purchaseDate = moment(datos.purchase_date).format("YYYY-MM-DD");
+                    inputPurchaseDate.value = purchaseDate;
+                }
+                inputBookID.value = datos.bookID;
+                inputISBN.value = datos.isbn;
+                inputTitle.value = datos.title;
+                inputAuthor.value = datos.author;
+                inputEditorial.value = datos.editorial;
+                inputLanguage.value = datos.language;
+                inputCollection.value = datos.collection;
+                inputObservation.value = datos.observation;
+                $(".modal-header").css(
+                    "background-color",
+                    "var(--Background-Color-forms-book)"
+                );
+                $(".modal-title").text("EDIT BOOK").css({
+                    "font-weight": "600",
+                    "font-size": "1.3em",
+                    "color": "var(--Color-forms-book)"
+                });
+            });
+    }
 
 //TODO ✅ VALIDAR FIELDS
     async function validateField(

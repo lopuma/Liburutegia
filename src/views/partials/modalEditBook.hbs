@@ -51,25 +51,25 @@
 
 //TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
     try {
-      inputsEditBook.forEach((input, i) => {
-          input.addEventListener("blur", validateFormBook);
-          input.addEventListener("keyup", validateFormBook);
-          input.addEventListener("keypress", e => {
-              if (e.key === "Enter") {
-                  validateFormBook;
-              }
-          });
-      });
+        inputsEditBook.forEach((input, i) => {
+            input.addEventListener("blur", validateFormBook);
+            input.addEventListener("keyup", validateFormBook);
+            input.addEventListener("keypress", e => {
+                if (e.key === "Enter") {
+                    validateFormBook;
+                }
+            });
+        });
     } catch (error) { }
 
-// TODO ✅ LIMPIAR EL SELECT
+/*// TODO ✅ LIMPIAR EL SELECT
   try {
     document.getElementById("btnCancelEditBook").addEventListener('click', async (e) => {
       $('#selectCategory').html("");
       console.log("cancel");
     });
   }
-  catch (error) { };
+  catch (error) { };*/
 
 
 </script>

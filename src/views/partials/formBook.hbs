@@ -223,16 +223,25 @@
     })();
 
 // TODO ✅ VALIDACIONES INPUTS PARTNERS
-        const validateFormBook = async e => {
-            switch (e.target.name) {
-                case "inputTitle":
-                    fieldEmpty(expresiones.title, e.target, "validationTitle", "errorTitle", textError.title, "title", "infoTitle", "closeInfoTitle");
-                    break;
-                case "inputAuthor":
-                    fieldEmpty(expresiones.author, e.target, "validationAuthor", "errorAuthor", textError.author, "author", "infoAuthor", "closeInfoAuthor");
-                    break;
-                }
-        };
+    const validateFormBook = async e => {
+        switch (e.target.name) {
+            case "inputTitle":
+                fieldEmpty(expresiones.title, e.target, "validationTitle", "errorTitle", textError.title, "title", "infoTitle", "closeInfoTitle");
+                break;
+            case "inputAuthor":
+                fieldEmpty(expresiones.author, e.target, "validationAuthor", "errorAuthor", textError.author, "author", "infoAuthor", "closeInfoAuthor");
+                break;
+            }
+    };
+
+// TODO CIERRE DE MODAL
+    function ClosePopup() {
+        $("#modalEditBook").modal('hide');//ocultamos el modal
+        $('#modalEditBook').hide();
+        $('body').removeClass('modal-open');
+        document.querySelector('.Body').removeAttribute('style');//eliminamos la clase del body para poder hacer scroll
+        $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+    }
 
 // TODO ✅ RESET FORMS BOOKS
     const resetFormsBook = async (e) => {
@@ -240,6 +249,9 @@
             document.getElementById("formEditBook").reset();
             $('#selectCategory').html("");
         }catch (error){ }
+        if(_STATEBOOK) {
+            ClosePopup();
+        }
         try {
             document.getElementById("formAddBook").reset();
             $('#selectCategory').html("");
@@ -262,7 +274,7 @@
                 try{
                     _STATEINFOBOOK ? 
                         location.reload() :
-                        reloadDataBooks();
+                        await reloadDataBooks();
                 } catch (error) { };
             });
         } else if(success === false) {
