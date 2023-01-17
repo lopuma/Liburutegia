@@ -8,12 +8,8 @@
             <div class="Box">
                 <i class="Box-i fa-solid fa-key"></i>
                 <div class="Box-animation Animation">
-                    <input class="Animation-input"  type="text" id="bookID" tabindex="-1" readonly value="null">
+                    <input class="Animation-input"  type="text" id="bookID" tabindex="0" readonly value="null">
                     <label class="Animation-label" for="bookID">Your Partner ID</label>
-                    <label class="Animation-info" for="bookID" id="infoID"><i
-                            class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="bookID"
-                        id="closeinfoID"><i class="fa-solid fa-circle-info"></i></label>
                 </div>
             </div>
         </div>
@@ -24,7 +20,7 @@
             <div class="Box">
                 <i class="fa-solid fa-calendar-days"></i>
                 <div class="Box-animation Animation Creation-date" id="purchaseDate">
-                    <input class="Animation-input" type="date" id="pPurchaseDate" tabindex=0>
+                    <input class="Animation-input" type="date" id="pPurchaseDate" tabindex="1">
                     <label class="Animation-label" for="date">Purchase  Date</label>
                 </div>
             </div>
@@ -37,27 +33,22 @@
                     <input class="Animation-input" name="inputISBN"
                         id="inputISBN" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="1" >
+                        tabindex="2" >
                     <label class="Animation-label" for="inputISBN">ISBN</label>
-                    <label class="Animation-info" for="inputISBN"
-                        id="infoISBN"><i class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="inputISBN"
-                        id="closeInfoISBN"><i class="fa-solid
-                            fa-circle-info"></i></label>
                 </div>
             </div>
         </div>
     </div>
     <div class="New-boxes">
         <!-- TODO Title -->
-        <div class="Input-box" id="inputBoxTitle">
+        <div class="Input-box Input-boxError" id="inputBoxTitle">
             <div class="Box">
                 <i class="Box-i fa-solid fa-book"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputTitle" id="inputTitle"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        required="required" tabindex="2">
+                        required="required" tabindex="3">
                     <label class="Animation-label" for="inputTitle">Title *</label>
                     <label class="Animation-info" for="inputTitle" id="infoTitle"><i
                             class="fa-solid fa-circle-info"></i></label>
@@ -73,20 +64,26 @@
             </div>
         </div>
         <!-- TODO AUTHOR -->
-        <div class="Input-box" id="inputBoxAuthor">
+        <div class="Input-box Input-boxError" id="inputBoxAuthor">
             <div class="Box">
                 <i class="Box-i fa-solid fa-user-secret"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputAuthor"
                         id="inputAuthor" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="3" required>
+                        tabindex="4" required>
                     <label class="Animation-label" for="inputAuthor">Author *</label>
                     <label class="Animation-info" for="inputAuthor"
                         id="infoAuthor"><i class="fa-solid fa-circle-info"></i></label>
                     <label class="Animation-closeInfo" for="inputAuthor"
                         id="closeInfoAuthor"><i class="fa-solid
                             fa-circle-info"></i></label>
+                </div>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationAuthor">
+                <div class="Error-text">
+                    <span id="errorAuthor" class="fieldErrText">Author cannot be
+                        empty.</span>
                 </div>
             </div>
         </div>
@@ -100,18 +97,8 @@
                     <input class="Animation-input" name="inputCollection" id="inputCollection"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="4">
+                        tabindex="5">
                     <label class="Animation-label" for="inputCollection">Collection</label>
-                    <label class="Animation-info" for="inputCollection" id="infoCollection"><i
-                            class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="inputCollection"
-                        id="closeInfoCollection"><i class="fa-solid fa-circle-info"></i></label>
-                </div>
-            </div>
-            <div class="Input-error Error fieldErr" id="validationCollection">
-                <div class="Error-text">
-                    <span id="errorCollection" class="fieldErrText">Collection cannot be
-                        empty.</span>
                 </div>
             </div>
         </div>
@@ -123,13 +110,8 @@
                     <input class="Animation-input" name="inputEditorial"
                         id="inputEditorial" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="5" >
+                        tabindex="6" >
                     <label class="Animation-label" for="inputEditorial">Editorial</label>
-                    <label class="Animation-info" for="inputEditorial"
-                        id="infoEditorial"><i class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="inputEditorial"
-                        id="closeInfoEditorial"><i class="fa-solid
-                            fa-circle-info"></i></label>
                 </div>
             </div>
         </div>
@@ -143,12 +125,8 @@
                     <input class="Animation-input" name="inputLanguage" id="inputLanguage"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="6">
+                        tabindex="7">
                     <label class="Animation-label" for="inputLanguage">Edition language</label>
-                    <label class="Animation-info" for="inputLanguage" id="infoLanguage"><i
-                            class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="inputLanguage"
-                        id="closeInfoLanguage"><i class="fa-solid fa-circle-info"></i></label>
                 </div>
             </div>
             <div class="Input-error Error fieldErr" id="validationLanguage">
@@ -163,7 +141,7 @@
             <div class="Box">
                 <i class="Box-i fa-solid fa-tags"></i>
                 <div class="Box-animation Animation" id="addSelect">
-                    <select class="Animation-input isSelect js-example-basic-single" id="selectCategory" name="selectCategory" style="width:95%" size="2">
+                    <select class="Animation-input isSelect js-example-basic-single" id="selectCategory" name="selectCategory" style="width:95%" size="2" tabindex="8">
                         <option></option>
                     </select>
                     <label class="Animation-label" for="selectCategory">Select or add category</label>
@@ -177,27 +155,19 @@
             <div class="Box isTextarea-box">
                 <i class="Box-i fa-solid fa-message"></i>
                 <div class="Box-animation Animation">
-                    <textarea class="Animation-input isTextarea-input" name="inputObservation" id="inputObservation" tabindex="8" rows="4" cols="50" maxlength="800"></textarea>
+                    <textarea class="Animation-input isTextarea-input" name="inputObservation" id="inputObservation" tabindex="9" rows="4" cols="50" maxlength="800"></textarea>
                     <label class="Animation-label" for="inputObservation">Observation</label>
-                    <label class="Animation-info" for="inputObservation" id="infoObservation"><i
-                            class="fa-solid fa-circle-info"></i></label>
-                    <label class="Animation-closeInfo" for="inputObservation"
-                        id="closeInfoObservation"><i class="fa-solid fa-circle-info"></i></label>
-                </div>
-            </div>
-            <div class="Input-error Error fieldErr" id="validationObservation">
-                <div class="Error-text">
-                    <span id="errorObservation" class="fieldErrText">Observation cannot be
-                        empty.</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-{{!-- <script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script> --}}
-
 <script defer type="text/javascript">
+    const infos         = document.querySelectorAll( ".Animation-info"       );
+    const closeInfos    = document.querySelectorAll( ".Animation-closeInfo"  );
+    const fieldErrs     = document.querySelectorAll( ".fieldErr"             );
+    const fieldErrTexts = document.querySelectorAll( ".fieldErrText"         );
     const inputBookID =  document.getElementById("bookID");
     const inputPurchaseDate =  document.getElementById("pPurchaseDate");
     const inputISBN =  document.getElementById("inputISBN");
@@ -209,7 +179,7 @@
     const inputType =  document.getElementById("selectCategory");
     const inputObservation = document.getElementById("inputObservation");
     
-    const fieldsFormBook = {
+    const field = {
         purchaseDate: true,
         ISBN: true,
         title: false,
@@ -219,6 +189,28 @@
         language: true,
         category: true,
         observation: true,
+    };
+
+    const activesInfos = {
+        title: false,
+        author: false,
+    }
+    
+    const expresiones = {
+        title: /^.{4,}$/,
+        author: /^.{4,}$/,
+        /*
+        ^ se utiliza para indicar el comienzo de la línea.
+        .{5,} se utiliza para buscar cualquier caracter (el punto) que aparezca 5 o más veces consecutivas.
+        $ se utiliza para indicar el final de la línea.
+        */
+    };
+
+    const textError = {
+        title:
+            "[ ERROR ] : The Title field cannot be empty.",
+        author:
+            "[ ERROR ] : The Author field cannot be empty.",
     };
 
 
@@ -234,10 +226,12 @@
         const validateFormBook = async e => {
             switch (e.target.name) {
                 case "inputTitle":
-                    fieldsFormBook.title = true;
+                    fieldEmpty(expresiones.title, e.target, "validationTitle", "errorTitle", textError.title, "title", "infoTitle", "closeInfoTitle");
+                    //fieldsFormBook.title = true;
                     break;
                 case "inputAuthor":
-                    fieldsFormBook.author = true;
+                    fieldEmpty(expresiones.author, e.target, "validationAuthor", "errorAuthor", textError.author, "author", "infoAuthor", "closeInfoAuthor");
+                    //fieldsFormBook.author = true;
                     break;
                 }
         };
@@ -253,7 +247,6 @@ const responseData = (data) =>  {
     const message = data.messageSuccess;
     const success = data.success;
     if(success) {
-        console.log(message, success);
         Swal.fire({
             icon: 'success',
             timer: 2000,
@@ -275,12 +268,21 @@ const responseData = (data) =>  {
     }
 
 };
+
+// TODO OBTENER VALOR DE OPTION 
+    function getValueOption(opt) {
+        const value = opt;
+        if (value === undefined) { 
+            return ""
+        } else {
+            return value.value;
+        }
+    }
+
 // TODO ✅ OBTENER DATOS DEL FORMULARIO
     async function dataBook() {
         const index = await inputType.selectedIndex;
-        console.log({index});
         const opt = inputType[index];
-        console.log({opt});
         const bookID = inputBookID.value;
         const data = await {
             bookID,
@@ -291,13 +293,12 @@ const responseData = (data) =>  {
             collection: await capitalizeFirstLetter(inputCollection.value.trim()),
             editorial: await capitalizeFirstLetter(inputEditorial.value.trim()),
             language: await capitalizeFirstLetter(inputLanguage.value.trim()),
-            type: opt.value,
+            type: await capitalizeWords(getValueOption(opt)),
             observation: await capitalizeFirstLetter(inputObservation.value.trim())
         };
+        //EDIT
         try {
             if(_STATEEDITBOOK || _STATEBOOK) {
-                console.log("se va actualizar");
-                console.log({data});
                 const bookID = data.bookID;
                 const urlUpdateBook = `/api/books/update/${bookID}`
                 fetch(urlUpdateBook, {
@@ -311,10 +312,9 @@ const responseData = (data) =>  {
                     .then(async (data) => await responseData(data));
             }
         } catch (err) { }
+        // ADD
         try {
             if(_STATENEWBOOK) {
-                console.log("se va añadir");
-                console.log({data});
                 const urlADDBook = "/api/books/add/";
                 fetch(urlADDBook, {
                     method: "POST",

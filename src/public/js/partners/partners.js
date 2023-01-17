@@ -70,7 +70,6 @@ let opcion = "";
 
 //TODO ✅ LOAD PARTNER
 async function loadData(data) {
-        console.log(data);
         dataTablePartners = $("#tablePartner").DataTable({
             data: data,
             deferRender: true,
@@ -380,9 +379,11 @@ async function loadData(data) {
         if (index !== 0) {
             if (inputDni.value === "") {
                 inputDni.value = rand_dni();
+                inputDni.focus();
             } else {
-                selectDni.focus();
+                inputDni.focus();
             }
+        document.querySelector(".select2-selection--single").classList.remove("isSelectError");
         }
     };
 

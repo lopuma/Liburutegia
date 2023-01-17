@@ -29,46 +29,7 @@ const inputs          = document.querySelectorAll( "#formEditPartner input" );
                     optionForm = 'updatePartner';
                     await dataPartner();
                 } else {
-                    Swal.fire('There are items required your attention.')
-                        .then(() => {
-                                if (!field.dni) {
-                                    document.getElementById("inputDni").focus();
-                                    document.getElementById("inputDni").select();
-                                    document.getElementById("inputDni").classList.add("isError");
-                                    document.getElementById("infoDni").classList.add("isVisible");
-                                    return;
-                                } else if (!field.name) {
-                                    document.getElementById("inputName").focus();
-                                    document.getElementById("inputName").select();
-                                    document.getElementById("inputName").classList.add("isError");
-                                    document.getElementById("infoName").classList.add("isVisible");
-                                    return;
-                                } else if (!field.lastname) {
-                                    document.getElementById("inputLastname").focus();
-                                    document.getElementById("inputLastname").select();
-                                    document.getElementById("inputLastname").classList.add("isError");
-                                    document.getElementById("infoLastname").classList.add("isVisible");
-                                    return;
-                                } else if (!field.email) {
-                                    inputEmailPartner.classList.add("isError");
-                                    document.getElementById("infoEmail").classList.add("isVisible");
-                                    document.getElementById("inputEmail").focus();
-                                    document.getElementById("inputEmail").select();
-                                    return;
-                                } else if (!field.mobile) {
-                                    inputPhone.classList.add("isError");
-                                    document.getElementById("infoMobile").classList.add("isVisible");
-                                    document.getElementById("inputPhone").focus();
-                                    document.getElementById("inputPhone").select();
-                                    return;
-                                } else if (!field.landline) {
-                                    inputPhoneLandline.classList.add("isError");
-                                    document.getElementById("infoPhoneLandline").classList.add("isVisible");
-                                    document.getElementById("inputPhoneLandline").focus();
-                                    document.getElementById("inputPhoneLandline").select();
-                                    return;
-                                }
-                        })
+                    focusElement();
                 }
             } else {
                 optionForm = 'updatePartner';
@@ -76,3 +37,4 @@ const inputs          = document.querySelectorAll( "#formEditPartner input" );
             }
         }); 
     } catch (error) { }
+

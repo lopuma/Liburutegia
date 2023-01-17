@@ -77,30 +77,41 @@ const globalDeleteBook = async (idBook) => {
     });
 }
 
+// TODO ✅ ACTIVA EL FOCU DEL ELEMENTO QUE TIENE ERROR
+function focusElementBooks() {
+    console.log('Please select', field.dni);
+    if (field.title === false) {
+        document.getElementById("inputTitle").focus();
+        document.getElementById("inputTitle").select();
+    } else if (!field.author) {
+        document.getElementById("inputAuthor").focus();
+        document.getElementById("inputAuthor").select();
+    }
+    Swal.fire('There are items required your attention.');
+}
+
 // TODO ✅ CORRECT FORMS
 async function correctFormsBook(e) {
     e.preventDefault();
-    if (fieldsFormBook.purchaseDate &&
-        fieldsFormBook.ISBN &&
-        fieldsFormBook.title &&
-        fieldsFormBook.author &&
-        fieldsFormBook.collection &&
-        fieldsFormBook.editorial &&
-        fieldsFormBook.language &&
-        fieldsFormBook.category &&
-        fieldsFormBook.observation
+    if (field.purchaseDate &&
+        field.ISBN &&
+        field.title &&
+        field.author &&
+        field.collection &&
+        field.editorial &&
+        field.language &&
+        field.category &&
+        field.observation
     ) {
         await dataBook();
 
     } else {
-        await window.alert("There are items required your attention.");
-        //document.querySelector('.select2-container').classList.add('isSelectError');
+        focusElementBooks();
     }
 }
 
 // TODO OBTENER CATEGORIAS 
 async function obtenerCategories(_category) {
-    console.log("cuando te cargas")
     const bookCategory = _category;
     const urlCategory = '/api/books/'
     let valueCategory = [];
@@ -180,7 +191,156 @@ async function globalEditBook(idBook) {
         $(".modal-title").text("EDIT BOOK").css({
             "font-weight": "600",
             "font-size": "1.3em",
-            "color": "#fff"
+            "color": "var(--Color-forms-book)"
         });
         });
 }
+
+//TODO ✅ VALIDAR FIELDS
+    async function validateField(
+        expresion,
+        input,
+        errorDivValidation,
+        errorInputText,
+        textError,
+        inputField,
+        info,
+        closeInfo
+    ) {
+        if (!expresion.test(input.value.trim())) {
+            input.classList.add("isError");
+            document.getElementById(info).classList.add("isVisible");
+            field[inputField] = false;
+        } else {
+            inputsCorrectValidate(errorDivValidation, errorInputText, input, info, closeInfo, inputField);
+        }
+        // MENSAJES
+        try {
+            document.getElementById(info).addEventListener("click", () => {
+                activesInfos[inputField] = true;
+                document.getElementById(info).classList.remove("isVisible");
+                document.getElementById(closeInfo).classList.add("isVisible");
+                document.getElementById(errorDivValidation).classList.add("isActive");
+                document.getElementById(errorInputText).innerHTML = textError;
+                // LLAMADA ABRIR LOS MENSAJES
+                infoReviewError();
+            });
+        } catch (error) { }
+
+        try {
+            document.getElementById(closeInfo).addEventListener("click", () => {
+                activesInfos[inputField] = false;
+                document.getElementById(info).classList.add("isVisible");
+                document.getElementById(closeInfo).classList.remove("isVisible");
+                document.getElementById(errorDivValidation).classList.remove("isActive");
+                document.getElementById(errorInputText).innerHTML = "";
+                // LLAMADA A CERRAR LOS MENSAJES
+                closeReviewError();
+            });
+        } catch (error) { };
+        return true;
+    }
+
+//TODO ✅ VALIDACIONES EXPRESSIONES
+    async function fieldEmpty(
+        expression, // EXPRESION DEL INPUT
+        input, // EL IMPUT
+        errorDivValidation, //EL DIV DODE MUESTRA EL ERROR
+        errorInputText, // EL LABEL DEL ERROR
+        textError, // EL TEXTO DEL ERROR
+        inputField, //SI EL FIELD INPUT SEA TRUE O FALSE
+        info, //BOTON QUE MUESTRA EL ERROR
+        closeInfo // BOTON QUE CIERRA EL ERROR
+    ) {
+        if (input.value.trim() !== "") {
+            await validateField(
+                expression,
+                input,
+                errorDivValidation,
+                errorInputText,
+                textError,
+                inputField,
+                info,
+                closeInfo
+            );
+        } else {
+            inputsCorrectValidate(errorDivValidation, errorInputText, input, info, closeInfo, inputField);
+        }
+        return true;
+    }
+
+//TODO ✅ CIERRA LOS MENSAJE SI TODO ES OK
+    function closeReviewError() {
+        try {
+            if (activesInfos["title"] === false && activesInfos["author"] === false) {
+                document.getElementById("inputBoxTitle").removeAttribute("data-error");
+                document.getElementById("inputBoxAuthor").removeAttribute("data-error");
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["name"] === false && activesInfos["lastname"] === false) {
+                document.getElementById("inputBoxName").removeAttribute("data-error");
+                document.getElementById("inputBoxLastname").removeAttribute("data-error");
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["mobile"] === false && activesInfos["landline"] === false) {
+                document.getElementById("inputBoxMobile").removeAttribute("data-error");
+                document.getElementById("inputBoxLandline").removeAttribute("data-error");
+            }
+        } catch (error) { }
+    }
+
+//TODO ✅ ABRE LOS MENSAJE SI TODO ES OK
+    function infoReviewError() {
+        try {
+            if (activesInfos["title"] === true && activesInfos["author"] === true || activesInfos["title"] === true && activesInfos["author"] === false) {
+                document.getElementById("inputBoxTitle").setAttribute("data-error", "");
+                document.getElementById("inputBoxAuthor").setAttribute("data-error", "");
+                return true;
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["author"] === true && activesInfos["title"] === true || activesInfos["author"] === true && activesInfos["title"] === false) {
+                document.getElementById("inputBoxTitle").setAttribute("data-error", "");
+                document.getElementById("inputBoxAuthor").setAttribute("data-error", "");
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["name"] === true && activesInfos["lastname"] === true || activesInfos["name"] === true && activesInfos["lastname"] === false) {
+                document.getElementById("inputBoxName").setAttribute("data-error", "");
+                document.getElementById("inputBoxLastname").setAttribute("data-error", "");
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["lastname"] === true && activesInfos["name"] === true || activesInfos["lastname"] === true && activesInfos["name"] === false) {
+                document.getElementById("inputBoxName").setAttribute("data-error", "");
+                document.getElementById("inputBoxLastname").setAttribute("data-error", "");
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["mobile"] === true && activesInfos["landline"] === true || activesInfos["mobile"] === true && activesInfos["landline"] === false) {
+                document.getElementById("inputBoxMobile").setAttribute("data-error", "");
+                document.getElementById("inputBoxLandline").setAttribute("data-error", "");
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["landline"] === true && activesInfos["mobile"] === true || activesInfos["landline"] === true && activesInfos["mobile"] === false) {
+                document.getElementById("inputBoxMobile").setAttribute("data-error", "");
+                document.getElementById("inputBoxLandline").setAttribute("data-error", "");
+            }
+        } catch (error) { }
+    }
+
+//TODO ✅ FUNCION QUE VALIDA LOS INPUTS HAYA O NO DATOS
+    function inputsCorrectValidate(errorDivValidation, errorInputText, input, info, closeInfo, inputField) {
+        document.getElementById(errorDivValidation).classList.remove("isActive");
+        document.getElementById(errorInputText).innerHTML = "";
+        input.classList.remove("isError");
+        document.getElementById(info).classList.remove("isVisible");
+        document.getElementById(closeInfo).classList.remove("isVisible");
+        field[inputField] = true;
+        activesInfos[inputField] = false;
+        closeReviewError();
+        return true;
+    }

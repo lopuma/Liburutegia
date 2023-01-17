@@ -2,8 +2,8 @@ const infos         = document.querySelectorAll( ".Animation-btnInfo"       );
 const closeInfos    = document.querySelectorAll( ".Animation-btnCloseInfo"  );
 const fieldErrs     = document.querySelectorAll( ".divFieldErr"             );
 const fieldErrTexts = document.querySelectorAll( ".divFieldErrText"         );
-const inputBox      = document.querySelectorAll( ".Input-boxError"          );
-const labelDniCheck = document.getElementById  ( "labelDniCheck"            );
+const labelDniCheck = document.getElementById("labelDniCheck");
+
 var chageDni = false;
 var chageName = false;
 var chageLastname = false;
@@ -19,11 +19,19 @@ const field = {
     email: true,
 };
 
+const activesInfos = {
+    name: false,
+    lastname: false,
+    mobile: false,
+    landline: false
+}
+
 const expresiones = {
     dni: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     name: /^[a-zA-ZÀ-ÿ\s]{4,40}$/, // Letras, numeros, guion y guion_bajo
     lastname: /^[a-zA-ZÀ-ÿ\s]{4,40}$/,// Letras y espacios, pueden llevar acentos.
     email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
+    //email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/,
     mobile: /^\(?([0-9]{3})\)?([0-9]{3})?([0-9]{3})$/,
 };
 
@@ -95,7 +103,7 @@ const fieldChange = {
             elem.classList.add("isError");
             document.getElementById('infoDni').classList.add("isVisible");
             field['dni'] = false;
-            $('errorDni').innerHTML = textError.dni;
+            document.querySelector('#errorDni').innerHTML = textError.dni;
             return false;
         }
         
@@ -149,6 +157,31 @@ const fieldChange = {
         field['lastname'] = true;
     }
 
+// TODO ✅ ACTIVA EL FOCU DEL ELEMENTO QUE TIENE ERROR
+    function focusElement() {
+        console.log('Please select', field.dni);
+        if (field.dni === false) {
+            document.getElementById("inputDni").focus();
+            document.getElementById("inputDni").select();
+        } else if (!field.name) {
+            document.getElementById("inputName").focus();
+            document.getElementById("inputName").select();
+        } else if (!field.lastname) {
+            document.getElementById("inputLastname").focus();
+            document.getElementById("inputLastname").select();
+        } else if (!field.email) {
+            document.getElementById("inputEmail").focus();
+            document.getElementById("inputEmail").select();
+        } else if (!field.mobile) {
+            document.getElementById("inputPhone").focus();
+            document.getElementById("inputPhone").select();
+        } else if (!field.landline) {
+            document.getElementById("inputPhoneLandline").focus();
+            document.getElementById("inputPhoneLandline").select();
+        }
+        Swal.fire('There are items required your attention.');
+    }
+
 // TODO ✅ VALIDAR FORMULARIOS
     async function correctForms(e) {
         e.preventDefault();
@@ -157,80 +190,45 @@ const fieldChange = {
                 optionForm = 'newPartner';
                 await dataPartner();
             } else {
-                await window.alert("There are items required your attention.");
-                if (!field.dni) {
-                    document.getElementById("inputDni").focus();
-                    document.getElementById("inputDni").select();
-                    document.getElementById("inputDni").classList.add("isError");
-                    document.getElementById("infoDni").classList.add("isVisible");
-                    return;
-                } else if (!field.name) {
-                    document.getElementById("inputName").focus();
-                    document.getElementById("inputName").select();
-                    document.getElementById("inputName").classList.add("isError");
-                    document.getElementById("infoName").classList.add("isVisible");
-                    return;
-                } else if (!field.lastname) {
-                    document.getElementById("inputLastname").focus();
-                    document.getElementById("inputLastname").select();
-                    document.getElementById("inputLastname").classList.add("isError");
-                    document.getElementById("infoLastname").classList.add("isVisible");
-                    return;
-                } else if (!field.email) {
-                    inputEmailPartner.classList.add("isError");
-                    document.getElementById("infoEmail").classList.add("isVisible");
-                    document.getElementById("inputEmail").focus();
-                    document.getElementById("inputEmail").select();
-                    return;
-                } else if (!field.mobile) {
-                    inputPhone.classList.add("isError");
-                    document.getElementById("infoMobile").classList.add("isVisible");
-                    document.getElementById("inputPhone").focus();
-                    document.getElementById("inputPhone").select();
-                    return;
-                } else if (!field.landline) {
-                    inputPhoneLandline.classList.add("isError");
-                    document.getElementById("infoPhoneLandline").classList.add("isVisible");
-                    document.getElementById("inputPhoneLandline").focus();
-                    document.getElementById("inputPhoneLandline").select();
-                    return;
-                }
+                focusElement();
             }
         }
     }
 
-// TODO ✅ OBTENER DATA FORMULARIOS PARA ADD
+    // TODO ✅ OBTENER DATA FORMULARIOS PARA ADD
     async function dataPartner() {
         const index = selectDni.selectedIndex;
         const actualDate = new Date();
         const date = moment(actualDate).format("YYYY-MM-DD HH:mm");
-        const data = await {
-            partnerID: $("#partnerID").val().trim(),
-            dni: $("#inputDni").val().toUpperCase().trim(),
-            name: await capitalizeWords($("#inputName").val().trim()),
-            scanner: $("#inputScanner").val().trim(),
-            lastname: await capitalizeWords($("#inputLastname").val().trim()),
-            direction: await capitalizeFirstLetter($("#inputDirection").val().trim()),
-            population: await capitalizeFirstLetter($("#inputPopulation").val().trim()),
-            phone1: $("#inputPhone").val().trim(),
-            phone2: $("#inputPhoneLandline").val().trim(),
-            email: $("#inputEmail").val().toLowerCase().trim(),
+        const mail = document.querySelector("#inputEmail").value.trim();
+        const emailCorrect = mail.replace(/@([^.]+\.[^.]+)$/, (match, domain) => {
+            return "@" + domain.toLowerCase();
+        });
+        const data = {
+            partnerID: document.querySelector("#partnerID").value.trim(),
+            dni: document.querySelector("#inputDni").value.toUpperCase().trim(),
+            name: capitalizeWords(document.querySelector("#inputName").value.trim()),
+            scanner: document.querySelector("#inputScanner").value.trim(),
+            lastname: capitalizeWords(document.querySelector("#inputLastname").value.trim()),
+            direction: capitalizeFirstLetter(document.querySelector("#inputDirection").value.trim()),
+            population: capitalizeFirstLetter(document.querySelector("#inputPopulation").value.trim()),
+            phone1: document.querySelector("#inputPhone").value.trim(),
+            phone2: document.querySelector("#inputPhoneLandline").value.trim(),
+            email: emailCorrect,
             date: date,
             updateDate: date
         };
         if (inputDniCheck.checked) {
-            if (index === -1 || index === undefined) return;
+            if (index === -1 || index === undefined) return false;
             if (index === 0) {
-                window.alert("Please select the DNI of the associated family member.");
-                return;
+                document.querySelector("#selectDni").focus();
+                document.querySelector(".select2-selection--single").classList.add("isSelectError");
+                Swal.fire('Please select the DNI of the associated family member.');
+                return false;
             }
             const opcionSeleccionada = selectDni.options[index];
             const partnerIDFamily = opcionSeleccionada.value;
             const partnerDniFamily = opcionSeleccionada.text;
-            console.log({
-                partnerIDFamily,
-                partnerDniFamily
-            })
             data.partnerIDFamily = partnerIDFamily;
             data.partnerDniFamily = partnerDniFamily;
             await addNewPartner(data);
@@ -244,9 +242,8 @@ const fieldChange = {
         }
     }
 
-//TODO ✅ ADD / UPDATE PARTNER
-async function addNewPartner(data) {
-        console.log({data});
+    //TODO ✅ ADD / UPDATE PARTNER
+    async function addNewPartner(data) {
         let idPartner = data.partnerID;
         if (optionForm === 'newPartner') {
             const urlAddPartner = `/api/partners/add/${idPartner}`;
@@ -267,7 +264,7 @@ async function addNewPartner(data) {
             let partnerDataUpdate = [data];
             const updatedDataPartner = partnerDataUpdate.map(data => ({
                 ...data,
-                actualDate: dateReal
+                date: dateReal
             }));
             await fetch(urlUpdate, {
                 method: "POST",
@@ -275,14 +272,14 @@ async function addNewPartner(data) {
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 }
-                })
+            })
                 .then(response => response.json())
                 .then(async data => await responseAddPartner(data))
                 .catch(error => console.error(error));
         }
     }
 
-//TODO ✅ RESPONSE ADD PARTNER
+    //TODO ✅ RESPONSE ADD PARTNER
     async function responseAddPartner(data) {
         const success = data.success;
         if (success) {
@@ -354,185 +351,8 @@ async function addNewPartner(data) {
             });
         }
     }
-    const activesInfos = {
-        infoName: false,
-        infoLastname: false,
-        infoMobile: false,
-        infoPhoneLandline: false
-    }
-//TODO ✅ VALIDAR FIELDS
-    async function validateField(
-        expresion,
-        input,
-        fieldError,
-        fieldErrorText,
-        textError,
-        inputField,
-        info,
-        closeInfo
-    ) {
-        if (!expresion.test(input.value.trim())) {
-            input.classList.add("isError");
-            document.getElementById(info).classList.add("isVisible");
-            field[inputField] = false;
-        } else {
-            document.getElementById(fieldError).classList.remove("isActive");
-            document.getElementById(fieldErrorText).innerHTML = "";
-            input.classList.remove("isError");
-            document.getElementById(info).classList.remove("isVisible");
-            document.getElementById(closeInfo).classList.remove("isVisible");
-            field[inputField] = true;
-            inputBox.forEach((info, i) => {
-                inputBox[i].classList.remove("isActiveError");
-            });
-        }
-        infos.forEach((info, i) => {
-            infos[i].addEventListener("click", () => {
-                // TODO ACTIVA NAME
-                if (infos[i].id === "infoName") {
-                    activesInfos.infoName = true;
-                    if (activesInfos.infoLastname) {
-                        document.getElementById("validationName").classList.add("isActive");
-                    } else {
-                        inputBox[i].classList.add("isActiveError");
-                        inputBox[i + 1].classList.add("isActiveError");
-                    }
-                }
-                // TODO ACTIVA LAST NAME
-                if (infos[i].id === "infoLastname") {
-                    activesInfos.infoLastname = true;
-                    if (activesInfos.infoName) {
-                        document.getElementById("validationLastname").classList.add("isActive");
-                    } else {
-                        inputBox[i].classList.add("isActiveError");
-                        inputBox[i - 1].classList.add("isActiveError");
-                    }
-                }
-                // TODO ACTIVA MOBILE
-                if (infos[i].id === "infoMobile") {
-                    activesInfos.infoMobile = true;
-                    if (activesInfos.infoPhoneLandline) {
-                        document.getElementById("validationMobile").classList.add("isActive");
-                    } else {
-                        inputBox[i].classList.add("isActiveError");
-                        inputBox[i + 1].classList.add("isActiveError");
-                    }
-                }
-                // TODO ACTIVA LAND LINE
-                if (infos[i].id === "infoPhoneLandline") {
-                    activesInfos.infoPhoneLandline = true;
-                    if (activesInfos.infoMobile) {
-                        document.getElementById("validationLandline").classList.add("isActive");
-                    } else {
-                        inputBox[i].classList.add("isActiveError");
-                        inputBox[i - 1].classList.add("isActiveError");
-                    }
-                }
-                // TODO ACTIVA EMAIL
-                if (infos[i].id === "infoEmail") {
-                    inputBox[i].classList.add("isActiveError");
-                }
-                fieldErrs[i].classList.add("isActive");
-                fieldErrTexts[i].innerHTML = textError;
-                infos[i].classList.remove("isVisible");
-                closeInfos[i].classList.add("isVisible");
-            });
-        });
-        closeInfos.forEach((info, i) => {
-            if (closeInfos[i].getAttribute('id') !== 'closeInfoDni' || closeInfos[i].getAttribute('id') !== 'infoID') {
-                closeInfos[i].addEventListener("click", () => {
-                    // TODO DESACTIVA NAME
-                    if (closeInfos[i].id === "closeInfoName") {
-                        activesInfos.infoName = false;
-                        if (activesInfos.infoLastname) {
-                            document.getElementById("validationName").classList.remove("isActive");
-                            }
-                        else {
-                            inputBox[i].classList.remove("isActiveError");
-                            inputBox[i + 1].classList.remove("isActiveError");
-                        }
-                    }
-                    // TODO DESACTIVA LAST NAME
-                    if (closeInfos[i].id === "closeInfoLastname") {
-                        activesInfos.infoLastname = false;
-                        if (activesInfos.infoName){
-                            document.getElementById("validationLastname").classList.remove("isActive");
-                        } else {
-                            inputBox[i].classList.remove("isActiveError");
-                            inputBox[i - 1].classList.remove("isActiveError");
-                        }
-                    }
-                    // TODO DESACTIVA MOBILE
-                    if (closeInfos[i].id === "closeInfoMobile") {
-                        activesInfos.infoMobile = false;
-                        if (activesInfos.infoPhoneLandline) {
-                            document.getElementById("validationMobile").classList.remove("isActive");
-                        }
-                        else {
-                            inputBox[i].classList.remove("isActiveError");
-                            inputBox[i + 1].classList.remove("isActiveError");
-                        }
-                    }
-                    // TODO DESACTIVA LANDLINE
-                    if (closeInfos[i].id === "closeInfoPhoneLandline") {
-                        activesInfos.infoPhoneLandline = false;
-                        if (activesInfos.infoMobile) {
-                            document.getElementById("validationLandline").classList.remove("isActive");
-                        } else {
-                            inputBox[i].classList.remove("isActiveError");
-                            inputBox[i - 1].classList.remove("isActiveError");
-                        }
-                    }
-                    // TODO DESACTIVA EMAIL
-                    if (closeInfos[i].id === "closeInfoEmail") {
-                        inputBox[i].classList.remove("isActiveError");
-                    }
-                    fieldErrs[i].classList.remove("isActive");
-                    fieldErrTexts[i].innerHTML = "";
-                    closeInfos[i].classList.remove("isVisible");
-                    infos[i].classList.add("isVisible");
-                });
-            }
-        });
-    }
 
-//TODO ✅ VALIDACIONES EXPRESSIONES
-    async function fieldEmpty(
-        expression, // EXPRESION DEL INPUT
-        input, // EL IMPUT
-        errorDivValidation, //EL DIV DODE MUESTRA EL ERROR
-        errorInputText, // EL LABEL DEL ERROR
-        textError, // EL TEXTO DEL ERROR
-        inputField, //SI EL FIELD INPUT SEA TRUE O FALSE
-        info, //BOTON QUE MUESTRA EL ERROR
-        closeInfo // BOTON QUE CIERRA EL ERROR
-    ) {
-        if (input.value.trim() !== "") {
-            await validateField(
-                expression,
-                input,
-                errorDivValidation,
-                errorInputText,
-                textError,
-                inputField,
-                info,
-                closeInfo
-            );
-        } else {
-            document.getElementById(errorDivValidation).classList.remove("isActive");
-            document.getElementById(errorInputText).innerHTML = "";
-            input.classList.remove("isError");
-            document.getElementById(info).classList.remove("isVisible");
-            document.getElementById(closeInfo).classList.remove("isVisible");
-            field[inputField] = true;
-            inputBox.forEach((info, i) => {
-                inputBox[i].classList.remove("isActiveError");
-            });
-        }
-        return;
-    }
-
-//TODO ✅ FUNCIONA PARA CAMBIAR DE INPUT
+    //TODO ✅ FUNCIONA PARA CAMBIAR DE INPUT
     function changeField(e, fieldChage) {
         fieldChange[fieldChage] = true;
         field[fieldChage] = false;
@@ -545,7 +365,7 @@ async function addNewPartner(data) {
         });
     };
 
-//TODO ✅ VALIDACIONES INPUTS PARTNERS
+    //TODO ✅ VALIDACIONES INPUTS PARTNERS
     const validateForms = async e => {
         switch (e.target.name) {
             case "inputDni":
@@ -611,10 +431,11 @@ async function addNewPartner(data) {
                     "closeInfoPhoneLandline"
                 );
                 break;
-            }
+        }
     };
 
+    //TODO ✅ CERRAR VISTA NEW PARTNER
     function cerrar() {
         window.location.href = "/workspace/partners";
-    }
+    };
 

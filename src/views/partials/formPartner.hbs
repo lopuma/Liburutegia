@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <!-- TODO PARTNER ID -->
+        <!-- TODO FECHA CREACION -->
         <div class="Input-box">
             <div class="Box">
                 <i class="fa-solid fa-calendar-days"></i>
@@ -88,7 +88,7 @@
     </div>
     <div class="New-boxes">
         <!-- TODO NAME -->
-        <div class="Input-box Input-boxError">
+        <div class="Input-box " id="inputBoxName">
             <div class="Box">
                 <i class="Box-i fa-solid fa-user"></i>
                 <div class="Box-animation Animation">
@@ -111,7 +111,7 @@
             </div>
         </div>
         <!-- TODO LASTNAME -->
-        <div class="Input-box Input-boxError">
+        <div class="Input-box " id="inputBoxLastname">
             <div class="Box">
                 <i class="Box-i fa-solid fa-user"></i>
                 <div class="Box-animation Animation">
@@ -137,7 +137,7 @@
     </div>
     <div class="New-boxes">
         <!-- TODO DIRECTION -->
-        <div class="Input-box Input-boxError">
+        <div class="Input-box">
             <div class="Box">
                 <i class="Box-i fa-solid fa-location-dot"></i>
                 <div class="Box-animation Animation">
@@ -161,7 +161,7 @@
             </div>
         </div>
         <!-- TODO POPULATION -->
-        <div class="Input-box  Input-boxError">
+        <div class="Input-box">
             <div class="Box">
                 <i class="Box-i fa-solid fa-location-arrow"></i>
                 <div class="Box-animation Animation">
@@ -187,14 +187,14 @@
     </div>
     <div class="New-boxes">
         <!-- TODO PHONE (MOBILE) -->
-        <div class="Input-box  Input-boxError" id="isMobile">
+        <div class="Input-box" id="inputBoxMobile">
             <div class="Box">
                 <i class="Box-i fa-solid fa-mobile-screen-button"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputPhone"
                         id="inputPhone" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="7" minlength="9" onkeydown="changeField(this, 'mobile')">
+                        tabindex="7" minlength="9" maxlength="9" onkeydown="changeField(this, 'mobile')">
                     <label class="Animation-label" for="inputPhone">Phone
                         (Mobile)</label>
                     <label class="Animation-info Animation-btnInfo" for="inputPhone"
@@ -211,14 +211,14 @@
             </div>
         </div>
         <!-- TODO PHONE (LANDLINE) -->
-        <div class="Input-box  Input-boxError">
+        <div class="Input-box" id="inputBoxLandline">
             <div class="Box">
                 <i class="Box-i fa-solid fa-phone-flip"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input" name="inputPhoneLandline"
                         id="inputPhoneLandline" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="8" minlength="9" onkeydown="changeField(this, 'landline')">
+                        tabindex="8" minlength="9"  maxlength="9" onkeydown="changeField(this, 'landline')">
                     <label class="Animation-label" for="inputPhoneLandline">Phone (Landline)</label>
                     <label class="Animation-info Animation-btnInfo" for="inputPhoneLandline"
                         id="infoPhoneLandline"><i class="fa-solid
@@ -238,7 +238,7 @@
     </div>
     <div class="New-boxes ">
         <!-- TODO EMAIL -->
-        <div class="Input-box Input-boxError">
+        <div class="Input-box " id="inputBoxEmail">
             <div class="Box">
                 <i class="Box-i fa-regular fa-address-card"></i>
                 <div class="Box-animation Animation">
