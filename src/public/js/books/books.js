@@ -217,7 +217,7 @@ let _STATEINFOBOOK = false;
     async function deleteBook(bookID) {
         opcion = "delete";
         const idBook = bookID;
-        globalDeleteBook(idBook);
+        await globalDeleteBook(idBook);
     }
 
 //TODO ✅ RESERVED

@@ -37,14 +37,41 @@ function capitalizeWords(str) {
 }
 
 // TODO ✅ FUNCT DELETE BOOK
-async function apiBookDelete(idBook) {
-    const urlDelete = `/api/books/delete/${idBook}`;
-    await fetch(urlDelete)
-        .then((response) => response.json())
-        .then(async (data) => {
+    async function apiBookDelete(idBook) {
+        const urlDelete = `/api/books/delete/${idBook}`;
+        await fetch(urlDelete)
+            .then((response) => response.json())
+            .then(async (data) => {
+                await responseDeleteBook(data);
+            });
+    }
+
+    const globalDeleteBook = async (idBook) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Are you sure you want to delete the BOOK!",
+            icon: "warning",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await apiBookDelete(idBook);
+            }
+        });
+    }
+
+// TODO ✅ RESPUESTA AL ELIMINAR BOOK
+    async function responseDeleteBook(data) {
+        const message = data.messageSuccess || data.errorMessage;
+        const title = data.swalTitle;
+        const success = data.success;
+        if (success) {
             Swal.fire({
-                title: `Removed! Book with ID: ${idBook}`,
-                text: data.messageSuccess,
+                title: title || "Success....!",
+                text: message,
                 icon: 'success',
                 timer: 2000,
                 confirmButtonText: 'OK',
@@ -57,29 +84,23 @@ async function apiBookDelete(idBook) {
                         await reloadDataBooks();
                     }
                 } catch (error) { }
-            })
-        });
-}
-const globalDeleteBook = async (idBook) => {
-    Swal.fire({
-        title: "Are you sure?",
-        text: "Are you sure you want to delete the BOOK!",
-        icon: "warning",
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            apiBookDelete(idBook);
+            });
+        } else {
+            Swal.fire({
+                title: title || "Oops....!",
+                text: message,
+                icon: 'error',
+                timer: 2000,
+                confirmButtonText: 'OK',
+            });
+            setTimeout(async () => {
+                await reloadDataBooks();
+            }, 1000);
         }
-    });
-}
+    }
 
 // TODO ✅ ACTIVA EL FOCU DEL ELEMENTO QUE TIENE ERROR
 function focusElementBooks() {
-    console.log('Please select', field.dni);
     if (field.title === false) {
         document.getElementById("inputTitle").focus();
         document.getElementById("inputTitle").select();

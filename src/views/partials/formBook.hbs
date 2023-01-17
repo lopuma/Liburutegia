@@ -227,47 +227,54 @@
             switch (e.target.name) {
                 case "inputTitle":
                     fieldEmpty(expresiones.title, e.target, "validationTitle", "errorTitle", textError.title, "title", "infoTitle", "closeInfoTitle");
-                    //fieldsFormBook.title = true;
                     break;
                 case "inputAuthor":
                     fieldEmpty(expresiones.author, e.target, "validationAuthor", "errorAuthor", textError.author, "author", "infoAuthor", "closeInfoAuthor");
-                    //fieldsFormBook.author = true;
                     break;
                 }
         };
 
 // TODO ✅ RESET FORMS BOOKS
     const resetFormsBook = async (e) => {
-        document.getElementById("formEditBook").reset();
-        $('#selectCategory').html("");
+        try {
+            document.getElementById("formEditBook").reset();
+            $('#selectCategory').html("");
+        }catch (error){ }
+        try {
+            document.getElementById("formAddBook").reset();
+            $('#selectCategory').html("");
+        }catch (error){ }
     }
 
 // TODO ✅ RESPONSE DATA SUCCESS
-const responseData = (data) =>  {
-    const message = data.messageSuccess;
-    const success = data.success;
-    if(success) {
-        Swal.fire({
-            icon: 'success',
-            timer: 2000,
-            title: 'Updated data...',
-            text: message,
-        }).then(async () => {
-            await resetFormsBook();
-            $('#modalEditBook').hide();
-            $('.modal-backdrop').hide();
-            $('#modalEditBook').modal('hide');
-            if ($('.modal:visible').length === 0) {
-                $('body').removeClass('modal-open');
-                document.querySelector('.Body').style = "";
-            }
-            _STATEINFOBOOK ? 
-                location.reload() :
-                reloadDataBooks();
-        });
-    }
+    const responseData = async (data) =>  {
+        const message = data.messageSuccess || data.errorMessage;
+        const title = data.swalTitle;
+        const success = data.success;
+        if(success) {
+            Swal.fire({
+                icon: 'success',
+                timer: 2000,
+                title: title || "Success....!",
+                text: message,
+            }).then(async () => {
+                await resetFormsBook();
+                try{
+                    _STATEINFOBOOK ? 
+                        location.reload() :
+                        reloadDataBooks();
+                } catch (error) { };
+            });
+        } else if(success === false) {
+            Swal.fire({
+                icon: 'error',
+                timer: 2000,
+                title: title  || "Oops....!",
+                text: message,
+            });
+        }
 
-};
+    };
 
 // TODO OBTENER VALOR DE OPTION 
     function getValueOption(opt) {
@@ -324,7 +331,7 @@ const responseData = (data) =>  {
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) => console.log(data));
+                    .then(async(data) => await responseData(data));
             }
         } catch (err) { }
     }

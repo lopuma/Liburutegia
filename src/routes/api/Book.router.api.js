@@ -29,7 +29,7 @@ const routerBooks = require('express').Router();
 
     routerBooks.post("/deliver/:bookID", deliverBook);
 
-    routerBooks.post("/add", addBook);
+    routerBooks.post("/add", validate, addBook);
 
     routerBooks.get("/delete/:idBook", deleteBook);
 

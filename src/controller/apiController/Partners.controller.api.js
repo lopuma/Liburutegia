@@ -451,8 +451,6 @@ const partnerController = {
                 phone2
             } = req.body[0];
 
-            console.log("1 =>> COMO VIENE", req.body[0]);
-
             let phonea = phone1 ? parseInt(phone1) : null;
             let phoneb = phone2 ? parseInt(phone2) : null;
 
@@ -470,10 +468,7 @@ const partnerController = {
                 email,
                 date,
                 updateDate
-            }];
-
-            console.log("2 =>> LO QUE SE GUARDA EN PARTNERS", partnerDataUpdate[0])
-            
+            }];            
             if (
                 partnerDniFamily === null ||
                 partnerIDFamily === null ||

@@ -30,6 +30,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -37,6 +38,7 @@ const bookController = {
                     return res.status(403).send({
                         success: false,
                         exists: false,
+                        swalTitle: "[ Error  not found ]",
                         errorMessage: `[ ERROR ], The BOOK with ID : ${bookID} does not exist`
                     });
                 } else {
@@ -57,14 +59,16 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
                 if (results.length === 0) {
                     return res.status(200).send({
                         success: false,
+                        swalTitle: "[ No found ]",
                         errorMessage:
-                            "[ ERROR ], There are no data in the table partners, Liburutegia.",
+                            "[ ERROR ], There are no data in the table books, Liburutegia.",
                         data: null
                     });
                 }
@@ -76,7 +80,7 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ SHOW ONLY PARTNERS FOR ID
+    //TODO ✅ SHOW ONLY BOOKS FOR ID
     getBook: async (req, res) => {
         try {
             const bookID = req.params.idBook;
@@ -87,6 +91,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -114,11 +119,13 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
                 res.status(200).send({
                     success: true,
+                    swalTitle: "[ Review added.... ]",
                     messageSuccess: `The following BOOK has been delivered with ID : ${idBook}, and a review has been added`
                 });
             }
@@ -135,6 +142,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -155,14 +163,13 @@ const bookController = {
                         res.status(500).redirect("/");
                     }
                     //TODO ATUALIZA LA IMAGEN AL EXISTOR UN REGISTRO EN LA BD.
-                    console.log("SEGUNDA UPLOAD");
-
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
                     await connection.query(sqlUpdateCover, { bookID, nameCover }, (_err, _results) => {
                         return res.status(200).send({
                             success: true,
                             exists: true,
                             nameCover,
+                            swalTitle: "[ Cover update.... ]",
                             messageSuccess: `Cover updated successfully.`
                         });
                     });
@@ -187,15 +194,16 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                console.log("PRIMERA UPLOAD");
                 return res.status(200).send({
                     success: true,
                     exists: false,
                     nameCover,
-                    messageSuccess: `Cover updated successfully.`
+                    swalTitle: "[ Cover added.... ]",
+                    messageSuccess: `Cover added successfully.`
                 });
             });
         } catch (error) {
@@ -205,10 +213,62 @@ const bookController = {
     },
     // TODO ✅ ADD NEW BOOK
     addBook: async (req, res) => { 
-        console.log("TODO OK ADD", req.body);
-        res.status(200).send({
-            messageSuccess: "TODO OK ADD"
-        });
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(300).send({
+                    success: false,
+                    swalTitle: "[ Error validation ]",
+                    errorMessage: errors.array()
+                });
+            }
+            const {
+                title,
+                author,
+                isbn,
+                purchase_date,
+                editorial,
+                type,
+                language,
+                collection,
+                observation
+            } = req.body;
+            const date = new Date();
+            const lastUpdate = moment(date).format("YYYY-MM-DD HH:mm:ss");
+            const fechaCompra = purchase_date ? purchase_date : null;
+            const bookDataUpdate = [{
+                title,
+                author,
+                isbn,
+                purchase_date: fechaCompra,
+                editorial,
+                type,
+                language,
+                collection,
+                observation,
+                lastUpdate
+            }]; 
+            sqlInsertBooks = "INSERT INTO books SET ?";
+            await connection.query(sqlInsertBooks, bookDataUpdate, (err, results) => { 
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
+                }
+                res.status(200).send({
+                    success: true,
+                    swalTitle: "Book added...",
+                    messageSuccess: `The book data has been added correctly, with ID : ${results.insertId }`
+                });
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
     },
     // TODO ✅ ACTUALIZAR BOOK
     putBook: async (req, res) => {
@@ -217,6 +277,7 @@ const bookController = {
             if (!errors.isEmpty()) {
                 return res.status(300).send({
                     success: false,
+                    swalTitle: "[ Error Validation ]",
                     errorMessage: errors.array()
                 });
             }
@@ -232,57 +293,38 @@ const bookController = {
                 collection,
                 observation
             } = req.body;
-
-            console.log(req.body);
             const date = new Date();
             const lastUpdate = moment(date).format("YYYY-MM-DD HH:mm:ss");
             const sqlUpdateBook = `UPDATE books SET ? WHERE bookID = ${bookID}`;
-            let purchase = purchase_date ? purchase_date : null;
-            console.log("TODOW, purchase date: " + purchase);
-            await connection.query(sqlUpdateBook, {
+            const fechaCompra = purchase_date ? purchase_date : null;
+            const bookDataUpdate = [{
                 title,
                 author,
-                editorial,
                 isbn,
+                purchase_date: fechaCompra,
+                editorial,
                 type,
                 language,
                 collection,
-                purchase_date: purchase,
                 observation,
                 lastUpdate
-            }, (err, results) => {
+            }]; 
+            await connection.query(sqlUpdateBook, bookDataUpdate, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                console.log(results);
                 res.status(200).send({
                     success: true,
+                    swalTitle: "Book updated...",
                     messageSuccess: `The book data has been updated correctly, with ID : ${bookID}`
                 });
             })
-            /*
-            title = req.body.title_book;
-            author = req.body.author;
-            type = req.body.type;
-            language = req.body.language;
-            let sql =
-                "UPDATE books SET title = ?, author = ?, type = ?, language = ? WHERE bookID = ?";
-            connection.query(sql, [title, author, type, language, bookID], function (
-                error,
-                result
-            ) {
-                if (error) {
-                    throw error;
-                } else {
-                    res.send(result);
-                }
-            });
-            */
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
@@ -299,6 +341,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -306,11 +349,11 @@ const bookController = {
                     return res.status(403).send({
                         success: false,
                         exists: false,
+                        swalTitle: "[ No found ]",
                         errorMessage: `[ ERROR ], The BOOK with ID : ${bookID} does not exist`
                     });
                 }
                 const title = results[0].title;
-                console.log({ title });
                 const sqlDelete = "DELETE FROM books WHERE bookID=?";
                 await connection.query(sqlDelete, [bookID], (err, _results) => {
                     if (err) {
@@ -318,11 +361,13 @@ const bookController = {
                         return res.status(400).send({
                             success: false,
                             messageErrBD: err,
+                            swalTitle: "[ Error BD ]",
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                     }
                     res.status(200).send({
                         success: true,
+                        swalTitle: "[ Book deleted... ]",
                         messageSuccess: `The Book with ID: '${bookID}', TITLE : '${title}' has been successfully deleted`
                     });
                 });
@@ -342,19 +387,22 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
                 if (results.length === 0) {
                     return res.status(200).send({
                         success: false,
-                        errorMessage: "[ ERROR ], No results",
+                        swalTitle: "[ No found ]",
+                        errorMessage: "[ ERROR ], No results found",
                         data: null
                     });
                 }
                 const data = results;
                 res.status(200).send({
                     success: true,
+                    swalTitle: "[ Success.... ]",
                     messageSuccess: "Success",
                     data
                 });
