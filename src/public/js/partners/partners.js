@@ -324,15 +324,6 @@ async function loadData(data) {
                         <label class="Animation-label" for="date">Creation Date</label>
                     `;
                 }
-                $(".modal-header").css(
-                    "background-color",
-                    "var(--Background-Color-forms-partner)"
-                );
-                $(".modal-title").text("EDIT PARTNER").css({
-                    "font-weight": "600",
-                    "font-size": "1.3em",
-                    "color": "#006E7F"
-                });
             });
     }
     async function disabledFamilyLink() {

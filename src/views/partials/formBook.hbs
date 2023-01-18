@@ -9,7 +9,7 @@
                 <i class="Box-i fa-solid fa-key"></i>
                 <div class="Box-animation Animation">
                     <input class="Animation-input"  type="text" id="bookID" tabindex="0" readonly value="null">
-                    <label class="Animation-label" for="bookID">Your Partner ID</label>
+                    <label class="Animation-label" for="bookID">Your Book ID</label>
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
             <div class="Box">
                 <i class="Box-i fa-solid fa-tags"></i>
                 <div class="Box-animation Animation" id="addSelect">
-                    <select class="Animation-input isSelect js-example-basic-single" id="selectCategory" name="selectCategory" style="width:95%" size="2" tabindex="8">
+                    <select class="Animation-input isSelect" id="selectCategory" name="selectCategory" style="width:95%" size="2" tabindex="8">
                         <option></option>
                     </select>
                     <label class="Animation-label" for="selectCategory">Select or add category</label>
@@ -234,15 +234,6 @@
             }
     };
 
-// TODO CIERRE DE MODAL
-    function ClosePopup() {
-        $("#modalEditBook").modal('hide');//ocultamos el modal
-        $('#modalEditBook').hide();
-        $('body').removeClass('modal-open');
-        document.querySelector('.Body').removeAttribute('style');//eliminamos la clase del body para poder hacer scroll
-        $('.modal-backdrop').remove();//eliminamos el backdrop del modal
-    }
-
 // TODO ✅ RESET FORMS BOOKS
     const resetFormsBook = async (e) => {
         try {
@@ -250,7 +241,7 @@
             $('#selectCategory').html("");
         }catch (error){ }
         if(_STATEBOOK) {
-            ClosePopup();
+            await ClosePopup("#modalEditBook");
         }
         try {
             document.getElementById("formAddBook").reset();

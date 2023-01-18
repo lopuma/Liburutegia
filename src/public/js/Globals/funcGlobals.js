@@ -7,6 +7,10 @@
         }
         return num
     }
+//TODO ✅ REMOVE CEROS POR DELANTE
+    function removeZeros(id) {
+        return id.toString().replace(/^0+/, "");
+    }
 
 //TODO ✅ FUNCION PARA CAMBIAR LAS TILDES
     const accentNeutralise = function (data) {
@@ -194,15 +198,6 @@
                 inputLanguage.value = datos.language;
                 inputCollection.value = datos.collection;
                 inputObservation.value = datos.observation;
-                $(".modal-header").css(
-                    "background-color",
-                    "var(--Background-Color-forms-book)"
-                );
-                $(".modal-title").text("EDIT BOOK").css({
-                    "font-weight": "600",
-                    "font-size": "1.3em",
-                    "color": "var(--Color-forms-book)"
-                });
             });
     }
 
@@ -354,3 +349,82 @@
         closeReviewError();
         return true;
     }
+
+// TODO CIERRE DE MODAL
+    async function ClosePopup(modal) {
+        $(modal).modal('hide');
+        $(modal).hide();
+        $('.modal-backdrop').remove()
+        document.querySelector(".Body").classList.remove('modal-open');
+        document.querySelector(".Body").setAttribute("style", "");
+    }
+
+// TODO LOAD DNI
+async function loadDni(data) {
+    const partners = data;
+    $("#selectDni").html("");
+    partners.forEach(partner => {
+        let option = document.createElement("option");
+        option.value = partner.partnerID;
+        option.text = partner.dni;
+        document.getElementById("selectDni").add(option);
+    })
+}
+
+// TODO LOAD TITLE
+async function loadTitle(data) {
+    const book = data;
+    $("#selectTitle").html("");
+    console.log(book);
+    //books.forEach(book => {
+    const option = document.createElement("option");
+    option.value = book.bookID;
+    option.text = book.title;
+    document.getElementById("selectTitle").add(option);
+    const sel = document.getElementById("selectTitle");
+    const opt = sel[0];
+    console.log(opt.text, opt.value);
+    $("#selectTitle").val(opt.value);
+    document.getElementById("reserveBookID").value = fillZeros(opt.value);
+    return true;
+}
+
+// TODO LOAD DNI PÀRTNER
+    const extractDataFormReserve = async (idBook, idPartner, dniPartner) => {
+        const bookID = idBook;
+        const partnerID = idPartner;
+        const partnerDni = dniPartner;
+        if (bookID !== null) { 
+            const urlTitleBook = `/api/books/${bookID}`;
+            fetch(urlTitleBook, {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json; charset=utf-8"
+                }
+            })
+                .then(response => response.json())
+                .then(async data => await loadTitle(data));
+        }
+        if (partnerID === null || partnerDni === null) {
+            const urlPartners = "/api/partners/"
+            fetch(urlPartners, {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json; charset=utf-8"
+                }
+            })
+                .then(response => response.json())
+                .then(async data => await loadDni(data));
+        }
+    }
+
+// TODO RESERVE BOOK 
+async function globalReserveBook(idBook, idPartner, dniPartner) {
+    const bookID = idBook;
+    const partnerID = idPartner;
+    const partnerDni = dniPartner;
+    await extractDataFormReserve(bookID, partnerID, partnerDni);
+    document.getElementById("reserveDate").value = moment(new Date()).format("YYYY-MM-DD");
+}

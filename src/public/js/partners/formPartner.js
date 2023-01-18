@@ -299,7 +299,7 @@ const fieldChange = {
                 hideClass: {
                     popup: "animate__animated animate__fadeOutUp"
                 }
-            }).then(() => {
+            }).then(async () => {
                 $("#selectDni").html("");
                 try {
                     formAddPartner.reset();
@@ -310,15 +310,9 @@ const fieldChange = {
                 familyLink.classList.remove("isEnable");
                 if (optionForm !== "newPartner") {
                     try {
-                        $('#modalEditPartner').hide();
-                        $('.modal-backdrop').hide();
-                        $('#modalEditPartner').modal('hide');
-                        if ($('.modal:visible').length === 0) {
-                            $('body').removeClass('modal-open');
-                            document.querySelector('.Body').style = "";
-                        }
+                        await ClosePopup("#modalEditPartner");
                         _STATEPARTNER ?
-                            reloadData() :
+                            await reloadData() :
                             location.reload();
                         fieldChange['dni'] = false;
                         fieldChange['name'] = false;

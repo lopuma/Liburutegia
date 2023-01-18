@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="/style/newForm.css">
+
+<!--TODO Modal para CRUD-->
+<div class="modal fade" role="dialog" aria-labelledby="modalReserveBookLabel" aria-hidden="true" style="padding-right:0" id="modalReserveBook" name="modalReserveBook">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="modalReserveBookLabel">RESERVE BOOK</h1>
+            </div>
+            <div class="New">
+                <form class="New-form" id="formReserveBook" name="formReserveBook">
+                    <div class="New-content">
+                        <div class="New-boxes">
+                            <!-- TODO BOOK ID -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-solid fa-key"></i>
+                                    <div class="Box-animation Animation">
+                                        <input class="Animation-input"  type="text" id="reserveBookID" name="reserveBookID"
+                                        tabindex="0" 
+                                        placeholder=" "
+                                        readonly required>
+                                        <label class="Animation-label" for="reserveBookID">Book ID *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- TODO  TITLE BOOK -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-solid fa-book"></i>
+                                    <div class="Box-animation Animation">
+                                        <select class="Animation-input selectTitle" id="selectTitle" name="selectTitle" style="width:95%" size="2" tabindex="2" required>
+                                            <option></option>
+                                        </select>
+                                        <label class="Animation-label" for="inputTitle">Title *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="New-boxes">
+                            <!-- TODO PARTNER ID -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-solid fa-boxes-stacked"></i>
+                                    <div class="Box-animation Animation">
+                                        <input class="Animation-input" name="reservePartnerID" id="reservePartnerID"
+                                            type="text"
+                                            placeholder=" " autocomplete="valorNoValido"
+                                            tabindex="3" readonly required>
+                                        <label class="Animation-label" for="reservePartnerID">Partner ID *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- TODO DNI -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-regular fa-newspaper"></i>
+                                    <div class="Box-animation Animation">
+                                        <select class="Animation-input selectDni" id="selectDni" name="selectDni" style="width:95%" size="2" tabindex="4" onChange="loadPartnerID()" required>
+                                            <option></option>
+                                        </select>
+                                        <label class="Animation-label" for="selectDni">Dni *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="New-boxes">
+                            <!-- TODO FECHA RESERVA -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <div class="Box-animation Animation">
+                                        <input class="Animation-input" type="date" id="reserveDate" tabindex="5" required>
+                                        <label class="Animation-label" for="reserveDate">Reserve  Date *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Input-button">
+                        <button type="button" class="Button-cancel"
+                            data-dismiss="modal" tabindex="10">Cancel</button>
+                        <input class="Button-accept" id="btnReserveBook" type="submit"
+                            value='UPDATE' tabindex="11"></input>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" defer>
+    (() => {
+        $(".selectTitle").select2({
+            placeholder: "Select BOOK Title",
+        });
+        $(".selectDni").select2({
+            placeholder: "Select DNI Partner",
+        });
+        console.log("se ejecuta ?---")
+    })();
+
+    function loadPartnerID() {
+        const selectDni = document.getElementById("selectDni");
+        const inputPartnerID = document.getElementById("reservePartnerID");
+        const index = selectDni.selectedIndex;
+        const opcionSeleccionada = selectDni.options[index];
+        inputPartnerID.value = fillZeros(opcionSeleccionada.value);
+    }
+
+    document.querySelector("#btnReserveBook").addEventListener("click", (e) => {
+        e.preventDefault();
+        const indexTitle = document.getElementById("selectTitle").selectedIndex;
+        const optionSelectTitle = document.getElementById("selectTitle").options[indexTitle];
+        const indexDni = document.getElementById("selectDni").selectedIndex;
+        const optionSelectDni = document.getElementById("selectDni").options[indexDni];
+        console.log(removeZeros(document.getElementById("reserveBookID").value));
+        console.log(optionSelectTitle.text);
+        console.log(removeZeros(document.getElementById("reservePartnerID").value));
+        console.log(optionSelectDni.text);
+    });
+</script>

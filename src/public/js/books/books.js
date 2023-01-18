@@ -90,11 +90,10 @@ let _STATEINFOBOOK = false;
                         if (type === "display") {
                             if (data.reserved === 0) {
                                 btnDisable =
-                                    `<button id="btnReservedBook" onClick=reservedBook(` + data.bookID + `) class="btn btn-secondary" title="Reserved Book" style="cursor: pointer"><i class="fa-solid fa-calendar-days"></i></button>`;
+                                    `<button id="btnReservedBook" onClick=reservedBook(` + data.bookID + `) class="btn btn-secondary" title="Reserved Book" style="cursor: pointer"><i class="fa-solid fa-calendar-days" data-toggle="modal" data-target="#modalReserveBook"></i></button>`;
                             } else {
                                 btnDisable = `<button class="btn btn-secondary not-allowed" style="cursor: not-allowed" onclick="return false;"><i class="fa-solid fa-calendar-days"></i></button>`;
                             }
-
                             return (
                                 `
                         <div class="ui buttons">
@@ -223,14 +222,15 @@ let _STATEINFOBOOK = false;
 //TODO ✅ RESERVED
     async function reservedBook(bookID) {
         const idBook = bookID;
-        console.log("Reserved Book: " + idBook);
+        await globalReserveBook(idBook, null, null);
+        console.log("Reserved Book -: " + idBook);
     }
 
 // TODO ✅ EDITAR
     async function editBook(idBook) {
         opcion = "edit";
         const bookID = idBook;
-        await globalEditBook(bookID);
+        globalEditBook(bookID);
     }
 
 //TODO ✅ INFO
