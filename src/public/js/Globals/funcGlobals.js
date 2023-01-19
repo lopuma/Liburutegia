@@ -361,42 +361,71 @@
 
 // TODO LOAD DNI
 async function loadDni(data) {
+    $("#selectDniReserve").html("");
     const partners = data;
-    $("#selectDni").html("");
     partners.forEach(partner => {
-        let option = document.createElement("option");
+        const option = document.createElement("option");
         option.value = partner.partnerID;
         option.text = partner.dni;
-        document.getElementById("selectDni").add(option);
+        document.getElementById("selectDniReserve").add(option);
     })
+    console.log("LENGTH =>> ", partners.length)
+    if (partners.length <= 1) {
+        const sel = document.getElementById("selectDniReserve");
+        const opt = sel[0];
+        $("#selectDniReserve").val(opt.value);
+        document.getElementById("reservePartnerID").value = fillZeros(opt.value);
+        //return true;
+    }
+    $(".selectDniReserve").select2({
+        placeholder: "Select DNI Partner",
+    });
 }
-
 // TODO LOAD TITLE
 async function loadTitle(data) {
-    const book = data;
-    $("#selectTitle").html("");
-    console.log(book);
-    //books.forEach(book => {
-    const option = document.createElement("option");
-    option.value = book.bookID;
-    option.text = book.title;
-    document.getElementById("selectTitle").add(option);
-    const sel = document.getElementById("selectTitle");
-    const opt = sel[0];
-    console.log(opt.text, opt.value);
-    $("#selectTitle").val(opt.value);
-    document.getElementById("reserveBookID").value = fillZeros(opt.value);
-    return true;
+    $("#reserveSelectTitle").html("");
+    const books = data;
+    books.forEach(book => {
+        const option = document.createElement("option");
+        option.value = book.bookID;
+        option.text = book.title;
+        document.getElementById("reserveSelectTitle").add(option);
+    })
+    if (books.length <= 1) { 
+        const sel = document.getElementById("reserveSelectTitle");
+        const opt = sel[0];
+        $("#reserveSelectTitle").val(opt.value);
+        document.getElementById("reserveBookID").value = fillZeros(opt.value);
+        //return true;
+    }
+    $(".reserveSelectTitle").select2({
+        placeholder: "Select BOOK Title",
+    });
 }
 
 // TODO LOAD DNI PÀRTNER
-    const extractDataFormReserve = async (idBook, idPartner, dniPartner) => {
+    const extractDataFormReserve = async (idBook, titleBook, idPartner, dniPartner) => {
         const bookID = idBook;
+        const bookTitle = titleBook;
         const partnerID = idPartner;
         const partnerDni = dniPartner;
-        if (bookID !== null) { 
-            const urlTitleBook = `/api/books/${bookID}`;
-            fetch(urlTitleBook, {
+        console.log({
+            bookID,
+            bookTitle,
+            partnerID,
+            partnerDni,
+        });
+        if (bookID !== null && bookTitle !== null) { 
+            const data = [{
+                bookID,
+                title: bookTitle
+            }];
+            console.log("ENVIO DATA CON LENG ", data.length)
+            await loadTitle(data)
+        } else {
+            console.log("ENTRA BOOK NO NULL");
+            const urlTitleBooks = `/api/books/`;
+            fetch(urlTitleBooks, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -406,7 +435,8 @@ async function loadTitle(data) {
                 .then(response => response.json())
                 .then(async data => await loadTitle(data));
         }
-        if (partnerID === null || partnerDni === null) {
+        if (partnerID === null && partnerDni === null) {
+            console.log("ENTRA PARTNER NUL Y DNI NULL");
             const urlPartners = "/api/partners/"
             fetch(urlPartners, {
                 method: "GET",
@@ -417,14 +447,22 @@ async function loadTitle(data) {
             })
                 .then(response => response.json())
                 .then(async data => await loadDni(data));
+        } else {
+            const data = [{
+                partnerID,
+                dni: partnerDni
+            }];
+            console.log("ENVIO DATA CON LENG ", data.length)
+            await loadDni(data)
         }
     }
 
 // TODO RESERVE BOOK 
-async function globalReserveBook(idBook, idPartner, dniPartner) {
+async function globalReserveBook(idBook, titleBook, idPartner, dniPartner) {
     const bookID = idBook;
+    const bookTitle = titleBook;
     const partnerID = idPartner;
     const partnerDni = dniPartner;
-    await extractDataFormReserve(bookID, partnerID, partnerDni);
+    await extractDataFormReserve(bookID, bookTitle, partnerID, partnerDni);
     document.getElementById("reserveDate").value = moment(new Date()).format("YYYY-MM-DD");
 }

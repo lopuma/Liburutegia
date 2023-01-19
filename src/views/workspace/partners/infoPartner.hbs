@@ -2,6 +2,7 @@
 
 {{> modalDeliver}}
 {{> modalEditPartner}}
+{{> modalReserveBook}}
 
 <div class="Info-contenedor" id="stateInfoPartner">
     <!-- TODO OK SLIDER -->
@@ -24,7 +25,7 @@
                     </a>
                 </div>
             </div>
-            <button class="Slider-arrow isPrev" onclick="avanzaSlide(-1,
+            <button class="Slider-arrow isPrev" onClick="avanzaSlide(-1,
                 {{this.partnerID}})">
                 <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
                     width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -33,7 +34,7 @@
                         0-.708l6-6a.5.5 0 0 1 .708 0z" />
                     </svg>
             </button>
-            <button class="Slider-arrow isNext" onclick="avanzaSlide(1,
+            <button class="Slider-arrow isNext" onClick="avanzaSlide(1,
                 {{this.partnerID}})">
                 <svg class="Slider-svg" xmlns="http://www.w3.org/2000/svg"
                     width="16" height="16" fill="currentColor" viewBox="0 0 16
@@ -73,8 +74,8 @@
                     </div>
                     <div class="ColumnB">
                         {{#each partner}}
-                            <button id="btnEditPartner" onClick=edit({{this.partnerID}}) type="button"  class="btn btn-outline-info" title="Edit Partner" data-toggle="modal" data-target="#modalEditPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
-                            <button id="btnReservedBook" onClick=reservedBook({{this.partnerID}}) class="btn btn-secondary" title="Reserve a Book"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
+                            <button id="btnEditPartner" onClick="edit({{this.partnerID}})" type="button"  class="btn btn-outline-info" title="Edit Partner" data-toggle="modal" data-target="#modalEditPartner" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
+                            <button id="btnReservedBook" onClick="reservedBook({{this.partnerID}}, '{{this.dni}}')" class="btn btn-secondary" title="Reserve a Book" data-toggle="modal" data-target="#modalReserveBook"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
                         {{/each}}
                     </div>
                 </div>
@@ -98,7 +99,7 @@
                             <span>
                         </div>
                         <div class="ColumnB">
-                            <h3 class="Column-h3">Created At: </h3>
+                            <h3 class="Column-h3">Member since: </h3>
                             <span class="Column-span">{{this.date}}</span>
                         </div>
                     {{/each}}
@@ -110,7 +111,7 @@
                             <span class="Column-span"></span>
                         </div>
                         <div class="ColumnB">
-                            <h3 class="Column-h3">Update At: </h3>
+                            <h3 class="Column-h3">Updated on: </h3>
                             <span class="Column-span">{{this.updateDate}}</span>
                         </div>
                     {{/each}}
@@ -230,7 +231,7 @@
                 </div>
                 <div class="ColumnB">
                     {{#each partner}}
-                        <button class="btn btn-danger" onClick=deletePartner({{this.partnerID}})  type="button">Delete</button>
+                        <button class="btn btn-danger" onClick="deletePartner({{this.partnerID}})"  type="button">Delete</button>
                     {{/each}}
                 </div>
             </div>

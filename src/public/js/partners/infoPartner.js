@@ -564,7 +564,8 @@ var _PARTNERID = "";
         edit(partnerID);
     };
 // TODO ✅ FUNCTION FOR RESERVE BOOK
-    async function reservedBook(partnerID) {
-        const idPartner = partnerID;
-        console.log("SE VA A RESERVAR ESTE LIBRO ==> ", idPartner);
+    async function reservedBook(idPartner, dniPartner) {
+        const partnerID = idPartner;
+        const partnerDni = dniPartner;
+        await globalReserveBook(null, null, partnerID, partnerDni);
     };

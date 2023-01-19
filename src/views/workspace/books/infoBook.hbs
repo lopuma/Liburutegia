@@ -1,6 +1,7 @@
 <link href="/style/styleBooks/infoBook.css" rel="stylesheet" />
 
 {{> modalEditBook}}
+{{> modalReserveBook}}
 
 <div class="Info-contenedor" id="stateInfoBook">
     {{#each book}}
@@ -176,7 +177,7 @@
                         <div class="Review-actions">
                             <button id="btnEditBook" onClick=_editBook({{this.bookID}}) type="button" class="Action-btn btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
                             {{#unless this.reserved}}
-                                <button id="btnReserveBook" onClick=reserveBook({{this.bookID}}) class="Action-btn btn btn-secondary" title="Reserve a Book"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
+                                <button id="btnReserveBook" onClick="reserveBook({{this.bookID}}, '{{this.title}}')" class="Action-btn btn btn-secondary" title="Reserve a Book" data-toggle="modal" data-target="#modalReserveBook"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
                             {{/unless}}
                             <button id="btnDeleteBook" class="Action-btn isDelete btn btn-danger" onClick=deleteBook({{this.bookID}})  type="button">Delete</button>
                         </div>
@@ -260,9 +261,10 @@
     }
 
 // TODO ✅ RESERVAR LIBRO
-    async function reserveBook(idBook){
-        const bookID = idBook;
-        console.log(bookID);
+    async function reserveBook(bookID, bookTitle){
+        const idBook= bookID;
+        const titleBook= bookTitle;
+        await globalReserveBook(idBook, titleBook, null, null);
     }
 
 // TODO ✅ UPLOAD COVER

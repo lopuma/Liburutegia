@@ -29,7 +29,8 @@
                                 <div class="Box">
                                     <i class="Box-i fa-solid fa-book"></i>
                                     <div class="Box-animation Animation">
-                                        <select class="Animation-input selectTitle" id="selectTitle" name="selectTitle" style="width:95%" size="2" tabindex="2" required>
+                                        <select class="Animation-input reserveSelectTitle" id="reserveSelectTitle" name="reserveSelectTitle" style="width:95%" size="2" 
+                                        onChange="loadBookID()" tabindex="2" required>
                                             <option></option>
                                         </select>
                                         <label class="Animation-label" for="inputTitle">Title *</label>
@@ -56,10 +57,10 @@
                                 <div class="Box">
                                     <i class="Box-i fa-regular fa-newspaper"></i>
                                     <div class="Box-animation Animation">
-                                        <select class="Animation-input selectDni" id="selectDni" name="selectDni" style="width:95%" size="2" tabindex="4" onChange="loadPartnerID()" required>
+                                        <select class="Animation-input selectDniReserve" id="selectDniReserve" name="selectDniReserve" style="width:95%" size="2" tabindex="4" onChange="loadPartnerID()" required>
                                             <option></option>
                                         </select>
-                                        <label class="Animation-label" for="selectDni">Dni *</label>
+                                        <label class="Animation-label" for="selectDniReserve">Dni *</label>
                                     </div>
                                 </div>
                             </div>
@@ -90,30 +91,38 @@
 </div>
 
 <script type="text/javascript" defer>
-    (() => {
-        $(".selectTitle").select2({
+    /*(() => {
+        $(".reserveSelectTitle").select2({
             placeholder: "Select BOOK Title",
         });
-        $(".selectDni").select2({
+        $(".selectDniReserve").select2({
             placeholder: "Select DNI Partner",
         });
         console.log("se ejecuta ?---")
-    })();
+    })();*/
 
     function loadPartnerID() {
-        const selectDni = document.getElementById("selectDni");
+        const selectDniReserve = document.getElementById("selectDniReserve");
         const inputPartnerID = document.getElementById("reservePartnerID");
-        const index = selectDni.selectedIndex;
-        const opcionSeleccionada = selectDni.options[index];
+        const index = selectDniReserve.selectedIndex;
+        const opcionSeleccionada = selectDniReserve.options[index];
         inputPartnerID.value = fillZeros(opcionSeleccionada.value);
+    }
+
+    function loadBookID() {
+        const reserveSelectTitle = document.getElementById("reserveSelectTitle");
+        const inputBookID = document.getElementById("reserveBookID");
+        const index = reserveSelectTitle.selectedIndex;
+        const opcionSeleccionada = reserveSelectTitle.options[index];
+        inputBookID.value = fillZeros(opcionSeleccionada.value);
     }
 
     document.querySelector("#btnReserveBook").addEventListener("click", (e) => {
         e.preventDefault();
-        const indexTitle = document.getElementById("selectTitle").selectedIndex;
-        const optionSelectTitle = document.getElementById("selectTitle").options[indexTitle];
-        const indexDni = document.getElementById("selectDni").selectedIndex;
-        const optionSelectDni = document.getElementById("selectDni").options[indexDni];
+        const indexTitle = document.getElementById("reserveSelectTitle").selectedIndex;
+        const optionSelectTitle = document.getElementById("reserveSelectTitle").options[indexTitle];
+        const indexDni = selectDniReserve.selectedIndex;
+        const optionSelectDni = document.getElementById("selectDniReserve").options[indexDni];
         console.log(removeZeros(document.getElementById("reserveBookID").value));
         console.log(optionSelectTitle.text);
         console.log(removeZeros(document.getElementById("reservePartnerID").value));
