@@ -362,6 +362,7 @@
 // TODO LOAD DNI
 async function loadDni(data) {
     $("#selectDniReserve").html("");
+    document.getElementById("reservePartnerID").value = "";
     const partners = data;
     partners.forEach(partner => {
         const option = document.createElement("option");
@@ -369,7 +370,6 @@ async function loadDni(data) {
         option.text = partner.dni;
         document.getElementById("selectDniReserve").add(option);
     })
-    console.log("LENGTH =>> ", partners.length)
     if (partners.length <= 1) {
         const sel = document.getElementById("selectDniReserve");
         const opt = sel[0];
@@ -384,19 +384,21 @@ async function loadDni(data) {
 // TODO LOAD TITLE
 async function loadTitle(data) {
     $("#reserveSelectTitle").html("");
+    document.getElementById("reserveBookID").value = "";
     const books = data;
     books.forEach(book => {
-        const option = document.createElement("option");
-        option.value = book.bookID;
-        option.text = book.title;
-        document.getElementById("reserveSelectTitle").add(option);
+        if (book.reserved === 0) {
+            const option = document.createElement("option");
+            option.value = book.bookID;
+            option.text = book.title;
+            document.getElementById("reserveSelectTitle").add(option);
+        }
     })
     if (books.length <= 1) { 
         const sel = document.getElementById("reserveSelectTitle");
         const opt = sel[0];
         $("#reserveSelectTitle").val(opt.value);
         document.getElementById("reserveBookID").value = fillZeros(opt.value);
-        //return true;
     }
     $(".reserveSelectTitle").select2({
         placeholder: "Select BOOK Title",
@@ -409,21 +411,14 @@ async function loadTitle(data) {
         const bookTitle = titleBook;
         const partnerID = idPartner;
         const partnerDni = dniPartner;
-        console.log({
-            bookID,
-            bookTitle,
-            partnerID,
-            partnerDni,
-        });
         if (bookID !== null && bookTitle !== null) { 
             const data = [{
                 bookID,
-                title: bookTitle
+                title: bookTitle,
+                reserved: 0
             }];
-            console.log("ENVIO DATA CON LENG ", data.length)
             await loadTitle(data)
         } else {
-            console.log("ENTRA BOOK NO NULL");
             const urlTitleBooks = `/api/books/`;
             fetch(urlTitleBooks, {
                 method: "GET",
@@ -436,7 +431,6 @@ async function loadTitle(data) {
                 .then(async data => await loadTitle(data));
         }
         if (partnerID === null && partnerDni === null) {
-            console.log("ENTRA PARTNER NUL Y DNI NULL");
             const urlPartners = "/api/partners/"
             fetch(urlPartners, {
                 method: "GET",
@@ -452,7 +446,6 @@ async function loadTitle(data) {
                 partnerID,
                 dni: partnerDni
             }];
-            console.log("ENVIO DATA CON LENG ", data.length)
             await loadDni(data)
         }
     }

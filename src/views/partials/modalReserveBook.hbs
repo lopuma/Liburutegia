@@ -91,15 +91,8 @@
 </div>
 
 <script type="text/javascript" defer>
-    /*(() => {
-        $(".reserveSelectTitle").select2({
-            placeholder: "Select BOOK Title",
-        });
-        $(".selectDniReserve").select2({
-            placeholder: "Select DNI Partner",
-        });
-        console.log("se ejecuta ?---")
-    })();*/
+    const formReserveBook = document.getElementById  ( "formReserveBook"        );
+    const inputsBook      = document.querySelectorAll( "#formReserveBook input" );
 
     function loadPartnerID() {
         const selectDniReserve = document.getElementById("selectDniReserve");
@@ -117,15 +110,109 @@
         inputBookID.value = fillZeros(opcionSeleccionada.value);
     }
 
-    document.querySelector("#btnReserveBook").addEventListener("click", (e) => {
+// TODO RESPUESTA DEL SERVIDOR 
+
+    async function responseReserve(data) {
+        console.log(data);
+        const success = data.success;
+        const title = data.swalTitle;
+        const message = data.messageSuccess || data.errorMessage;
+
+        if (success) {
+            Swal.fire({
+                title: title || "Success....!",
+                text: message,
+                icon: 'success',
+                timer: 2000,
+                confirmButtonText: 'OK',
+            })
+                .then(async () => {
+                //await ClosePopup("#modalReserveBook");
+                try {
+                    if (_STATEINFOBOOK) { // 
+                        location.reload(true);
+                    }
+                    else if(_STATEBOOK) { 
+                        await reloadDataBooks();
+                    }
+                } catch (error) { }
+                console.log("RELOAD SUCESS");
+            });
+        } else {
+            Swal.fire({
+                title: title || "Oops....!",
+                text: message,
+                icon: 'error',
+                timer: 2000,
+                confirmButtonText: 'OK',
+            })
+                .then(async () => {
+                    //await ClosePopup("modalReserveBook");
+                    try {
+                        if(_STATEBOOK) { 
+                            await ClosePopup("#modalReserveBook");
+                            await reloadDataBooks();
+                        } 
+                        
+                    } catch (error) { }
+                    try {
+                        if ($('#stateInfoPartner').val() === ''){
+                            console.log("ESTOY EN PARTNER");
+                            const sel = document.getElementById("selectDniReserve");
+                            const opt = sel[0];
+                            console.log({opt});
+                            //$("#selectDniReserve").val(opt.value);
+                            const idPartner = fillZeros(opt.value);
+                            const dniPartner = opt.text;
+                            await extractDataFormReserve(null, null, idPartner, dniPartner);
+                        }
+                    } catch (error) { }
+                });
+                console.log("RELOAD ERROR")
+        }
+    }
+
+// TODO ✅ CORRECT FORMS
+    async function correctFormsReserveBook(e) {
         e.preventDefault();
         const indexTitle = document.getElementById("reserveSelectTitle").selectedIndex;
         const optionSelectTitle = document.getElementById("reserveSelectTitle").options[indexTitle];
         const indexDni = selectDniReserve.selectedIndex;
         const optionSelectDni = document.getElementById("selectDniReserve").options[indexDni];
-        console.log(removeZeros(document.getElementById("reserveBookID").value));
-        console.log(optionSelectTitle.text);
-        console.log(removeZeros(document.getElementById("reservePartnerID").value));
-        console.log(optionSelectDni.text);
-    });
+        const bookID = removeZeros(document.getElementById("reserveBookID").value);
+        const title = optionSelectTitle.text;
+        const partnerID = removeZeros(document.getElementById("reservePartnerID").value);
+        const partnerDni = optionSelectDni.text;
+        const reserveDate = document.getElementById("reserveDate").value;
+        const data = {
+            bookID,
+            title,
+            partnerID,
+            partnerDni,
+            reserveDate,
+        }
+        const urlAddReserve = `/api/books/add/reserve/${bookID}`
+
+        fetch(urlAddReserve, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+            .then((response) => response.json())
+            .then(async (data) => {
+                await responseReserve(data);
+            })
+            .catch((error) => console.error(error));
+    }
+
+// TODO ✅ EVENTO AL ENVIAR FORMULARIO
+    try {
+        document.addEventListener("DOMContentLoaded", function () {
+            formReserveBook.addEventListener("submit", correctFormsReserveBook);
+        });
+    } catch (error) { }
+
 </script>
