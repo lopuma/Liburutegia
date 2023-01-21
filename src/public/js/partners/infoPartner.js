@@ -162,7 +162,7 @@ var _PARTNERID = "";
             for (let elemento of data.data) {
                 const reserved = elemento.reserved;
                 const idBookingReview = elemento.bookingID_review;
-                let reservationDate = moment(elemento.reservation_date).format("MMMM Do, YYYY HH:mm A");
+                let reservationDate = moment(elemento.reserveDate).format("MMMM Do, YYYY HH:mm A");
                 if (reserved === 1 && idBookingReview === null) {
                     let myActivesReserves = Object.create(elemento);
                     myActivesReserves['bookID'] = elemento.bookID;
@@ -170,7 +170,7 @@ var _PARTNERID = "";
                     myActivesReserves['title'] = elemento.title;
                     myActivesReserves['isbn'] = elemento.isbn;
                     myActivesReserves['author'] = elemento.author;
-                    myActivesReserves['reservation_date'] = reservationDate;
+                    myActivesReserves['reserveDate'] = reservationDate;
                     dataActive.push(myActivesReserves);
                 }
             }
@@ -202,7 +202,7 @@ var _PARTNERID = "";
                 { data: "title" },
                 { data: "isbn" },
                 { data: "author" },
-                { data: "reservation_date" },
+                { data: "reserveDate" },
                 {
                     data: null,
                     render: function (data) {
@@ -322,7 +322,7 @@ var _PARTNERID = "";
                 const starTotal = 5;
                 const reserved = elemento.reserved;
                 const idBookingReview = elemento.bookingID_review;
-                let reservationDate = moment(elemento.reservation_date).format("MMMM Do, YYYY HH:mm A");
+                let reservationDate = moment(elemento.reserveDate).format("MMMM Do, YYYY HH:mm A");
                 let deliverDateReview = moment(elemento.deliver_date_review).format("MMMM Do, YYYY HH:mm A");
                 const starPercentage = elemento.score / starTotal * 100;
                 const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
@@ -333,7 +333,7 @@ var _PARTNERID = "";
                     myHistoryReserves['title'] = elemento.title;
                     myHistoryReserves['isbn'] = elemento.isbn;
                     myHistoryReserves['author'] = elemento.author;
-                    myHistoryReserves['reservation_date'] = reservationDate;
+                    myHistoryReserves['reserveDate'] = reservationDate;
                     myHistoryReserves['deliver_date_review'] = deliverDateReview;
                     myHistoryReserves['score'] = starPercentageRounded;
                     myHistoryReserves['review'] = elemento.review
@@ -368,7 +368,7 @@ var _PARTNERID = "";
                 { data: "title" },
                 { data: "isbn" },
                 { data: "author" },
-                { data: "reservation_date" },
+                { data: "reserveDate" },
                 { data: "deliver_date_review" },
                 {
                     data: null,

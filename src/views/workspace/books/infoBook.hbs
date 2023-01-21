@@ -3,6 +3,7 @@
 {{> modalEditBook}}
 {{> modalReserveBook}}
 
+
 <div class="Info-contenedor" id="stateInfoBook">
     {{#each book}}
         <script>
@@ -14,7 +15,6 @@
         <div class="Info-cover">    
             <div class="Cover-upload Upload" >
                 <form name="formUpload" id="formUpload">
-                    <!--<div class="Upload-group" id="imgBox" style="background-image: url('/img/covers/{{this.cover}}')"> -->
                     <div class="Upload-group" id="imgBox">
                         <input type="file" class="Upload-file" name="coverImage" accept="image/*" id="coverImage" onchange="loadFile(event)">
                         <label for="coverImage" class="Upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></label>
@@ -37,152 +37,196 @@
                 </form>
             </div>
         </div>
-        <div class="Info-contents Contents">
-            <div class="Contents-data">
-                {{#each book}}
-                    <div class="Contents-information Information">
-                        <div class="Information-title Title">
-                            <i class="Title-i fa-solid fa-book-open"></i>
-                            <h1 class="Title-h1">
-                                {{this.title}}
-                            </h1>
-                        </div>
-                        <div class="Information-author Author">
-                            <label>by <span>{{this.author}}</span></label>
-                        </div>
-                        <h2 class="Information-subtitle">Bibliographic Record</h2>
-                        <hr>
-                        <!-- TODO BOOK ID -->
-                        <div class="Information-boxes">
-                            <div class="Information-row">
-                                <h3 class="Information-h3">
-                                    Book ID:
-                                </h3>
-                            </div>
-                            <div class="Information-cell">
-                                <span class="Information-span">
-                                    {{this.bookID}}
-                                </span>
-                            </div>
-                        </div>
-                        <!-- TODO FECHA COMPRA -->
-                        <div class="Information-boxes">
-                            <div class="Information-row">
-                                <h3 class="Information-h3">
-                                    Date of purchase:
-                                </h3>
-                            </div>
-                            <div class="Information-cell">
-                                <span class="Information-span">
-                                    {{this.purchase_date}}
-                                </span>
-                            </div>
-                        </div>
-                        <!-- TODO ISBN -->
-                        <div class="Information-boxes">
-                            <div class="Information-row">
-                                <h3 class="Information-h3">
-                                    Print ISBN:
-                                </h3>
-                            </div>
-                            <div class="Information-cell">
-                                <span class="Information-span">
-                                    {{this.isbn}}
-                                </span>
-                            </div>
-                        </div>
-                        <details class="Information-details">
-                            <summary class="Information-summary"><dfn>....more details<dfn></summary>
-                            <!-- TODO COLLECTION -->
-                            <div class="Information-boxes">
-                                <div class="Information-row">
-                                    <h3 class="Information-h3">
-                                        Collection:
-                                    </h3>
-                                </div>
-                                <div class="Information-cell">
-                                    <span class="Information-span">
-                                        {{this.collection}}
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- TODO FECHA TYPE -->
-                            <div class="Information-boxes">
-                                <div class="Information-row">
-                                    <h3 class="Information-h3">
-                                        Category:
-                                    </h3>
-                                </div>
-                                <div class="Information-cell">
-                                    <span class="Information-span">
-                                        {{this.type}}
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- TODO FECHA LANGUAGE -->
-                            <div class="Information-boxes">
-                                <div class="Information-row">
-                                    <h3 class="Information-h3">
-                                        Language:
-                                    </h3>
-                                </div>
-                                <div class="Information-cell">
-                                    <span class="Information-span">
-                                        {{this.language}}
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- TODO FECHA OBSERVATIONS -->
-                            <div class="Information-boxes">
-                                <div class="Information-row">
-                                    <h3 class="Information-h3">
-                                        Observations:
-                                    </h3>
-                                </div>
-                                <div class="Information-cell isObservation">
-                                    <span class="Information-span">
-                                        {{this.observation}}
-                                    </span>
-                                </div>
-                            </div>
-                        </details>
+        <div class="Contents-information Information">
+            {{#each book}}
+                <div class="Information-title Title">
+                    <i class="Title-i fa-solid fa-book-open"></i>
+                    <h1 class="Title-h1">
+                        {{this.title}}
+                    </h1>
+                </div>
+                <div class="Information-author Author">
+                    <label>by <span>{{this.author}}</span></label>
+                </div>
+                <h2 class="Information-subtitle">Bibliographic Record</h2>
+                <hr class="Container-hr">
+                <!-- TODO BOOK ID -->
+                <div class="Information-boxes">
+                    <div class="Information-row">
+                        <h3 class="Information-h3">
+                            Book ID:
+                        </h3>
                     </div>
-                    <div class="Contents-totalReview Review">
-                        <h3>CUSTOMER REVIEWS</h3>
-                        <hr>
-                        <div class="Review-header">
-                            <div class="Review-star">
-                                <div class="stars-outer">
-                                    <div class="stars-inner" id="totalScore" style="cursor: pointer" title="Total score {{this.rating}} star">
+                    <div class="Information-cell">
+                        <span class="Information-span" id="informationBookID">
+                            <script>
+                                function fillZeros(id){
+                                    let num = id.toString();
+                                    let large = 10;
+                                    for (let i = 0; i < (large - num.length); i++) {
+                                        num = "0" + num
+                                    }
+                                    return num
+                                }
+                                document.getElementById("informationBookID").innerHTML = fillZeros({{this.bookID}});
+                            </script>
+                        </span>
+                    </div>
+                </div>
+                <!-- TODO FECHA COMPRA -->
+                <div class="Information-boxes">
+                    <div class="Information-row">
+                        <h3 class="Information-h3">
+                            Date of purchase:
+                        </h3>
+                    </div>
+                    <div class="Information-cell">
+                        <span class="Information-span">
+                            {{this.purchase_date}}
+                        </span>
+                    </div>
+                </div>
+                <!-- TODO ISBN -->
+                <div class="Information-boxes">
+                    <div class="Information-row">
+                        <h3 class="Information-h3">
+                            Print ISBN:
+                        </h3>
+                    </div>
+                    <div class="Information-cell">
+                        <span class="Information-span">
+                            {{this.isbn}}
+                        </span>
+                    </div>
+                </div>
+                <details class="Information-details">
+                    <summary class="Information-summary"><dfn>....more details<dfn></summary>
+                    <!-- TODO COLLECTION -->
+                    <div class="Information-boxes">
+                        <div class="Information-row">
+                            <h3 class="Information-h3">
+                                Collection:
+                            </h3>
+                        </div>
+                        <div class="Information-cell">
+                            <span class="Information-span">
+                                {{this.collection}}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- TODO FECHA TYPE -->
+                    <div class="Information-boxes">
+                        <div class="Information-row">
+                            <h3 class="Information-h3">
+                                Category:
+                            </h3>
+                        </div>
+                        <div class="Information-cell">
+                            <span class="Information-span">
+                                {{this.type}}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- TODO FECHA LANGUAGE -->
+                    <div class="Information-boxes">
+                        <div class="Information-row">
+                            <h3 class="Information-h3">
+                                Language:
+                            </h3>
+                        </div>
+                        <div class="Information-cell">
+                            <span class="Information-span">
+                                {{this.language}}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- TODO FECHA OBSERVATIONS -->
+                    <div class="Information-boxes">
+                        <div class="Information-row">
+                            <h3 class="Information-h3">
+                                Observations:
+                            </h3>
+                        </div>
+                        <div class="Information-cell isObservation">
+                            <span class="Information-span">
+                                {{this.observation}}
+                            </span>
+                        </div>
+                    </div>
+                </details>
+            {{/each}}
+        </div>
+        <div class="Contents-totalReview Review">
+            <div class="Review-header">
+                {{#each book}}
+                    <h3>   CUSTOMER REVIEWS   </h3>
+                    <div class="Review-star">
+                        <div class="stars-outer">
+                            <div class="stars-inner" id="totalScore" style="cursor: pointer" title="Total score {{this.rating}} star">
+                            </div>
+                        </div>
+                        <span>{{#if this.rating}}{{this.rating}} of 5{{else}}0 of 5{{/if}}</span>
+                    </div>
+                    <div class="Review-lastupdate Update">
+                        <div class="Update-a">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                            <span class="Update-span">Last Update:</span>
+                        </div>
+                        <div class="Update-b">
+                            <strong>{{this.lastUpdate}}</strong>
+                        </div>
+                    </div>
+                    <div class="Review-total Total">
+                        <div class="Total-a">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span class="Update-span">Review:</span>
+                        </div>
+                        <div class="Total-b">
+                            <a href="#customerReviews"><span class="Review-span">{{this.numVotes}} Overall Ratings</span></a>
+                        </div>
+                    </div>
+                    {{#unless this.reserved}}
+                        <div class="Review-reserved Reserved">
+                            <div class="Reserved-a">
+                                <i class="fa-solid fa-book"></i> 
+                                <span>The book is</span>
+                            </div>
+                            <div class="Reserved-b">
+                                <span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em">Available</span>
+                            </div>
+                        </div>
+                    {{/unless}}
+                {{/each}}
+                {{#if deliver}}
+                    {{#each deliver}}
+                        <div class="Review-reserved">
+                            {{#if this.reserved}}
+                                <div class="Review-avaliable">
+                                    <i class="fa-solid fa-book"></i> The book is  
+                                    <span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em">Not available</span>
+                                </div>
+                                <div class="Review-delivered Delivered">
+                                    <div class="Delivered-head">Book reserved by:</div>
+                                    <div class="Delivered-reserved" id="reserveBy">
+                                        <i class="fa-solid fa-user-check"></i>
+                                        <a href="/workspace/partners/info/{{this.partnerID}}">
+                                            <span class="Delivered-span">{{this.partnerDni}}</span>
+                                        </a>
                                     </div>
                                 </div>
-                                <span>{{#if this.rating}}{{this.rating}} of 5{{else}}0 of 5{{/if}}</span>
-                            </div>
-                            <div class="Review-lastupdate Update">
-                                <i class="fa-regular fa-pen-to-square"></i><span class="Update-span">Last Update </span><strong>{{this.lastUpdate}}</strong>
-                            </div>
-                            <div class="Review-total">
-                                <i class="fa-solid fa-chart-line"></i> <a href="#customerReviews"><span class="Review-span">{{this.numVotes}} Overall Ratings</span></a>
-                            </div>
-                            <div class="Review-reserved">
-                                {{#if this.reserved}}                                
-                                    <i class="fa-solid fa-book"></i> The book is  <span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em">Not available</span>
-                                {{else}}
-                                    <i class="fa-solid fa-book"></i> The book is  <span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em">Available</span>
-                                {{/if}}
-                            </div>
+                            {{/if}}
                         </div>
-                        <h3>ACTIONS</h3>
-                        <hr>
-                        <div class="Review-actions">
-                            <button id="btnEditBook" onClick=_editBook({{this.bookID}}) type="button" class="Action-btn btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
-                            {{#unless this.reserved}}
-                                <button id="btnReserveBook" onClick="reserveBook({{this.bookID}}, '{{this.title}}')" class="Action-btn btn btn-secondary" title="Reserve a Book" data-toggle="modal" data-target="#modalReserveBook"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
-                            {{/unless}}
-                            <button id="btnDeleteBook" class="Action-btn isDelete btn btn-danger" onClick=deleteBook({{this.bookID}})  type="button">Delete</button>
-                        </div>
-                    </div>
-                    
+                    {{/each}}
+                {{/if}}
+            </div>
+            <div class="Review-actions">
+                {{#each book}}
+                    <h3>   ACTIONS   </h3>
+                    <button id="btnEditBook" onClick=_editBook({{this.bookID}}) type="button" class="Action-btn btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
+                    {{#unless this.reserved}}
+                        <button id="btnReserveBook" onClick="reserveBook({{this.bookID}}, '{{this.title}}')" class="Action-btn btn btn-secondary" title="Reserve a Book" data-toggle="modal" data-target="#modalReserveBook"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
+                    {{/unless}}
+                    <button id="btnInfoDeleteBook" class="Action-btn isDelete btn btn-danger" onClick=deleteBook({{this.bookID}})  type="button">Delete</button>
                 {{/each}}
             </div>
         </div>
@@ -193,16 +237,13 @@
             <span class="Container-span">Reviews</span>
         </div>
         <hr class="Container-hr">
-        <div class="Container-review" id="containerReview">
-
-        </div>
+        <div class="Container-review" id="containerReview"></div>
     </div>
 </div>
 
 <script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
 
 <script defer type="text/javascript">
-
     const imgBox = document.getElementById('imgBox');
     const btnEditBook = document.getElementById('btnEditBook');
     const btnReserveBook = document.getElementById('btnReserveBook');
@@ -211,6 +252,7 @@
     const btnUpload = document.getElementById('btnUpload');
     const coverImage = document.getElementById('coverImage');
     const bookCoverID = document.getElementById('bookCoverID');
+
 
 //TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA BOOK
     try {
@@ -299,8 +341,6 @@
             }, 5000);
         }
     }
-
-
 // TODO ✅ ELIMNAR LIBRO
     async function deleteBook(idBook){
         opcion = 'delete';
@@ -321,6 +361,7 @@
             .then((response) => response.json())
             .then((data) => createCardReview(data));
     }) ( )
+    
     function generarNuevoColor(){
         var simbolos, color;
         simbolos = "0123456789ABCDEF";

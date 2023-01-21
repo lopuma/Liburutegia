@@ -4,9 +4,6 @@ const flash = require("connect-flash");
 
 
 const bookingController = {
-    //TODO VALIDATIONS
-    validate: [body("email", "The format email address is incorrect.").isEmail()],
-
     //TODO EXISTS DNI BOOKINGS
     existBooking: async (req, res, next) => {
         try {
@@ -69,26 +66,28 @@ const bookingController = {
     //TODO ✅ SHOW ALL BOOKINGS
     getBookings: async (req, res) => {
         try {
-            const sqlSelect = "SELECT * FROM bookings";
+            const sqlSelect = `select bk.bookingID, bk.bookID, b.title as title, bk.partnerDni, CONCAT(p.lastname, ", ", p.name) as fullname, bk.reserveDate, bk.delivered from bookings bk INNER JOIN partners p ON p.dni=bk.partnerDNI INNER JOIN books b ON b.bookID=bk.bookID`;
             await connection.query(sqlSelect, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
-                        code: 400,
-                        message: err
+                        success: false,
+                        messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
                 if (results.length === 0) {
                     return res.status(200).send({
                         success: false,
-                        messageNotFound: "No data found for Bookings"
+                        swalTitle: "No found....!",
+                        errorMessage:
+                            "[ ERROR ], There are no data in the table bookings, Liburutegia.",
+                        data: null
                     });
                 }
-                res.status(200).send({
-                    success: true,
-                    messageSuccess: results.msg,
-                    data: results
-                });
+                let data = results;
+                res.status(200).send(data);
             });
         } catch (error) {
             console.error(error);
@@ -118,7 +117,7 @@ const bookingController = {
         }
     },
 
-    // TODO
+    // TODO ✅ ADD NEW BOOKINGS
     infoBooking: async (req, res) => {
         try {
             const idBooking = req.params.idBooking;
@@ -126,7 +125,7 @@ const bookingController = {
             const rolAdmin = req.session.roladmin;
             const sqlBooking = "SELECT * FROM bookings WHERE bookingID = ?";
             const sqlBookin =
-                "SELECT p.bookingID, p.dni, p.name, bk.bookingID, bk.bookID, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.bookingID bookingID_review, v.score, v.review, v.deliver_date_review FROM bookings p LEFT OUTER JOIN bookings bk ON p.dni=bk.partnerDNI INNER JOIN books b ON bk.bookID=b.bookIDLEFT OUTER JOIN votes v ON bk.bookingID=v.bookingID WHERE p.dni = ?";
+                "SELECT p.bookingID, p.dni, p.name, bk.bookingID, bk.bookID, b.isbn, b.title, b.author, b.reserved, bk.reserveDate, v.bookingID bookingID_review, v.score, v.review, v.deliver_date_review FROM bookings p LEFT OUTER JOIN bookings bk ON p.dni=bk.partnerDNI INNER JOIN books b ON bk.bookID=b.bookIDLEFT OUTER JOIN votes v ON bk.bookingID=v.bookingID WHERE p.dni = ?";
             await connection.query(sqlBooking, [idBooking], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -180,135 +179,98 @@ const bookingController = {
     // ADD BOOKINGS
     addBooking: async (req, res) => {
         try {
-            const errors = validationResult(req);
-            const {
-                inputDni: dni,
-                inputScanner: scanner,
-                inputName: name,
-                inputLastname: lastname,
-                inputDirection: direction,
-                inputPopulation: population,
-                inputEmail: email,
-                actualDate: date,
-                idBookingFamily,
-                dniFamily
-            } = req.body;
-            let phone1 = req.body.inputPhone;
-            let phone2 = req.body.inputPhoneLandline;
-            if (!dni || !name || !lastname) {
-                return res.send({
-                    status: 400,
-                    exists: true,
-                    errorMessage: `Missing data to complete, can not be empty`
-                });
-            }
-            if (email !== "") {
-                if (!errors.isEmpty()) {
-                    req.flash("errorValidation", errors.array());
-                    return res.send({
-                        status: 304,
-                        exists: false,
-                        messageSuccess: errors.array()
+            const bookID = req.params.idBook;
+            const { title, partnerID, partnerDni, reserveDate } = req.body;
+            const selectReserve = `SELECT b.reserved as reserved, b.title as title, bk.partnerDNI as dni, CONCAT(p.lastname,", ", p.name) as fullname FROM books b INNER JOIN bookings bk ON bk.bookID=b.bookID INNER JOIN partners p on p.dni=bk.partnerDNI WHERE b.bookID = ${bookID} and bk.delivered=0`;
+            await connection.query(selectReserve, async (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        swalTitle: "Error BD",
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-            }
-            const phonea = phone1 ? parseInt(phone1) : null;
-            const phoneb = phone2 ? parseInt(phone2) : null;
-            if (idBookingFamily === "null" || dniFamily === "null") {
-                await addNewBooking(
-                    dni,
-                    scanner,
-                    name,
-                    lastname,
-                    direction,
-                    population,
-                    phonea,
-                    phoneb,
-                    email,
-                    date
-                );
-            } else {
-                const sqlInsertFamily = "INSERT INTO familys SET ?";
-                await connection.query(
-                    sqlInsertFamily,
-                    {
-                        dni,
-                        id_familiar_booking: idBookingFamily
-                    },
-                    async err => {
-                        if (err) {
-                            console.error("[ DB ]", err.sqlMessage);
-                            return res.status(400).send({
-                                code: 400,
-                                message: err
-                            });
-                        }
-                        await addNewBooking(
-                            dni,
-                            scanner,
-                            name,
-                            lastname,
-                            direction,
-                            population,
-                            phonea,
-                            phoneb,
-                            email,
-                            date
-                        );
+                try {
+                    if (results[0].reserved === 1) {
+                        return res.status(200).send({
+                            success: false,
+                            swalTitle: "Data exists....!",
+                            errorMessage: `The book with ID: '${bookID}' - '${results[0].title}', has a reservation to partner Dni: '${results[0].dni}' - '${results[0].fullname}'.`
+                        });
                     }
-                );
-            }
-        } catch (error) {
-            console.error(error);
-            res.status(500).redirect("/");
-        }
-
-        async function addNewBooking(
-            dni,
-            scanner,
-            name,
-            lastname,
-            direction,
-            population,
-            phonea,
-            phoneb,
-            email,
-            date
-        ) {
-            const sqlInsert = "INSERT INTO bookings SET ?";
-            await connection.query(
-                sqlInsert,
-                {
-                    dni,
-                    scanner,
-                    name,
-                    lastname,
-                    direction,
-                    population,
-                    phone1: phonea,
-                    phone2: phoneb,
-                    email,
-                    date
-                },
-                (err, results) => {
+                } catch (error) { }
+                const selectExistDni = `SELECT dni FROM partners WHERE dni='${partnerDni}'`;
+                await connection.query(selectExistDni, async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
-                            code: 400,
-                            message: err
+                            success: false,
+                            messageErrBD: err,
+                            swalTitle: "Error BD",
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                     }
-                    req.flash(
-                        "messageSuccess",
-                        `Booking successfully created, with BOOKINGS ID : ${results.insertId}`
-                    );
-                    res.status(200).send({
-                        success: true,
-                        exists: false,
-                        messageSuccess: `Booking successfully created, with BOOKINGS ID : ${results.insertId}`
+                    if (results.length === 0) {
+                        return res.status(200).send({
+                            success: false,
+                            swalTitle: "Data no exists....!",
+                            errorMessage: `The member's DNI : ${partnerDni} does not exist in the database`
+                        });
+                    }
+                    //const selectExistBooking = `select * from bookings WHERE partnerDNI='${partnerDni}' AND bookID=${bookID}`;
+                    //await connection.query(selectExistBooking, async (err, results) => {
+                        /*if (err) {
+                            console.error("DB", err.sqlMessage);
+                            return res.status(400).send({
+                                success: false,
+                                messageErrBD: err,
+                                swalTitle: "Error BD",
+                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                            });
+                        }*/
+                        /*if (results.length > 0) {
+                            return res.status(200).send({
+                                success: false,
+                                swalTitle: "Data exists....!",
+                                errorMessage: `The book with ID: '${bookID}', has a reservation to partner Dni: '${results[0].partnerDNI}'.`
+                            });
+                        }*/
+                    const insertBooking = [
+                        `UPDATE books SET reserved=if(reserved = 0, 1, 1) WHERE bookID=${bookID}`,
+                        "INSERT INTO bookings SET ?"
+                    ]
+                    const dataReserve = {
+                        bookID,
+                        partnerDni,
+                        reserveDate
+                    }
+                    await connection.query(insertBooking.join(";"), dataReserve, (err, results) => {
+                        if (err) {
+                            console.error("[ DB ]", err.sqlMessage);
+                            return res.status(400).send({
+                                success: false,
+                                messageErrBD: err,
+                                swalTitle: "Error BD",
+                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                            });
+                        }
+                        console.log("1 => ", results[1].insertId, "2 => ", results[0].insertId)
+                        res.status(201).send({
+                            success: true,
+                            swalTitle: "Reserve Book added...",
+                            messageSuccess:`Successfully reserved the Book with ID: ${bookID}, it has been created with Booking ID: ${results[1].insertId}, for the partner with Dni: ${partnerDni}
+                            `
+                        });
                     });
-                }
-            );
+                    //});
+                });
+            });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
         }
     },
 

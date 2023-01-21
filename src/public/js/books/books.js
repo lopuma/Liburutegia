@@ -1,8 +1,8 @@
 let opcion = "";
-let _STATEBOOK = false;
-let _STATENEWBOOK = false;
-let _STATEEDITBOOK = false;
-let _STATEINFOBOOK = false;
+//let _STATEBOOK = false;
+//let _STATENEWBOOK = false;
+//let _STATEEDITBOOK = false;
+//let _STATEINFOBOOK = false;
 
 //TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA BOOK
     try {
@@ -90,9 +90,9 @@ let _STATEINFOBOOK = false;
                         if (type === "display") {
                             if (data.reserved === 0) {
                                 btnDisable =
-                                    `<button id="btnReservedBook" onClick="reservedBook(${data.bookID}, '${data.title}')" class="btn btn-secondary" title="Reserved Book" style="cursor: pointer"><i class="fa-solid fa-calendar-days" data-toggle="modal" data-target="#modalReserveBook"></i></button>`;
+                                    `<button id="btnReservedBook" onClick="reservedBook(${data.bookID}, '${data.title}')" class="btn btn-secondary" title="Reserved Book" style="cursor: pointer" data-toggle="modal" data-target="#modalReserveBook"><i class="fa-solid fa-calendar-days" ></i></button>`;
                             } else {
-                                btnDisable = `<button class="btn btn-secondary not-allowed" style="cursor: not-allowed" onclick="return false;"><i class="fa-solid fa-calendar-days"></i></button>`;
+                                btnDisable = `<button class="btn btn-secondary not-allowed" style="cursor: not-allowed" onClick="return false;" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
                             }
                             return (
                                 `

@@ -66,7 +66,7 @@ const bookController = {
                 if (results.length === 0) {
                     return res.status(200).send({
                         success: false,
-                        swalTitle: "[ No found ]",
+                        swalTitle: "No found....!",
                         errorMessage:
                             "[ ERROR ], There are no data in the table books, Liburutegia.",
                         data: null
@@ -95,6 +95,7 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                console.log("ESTE RESULT DONDE SE MUESTRA ", results[0]);
                 return res.status(200).send(results[0]);
             });
         } catch (error) {
@@ -109,7 +110,7 @@ const bookController = {
         const { idBooking, score, review, deliver_date_review } = req.body;
         const sql = [`UPDATE books SET 
                     reserved=0 WHERE bookID=${idBook}`,
-        `UPDATE bookings SET deliver=1 WHERE bookingID=${idBooking}`,
+        `UPDATE bookings SET delivered=1 WHERE bookingID=${idBooking}`,
         `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner) VALUES (${idBook}, ${idBooking}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${idBooking}))`];
         await connection.query(
             sql.join(";"),
@@ -349,7 +350,7 @@ const bookController = {
                     return res.status(403).send({
                         success: false,
                         exists: false,
-                        swalTitle: "[ No found ]",
+                        swalTitle: "No found....!",
                         errorMessage: `[ ERROR ], The BOOK with ID : ${bookID} does not exist`
                     });
                 }
@@ -394,7 +395,7 @@ const bookController = {
                 if (results.length === 0) {
                     return res.status(200).send({
                         success: false,
-                        swalTitle: "[ No found ]",
+                        swalTitle: "No found....!",
                         errorMessage: "[ ERROR ], No results found",
                         data: null
                     });
@@ -407,100 +408,6 @@ const bookController = {
                     data
                 });
             });
-        } catch (error) {
-            console.error(error);
-            res.status(500).redirect("/");
-        }
-    },
-    addReserve: async (req, res) => { 
-        try {
-            const bookID = req.params.idBook;
-            const { title, partnerID, partnerDni, reserveDate } = req.body;
-            const selectReserve = `SELECT b.reserved as reserved, b.title as title, bk.partnerDNI as dni, CONCAT(p.lastname,", ", p.name) as fullname FROM books b INNER JOIN bookings bk ON bk.bookID=b.bookID INNER JOIN partners p on p.dni=bk.partnerDNI WHERE b.bookID = ${bookID}`;
-            await connection.query(selectReserve, async (err, results) => {
-                if (err) {
-                    console.error("[ DB ]", err.sqlMessage);
-                    return res.status(400).send({
-                        success: false,
-                        messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
-                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
-                    });
-                }
-                try {
-                    if (results[0].reserved === 1) {
-                        return res.status(200).send({
-                            success: false,
-                            swalTitle: "[ Data exists....! ]",
-                            errorMessage: `The book with ID: '${bookID}' - '${results[0].title}', has a reservation to partner Dni: '${results[0].dni}' - '${results[0].fullname}'.`
-                        });
-                    }
-                } catch (error) { }
-                const selectExistDni = `SELECT dni FROM partners WHERE dni='${partnerDni}'`;
-                await connection.query(selectExistDni, async (err, results) => {
-                    if (err) {
-                        console.error("[ DB ]", err.sqlMessage);
-                        return res.status(400).send({
-                            success: false,
-                            messageErrBD: err,
-                            swalTitle: "[ Error BD ]",
-                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
-                        });
-                    }
-                    if (results.length === 0) {
-                        return res.status(200).send({
-                            success: false,
-                            swalTitle: "[ Data no exists....! ]",
-                            errorMessage: `The member's DNI : ${partnerDni} does not exist in the database`
-                        });
-                    }
-                    const selectExistBooking = `select * from bookings WHERE partnerDNI='${partnerDni}' AND bookID=${bookID}`;
-                    await connection.query(selectExistBooking, async (err, results) => {
-                        if (err) {
-                            console.error("[ DB ]", err.sqlMessage);
-                            return res.status(400).send({
-                                success: false,
-                                messageErrBD: err,
-                                swalTitle: "[ Error BD ]",
-                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
-                            });
-                        }
-                        if (results.length > 0) {
-                            return res.status(200).send({
-                                success: false,
-                                swalTitle: "[ Data exists....! ]",
-                                errorMessage: `The book with ID: '${bookID}', has a reservation to partner Dni: '${results[0].partnerDNI}'.`
-                            });
-                        }
-                        const insertBooking = [
-                            `UPDATE books SET reserved=if(reserved = 0, 1, 1) WHERE bookID=${bookID}`,
-                            "INSERT INTO bookings SET ?"
-                        ]
-                        const dataReserve = {
-                            bookID,
-                            partnerDni,
-                            reservation_date: reserveDate
-                        }
-                        await connection.query(insertBooking.join(";"), dataReserve, (err, results) => {
-                            if (err) {
-                                console.error("[ DB ]", err.sqlMessage);
-                                return res.status(400).send({
-                                    success: false,
-                                    messageErrBD: err,
-                                    swalTitle: "[ Error BD ]",
-                                    errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
-                                });
-                            }
-                            res.status(201).send({
-                                success: true,
-                                swalTitle: "Reserve Book added...",
-                                messageSuccess: `Book hold with Book ID: ${bookID}, added successfully, Hold ID: ${bookID}, for Dni: ${partnerDni}`
-                            });
-                        });
-                    });  
-                });
-            });
-            
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");

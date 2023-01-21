@@ -167,7 +167,7 @@ const partnerController = {
                     });
                 }
                 const sqlBookin =
-                    "SELECT p.partnerID, p.dni, p.name, bk.bookingID, bk.bookID, b.isbn, b.title, b.author, b.reserved, bk.reservation_date, v.bookingID bookingID_review, v.score, v.review, v.deliver_date_review FROM partners p LEFT OUTER JOIN bookings bk ON p.dni=bk.partnerDNI INNER JOIN books b ON bk.bookID=b.bookID LEFT OUTER JOIN votes v ON bk.bookingID=v.bookingID WHERE p.dni = ?";
+                    "SELECT p.partnerID, p.dni, p.name, bk.bookingID, bk.bookID, b.isbn, b.title, b.author, b.reserved, bk.reserveDate, v.bookingID bookingID_review, v.score, v.review, v.deliver_date_review FROM partners p LEFT OUTER JOIN bookings bk ON p.dni=bk.partnerDNI INNER JOIN books b ON bk.bookID=b.bookID LEFT OUTER JOIN votes v ON bk.bookingID=v.bookingID WHERE p.dni = ?";
                 const dni = results[0].dni;
                 await connection.query(sqlBookin, [dni], async (err, results) => {
                     if (err) {

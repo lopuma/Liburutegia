@@ -127,7 +127,6 @@
                 confirmButtonText: 'OK',
             })
                 .then(async () => {
-                //await ClosePopup("#modalReserveBook");
                 try {
                     if (_STATEINFOBOOK) { // 
                         location.reload(true);
@@ -136,6 +135,7 @@
                         await reloadDataBooks();
                     }
                 } catch (error) { }
+                await ClosePopup("#modalReserveBook");
                 console.log("RELOAD SUCESS");
             });
         } else {
@@ -153,11 +153,15 @@
                             await ClosePopup("#modalReserveBook");
                             await reloadDataBooks();
                         } 
-                        
+                    } catch (error) { }
+                    try {
+                        if(_STATEINFOBOOK) { 
+                            await ClosePopup("#modalReserveBook");
+                            location.reload(true);
+                        } 
                     } catch (error) { }
                     try {
                         if ($('#stateInfoPartner').val() === ''){
-                            console.log("ESTOY EN PARTNER");
                             const sel = document.getElementById("selectDniReserve");
                             const opt = sel[0];
                             console.log({opt});
@@ -191,8 +195,7 @@
             partnerDni,
             reserveDate,
         }
-        const urlAddReserve = `/api/books/add/reserve/${bookID}`
-
+        const urlAddReserve = `/api/bookings/add/${bookID}`
         fetch(urlAddReserve, {
             method: "POST",
             body: JSON.stringify(data),

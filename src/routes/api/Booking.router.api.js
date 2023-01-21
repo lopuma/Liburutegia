@@ -1,5 +1,4 @@
 const {
-	validate,
 	getBookings,
 	getBooking,
 	existBooking,
@@ -9,6 +8,11 @@ const {
 	putBooking,
 	infoBooking
 } = require("../../controller/apiController/Bookings.controller.api");
+
+const {
+    noExistBook,
+} = require('../../controller/apiController/Books.controller.api');
+
 const {
 	isAuthenticated
 } = require("../../controller/authController/loginController");
@@ -30,6 +34,8 @@ const routerBookings = require("express").Router();
 			}
 			res.send(JSON.stringify({ data: results }));
 		});
-	});
+    });
+    
+    routerBookings.post("/add/:idBook", noExistBook, addBooking);
 
 module.exports = routerBookings;

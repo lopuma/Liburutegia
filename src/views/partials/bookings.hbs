@@ -1,4 +1,4 @@
-<div class="Dashboard">
+<div class="Dashboard" id="stateBookings">
     <a class="Dashboard-a" href="/workspace/books/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Booking</a>
     <div class="Dashboard-row">
         <!-- TODO LOADING -->
@@ -7,35 +7,35 @@
         </div>
 
         <!-- TODO TABLE BOOKINGS -->
-        <table id="tableBooking" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
+        <table id="tableBookings" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
             <thead class="Dashboard-head">
                 <tr>
-                    <th hidden>bookingID</th>
+                    <th>BOOKING ID</th>
                     <th>BOOK ID</th>
                     <th>TITLE</th>
                     <th>PARTNER DNI</th>
-                    <th>NAME</th>
+                    <th>FULL NAME</th>
                     <th>RESERVATION DATE</th>
-                    <th>DELIVER DATE</th>
-                    <th>ACTIONS</th>
+                    <th>DELIVERED</th>
                 </tr>
             </thead>
             <tbody id="tbodyBookings">
             </tbody>
             <tfoot  class="Dashboard-foot">
                 <tr>
-                    <th hidden>bookingID</th>
+                    <th>BOOKING ID</th>
                     <th>BOOK ID</th>
                     <th>TITLE</th>
                     <th>PARTNER DNI</th>
-                    <th>NAME</th>
+                    <th>FULL NAME</th>
                     <th>RESERVATION DATE</th>
-                    <th>DELIVER DATE</th>
-                    <th>ACTIONS</th>
+                    <th>DELIVERED</th>
                 </tr>
             </tfoot>
         </table>  
     </div> 
 </div>    
+
+<script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
 
 <script defer src="/scripts/bookings.js"></script>

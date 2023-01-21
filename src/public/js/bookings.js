@@ -1,135 +1,216 @@
 const spinner = document.getElementById("spinner");
 
-//TODO CLOSE LOADING
-setTimeout(() => {
-    loadData();
-}, "1600");
 
-async function loadData() {
-    $(document).ready(function() {
-      $("#tableBooking").DataTable({
-        responsive: true,
-        lengthMenu: [
-          [5, 10, 15, 25, 50, -1],
-          [5, 10, 15, 25, 50, "All"]
-        ],
-        pageLength: 15
-      });
+//TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA BOOK
+try {
+    if ($('#stateBookings').val() === '') { // 
+        _STATEBOOKINGS = true;
+    }
+} catch (error) { }
+
+//TODO ✅ SHOW DATA IN THE TABLE BOOK
+async function loadDataBookings(data) {
+    console.log(data);    
+    dataTableBookings = $("#tableBookings").DataTable({
+            data: data,
+            deferRender: true,
+            searching: true,
+            "info": true,
+            "paging": true,
+            "orderClasses": false,
+            destroy: true,
+            language: {
+                emptyTable: "No data available in table Bookings"
+            },
+            stateSave: true,
+            responsive: true,
+            order: [[0, "desc"]],
+            lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, 'ALL']],
+            pageLength: 15,
+            select: true,
+            autoWidth: false,
+            columns: [
+                {
+                    data: null, 
+                    render: (data) => {
+                        return (fillZeros(data.bookingID));
+                    }
+                },
+                {
+                    data: null,
+                    render: (data) => {
+                        return (fillZeros(data.bookID));
+                    }
+                },
+                {
+                    data: "title",
+                    render: (data) => {
+                        return (accentNeutralise(data));
+                    }
+                },
+                { data: "partnerDni" },
+                {
+                    data: "fullname",
+                    render: (data) => {
+                        return (accentNeutralise(data));
+                    }
+                },
+                /*{ data: "type", visible: false },
+                { data: "language", visible: false },
+                { data: "collection", visible: false },*/
+                {
+                    data: "reserveDate", "searchable": false,
+                    render: (data) => {
+                        return (moment(data).format("MMMM Do, YYYY"));
+                    }
+                },
+                /*{
+                    data: "lastUpdate", visible: false, "searchable": false,
+                    render: (data) => {
+                        return (moment(data).format("MMMM Do, YYYY HH:mm A"));
+                    }
+                },
+                { data: "observation", visible: false },*/
+                {
+                    data: "delivered",
+                    render: function (data, type) {
+                        if (type === "display") {
+                            if (data === 1) {
+                                delivered =
+                                    '<span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em; padding: 0.5em 1em;">Not available</span>';
+                            } else {
+                                delivered =
+                                    '<span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em; padding: 0.5em 1em;">Available</span>';
+                            }
+                            return delivered;
+                        }
+                        return data;
+                    }
+                },
+                /*{
+                    data: null, "searchable": false,
+                    render: function (data, type) {
+                        if (type === "display") {
+                            if (data.reserved === 0) {
+                                btnDisable =
+                                    `<button id="btnReservedBook" onClick="reservedBook(${data.bookID}, '${data.title}')" class="btn btn-secondary" title="Reserved Book" style="cursor: pointer" data-toggle="modal" data-target="#modalReserveBook"><i class="fa-solid fa-calendar-days" ></i></button>`;
+                            } else {
+                                btnDisable = `<button class="btn btn-secondary not-allowed" style="cursor: not-allowed" onClick="return false;" title="Reserved Book"><i class="fa-solid fa-calendar-days"></i></button>`;
+                            }
+                            return (
+                                `
+                            <div class="ui buttons">
+                            ${btnDisable}
+                            <button id="btnInfoBook" onClick=infoBook(` + data.bookID + `) class="btn btn-outline-warning" title="Info Book"><i class="fa-sharp fa-solid fa-eye"></i></button>
+                            <button id="btnEditBook" onClick=editBook(` + data.bookID + `) type="button"  class="btn btn-outline-primary" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <button id="btnDeleteBook" onClick=deleteBook(` + data.bookID + `) class="btn btn-outline-danger" title="Delete Book"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            `
+                            );
+                        }
+                        return data;
+                    }
+                }*/
+            ],
+            'dom': 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pageLength',
+                },
+                {
+                    extend: 'colvis',
+                },
+                {
+                    extend: 'collection',
+                    text: 'Export Data',
+                    autoClose: true,
+                    buttons: [
+                        //TODO COPY
+                        {
+                            extend: 'copy',
+                            text: '<i class="fa fa-files-o"></i> Copy',
+                            titleAttr: 'Copy',
+                            className: "buttonCopy",
+                            exportOptions: {
+                                columns: [0, ':visible']
+                            },
+                            title: 'Liburutegia SAN MIGUEL: BOOKINGS',
+                        },
+                        //TODO CSV
+                        {
+                            extend: 'csv',
+                            text: '<i class="fa-solid fa-file-csv"></i> CSV',
+                            titleAttr: 'Export CSV',
+                            className: "buttonCsv",
+                            exportOptions: {
+                                columns: [0, 1, 2, 3]
+                            },
+                            title: 'Liburutegia SAN MIGUEL: BOOKINGS',
+                        },
+                        //TODO EXCEL
+                        {
+                            extend: 'excel',
+                            text: '<i class="fa fa-file-excel-o"></i> Excel',
+                            titleAttr: 'Export Excel',
+                            className: "buttonExcel",
+                            exportOptions: {
+                                columns: [0, 1, 2, 3]
+                            },
+                            title: 'Liburutegia SAN MIGUEL: BOOKINGS',
+                        },
+                        //TODO PDF
+                        {
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            text: '<i class="fa-solid fa-file-pdf"></i> PDF',
+                            titleAttr: 'Export PDF',
+                            className: "buttonPdf",
+                            exportOptions: {
+                                columns: [0, 1, 2, 3]
+                            },
+                            title: 'Liburutegia SAN MIGUEL: BOOKINGS',
+                            customize: function (doc) {
+                                doc.styles.title = {
+                                    width: '100',
+                                    color: 'black',
+                                    fontSize: '16',
+                                    background: '#CEEDC7',
+                                    alignment: 'center'
+                                };
+                            },
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa-solid fa-print"></i> Print',
+                            titleAttr: 'Print',
+                            className: "buttonPrint",
+                            exportOptions: {
+                                columns: [0, 1, 2, 3]
+                            },
+                            title: 'Liburutegia SAN MIGUEL: BOOKINGS',
+                        }
+                    ]
+                },
+            ],
     });
-  spinner.style.display = "none";
+    };
+
+//TODO ✅ FETCH RELOAD DATA BOOKINGS
+const reloadDataBookings = async () => {
+    if (_STATEBOOKINGS) {
+        const urlLoad = "/api/bookings/";
+        const data = await fetch(urlLoad)
+            .then((response) => response.json())
+            .then((datos) => datos);
+        loadDataBookings(data);
+    }
 };
-// MOSTRAR DATOS
-    // $(document).ready(function (e) {
-    //     var tabla = $("#table-bookings").DataTable({
-    //       e.preventDefault(),
-    //       'searching': true,
-    //       'ordering': true,
-    //       'info': true,
-    //       'responsive': true,
-    //       "scrollCollapse": true,
-    //       "order": [[0, "desc"]],
-    //       "lengthMenu": [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, "All"]],
-    //       "pageLength": 5,
-    //       "ajax": '/api/bookings',
-    //       columns: [
-    //         { data: 'bookingID' },
-    //         { data: 'id_book' },
-    //         { data: 'title' },
-    //         { data: 'dni' },
-    //         { data: 'nombre' },
-    //         { data: 'apellidos' },
-    //         {
-    //           data: 'fecha_entrega',
-    //           render: function (data, type) {
-    //             var fecha = new Date(data);
-    //             return fecha.getFullYear() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getDate();
-    //           }
-    //         },
-    //         {
-    //           defaultContent: `
-    //                   <div class="ui buttons">
-    //                     <button id="btnEditBooking" type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modalCRUD" title="Edit bookin"><i class="fa-regular fa-pen-to-square"></i></button>
-    //                     <div class="or" data-text="or">
-    //                   </div>
-    //                     <button id="btnDeleteBook" class="btn btn-outline-danger" title="Delete book"><i class="fa-solid fa-trash-can"></i></button>
-    //                   </div>`
-    //         }
-    //       ]
-    //     });
-    //   });
-      //EDITAR
-      $(document).on("click", "#btnEditBooking", function () {
-        opcion = 'edit';
-        fila_booking = $(this).closest("tr");
-        bookingID = fila_booking.find('td:eq(0)').text();
-        id_book = fila_booking.find('td:eq(1)').text();
-        title_book = fila_booking.find('td:eq(2)').text();
-        dni = fila_booking.find('td:eq(3)').text();
-        firstname = fila_booking.find('td:eq(4)').text();
-        lastname = fila_booking.find('td:eq(5)').text();
-        deliver_date = fila_booking.find('td:eq(6)').text();
-        $("#bookingID").val(bookingID);
-        $("#id_book").val(id_book);
-        $("#title_book").val(title_book);
-        $("#dni").val(dni);
-        $("#firstname").val(firstname);
-        $("#lastname").val(lastname);
-        $("#deliver_date").val(deliver_date);
-        $(".modal-header").css("background-color", "#7303c0");
-        $(".modal-header").css("color", "white");
-        $(".modal-title").text("Edit Booking");
-      });
-  
-  
-  
-      //DELETE
-      $(document).on("click", "#btnDeleteBook", function () {
-        fila_booking = $(this).closest("tr");
-        bookingID = fila_booking.find('td:eq(0)').text();
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "Are you sure you want to delete the BOOKING!",
-          icon: 'warning',
-          showConfirmButton: true,
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire(
-              'Deleted! Booking ' + bookingID,
-              'Your booking has been deleted.',
-              'success',
-            )//.then((result) => {
-            //window.location = '../workspace/bookings';
-            //});
-          }
-        });
-      });
-  
-      //submit para el CREAR y EDITAR
-      $('#formu').submit(function (e) {
-        e.preventDefault();
-        url = "/api/bookings/"
-        bookingID = $('#bookingID').val();
-        dni = $('#dni').val();
-        deliver_date = $('#deliver_date').val();
-        if (opcion == 'edit') {
-          $.ajax({
-            url: url + bookingID,
-            method: 'put',
-            contentType: 'application/json',
-            data: JSON.stringify({
-              dni: dni, deliver_date: deliver_date
-            }
-            )
-          });
-          $(document).ajaxStop(function () {
-            location.reload(true);
-          });
-        }
-        $('#modalCRUD').hide();
-        $('#modal').hide();
-        window.location.reload(true);
-      });
+
+//TODO ✅ FETCH LOAD DATA BOOKINGS
+    (async () => {
+        await reloadDataBookings();
+        try {
+            spinner.style.display = "none";
+        } catch (error) { }
+    })();

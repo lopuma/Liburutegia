@@ -2,7 +2,7 @@
 
 .Info-contenedor {
     margin: var(--Margin-top-forms) auto;
-    width: 90%;
+    width: 95%;
     height: 100%;
     padding: 0.5em;
     color: var(--Color-negro);
@@ -22,13 +22,8 @@
 
 .Info-header {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-flow: row wrap;
-}
-
-.Info-cover {
-    flex: 20%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.7fr;
 }
 
 .Cover-upload {
@@ -137,11 +132,8 @@
 }
 
 .Contents-data {
-    display: flex;
-}
-
-.Contents-information {
-    flex: 75%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
 }
 
 .Information-title {
@@ -255,18 +247,22 @@ details[open] summary::before {
 }
 
 .Review {
-    flex: 50%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
     padding: 1em;
     margin-top: 1em;
 }
 
 .Review h3 {
+    text-decoration: double underline;
     font-weight: 700;
     font-size: 1.2em;
+    text-align: center;
 }
 
 .Review-actions,
 .Review-header {
+    height: fit-content;
     background-color: rgba(236, 236, 236, 0.33);
     box-shadow: var(--Box-shadow-forms);
     margin: 1em 0 3em;
@@ -275,6 +271,10 @@ details[open] summary::before {
     border-radius: var(--Radius);
     display: flex;
     flex-direction: column;
+}
+
+.Review-header {
+    gap: 1em;
 }
 
 .Review-actions {
@@ -299,50 +299,38 @@ details[open] summary::before {
     bottom: 0;
 }
 
-.Review-lastupdate,
+.Review-reserved,
 .Review-star,
+.Review-lastupdate,
 .Review-total {
-    margin: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: .5em;
+    padding: 0 .5em;
 }
 
-.Review-total {
+
+.Delivered-reserved {
     display: flex;
-    flex-direction: row;
+    margin-top: .5em;
 }
 
-
-.Review-lastupdate i,
-.Review-total i {
-    margin-right: 1em;
+.Review-avaliable span {
+    margin-top: .5em;
 }
 
-.Review-star span {
-    margin: 0 .5em;
-    font-size: 1em;
-    font-weight: 700;
+.Delivered-reserved i {
+    margin-right: .5em;
+    color: var(--Success);
 }
 
-.Review-reserved {
-    text-align: start;
-    font-weight: 700;
-    padding: 0.5em;
-    margin-left: 0.5em;
-}
-
-.Review-reserved .badge {
-    margin: 0 .5em;
-    padding: 0.5em;
-}
-
+.Delivered-reserved a,
 .Review-span {
     color: #007185;
     font-size: 1em;
 }
 
-.Update-span {
-    font-weight: 700;
-}
-
+.Delivered-reserved a:hover,
 .Review-span:hover {
     cursor: pointer;
     color: #C7511F;
@@ -487,12 +475,50 @@ h2.linea span {
     background: var(--Color-texto-blanco);
     padding: 0 1em;
 }
+@media screen and (max-width: 950px) {
+    .Info-header {
+        grid-template-columns: 1fr;
+        padding: 1em;
+    }
 
+    .Review {
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 1em
+    }
+
+    .Information {
+        margin-bottom: 2em;
+    }
+
+}
 @media screen and (max-width: 550px) {
+
+    .Review {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        gap: 1em
+    }
 
     .Info-contenedor {
         width: 95%;
         padding: .5em 0;
+    }
+
+    .Info-header {
+        padding: 0;
+    }
+    .Container-header {
+        padding: .5em;
+    }
+
+    .Information-summary {
+        position: relative;
+        left: 7%;
+    }
+
+    details[open] summary {
+        left: 25%;
     }
 
 }
