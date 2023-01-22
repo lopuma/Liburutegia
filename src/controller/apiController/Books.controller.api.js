@@ -382,7 +382,7 @@ const bookController = {
     infoReviews: async (req, res) => {
         try {
             const bookID = req.params.idBook;
-            const selectReviews = "SELECT score, deliver_date_review as dateReview, review, fullnamePartner AS fullName FROM votes WHERE bookID=?"; await connection.query(selectReviews, [bookID], (err, results) => {
+            const selectReviews = "SELECT v.score, v.deliver_date_review as dateReview, v.review, fullnamePartner AS fullName, reviewOn FROM votes v WHERE v.bookID=?"; await connection.query(selectReviews, [bookID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({

@@ -1,5 +1,6 @@
 @charset "UTF-8";
 .Cards {
+    /* 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -7,31 +8,37 @@
     width: 100%;
     height: 100%;
     padding: 1em;
-    margin: 3em auto;
+    margin: 3em auto;*/
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    padding: 1em;
+    margin: 5em 2em;
     display: none;
 }
 
 .Cards.isVisible {
-    display: flex;
+    display: grid;
 }
 
 /* TITULO */
 .Cards-data {
     position: relative;
-    width: 300px;
+    /* width: 300px; */
     height: 200px;
     background: var(--Color-texto-blanco);;
-        border: #000 solid 1px;
+    border: var(--Color-outline) solid 1px;
     /* border: solid 1px var(--color-background-shadow-botton); */
-    border-radius: 5px;
+    border-radius: var(--Radius);
     -webkit-box-shadow: var(--box-shadow-forms);
     box-shadow: var(--box-shadow-forms);
     transition-property: height, box-shadow;
-    transition-duration: 0.7s;
-    transition-timing-function: ease-in-out;
-    -webkit-transition-timing-function: ease-in-out;
-    -moz-transition-timing-function: ease-in-out;
-    margin: 50px 20px;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+    -webkit-transition-timing-function: ease;
+    -moz-transition-timing-function: ease;
+    margin: 2em .5em;
     cursor: default;
 }
 
@@ -49,7 +56,8 @@
     width: 240px;
     height: 60px;
     background: var(--Background-Color-forms-admin-head);
-    border-radius: 5px;
+    border-radius: var(--Radius);
+    border: solid 1px var(--Color-outline);
     box-shadow: 0 8px 8px var(--color-background-shadow-botton);
     /* overflow: hidden; */
     transition-property: width, height, font-size;

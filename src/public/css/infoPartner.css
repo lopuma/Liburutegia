@@ -388,6 +388,17 @@
     animation-delay: 0.75s;
 }
 
+.Links {
+    color: #007185;
+    font-size: 1em;
+}
+
+.Links:hover {
+    cursor: pointer;
+    color: #C7511F;
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 950px) {
     .Slider {
         margin: 1em;

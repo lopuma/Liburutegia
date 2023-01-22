@@ -375,13 +375,15 @@
     }
     async function createCardReview(data){
         try {
+            console.log("DATA REVIEWS =>> ", data);
             if(data.success) {
-                const reviws = data.data;
-                let valores = Object.values(reviws); //
+                const review = data.data;
+                let valores = Object.values(review); //
                 let textRate = "";
                 let colorStar = "";
                 let textShadow = "";
                 for(let i=0; i< valores.length; i++){
+                    const reviewOn = valores[i].reviewOn;
                     const color = generarNuevoColor();
                     const score = obtenerPorcentaje(valores[i].score);
                     const dateReview = moment(valores[i].dateReview).format("MMMM Do, YYYY HH:mm A");
@@ -401,32 +403,35 @@
                     } else {
                         textRate =  "I don't like it ";
                     }
-                    template  = `
-                        <div class='Review-box'>
-                            <div class='Review-name'>
-                                <div class='Review-icon'>
-                                    <i class='fa-solid fa-circle-user' style='color: ${color}'></i><br>
+                    console.log(reviewOn);
+                    if (reviewOn === 1) { 
+                        template  = `
+                            <div class='Review-box'>
+                                <div class='Review-name'>
+                                    <div class='Review-icon'>
+                                        <i class='fa-solid fa-circle-user' style='color: ${color}'></i><br>
+                                    </div>
+                                    <div class='Review-fullname'>${fullName}</div>
                                 </div>
-                                <div class='Review-fullname'>${fullName}</div>
-                            </div>
-                            <div class='Review-dateReview'>
-                                <span class='Review-date'>Revised on ${dateReview}</span>
-                            </div>
-                            <div class='Review-content'>
-                                <div class='Review-score'>
-                                    <div class='stars-outer'>
-                                        <div class='stars-inner' id='totalScore' style='width: ${score}' title='Total score ${valores[i].score} star'>
+                                <div class='Review-dateReview'>
+                                    <span class='Review-date'>Revised on ${dateReview}</span>
+                                </div>
+                                <div class='Review-content'>
+                                    <div class='Review-score'>
+                                        <div class='stars-outer'>
+                                            <div class='stars-inner' id='totalScore' style='width: ${score}' title='Total score ${valores[i].score} star'>
+                                            </div>
+                                        </div>
+                                        <div class='Review-rate'>
+                                            ${textRate}
                                         </div>
                                     </div>
-                                    <div class='Review-rate'>
-                                        ${textRate}
-                                    </div>
+                                    <div class='Review-message'>${review}</div>
                                 </div>
-                                <div class='Review-message'>${review}</div>
                             </div>
-                        </div>
-                    `;
-                    containerReview.innerHTML += template;
+                        `;
+                        containerReview.innerHTML += template;
+                    }
                 }
             } else { 
                 template = `<h2 class="linea"><span>There are currently no reviews</span></h2>`;

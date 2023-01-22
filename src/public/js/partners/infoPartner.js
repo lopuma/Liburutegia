@@ -21,9 +21,6 @@ var _PARTNERID = "";
             partnerDni
         };
 
-        console.log({
-            data
-        })
         const urlDesvincular = `/api/familys/unlink/${idFamily}`;
         
         Swal.fire({
@@ -180,6 +177,7 @@ var _PARTNERID = "";
         createdTableActive(data);
     }
     async function createdTableActive(data) {
+        console.log({data});
         tableActiveReserved = $("#tablePartnerActive").DataTable({
             data: data,
             deferRender: true,
@@ -199,12 +197,42 @@ var _PARTNERID = "";
             select: true,
             autoWidth: false,
             columns: [
-                { data: "title" },
+                {
+                    data: "bookingID", 
+                    visible: false,
+                    render : (data) => {
+                        return (fillZeros(data));
+                    }
+                },
+                {
+                    data: "bookID",
+                    render: (data) => {
+                        const bookID = fillZeros(data);
+                        return (
+                            `<a class='Links'  href='/workspace/books/info/${data}'>${bookID}</a>`
+                            );
+                    }
+                },
+                {
+                    data: null,
+                    render: (data) => {
+                        const title = accentNeutralise(data.title);
+                        return (
+                            `<a class='Links'  href='/workspace/books/info/${data.bookID}'>${title}</a>`
+                        );
+                    }
+                },
                 { data: "isbn" },
-                { data: "author" },
+                {
+                    data: "author",
+                    render : (data) => {
+                        return (accentNeutralise(data));
+                    }
+                },
                 { data: "reserveDate" },
                 {
                     data: null,
+                    searchable: false,
                     render: function (data) {
                         return (
                             `
@@ -248,7 +276,7 @@ var _PARTNERID = "";
                             titleAttr: 'Export CSV',
                             className: "buttonCsv",
                             exportOptions: {
-                                columns: [0, 1, 2, 3]
+                                columns: [0, 1, 2, 3, 4, 5]
                             },
                             title: 'Liburutegia SAN MIGUEL: Active Reserves',
                         },
@@ -259,7 +287,7 @@ var _PARTNERID = "";
                             titleAttr: 'Export Excel',
                             className: "buttonExcel",
                             exportOptions: {
-                                columns: [0, 1, 2, 3]
+                                columns: [0, 1, 2, 3, 4, 5]
                             },
                             title: 'Liburutegia SAN MIGUEL: Active Reserves',
                         },
@@ -276,7 +304,7 @@ var _PARTNERID = "";
                             titleAttr: 'Export PDF',
                             className: "buttonPdf",
                             exportOptions: {
-                                columns: [0, 1, 2, 3]
+                                columns: [0, 1, 2, 3, 4, 5]
                             },
                             title: 'Liburutegia SAN MIGUEL: Active Reserves',
                             customize: function (doc) {
@@ -295,7 +323,7 @@ var _PARTNERID = "";
                             titleAttr: 'Print',
                             className: "buttonPrint",
                             exportOptions: {
-                                columns: [0, 1, 2, 3]
+                                columns: [0, 1, 2, 3, 4, 5]
                             },
                             title: 'Liburutegia SAN MIGUEL: Active Reserves',
                         }
@@ -346,6 +374,7 @@ var _PARTNERID = "";
         createdTableHistory(data);
     }
     async function createdTableHistory(data) {
+        console.log({data})
         tableHistoryReserved = $("#tablePartnerHistory").DataTable({
             data: data,
             deferRender: true,
@@ -365,9 +394,38 @@ var _PARTNERID = "";
             select: true,
             autoWidth: false,
             columns: [
-                { data: "title" },
+                {
+                    data: "bookingID",
+                    visible: false,
+                    render: (data) => {
+                        return (fillZeros(data));
+                    }
+                },
+                {
+                    data: "bookID",
+                    render: (data) => {
+                        const bookID = fillZeros(data);
+                        return (
+                            `<a class='Links'  href='/workspace/books/info/${data}'>${bookID}</a>`
+                        );
+                    }
+                },
+                {
+                    data: null,
+                    render: (data) => {
+                        const title = accentNeutralise(data.title);
+                        return (
+                            `<a class='Links'  href='/workspace/books/info/${data.bookID}'>${title}</a>`
+                        );
+                    }
+                },
                 { data: "isbn" },
-                { data: "author" },
+                {
+                    data: "author",
+                    render: (data) => {
+                        return (accentNeutralise(data));
+                    }
+                },
                 { data: "reserveDate" },
                 { data: "deliver_date_review" },
                 {
@@ -417,7 +475,7 @@ var _PARTNERID = "";
                             titleAttr: 'Export CSV',
                             className: "buttonCsv",
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                             },
                             title: 'Liburutegia SAN MIGUEL: Reservation History',
                         },
@@ -428,7 +486,7 @@ var _PARTNERID = "";
                             titleAttr: 'Export Excel',
                             className: "buttonExcel",
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                             },
                             title: 'Liburutegia SAN MIGUEL: Reservation History',
                         },
@@ -445,7 +503,7 @@ var _PARTNERID = "";
                             titleAttr: 'Export PDF',
                             className: "buttonPdf",
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                             },
                             title: 'Liburutegia SAN MIGUEL: Reservation History',
                             customize: function (doc) {
@@ -464,7 +522,7 @@ var _PARTNERID = "";
                             titleAttr: 'Print',
                             className: "buttonPrint",
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                             },
                             title: 'Liburutegia SAN MIGUEL: Reservation History',
                         }
