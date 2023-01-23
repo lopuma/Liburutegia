@@ -26,18 +26,8 @@ server {
                 proxy_set_header Host $host;
                 proxy_cache_bypass $http_upgrade;
         }
-        #location /admin {
-        #        proxy_cache cache1;
-        #        proxy_cache_valid any 30m;
-        #
-        #        rewrite ^/(.*) /$1 break;
-        #        proxy_pass http://application;
-        #}
-        #location /login {
-        #        proxy_cache cache1;
-        #        proxy_cache_valid any 30m;
-        #
-        #        rewrite ^/login(.*) /$1 break;
-        #        proxy_pass http://application;
-        #}
+        location /api/books/frontPage {
+            proxy_pass http://application/api/books/frontPage ;
+            client_max_body_size 20M;
+        }
 }
