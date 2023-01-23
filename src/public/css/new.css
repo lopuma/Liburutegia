@@ -24,6 +24,7 @@
     font-size: 2em;
     font-weight: bold;
     text-align: center;
+    text-shadow: 0 0 5px var(--Color-forms-partner);
     border-top-right-radius: var(--Radius);
     border-top-left-radius: var(--Radius);
     border-bottom-right-radius: var(--Radius);

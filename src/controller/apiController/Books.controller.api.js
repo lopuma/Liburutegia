@@ -107,11 +107,11 @@ const bookController = {
     deliverBook: async (req, res) => {
         const idBook = req.params.bookID;
 
-        const { idBooking, score, review, deliver_date_review } = req.body;
+        const { idBooking, score, review, deliver_date_review, reviewOn } = req.body;
         const sql = [`UPDATE books SET 
                     reserved=0 WHERE bookID=${idBook}`,
         `UPDATE bookings SET delivered=1 WHERE bookingID=${idBooking}`,
-        `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner) VALUES (${idBook}, ${idBooking}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${idBooking}))`];
+        `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner, reviewOn) VALUES (${idBook}, ${idBooking}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${idBooking}), ${reviewOn})`];
         await connection.query(
             sql.join(";"),
             (err) => {

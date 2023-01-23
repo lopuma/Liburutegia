@@ -51,7 +51,8 @@ const contador              = document.getElementById( 'contador'           );
             idBooking,
             score,
             review,
-            deliver_date_review: dateActual
+            deliver_date_review: dateActual,
+            reviewOn: 1
         }
         await fetch(urlDeliver, {
             method: 'POST',

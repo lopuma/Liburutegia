@@ -1,9 +1,12 @@
 .New-form {
     margin-top: 1.89em;
     background-color: var(--Color-texto-blanco);
-    display: flex;
+    /*display: flex;
     align-items: center;
-    flex-flow: column nowrap;
+    flex-flow: column nowrap;*/
+    display: grid;
+    grid-template-columns: repeat(1, minmax(200px, 1fr));
+    gap: 1em;
     position: relative;
     z-index: 2;
 }
@@ -13,7 +16,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2em;
+    padding: 2em 2em 0;
     height: 7.5em;
 }
 
@@ -69,32 +72,35 @@
 }
 
 .New-content {
-    display: flex;
+    /*display: flex;
     align-items: center;
     justify-content: center;
-    flex-flow: column nowrap;
+    flex-flow: column nowrap;*/
+    display: grid;
+    grid-template-columns: auto;
     width: 100%;
     height: 100%;
-    padding-top: 1.5em;
+    /* padding-top: 1.5em; */
     overflow: hidden;
 }
 
 .New-boxes {
-    display: flex;
+    /*display: flex;
     align-items: center;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: space-between;*/
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
     width: 100%;
+    height: auto;
     padding: 1.5em 2em 0;
     align-items: center;
     overflow: hidden;
 }
 
 .Input-box {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    flex-flow: column nowrap;
+    width: 100%;
     margin-bottom: 2em;
 }
 
@@ -121,8 +127,9 @@
 }
 
 .select2-container {
+    width: 100% !important;
     height: 3.75em;
-    /* background-color: brown; */
+    /* margin: 0 0.5em; */
 }
 
 .select2-container .select2-selection--single {
@@ -168,7 +175,7 @@
 .Animation {
     width: 100%;
     height: 100%;
-    margin: 0 1em;
+    margin: 1em .5em 0 1em;
     text-align: center;
     position: relative;
 }
@@ -177,7 +184,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 95%;
+    width: 100%;
     height: 100%;
     font-family: inherit;
     font-size: 1em;
@@ -292,7 +299,8 @@
 }
 
 .isTextarea-boxes {
-    width: 95%;
+    width: 100%;
+    gap: 0;
     height: 12em;
 }
 
@@ -306,7 +314,7 @@
 }
 
 .isTextarea-input {
-    width: 95%;
+    width: 100%;
     padding: 1.5em;
     resize: none;
 }
@@ -316,18 +324,19 @@
 }
 
 .Input-button {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
     justify-content: center;
-    width: 80%;
     height: auto;
-    margin: 1.5em 0;
+    margin: 1em 2em;
+
 }
 
 .Button-cancel,
 .Button-accept {
-    width: inherit;
-    height: 3em;
+    width: 70%;
+    height: 3.5em;
     border: 1px solid var(--Color-outline);
     border-radius: var(--Radius);
     font-size: var(--Size-font-button);
@@ -340,7 +349,7 @@
     transition-duration: .5s;
     transition-timing-function: ease;
     color: var(--Brown);
-    margin: 1em 2em;
+    margin: 1em auto;
     text-transform: uppercase;
 }
 
@@ -372,20 +381,24 @@
 }
 
 div[data-error] {
-    background-color: chartreuse;
+    /* background-color: chartreuse; */
     height: auto;
     min-height: 10em;
     margin: 0;
 }
 @media screen and (max-width: 950px) {
 
+    .New-form{
+        margin-top: 1.1em;
+    }
+
     .Family {
-        padding: 1em 0;
+        padding: 1em 2em 0;
     }
 
     .New-boxes {
-        width: 100%;
-        padding: 0;
+        grid-template-columns: auto;
+        padding: 0 2em 0;
         margin: 0;
         flex-flow: column nowrap;
     }
@@ -394,6 +407,10 @@ div[data-error] {
         width: 100%;
         padding: 1em 0;
         margin: 0;
+    }
+
+    .Input-box.isInvisible {
+        display: none;
     }
 
     .Input-box.isActiveErrorDni,
@@ -414,10 +431,10 @@ div[data-error] {
         top: 3.1em;
     }
 
-    .New-form {
-        padding: 1em 1em 1em 2em;
-        margin-top: 1.1em;
+    .select2-container .select2-selection--single {
+        margin: 0 0 0 .5em;
     }
+
 }
 
 @media screen and (max-width: 550px) {
@@ -461,6 +478,11 @@ div[data-error] {
         padding: 1em;
     }
 
+    .New-boxes {
+        padding: 0;
+        grid-template-columns: none;
+    }
+
     .Animation-label {
         letter-spacing: .1em;
         left: 1em;
@@ -469,6 +491,7 @@ div[data-error] {
 
     .Animation-input {
         padding: .5em;
+        margin: 0;
     }
 
     .Animation-input:focus~.Animation-info,
@@ -480,13 +503,30 @@ div[data-error] {
     }
 
     .Input-button {
-        width: 100%;
+        grid-template-columns: auto auto;
+        margin: auto;
     }
 
     .Button-cancel,
     .Button-accept {
-        width: fit-content;
+        width: 100%;
         padding: 1em;
         margin: 1em 0.5em;
+    }
+    
+    .select2-container {
+        width: 97% !important;
+    }
+
+    .select2-container .select2-selection--single {
+        margin: 0;
+    }
+
+    input:disabled, input[readonly], textarea:disabled, textarea[readonly] {
+        margin: 0;
+    }
+
+    .Family-links.isEnable {
+        margin: 0;
     }
 }

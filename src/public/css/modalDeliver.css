@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* TODO STARs */
 .Deliver-modal {
-    max-width: 45% !important;
+    max-width: 50% !important;
     border-radius: var(--Radius);
 }
 
@@ -12,14 +12,22 @@
     padding: .5em 1em;
     font-size: 1.5em;
     font-weight: 600;
-    background-color: #F8CB2E;
-    color: #006E7F;
+    background-color: var(--Background-Color-forms-partner);
+    color: var(--Color-forms-partner);
     border-bottom: 1px solid var(--Color-outline);
     box-shadow: var(--Box-shadow-nav);
 }
 
+.Modal-title {
+    margin: 0;
+}
+
 .Modal-close i {
     font-size: 1.3em;
+}
+
+.Modal-close:hover {
+    color: var(--Color-forms-partner);
 }
 
 .Star {
@@ -89,7 +97,7 @@
 }
 
 .Widget-label {
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: var(--Color-texto-negro);
     padding: .5em;
     float: right;
@@ -109,7 +117,8 @@
 
 .Widget-input#rate-5:checked~.Widget-label {
     color: #fe7;
-    text-shadow: 0 0 10px #006E7F;
+    /* margin: 0 0.5em 0 0; */
+    text-shadow: 0 0 5px #006E7F;
 }
 
 #rate-1:checked~.Star-header::before {
@@ -227,7 +236,7 @@
 /* TODO STARs */
 @import url('star.css');
 
-@media screen and (max-width: 34.375em) {
+@media screen and (max-width: 550px) {
 
     .Star-header {
         font-size: 1.2em;
@@ -243,4 +252,5 @@
     .Form-textarea {
         padding: 1.5em 0 0 0;
     }
+
 }

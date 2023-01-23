@@ -141,7 +141,7 @@
             <div class="Box">
                 <i class="Box-i fa-solid fa-tags"></i>
                 <div class="Box-animation Animation" id="addSelect">
-                    <select class="Animation-input isSelect" id="selectCategory" name="selectCategory" style="width:95%" size="2" tabindex="8">
+                    <select class="Animation-input isSelect" id="selectCategory" name="selectCategory"  size="2" tabindex="8">
                         <option></option>
                     </select>
                     <label class="Animation-label" for="selectCategory">Select or add category</label>
@@ -240,13 +240,16 @@
             document.getElementById("formEditBook").reset();
             $('#selectCategory').html("");
         }catch (error){ }
-        if(_STATEBOOK) {
-            await ClosePopup("#modalEditBook");
-        }
+        try {
+            if(_STATEBOOK) {
+                await ClosePopup("#modalEditBook");
+            }
+        } catch (error) {}
         try {
             document.getElementById("formAddBook").reset();
             $('#selectCategory').html("");
         }catch (error){ }
+        
     }
 
 // TODO ✅ RESPONSE DATA SUCCESS
@@ -263,9 +266,16 @@
             }).then(async () => {
                 await resetFormsBook();
                 try{
-                    _STATEINFOBOOK ? 
-                        location.reload() :
+                    if(_STATEINFOBOOK) { 
+                        location.reload()
+                        window.location.href = "";
+                    }
+                } catch (error) { };
+                try{
+                    if(_STATEBOOK) {
                         await reloadDataBooks();
+                        window.location.href = "";
+                    }
                 } catch (error) { };
             });
         } else if(success === false) {
@@ -297,18 +307,33 @@
         const data = await {
             bookID,
             purchase_date: inputPurchaseDate.value,
-            isbn: await capitalizeFirstLetter(inputISBN.value.trim()),
-            title: await capitalizeFirstLetter(inputTitle.value.trim()),
-            author: await capitalizeWords(inputAuthor.value.trim()),
-            collection: await capitalizeFirstLetter(inputCollection.value.trim()),
-            editorial: await capitalizeFirstLetter(inputEditorial.value.trim()),
-            language: await capitalizeFirstLetter(inputLanguage.value.trim()),
-            type: await capitalizeWords(getValueOption(opt)),
-            observation: await capitalizeFirstLetter(inputObservation.value.trim())
+            isbn: capitalizeFirstLetter(inputISBN.value.trim()),
+            title: capitalizeFirstLetter(inputTitle.value.trim()),
+            author: capitalizeWords(inputAuthor.value.trim()),
+            collection: capitalizeFirstLetter(inputCollection.value.trim()),
+            editorial: capitalizeFirstLetter(inputEditorial.value.trim()),
+            language: capitalizeFirstLetter(inputLanguage.value.trim()),
+            type: capitalizeWords(getValueOption(opt)),
+            observation: capitalizeFirstLetter(inputObservation.value.trim())
         };
         //EDIT
         try {
-            if(_STATEEDITBOOK || _STATEBOOK) {
+            if(_STATEEDITBOOK) {
+                const bookID = data.bookID;
+                const urlUpdateBook = `/api/books/update/${bookID}`
+                fetch(urlUpdateBook, {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then((response) => response.json())
+                    .then(async (data) => await responseData(data));
+            }
+        } catch (err) { }
+        try {
+            if(_STATEBOOK) {
                 const bookID = data.bookID;
                 const urlUpdateBook = `/api/books/update/${bookID}`
                 fetch(urlUpdateBook, {

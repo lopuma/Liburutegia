@@ -105,7 +105,8 @@ var _PARTNERID = "";
                         idBooking,
                         score: 0,
                         review: null,
-                        deliver_date_review: dateActual
+                        deliver_date_review: dateActual,
+                        reviewOn: 0
                     }
                     fetch(urlDeliver, {
                         method: 'POST',
@@ -208,9 +209,7 @@ var _PARTNERID = "";
                     data: "bookID",
                     render: (data) => {
                         const bookID = fillZeros(data);
-                        return (
-                            `<a class='Links'  href='/workspace/books/info/${data}'>${bookID}</a>`
-                            );
+                        return (bookID);
                     }
                 },
                 {
@@ -405,9 +404,7 @@ var _PARTNERID = "";
                     data: "bookID",
                     render: (data) => {
                         const bookID = fillZeros(data);
-                        return (
-                            `<a class='Links'  href='/workspace/books/info/${data}'>${bookID}</a>`
-                        );
+                        return (bookID);
                     }
                 },
                 {

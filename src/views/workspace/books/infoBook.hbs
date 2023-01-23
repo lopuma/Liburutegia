@@ -345,7 +345,7 @@
     async function deleteBook(idBook){
         opcion = 'delete';
         const bookID = idBook;
-        globalDeleteBook(bookID);
+        await globalDeleteBook(bookID);
     }
 
     // TODO ✅ FUNCION AUTOEJECUTABLE PARA EXTRAER LOS REVIEWS

@@ -50,6 +50,7 @@
             });
     }
     const globalDeleteBook = async (idBook) => {
+        window.location.href = "" + `#delete_book?${idBook}`;
         Swal.fire({
             title: "Are you sure?",
             text: "Are you sure you want to delete the BOOK!",
@@ -63,7 +64,7 @@
             if (result.isConfirmed) {
                 await apiBookDelete(idBook);
             }
-        });
+        }) 
     }
 
 // TODO ✅ RESPUESTA AL ELIMINAR BOOK
@@ -85,6 +86,7 @@
                     }
                     else {
                         await reloadDataBooks();
+                        window.location.href = "";
                     }
                 } catch (error) { }
             });
@@ -181,6 +183,7 @@
 // TODO ✅ FUNCT EDIT BOOK
     async function globalEditBook(idBook) {
         const bookID = idBook;
+        window.location.href = ""+`#edit_book?${bookID}`;
         const urlDataEdit = `/api/books/${bookID}`;
         await fetch(urlDataEdit)
             .then(response => response.json())
@@ -360,50 +363,50 @@
     }
 
 // TODO LOAD DNI
-async function loadDni(data) {
-    $("#selectDniReserve").html("");
-    document.getElementById("reservePartnerID").value = "";
-    const partners = data;
-    partners.forEach(partner => {
-        const option = document.createElement("option");
-        option.value = partner.partnerID;
-        option.text = partner.dni;
-        document.getElementById("selectDniReserve").add(option);
-    })
-    if (partners.length <= 1) {
-        const sel = document.getElementById("selectDniReserve");
-        const opt = sel[0];
-        $("#selectDniReserve").val(opt.value);
-        document.getElementById("reservePartnerID").value = fillZeros(opt.value);
-        //return true;
-    }
-    $(".selectDniReserve").select2({
-        placeholder: "Select DNI Partner",
-    });
-}
-// TODO LOAD TITLE
-async function loadTitle(data) {
-    $("#reserveSelectTitle").html("");
-    document.getElementById("reserveBookID").value = "";
-    const books = data;
-    books.forEach(book => {
-        if (book.reserved === 0) {
+    async function loadDni(data) {
+        $("#selectDniReserve").html("");
+        document.getElementById("reservePartnerID").value = "";
+        const partners = data;
+        partners.forEach(partner => {
             const option = document.createElement("option");
-            option.value = book.bookID;
-            option.text = book.title;
-            document.getElementById("reserveSelectTitle").add(option);
+            option.value = partner.partnerID;
+            option.text = partner.dni;
+            document.getElementById("selectDniReserve").add(option);
+        })
+        if (partners.length <= 1) {
+            const sel = document.getElementById("selectDniReserve");
+            const opt = sel[0];
+            $("#selectDniReserve").val(opt.value);
+            document.getElementById("reservePartnerID").value = fillZeros(opt.value);
+            //return true;
         }
-    })
-    if (books.length <= 1) { 
-        const sel = document.getElementById("reserveSelectTitle");
-        const opt = sel[0];
-        $("#reserveSelectTitle").val(opt.value);
-        document.getElementById("reserveBookID").value = fillZeros(opt.value);
+        $(".selectDniReserve").select2({
+            placeholder: "Select DNI Partner",
+        });
     }
-    $(".reserveSelectTitle").select2({
-        placeholder: "Select BOOK Title",
-    });
-}
+// TODO LOAD TITLE
+    async function loadTitle(data) {
+        $("#reserveSelectTitle").html("");
+        document.getElementById("reserveBookID").value = "";
+        const books = data;
+        books.forEach(book => {
+            if (book.reserved === 0) {
+                const option = document.createElement("option");
+                option.value = book.bookID;
+                option.text = book.title;
+                document.getElementById("reserveSelectTitle").add(option);
+            }
+        })
+        if (books.length <= 1) { 
+            const sel = document.getElementById("reserveSelectTitle");
+            const opt = sel[0];
+            $("#reserveSelectTitle").val(opt.value);
+            document.getElementById("reserveBookID").value = fillZeros(opt.value);
+        }
+        $(".reserveSelectTitle").select2({
+            placeholder: "Select BOOK Title",
+        });
+    }
 
 // TODO LOAD DNI PÀRTNER
     const extractDataFormReserve = async (idBook, titleBook, idPartner, dniPartner) => {
@@ -451,11 +454,12 @@ async function loadTitle(data) {
     }
 
 // TODO RESERVE BOOK 
-async function globalReserveBook(idBook, titleBook, idPartner, dniPartner) {
-    const bookID = idBook;
-    const bookTitle = titleBook;
-    const partnerID = idPartner;
-    const partnerDni = dniPartner;
-    await extractDataFormReserve(bookID, bookTitle, partnerID, partnerDni);
-    document.getElementById("reserveDate").value = moment(new Date()).format("YYYY-MM-DD");
-}
+    async function globalReserveBook(idBook, titleBook, idPartner, dniPartner) {
+        const bookID = idBook;
+        const bookTitle = titleBook;
+        const partnerID = idPartner;
+        const partnerDni = dniPartner;
+        window.location.href = ""+`#reserve_book?${bookID}`;
+        await extractDataFormReserve(bookID, bookTitle, partnerID, partnerDni);
+        document.getElementById("reserveDate").value = moment(new Date()).format("YYYY-MM-DD");
+    }

@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="Modal-header">
                 <h1 class="Modal-title">Star Rating</h1>
-                <button class="Modal-close" id="closeModal">
+                <button class="Modal-close" id="closeModal" style="cursor: pointer">
                     <i class="fa-regular fa-circle-xmark"></i>
                 </button>
             </div>
@@ -31,11 +31,11 @@
                             <input type="text" class="form-control" id="bookingID"
                                 tabindex="2" hidden>
                             <div class="Form-textarea">
-                                <textarea id="mensaje" cols="30" placeholder="Describe your experience.." maxlength="100" tabindex="3" rows="3"></textarea>
+                                <textarea id="mensaje" cols="30" placeholder="Describe your experience.." minlenhtg="100"  maxlength="100" tabindex="3" rows="3"></textarea>
                                 <div id="contador">0 / 100</div>
                             </div>
                             <div class="Form-button">
-                                <button type="submit" id="post" tabindex="4">Post</button>
+                                <button type="submit" id="post" tabindex="4">REVIEW</button>
                             </div>
                         </form>
                     </div>

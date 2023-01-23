@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="/style/newForm.css">
+{{!-- <link rel="stylesheet" href="/style/newForm.css"> --}}
 
 <!--TODO Modal para CRUD-->
 <div class="modal fade" role="dialog" aria-labelledby="modalReserveBookLabel" aria-hidden="true" style="padding-right:0" id="modalReserveBook" name="modalReserveBook">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title" id="modalReserveBookLabel">RESERVE BOOK</h1>
+            <div class="Modal-header" style="background-color: var(--Background-Color-forms-book); color: var(--Color-forms-book)">
+                <h1 class="Modal-title" id="modalReserveBookLabel" >RESERVE BOOK</h1>
             </div>
             <div class="New">
                 <form class="New-form" id="formReserveBook" name="formReserveBook">
@@ -29,7 +29,7 @@
                                 <div class="Box">
                                     <i class="Box-i fa-solid fa-book"></i>
                                     <div class="Box-animation Animation">
-                                        <select class="Animation-input reserveSelectTitle" id="reserveSelectTitle" name="reserveSelectTitle" style="width:95%" size="2" 
+                                        <select class="Animation-input reserveSelectTitle" id="reserveSelectTitle" name="reserveSelectTitle"  size="2" 
                                         onChange="loadBookID()" tabindex="2" required>
                                             <option></option>
                                         </select>
@@ -57,7 +57,7 @@
                                 <div class="Box">
                                     <i class="Box-i fa-regular fa-newspaper"></i>
                                     <div class="Box-animation Animation">
-                                        <select class="Animation-input selectDniReserve" id="selectDniReserve" name="selectDniReserve" style="width:95%" size="2" tabindex="4" onChange="loadPartnerID()" required>
+                                        <select class="Animation-input selectDniReserve" id="selectDniReserve" name="selectDniReserve"  size="2" tabindex="4" onChange="loadPartnerID()" required>
                                             <option></option>
                                         </select>
                                         <label class="Animation-label" for="selectDniReserve">Dni *</label>
@@ -76,13 +76,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="Input-box isInvisible"></div>
                         </div>
                     </div>
                     <div class="Input-button">
                         <button type="button" class="Button-cancel"
                             data-dismiss="modal" tabindex="10">Cancel</button>
                         <input class="Button-accept" id="btnReserveBook" type="submit"
-                            value='UPDATE' tabindex="11"></input>
+                            value='RESERVE' tabindex="11"></input>
                     </div>
                 </form>
             </div>
@@ -130,13 +131,16 @@
                 try {
                     if (_STATEINFOBOOK) { // 
                         location.reload(true);
+                        window.location.href = "";
                     }
-                    else if(_STATEBOOK) { 
+                } catch (error) { }
+                try {
+                    if(_STATEBOOK) { 
                         await reloadDataBooks();
+                        window.location.href = "";
                     }
                 } catch (error) { }
                 await ClosePopup("#modalReserveBook");
-                console.log("RELOAD SUCESS");
             });
         } else {
             Swal.fire({
@@ -147,17 +151,18 @@
                 confirmButtonText: 'OK',
             })
                 .then(async () => {
-                    //await ClosePopup("modalReserveBook");
                     try {
                         if(_STATEBOOK) { 
                             await ClosePopup("#modalReserveBook");
                             await reloadDataBooks();
+                            window.location.href = "";
                         } 
                     } catch (error) { }
                     try {
                         if(_STATEINFOBOOK) { 
                             await ClosePopup("#modalReserveBook");
                             location.reload(true);
+                            window.location.href = "";
                         } 
                     } catch (error) { }
                     try {
@@ -165,14 +170,12 @@
                             const sel = document.getElementById("selectDniReserve");
                             const opt = sel[0];
                             console.log({opt});
-                            //$("#selectDniReserve").val(opt.value);
                             const idPartner = fillZeros(opt.value);
                             const dniPartner = opt.text;
                             await extractDataFormReserve(null, null, idPartner, dniPartner);
                         }
                     } catch (error) { }
                 });
-                console.log("RELOAD ERROR")
         }
     }
 
