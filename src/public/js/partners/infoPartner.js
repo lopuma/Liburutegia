@@ -178,7 +178,6 @@ var _PARTNERID = "";
         createdTableActive(data);
     }
     async function createdTableActive(data) {
-        console.log({data});
         tableActiveReserved = $("#tablePartnerActive").DataTable({
             data: data,
             deferRender: true,
@@ -373,7 +372,6 @@ var _PARTNERID = "";
         createdTableHistory(data);
     }
     async function createdTableHistory(data) {
-        console.log({data})
         tableHistoryReserved = $("#tablePartnerHistory").DataTable({
             data: data,
             deferRender: true,
@@ -615,7 +613,6 @@ var _PARTNERID = "";
 // TODO ✅ FUNCTION FOR RESERVE BOOK
     async function editBook(partnerID) {
         const idPartner = partnerID;
-        console.log("SE VA A RESERVAR ESTE LIBRO ==> ", idPartner);
         edit(partnerID);
     };
 // TODO ✅ FUNCTION FOR RESERVE BOOK

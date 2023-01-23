@@ -159,7 +159,6 @@ const fieldChange = {
 
 // TODO ✅ ACTIVA EL FOCU DEL ELEMENTO QUE TIENE ERROR
     function focusElement() {
-        console.log('Please select', field.dni);
         if (field.dni === false) {
             document.getElementById("inputDni").focus();
             document.getElementById("inputDni").select();

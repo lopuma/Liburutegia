@@ -10,7 +10,6 @@ try {
 
 //TODO ✅ SHOW DATA IN THE TABLE BOOK
 async function loadDataBookings(data) {
-    console.log(data);    
     dataTableBookings = $("#tableBookings").DataTable({
             data: data,
             deferRender: true,

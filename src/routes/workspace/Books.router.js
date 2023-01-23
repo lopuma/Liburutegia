@@ -9,9 +9,9 @@ const { getNew, getInfo, getInfoCover } = require("../../controller/workSpaceCon
 // TODO 👌 
 const routerBooks = require("express").Router();
 
-    routerBooks.get("/new", getNew);
+    routerBooks.get("/new", isAuthenticated, getNew);
 
-    routerBooks.get("/info/:idBook", noExistBook, getInfo);
+    routerBooks.get("/info/:idBook", isAuthenticated, noExistBook, getInfo);
 
     routerBooks.get("/infoCover/:idBook", noExistBook, getInfoCover);
 

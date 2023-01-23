@@ -95,7 +95,6 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                console.log("ESTE RESULT DONDE SE MUESTRA ", results[0]);
                 return res.status(200).send(results[0]);
             });
         } catch (error) {

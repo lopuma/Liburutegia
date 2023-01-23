@@ -3,6 +3,6 @@ const { postReset, userExists } = require('../../controller/authController/reset
 const routerReset = require('express').Router();
 
     // TODO 👌 
-    routerReset.post("/", userExists, postReset);
+routerReset.post("/", userExists, postReset);
 
 module.exports = routerReset;

@@ -223,10 +223,6 @@ let opcion = "";
     async function reservedBook(bookID, title) {
         const idBook = bookID;
         const titleBook = title;
-        console.log({
-            idBook,
-            titleBook
-        })
         await globalReserveBook(idBook, titleBook, null, null);
     }
 

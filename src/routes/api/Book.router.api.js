@@ -27,15 +27,15 @@ const routerBooks = require('express').Router();
 
     routerBooks.get("/:idBook", noExistBook, getBook);
 
-    routerBooks.post("/deliver/:bookID", deliverBook);
+    routerBooks.post("/deliver/:bookID", isAuthenticated, deliverBook);
 
-    routerBooks.post("/add", validate, addBook);
+    routerBooks.post("/add", isAuthenticated, validate, addBook);
 
-    routerBooks.get("/delete/:idBook", deleteBook);
+    routerBooks.get("/delete/:idBook", isAuthenticated, deleteBook);
 
-    routerBooks.post("/update/:idBook", noExistBook, validate, putBook);
+    routerBooks.post("/update/:idBook", isAuthenticated, noExistBook, validate, putBook);
 
-    routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
+    routerBooks.post("/frontPage", isAuthenticated, upload.single('coverImage'), existsCover, uploadFile);
 
     routerBooks.get("/info/reviews/:idBook", infoReviews);
 

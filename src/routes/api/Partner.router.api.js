@@ -23,16 +23,18 @@ const routerPartners = require("express").Router();
 
     routerPartners.get("/info/:idPartner", noExistPartner, infoPartner);
 
-    routerPartners.post("/add/:idPartner", validate, existPartner, noExistPartner, addPartner);
+    routerPartners.post("/add/:idPartner", isAuthenticated, validate, existPartner, noExistPartner, addPartner);
 
     routerPartners.get(
         "/delete/:idPartner",
+        isAuthenticated,
         noExistPartner,
         deletePartner
     );
 
     routerPartners.post(
         "/update/:idPartner",
+        isAuthenticated,
         noExistPartner,
         validate,
         putPartner

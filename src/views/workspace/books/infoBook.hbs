@@ -312,7 +312,6 @@
 // TODO ✅ UPLOAD COVER
     async function uploadCover() {
         const formData = new FormData();
-        console.log(coverImage.files[0]);
         if(coverImage.value !== "" || coverImage.files[0] !== undefined) {
             formData.append('idBook', bookCoverID.value);
             formData.append('coverImage', coverImage.files[0]);
@@ -322,7 +321,6 @@
             })
                 .then((response) =>  response.json())
                 .then((data) => {
-                    console.log(data);
                     document.getElementById('successUpload').classList.add("isEnable");
                     document.getElementById('successUpload').innerHTML = data.messageSuccess;
                     imgBox.style.backgroundImage = `url(/img/covers/${data.nameCover})`;
@@ -375,7 +373,6 @@
     }
     async function createCardReview(data){
         try {
-            console.log("DATA REVIEWS =>> ", data);
             if(data.success) {
                 const review = data.data;
                 let valores = Object.values(review); //
@@ -403,7 +400,6 @@
                     } else {
                         textRate =  "I don't like it ";
                     }
-                    console.log(reviewOn);
                     if (reviewOn === 1) { 
                         template  = `
                             <div class='Review-box'>

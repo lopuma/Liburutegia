@@ -265,11 +265,6 @@ const partnerController = {
                 }));
                 await addNewPartner(updatedDataAddPartner);
             } else {
-                console.log({
-                    familyDni: dni,
-                    partnerDniFamily,
-                    partnerIDFamily
-                })
                 const sqlInsertFamily = "INSERT INTO familys SET ?";
                 await connection.query(
                     sqlInsertFamily,
@@ -433,7 +428,6 @@ const partnerController = {
         try {
             const errors = validationResult(req);
             const idPartner = req.params.idPartner;
-            console.log(idPartner);
             const sqlUpdate = `UPDATE partners SET ? WHERE partnerID = ${idPartner}`;
             const {
                 dni,
@@ -483,7 +477,6 @@ const partnerController = {
                     ...data,
                     activeFamily: 0
                 }));
-                console.log("[ DB 3 ] =>> ", updatedDataAddPartner[0])
                 if (updatedDataAddPartner[0].activeFamily === 0) {
                     const sqlDeleteFamily = " DELETE FROM familys WHERE familyDni=? AND partnerDni=?";
                     await connection.query(sqlDeleteFamily, [dni, partnerDniFamily], async (err, results) => {
@@ -536,7 +529,6 @@ const partnerController = {
                     });
                 });
             } else {
-                console.log("ENTRO NO VACIO");
                 const sqlExistsFamily = "SELECT * from familys WHERE familyDni=? AND partnerDni=?";
                 await connection.query(
                     sqlExistsFamily, [dni, partnerDniFamily], async (err, exists) => {
@@ -548,7 +540,6 @@ const partnerController = {
                                 errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                             });
                         }
-                        console.log(exists.length);
                         if (exists.length === 0) {
                             const sqlInsertFamily = "INSERT INTO familys SET ?";
                             await connection.query(
@@ -574,7 +565,6 @@ const partnerController = {
                             ...data,
                             activeFamily: 1
                         }));
-                        console.log("[ DB 3 ] =>> ", updatedDataPartner[0]);
                         await connection.query(sqlUpdate, updatedDataPartner, (err, results) => {
                             if (err) {
                                 console.error("[ DB ?]", err.sqlMessage);

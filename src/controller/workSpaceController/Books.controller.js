@@ -38,10 +38,8 @@ const booksController = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
-                console.log(results[1]);
                 const purchase = moment(results[1].purchase_date).format("MMMM Do, YYYY");
                 const update = moment(results[1].lastUpdate).format("MMMM Do, YYYY HH:mm A");
-                console.log("=>> ", results[1].lenght, results[1][0].bookID)
                 let book = "";
                 if (results[1][0].bookID === null) {
                     book = results[3].map(results => ({
@@ -57,7 +55,6 @@ const booksController = {
                     }));
                     
                 }
-                console.log("ES0TE ES EL RESULT QUE QUIERO ??", book);
                 const deliver = results[2];
                 res.status(200).render("workspace/books/infoBook", {
                     loggedIn,

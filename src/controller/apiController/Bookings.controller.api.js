@@ -256,7 +256,6 @@ const bookingController = {
                                 errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                             });
                         }
-                        console.log("1 => ", results[1].insertId, "2 => ", results[0].insertId)
                         res.status(201).send({
                             success: true,
                             swalTitle: "Reserve Book added...",

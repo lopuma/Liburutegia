@@ -114,7 +114,6 @@
 // TODO RESPUESTA DEL SERVIDOR 
 
     async function responseReserve(data) {
-        console.log(data);
         const success = data.success;
         const title = data.swalTitle;
         const message = data.messageSuccess || data.errorMessage;
@@ -169,7 +168,6 @@
                         if ($('#stateInfoPartner').val() === ''){
                             const sel = document.getElementById("selectDniReserve");
                             const opt = sel[0];
-                            console.log({opt});
                             const idPartner = fillZeros(opt.value);
                             const dniPartner = opt.text;
                             await extractDataFormReserve(null, null, idPartner, dniPartner);

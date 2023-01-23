@@ -1,17 +1,17 @@
 const {
-  getFamily,
-  desFamily
+    getFamily,
+    desFamily
 } = require("../../controller/apiController/Familys.controller.api");
 
 const {
-  isAuthenticated
+    isAuthenticated
 } = require("../../controller/authController/loginController");
 
 
 const routerFamilys = require("express").Router();
-  
-  routerFamilys.get("/:dniPartner", getFamily);
 
-  routerFamilys.post("/unlink/:idFamily", desFamily);
+    routerFamilys.get("/:dniPartner", getFamily);
+
+    routerFamilys.post("/unlink/:idFamily", isAuthenticated, desFamily);
 
 module.exports = routerFamilys;
