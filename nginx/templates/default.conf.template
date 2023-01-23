@@ -13,8 +13,8 @@ server {
 
         server_name ${NGINX_HOST};
         #return 301 https://www.liburutegia-sanmiguel,com;
-        access_log  /var/log/nginx/${NGINX_HOST}.access.log;
-        error_log  /var/log/nginx/${NGINX_HOST}.error.log;
+        access_log  /var/log/nginx/${NGINX_APP}.access.log;
+        error_log  /var/log/nginx/${NGINX_APP}.error.log;
 
 
         location / { 
