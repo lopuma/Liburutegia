@@ -25,7 +25,7 @@
 /* TITULO */
 .Cards-data {
     position: relative;
-    /* width: 300px; */
+    max-width: 300px;
     height: 200px;
     background: var(--Color-texto-blanco);;
     border: var(--Color-outline) solid 1px;

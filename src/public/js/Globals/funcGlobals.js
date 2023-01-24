@@ -463,3 +463,57 @@
         await extractDataFormReserve(bookID, bookTitle, partnerID, partnerDni);
         document.getElementById("reserveDate").value = moment(new Date()).format("YYYY-MM-DD");
     }
+
+// DELIVER
+// TODO ✅ ENTEGA DEL LIBRO
+async function deliverBook(bookID, bookingID) {
+    try {
+        const idBook = bookID;
+        const idBooking = bookingID;
+        //_PARTNERID = partnerID;
+        const urlDeliver = `/api/books/deliver/${idBook}`;
+        let dateActual = new Date();
+        dateActual = moment(dateActual).format("YYYY-MM-DD HH:mm");
+        Swal.fire({
+            title: 'Deliver',
+            text: `Do you want to add a review, for the book : ${idBook} ?`,
+            icon: 'warning',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#474E68',
+            confirmButtonText: 'Yes',
+            denyButtonText: `Don't review`,
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            console.log({ _PARTNERID });
+            if (result.isConfirmed) {
+                $("#deliverPartnerID").val(_PARTNERID);
+                $("#bookID").val(idBook);
+                $("#bookingID").val(idBooking);
+                $('#modalStar').modal('show');
+            } else if (result.isDenied) {
+                const data = {
+                    idBooking,
+                    score: 0,
+                    review: null,
+                    deliver_date_review: dateActual,
+                    reviewOn: 0
+                }
+                fetch(urlDeliver, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8"
+                    }
+                })
+                try {
+                    inforActive(_PARTNERID);
+                } catch (error) { }
+                location.reload(true);
+            }
+        })
+    } catch (error) {
+        console.error(":error ", error)
+    }
+}

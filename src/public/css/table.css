@@ -288,6 +288,60 @@ div.dt-button-collection .active:hover {
 .select-info {
     color: #1746A2;
 }
+
+.Links {
+    color: #007185;
+    font-size: 1em;
+}
+
+.Links:hover {
+    cursor: pointer;
+    color: #C7511F;
+    text-decoration: underline;
+}
+
+/*START*/
+.Review-on {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 2em;
+    width: fit-content;
+    height: auto;
+    margin: 0;
+}
+
+.Review-data {
+    width: 200px;
+    height: 100px;
+    word-break: break-word;
+    white-space: pre-wrap;
+    -moz-white-space: pre-wrap;
+}
+
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: gold;
+}
+
 @media screen and (max-width: 980px) {
 
     .Dashboard {

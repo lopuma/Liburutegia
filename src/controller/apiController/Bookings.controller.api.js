@@ -66,7 +66,7 @@ const bookingController = {
     //TODO ✅ SHOW ALL BOOKINGS
     getBookings: async (req, res) => {
         try {
-            const sqlSelect = `select bk.bookingID, bk.bookID, b.title as title, bk.partnerDni, CONCAT(p.lastname, ", ", p.name) as fullname, bk.reserveDate, bk.delivered from bookings bk INNER JOIN partners p ON p.dni=bk.partnerDNI INNER JOIN books b ON b.bookID=bk.bookID`;
+            const sqlSelect = `select bk.bookingID, bk.bookID, b.title as title, bk.partnerDni, CONCAT(p.lastname, ", ", p.name) as fullname, p.partnerID, bk.reserveDate, bk.delivered, bk.cancelReserved, v.score, v.review, v.deliver_date_review, v.reviewOn from bookings bk INNER JOIN partners p ON p.dni=bk.partnerDNI INNER JOIN books b ON b.bookID=bk.bookID LEFT JOIN votes v ON v.bookingID=bk.bookingID`;
             await connection.query(sqlSelect, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -87,6 +87,7 @@ const bookingController = {
                     });
                 }
                 let data = results;
+                console.log(data);
                 res.status(200).send(data);
             });
         } catch (error) {

@@ -81,12 +81,15 @@ const contador              = document.getElementById( 'contador'           );
                 popup: 'animate__animated animate__fadeOutUp'
             }
         }).then(async () => { 
-            await inforActive(valuePartnerID);
+            try {
+                await inforActive(valuePartnerID);
+            } catch (error) { }
             widget.style.display = "none";
             post.style.display = "block";
-            $('#modalStar').modal('hide');
-            resetRadioButtons("rate");
             contador.innerHTML = '0 / 100'
+            resetRadioButtons("rate");
+            await ClosePopup("#modalStar")
+            location.reload(true);
         });
     }
 

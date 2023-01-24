@@ -36,6 +36,7 @@ const routerBookings = require("express").Router();
 		});
     });
     
-    routerBookings.post("/add/:idBook", isAuthenticated, noExistBook, addBooking);
+//routerBookings.post("/add/:idBook", isAuthenticated, noExistBook, addBooking);
+routerBookings.post("/add/:idBook", noExistBook, addBooking);
 
 module.exports = routerBookings;

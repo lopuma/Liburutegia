@@ -400,6 +400,7 @@ const bookController = {
                     });
                 }
                 const data = results;
+                
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Success.... ]",
