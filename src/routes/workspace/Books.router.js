@@ -11,8 +11,8 @@ const routerBooks = require("express").Router();
 
     routerBooks.get("/new", isAuthenticated, getNew);
 
-//routerBooks.get("/info/:idBook", isAuthenticated, noExistBook, getInfo);
-routerBooks.get("/info/:idBook", noExistBook, getInfo);
+    routerBooks.get("/info/:idBook", isAuthenticated, noExistBook, getInfo);
+//routerBooks.get("/info/:idBook", noExistBook, getInfo);
 
     routerBooks.get("/infoCover/:idBook", noExistBook, getInfoCover);
 

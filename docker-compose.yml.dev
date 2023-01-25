@@ -1,5 +1,4 @@
 # TODO CREAR NETWORK
-#docker network create ntw-app
 version: '3.7'
 networks:
     ntk-app:
@@ -8,9 +7,7 @@ networks:
 services:
     liburutegia-nginx:
         container_name: liburutegia-nginx
-        #build:
-        #  context: ./nginx
-        image: nginx:latest
+        image: lopuma/nginx-liburutegia:1.0
         restart: always
         ports: 
             - "80:80"
@@ -26,8 +23,7 @@ services:
             - ntk-app
     application:
         container_name: application
-        build: .
-        #image: lopuma/liburutegia:5.0
+        image: lopuma/liburutegia:7.0
         ports:
             - "3000:3000"
         depends_on:
@@ -46,22 +42,12 @@ services:
             - ntk-app
     mysql:
         container_name: mysql
-        build:
-          context: ./data
-        #args:
-        #  - NODE_ENV=${NODE_ENV}
-        #  - MYSQL_DATABASE=${MYSQL_DATABASE}
-        #  - MYSQL_USER=${MYSQL_USER}
-        #  - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        #  - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-        #image: lopuma/db-liburutegia:1.0
+        image: lopuma/db-liburutegia:1.0
         restart: always
         ports:
             - "3306:3306"
         environment:
-            #NODE_ENV: ${NODE_ENV}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
-            #MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         volumes:

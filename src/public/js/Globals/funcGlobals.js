@@ -492,7 +492,7 @@ async function deliverBook(bookID, bookingID) {
                 $('#modalStar').modal('show');
             } else if (result.isDenied) {
                 const data = {
-                    idBooking,
+                    bookingID: idBooking,
                     score: 0,
                     review: null,
                     deliver_date_review: dateActual,
