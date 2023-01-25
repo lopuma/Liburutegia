@@ -9,6 +9,8 @@
             </div>
             <div class="New">
                 <form class="New-form" id="formReserveBook" name="formReserveBook">
+                    {{!-- BUTTO DISABLE ENTER --}}
+                    <button type="submit" disabled hidden aria-hidden="true"></button>
                     <div class="New-content">
                         <div class="New-boxes">
                             <!-- TODO BOOK ID -->
@@ -117,7 +119,7 @@
         const success = data.success;
         const title = data.swalTitle;
         const message = data.messageSuccess || data.errorMessage;
-
+        console.log("DATA RESPONSE MODAL RESERVED ",{data})
         if (success) {
             Swal.fire({
                 title: title || "Success....!",
@@ -130,13 +132,12 @@
                 try {
                     if (_STATEINFOBOOK) { // 
                         location.reload(true);
-                        window.location.href = "";
                     }
                 } catch (error) { }
                 try {
                     if(_STATEBOOK) { 
                         await reloadDataBooks();
-                        window.location.href = "";
+                        window.location.href = "" + "#";
                     }
                 } catch (error) { }
                 await ClosePopup("#modalReserveBook");
@@ -154,14 +155,12 @@
                         if(_STATEBOOK) { 
                             await ClosePopup("#modalReserveBook");
                             await reloadDataBooks();
-                            window.location.href = "";
                         } 
                     } catch (error) { }
                     try {
                         if(_STATEINFOBOOK) { 
                             await ClosePopup("#modalReserveBook");
                             location.reload(true);
-                            window.location.href = "";
                         } 
                     } catch (error) { }
                     try {
@@ -189,6 +188,7 @@
         const partnerID = removeZeros(document.getElementById("reservePartnerID").value);
         const partnerDni = optionSelectDni.text;
         const reserveDate = document.getElementById("reserveDate").value;
+        const date = new Date(reserveDate);
         const data = {
             bookID,
             title,

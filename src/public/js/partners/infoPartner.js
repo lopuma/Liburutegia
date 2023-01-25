@@ -113,7 +113,7 @@ var _PARTNERID = "";
             for (let elemento of data.data) {
                 const reserved = elemento.reserved;
                 const idBookingReview = elemento.bookingID_review;
-                let reservationDate = moment(elemento.reserveDate).format("MMMM Do, YYYY HH:mm A");
+                let reservationDate = moment(elemento.reserveDate).format("MMMM Do, YYYY");
                 if (reserved === 1 && idBookingReview === null) {
                     let myActivesReserves = Object.create(elemento);
                     myActivesReserves['bookID'] = elemento.bookID;
@@ -169,7 +169,7 @@ var _PARTNERID = "";
                     render: (data) => {
                         const title = accentNeutralise(data.title);
                         return (
-                            `<a class='Links'  href='/workspace/books/info/${data.bookID}'>${title}</a>`
+                            `<a class='Links'  href='/workspace/books/info/${data.bookID}' style="margin-left: 1em">${title}</a>`
                         );
                     }
                 },
@@ -180,7 +180,7 @@ var _PARTNERID = "";
                         return (accentNeutralise(data));
                     }
                 },
-                { data: "reserveDate" },
+                { data : "reserveDate"   },
                 {
                     data: null,
                     searchable: false,
@@ -301,7 +301,7 @@ var _PARTNERID = "";
                 const starTotal = 5;
                 const reserved = elemento.reserved;
                 const idBookingReview = elemento.bookingID_review;
-                let reservationDate = moment(elemento.reserveDate).format("MMMM Do, YYYY HH:mm A");
+                let reservationDate = moment(elemento.reserveDate).format("MMMM Do, YYYY");
                 let deliverDateReview = moment(elemento.deliver_date_review).format("MMMM Do, YYYY HH:mm A");
                 const starPercentage = elemento.score / starTotal * 100;
                 const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
@@ -348,7 +348,8 @@ var _PARTNERID = "";
                     data: "bookingID",
                     visible: false,
                     render: (data) => {
-                        return (fillZeros(data));
+                        const bookingID = fillZeros(data);
+                        return (bookingID);
                     }
                 },
                 {
@@ -363,7 +364,7 @@ var _PARTNERID = "";
                     render: (data) => {
                         const title = accentNeutralise(data.title);
                         return (
-                            `<a class='Links'  href='/workspace/books/info/${data.bookID}'>${title}</a>`
+                            `<a class='Links'  href='/workspace/books/info/${data.bookID}' style="margin-left: 1em">${title}</a>`
                         );
                     }
                 },

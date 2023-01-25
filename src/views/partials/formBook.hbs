@@ -254,7 +254,7 @@
 
 // TODO ✅ RESPONSE DATA SUCCESS
     const responseData = async (data) =>  {
-        const message = data.messageSuccess || data.errorMessage;
+        const menssage = data.messageSuccess || data.errorMessage;
         const title = data.swalTitle;
         const success = data.success;
         if(success) {
@@ -262,19 +262,17 @@
                 icon: 'success',
                 timer: 2000,
                 title: title || "Success....!",
-                text: message,
+                text: menssage,
             }).then(async () => {
                 await resetFormsBook();
                 try{
                     if(_STATEINFOBOOK) { 
                         location.reload()
-                        window.location.href = "";
                     }
                 } catch (error) { };
                 try{
                     if(_STATEBOOK) {
                         await reloadDataBooks();
-                        window.location.href = "";
                     }
                 } catch (error) { };
             });
@@ -283,7 +281,7 @@
                 icon: 'error',
                 timer: 2000,
                 title: title  || "Oops....!",
-                text: message,
+                text: menssage,
             });
         }
 

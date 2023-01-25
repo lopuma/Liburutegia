@@ -104,18 +104,17 @@ const bookController = {
     },
     // TODO ✅ ENTREGA BOOK
     deliverBook: async (req, res) => {
-        const idBook = req.params.bookID;
-
-        const { idBooking, score, review, deliver_date_review, reviewOn } = req.body;
+        const bookID = req.params.idBook;
+        const { bookingID, score, review, deliver_date_review, reviewOn } = req.body;
         const sql = [`UPDATE books SET 
-                    reserved=0 WHERE bookID=${idBook}`,
-        `UPDATE bookings SET delivered=1 WHERE bookingID=${idBooking}`,
-        `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner, reviewOn) VALUES (${idBook}, ${idBooking}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${idBooking}), ${reviewOn})`];
+                    reserved=0 WHERE bookID=${bookID}`,
+        `UPDATE bookings SET delivered=1 WHERE bookingID=${bookingID}`,
+        `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner, reviewOn) VALUES (${bookID}, ${bookingID}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${bookingID}), ${reviewOn})`];
         await connection.query(
             sql.join(";"),
-            (err) => {
+            (err, results) => {
                 if (err) {
-                    console.error("[ DB ]", err.sqlMessage);
+                    console.error("[ DB 1 ]", err.sqlMessage);
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
@@ -123,10 +122,11 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                console.log("P4", results);
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Review added.... ]",
-                    messageSuccess: `The following BOOK has been delivered with ID : ${idBook}, and a review has been added`
+                    messageSuccess: `The following BOOK has been delivered with ID : ${bookID}, and a review has been added`
                 });
             }
         );

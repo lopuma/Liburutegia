@@ -48,7 +48,7 @@ const contador              = document.getElementById( 'contador'           );
         let dateActual = new Date();
         dateActual = moment(dateActual).format("YYYY-MM-DD HH:mm");
         const data = {
-            idBooking,
+            bookingID: idBooking,
             score,
             review,
             deliver_date_review: dateActual,
@@ -67,30 +67,61 @@ const contador              = document.getElementById( 'contador'           );
 
 //TODO ✅ RESPUESTA DE LA ENTREGA DEL LIBRO
     async function responseDeliver(data) {
-        const menssage = data.messageSuccess;
+        const menssage = data.messageSuccess || data.errorMessage;
+        const title = data.swalTitle;
+        const success = data.success;
         const valuePartnerID = modalInputPartnerID.value;
-        Swal.fire({
-            icon: 'success',
-            title: menssage,
-            showConfirmButton: true,
-            timer: 1500,
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        }).then(async () => { 
-            try {
-                await inforActive(valuePartnerID);
-            } catch (error) { }
-            widget.style.display = "none";
-            post.style.display = "block";
-            contador.innerHTML = '0 / 100'
-            resetRadioButtons("rate");
-            await ClosePopup("#modalStar")
-            location.reload(true);
-        });
+        if(success) {
+            Swal.fire({
+                icon: 'success',
+                title: title || "Success....!",
+                showConfirmButton: true,
+                text: menssage,
+                timer: 4000,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then(async () => { 
+                try {
+                    await inforActive(valuePartnerID);
+                } catch (error) { }
+                widget.style.display = "none";
+                post.style.display = "block";
+                contador.innerHTML = '0 / 100'
+                resetRadioButtons("rate");
+                await ClosePopup("#modalStar")
+                try {                
+                    if (_STATEBOOKINGS) {
+                        await reloadDataBookings();
+                    }
+                } catch (error) { }
+            });
+        } else if (success === false) {
+            Swal.fire({
+                icon: 'error',
+                timer: 2000,
+                title: title  || "Oops....!",
+                text: menssage,
+            }).then(async () => { 
+                try {
+                    await inforActive(valuePartnerID);
+                } catch (error) { }
+                widget.style.display = "none";
+                post.style.display = "block";
+                contador.innerHTML = '0 / 100'
+                resetRadioButtons("rate");
+                await ClosePopup("#modalStar")
+                try {                
+                    if (_STATEBOOKINGS) {
+                        await reloadDataBookings();
+                    }
+                } catch (error) { }
+            });
+        }
+        
     }
 
 //TODO ✅ EVENTO AL HACER SUBMIT

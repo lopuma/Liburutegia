@@ -20,6 +20,10 @@ const {
     isAuthenticated
 } = require("../../controller/authController/loginController");
 
+const {
+	existBooking
+} = require("../../controller/apiController/Bookings.controller.api");
+
 // TODO 👌 
 const routerBooks = require('express').Router();
 
@@ -27,8 +31,8 @@ const routerBooks = require('express').Router();
 
     routerBooks.get("/:idBook", noExistBook, getBook);
 
-//routerBooks.post("/deliver/:bookID", isAuthenticated, deliverBook);
-routerBooks.post("/deliver/:bookID", deliverBook);
+//routerBooks.post("/deliver/:bookID", isAuthenticated, existBooking, deliverBook);
+routerBooks.post("/deliver/:idBook", existBooking, deliverBook);
 
 //routerBooks.post("/add", isAuthenticated, validate, addBook);
 routerBooks.post("/add", validate, addBook);

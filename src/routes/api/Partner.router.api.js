@@ -32,12 +32,18 @@ const routerPartners = require("express").Router();
         deletePartner
     );
 
-    routerPartners.post(
+/*    routerPartners.post(
         "/update/:idPartner",
         isAuthenticated,
         noExistPartner,
         validate,
         putPartner
-    );
+    );*/
+routerPartners.post(
+    "/update/:idPartner",
+    noExistPartner,
+    validate,
+    putPartner
+);
 
 module.exports = routerPartners;

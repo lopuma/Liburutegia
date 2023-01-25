@@ -74,10 +74,10 @@ let opcion = "";
                         if (type === "display") {
                             if (data === 1) {
                                 reserved =
-                                    '<span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; color: black; font-size: 1em; padding: 0.5em 1em;">Not available</span>';
+                                    '<span class="badge rounded-pill bg-warning text-dark" style="cursor: pointer; font-size: 1em; padding: 0.5em 1em;; font-weight: 100">Not available</span>';
                             } else {
                                 reserved =
-                                    '<span class="badge rounded-pill bg-success" style="cursor: pointer; font-size: 1em; padding: 0.5em 1em;">Available</span>';
+                                    '<span class="badge rounded-pill" style="cursor: pointer; font-size: 1em; padding: .5em 1em; background-color: #01937C; color: #FAF1E6; font-weight: 100">Available</span>';
                             }
                             return reserved;
                         }

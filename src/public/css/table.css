@@ -312,7 +312,7 @@ div.dt-button-collection .active:hover {
 
 .Review-data {
     width: 200px;
-    height: 100px;
+    height: auto;
     word-break: break-word;
     white-space: pre-wrap;
     -moz-white-space: pre-wrap;

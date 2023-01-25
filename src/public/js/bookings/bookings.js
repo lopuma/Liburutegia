@@ -23,7 +23,7 @@ async function loadDataBookings(data) {
         },
         stateSave: true,
         responsive: true,
-        order: [[0, "desc"]],
+        order: [[6, "desc"]],
         lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, 'ALL']],
         pageLength: 15,
         select: true,
@@ -46,16 +46,16 @@ async function loadDataBookings(data) {
                 render: (data) => {
                     const title = accentNeutralise(data.title);
                     return (`
-                            <a class='Links' href='/workspace/books/info/${data.bookID}'>${title}</a>`
+                            <a class='Links' href='/workspace/books/info/${data.bookID}' style="margin-left: 1em">${title}</a>`
                     );
                 }
             },
             {
-                data: "partnerDni",
+                data: null,
                 render: (data) => {
-                    const partnerDni = data;
+                    const partnerDni = data.partnerDni;
                     return (`
-                            <a class='Links' href='/workspace/partners/info/${data}'>${partnerDni}</a>`
+                            <a class='Links' href='/workspace/partners/info/${data.partnerID}' style="margin-left: .5em">${partnerDni}</a>`
                     );
                 }
             },
@@ -74,15 +74,31 @@ async function loadDataBookings(data) {
                 }
             },
             {
-                data: "delivered",
-                render: function (data, type) {
+                data: "deliver_date_review", "searchable": false,
+                render: (data) => {
+                    if (data !== null) {
+                        date = (moment(data).format("MMMM Do, YYYY HH:mm"));
+                    } else {
+                        date = "";
+                    }
+                    return date;
+                }
+            },
+            {
+                data: null,
+                render: (data, type) => {
                     if (type === "display") {
-                        if (data === 0) {
+                        if (data.cancelReserved) {
                             delivered =
-                                '<span class="badge rounded-pill bg-light  text-danger" style="cursor: pointer; color: black; font-size: 1em; padding: 0.5em 1em;">Active Reserve</span>';
+                                    '<span class="badge rounded-pill" style="cursor: pointer; font-size: 1em; padding: .5em;background-color : #FF8B8B; color: #4C3A51; font-weight: 100; margin-left : .55em">Cancel Reserve</span>';
                         } else {
-                            delivered =
-                                '<span class="badge rounded-pill bg-success text-body" style="cursor: pointer; font-size: 1em; padding: 0.5em 1em;">Reservation Completed</span>';
+                            if (data.delivered === 0) {
+                                delivered =
+                                    '<span class="badge rounded-pill" style="cursor: pointer; font-size: 1em; padding: .5em;background-color : #FFB26B; color: #001253; font-weight: 100; margin-left : .55em">Active Reserve</span>';
+                            } else {
+                                delivered =
+                                    '<span class="badge rounded-pill" style="cursor: pointer; font-size: 1em; padding: .5em;background-color : #A2CDCD; color: #000000; font-weight: 100; margin-left : .55em">Reservation Completed</span>';
+                            }
                         }
                         return delivered;
                     }
@@ -93,7 +109,59 @@ async function loadDataBookings(data) {
                 data: null,
                 render: (data, type) => {
                     if (type === "display") {
-                        console.log(data.delivered);
+                        const starTotal = 5;
+                        const starPercentage = data.score / starTotal * 100;
+                        const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+                        if (data.cancelReserved) {
+                            deliveredBook = `
+                            <div class="Review-on">
+                                Reason for cancel  :<div class="Review-data" style="color: #3D0000">${data.cancelReason}</div>
+                            </div>
+                            `;
+                        } else {
+                            if (data.delivered === 1) {
+                                let dtScore = parseInt(starPercentageRounded);
+                                let point = Math.round(dtScore / 20);
+                                if (data.reviewOn === 1) {
+                                    if (data.review === "") {
+                                        deliveredBook = `
+                                        <div class="Review-on">
+                                            <div class="Review-data" style="color: #557C55">No review has been written, but if the qualifications.</div>
+                                            <div class="stars-outer">
+                                                <div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${point} star">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        `;
+                                    } else {
+                                        deliveredBook = `
+                                        <div class="Review-on">
+                                            <span style="font-weight: 600">Review  :</span>
+                                            <div class="Review-data" style="color: #3D0000">${data.review}</div>
+                                            <span style="font-weight: 600">Score  :</span>
+                                            <div class="stars-outer">
+                                                <div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${point} star">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        `
+                                    }
+                                } else {
+                                    deliveredBook = `<div style="color: #E64848">There is no review or rating.</div>`;
+                                }
+                            } else {
+                                deliveredBook = "";
+                            }
+                        }
+                        return deliveredBook;
+                    }
+                    return data;
+                }
+            },
+            {
+                data: null,
+                render: (data, type) => {
+                    if (type === "display") {
                         const starTotal = 5;
                         const starPercentage = data.score / starTotal * 100;
                         const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
@@ -102,28 +170,8 @@ async function loadDataBookings(data) {
                             <button id="btnDeliver" onClick="deliverBooking(${data.bookID},${data.bookingID}, ${data.partnerID})" class="btn btn-warning text-dark" title="Deliver Book"><i class="fa-regular fa-handshake"></i>  Deliver Book</button>
 
                             <button id="btnDeliver" onClick=cancelReservation(` + data.bookID + `,` + data.bookingID + `) class="btn btn-danger text-light" title="Cancel Reservation"><i class="fa-solid fa-calendar-xmark"></i>  Cancel Reservation</button>`
-                        } else if (data.delivered === 1) {
-                            let dtScore = parseInt(starPercentageRounded);
-                            let point = Math.round(dtScore / 20);
-                            console.log({
-                                dtScore,
-                                point,
-                                starPercentageRounded
-                            })
-                            if (data.reviewOn === 1) {
-                                deliveredBook = `
-                                <div class="Review-on">
-                                    <div class="Review-data">${data.review}</div>
-                                    <div class="stars-outer">
-                                        <div class="stars-inner" style="width: ${starPercentageRounded}; cursor: pointer" title="score ${point} star">
-                                        </div>
-                                    </div>
-                                </div>
-                                `
-                            } else {
-                                deliveredBook = `<div>There is no review</div>`;
-                                
-                            }
+                        } else { 
+                            deliveredBook = "";
                         }
                         return deliveredBook;
                     }
@@ -162,7 +210,7 @@ async function loadDataBookings(data) {
                         titleAttr: 'Export CSV',
                         className: "buttonCsv",
                         exportOptions: {
-                            columns: [0, 1, 2, 3]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         },
                         title: 'Liburutegia SAN MIGUEL: BOOKINGS',
                     },
@@ -173,7 +221,7 @@ async function loadDataBookings(data) {
                         titleAttr: 'Export Excel',
                         className: "buttonExcel",
                         exportOptions: {
-                            columns: [0, 1, 2, 3]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         },
                         title: 'Liburutegia SAN MIGUEL: BOOKINGS',
                     },
@@ -186,7 +234,7 @@ async function loadDataBookings(data) {
                         titleAttr: 'Export PDF',
                         className: "buttonPdf",
                         exportOptions: {
-                            columns: [0, 1, 2, 3]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         },
                         title: 'Liburutegia SAN MIGUEL: BOOKINGS',
                         customize: function (doc) {
@@ -205,7 +253,7 @@ async function loadDataBookings(data) {
                         titleAttr: 'Print',
                         className: "buttonPrint",
                         exportOptions: {
-                            columns: [0, 1, 2, 3]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         },
                         title: 'Liburutegia SAN MIGUEL: BOOKINGS',
                     }
@@ -238,10 +286,6 @@ const reloadDataBookings = async () => {
 async function cancelReservation(idBook, idBooking) {
     const bookID = idBook;
     const bookingID = idBooking;
-    console.log({
-        bookID,
-        bookingID
-    })
 }
 
 // TDDO DELIVER BOOK
@@ -249,15 +293,8 @@ async function deliverBooking(idBook, idBooking, idPartner) {
     const bookID = idBook;
     const bookingID = idBooking;
     const partnerID = idPartner;
-    window.location.href = "" + "#deliver-book";
-    console.log({
-        bookID,
-        bookingID,
-        partnerID
-    })
     try {
         _PARTNERID = partnerID;
     } catch (error) { }
     await deliverBook(idBook, idBooking);
-    
 }

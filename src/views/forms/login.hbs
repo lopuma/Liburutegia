@@ -1,137 +1,143 @@
 <link rel="stylesheet" href="/style/login.min.css">
 <!-- Login.component.hbs -->
 <div class="Authentication" id="stateLogin">
-  <input type="checkbox" id="flip">
-  <div class="Auth-cover">
+<input type="checkbox" id="flip">
+<div class="Auth-cover">
     <div class="Auth-cover--front">
-      <img class="Auth-img" loading="lazy" src="image/front.svg" alt="">
+    <img class="Auth-img" loading="lazy" src="image/front.svg" alt="">
     </div>
     <div class="Auth-cover--back">
-      <img class="Auth-img" loading="lazy" src="image/back.svg" alt="">
+    <img class="Auth-img" loading="lazy" src="image/back.svg" alt="">
     </div>
-  </div>
-  <!-- TODO MESSAGES -------- -->
-  {{#if errorValidation}}
+</div>
+<!-- TODO MESSAGES -------- -->
+{{#if errorValidation}}
     {{> messages}}
-  {{/if}}
+{{/if}}
     <!-- TODO SUPER -->
-  <form class="Login" action="/login" method="POST" id="formLogin">
+<form class="Login" action="/login" method="POST" id="formLogin">
+    {{!-- BUTTO DISABLE ENTER --}}
+    {{!-- <button type="submit" disabled hidden aria-hidden="true"></button> --}}
+    {{!-- ------------------- --}}
     <div class="Login-content">
-      <h1 class="Login-title">Sign in to Liburutegia</h1>
-      <div class="Input-boxes">
+    <h1 class="Login-title">Sign in to Liburutegia</h1>
+    <div class="Input-boxes">
         <!-- TODO EMAIL -->
         <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
             <div class="Box-animation Animation">
-              <input class="Animation-input" id="inputEmailLogin" type="email" name="inputEmailLogin" tabindex="1" placeholder=" " autocomplete="off" required="required">
-              <label class="Animation-label" for="inputEmailLogin" >Your Email *</label>
+            <input class="Animation-input" id="inputEmailLogin" type="email" name="inputEmailLogin" tabindex="1" placeholder=" " autocomplete="off" required="required">
+            <label class="Animation-label" for="inputEmailLogin" >Your Email *</label>
             </div>
         </div>
         {{#if errorUser}}
-          {{> messages}}
+        {{> messages}}
         {{/if}}
         <!-- TODO PASSWORD -->
         <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
             <div class="Box-animation Animation">
-              <input class="Animation-input" name="inputPassword" id="inputPassword" type="password"  placeholder=" " autocomplete="off" required="required" tabindex="2">
-              <label class="Animation-label" for="inputPassword">Your Password</label>
+            <input class="Animation-input" name="inputPassword" id="inputPassword" type="password"  placeholder=" " autocomplete="off" required="required" tabindex="2">
+            <label class="Animation-label" for="inputPassword">Your Password</label>
             </div>
             <i id="btnEyePassword" class="Box-i fa-solid fa-eye"></i>
         </div>
         {{#if errorPassword}}
-          {{> messages}}
+        {{> messages}}
         {{/if}}
         <!-- TODO OTHER ELEMENTS -->
         <div class="Input-box isText">
-          <label class="Input-label" id="linkLogin" for="flip" tabindex="3">Forgot Password?</label>
+        <label class="Input-label" id="linkLogin" for="flip" tabindex="3">Forgot Password?</label>
         </div>
         <div class="Input-box isButton">
-          <input class="Login-button" id="botonLogin" type="submit" value='LOG IN' tabindex="4" />
+        <input class="Login-button" id="botonLogin" type="submit" value='LOG IN' tabindex="4" />
         </div>
-      </div>
     </div>
-  </form>
+    </div>
+</form>
     <!-- TODO SUPER -->
-  <form class="Reset" id="formReset">
+<form class="Reset" id="formReset">
+    {{!-- BUTTO DISABLE ENTER --}}
+    {{!-- <button type="submit" disabled hidden aria-hidden="true"></button> --}}
+    {{!-- ------------------- --}}
     <div class="Reset-content">
-      <div class="Reset-title">Reset Your Password</div>
-      <div class="Input-boxes">
-          <!---- TODO EMAIL RESET -->
-          <div class="Input-box Box">
+    <div class="Reset-title">Reset Your Password</div>
+    <div class="Input-boxes">
+        <!---- TODO EMAIL RESET -->
+        <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-envelope"></i>
             <div class="Box-animation Animation">
-              <input class="Animation-input" id="inputEmailReset" type="email" name="inputEmailReset" required="required" tabindex="1" placeholder=" " autocomplete="off">
-              <label class="Animation-label" for="inputEmailReset">Your Email *</label>
+            <input class="Animation-input" id="inputEmailReset" type="email" name="inputEmailReset" required="required" tabindex="1" placeholder=" " autocomplete="off">
+            <label class="Animation-label" for="inputEmailReset">Your Email *</label>
             </div>
-          </div>
-          <div class="Input-error Error" id="validationEmailReset">
-              <div class="Error-icon" >
+        </div>
+        <div class="Input-error Error" id="validationEmailReset">
+            <div class="Error-icon" >
                 <svg   fill="currentColor" focusable="false" width="16px" height="16px"
-                  viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
                 </svg>
-              </div>
-              <div class="Error-text">
+            </div>
+            <div class="Error-text">
                 <span id="errorEmailReset">The field cannot be empty.</span>
-              </div>
-          </div>
-          <!---- SUPER ONLY EXISTS ACCOUNT -->
-          <div class="Input-exists" id="inputsExists">
+            </div>
+        </div>
+        <!---- SUPER ONLY EXISTS ACCOUNT -->
+        <div class="Input-exists" id="inputsExists">
             <!---- TODO PASSWORD NEW -->
             <div class="Input-box Box">
-              <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-              <div class="Box-animation Animation">
+            <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+            <div class="Box-animation Animation">
                 <input class="Animation-input" id="inputPasswordNew" name="inputPasswordNew" type="password" tabindex="2" placeholder=" " autocomplete="off">
                 <label class="Animation-label" for="inputPasswordNew">New Password *</label>
-              </div>
-              <i id="btnEyePasswordNew" class="Box-i fa-solid fa-eye"></i>
+            </div>
+            <i id="btnEyePasswordNew" class="Box-i fa-solid fa-eye"></i>
             </div>
             <div class="Input-error Error" id="validationPasswordNew">
-              <div class="Error-icon" >
+            <div class="Error-icon" >
                 <svg   fill="currentColor" focusable="false" width="16px" height="16px"
-                  viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
                 </svg>
-              </div>
-              <div class="Error-text">
+            </div>
+            <div class="Error-text">
                 <span id="errorPasswordNew">Passwords do not match.</span>
-              </div>
+            </div>
             </div>
             <!---- TODO PASSWORD REPEAT -->
             <div class="Input-box Box">
-              <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
-              <div class="Box-animation Animation">
+            <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
+            <div class="Box-animation Animation">
                 <input class="Animation-input" id="inputPasswordRepeat" name="inputPasswordRepeat" type="password" tabindex="3" placeholder=" " autocomplete="off">
                 <label class="Animation-label" for="inputPasswordRepeat" >Repear Password *</label>
-              </div>
-              <i id="btnEyePasswordRepeat" class="Box-i fa-solid fa-eye"></i>
+            </div>
+            <i id="btnEyePasswordRepeat" class="Box-i fa-solid fa-eye"></i>
             </div>
             <div class="Input-error Error" id="validationPasswordRepeat">
-              <div class="Error-icon" >
+            <div class="Error-icon" >
                 <svg fill="currentColor" focusable="false" width="16px" height="16px"
-                  viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
                 </svg>
-              </div>
-              <div class="Error-text">
-                <span id="errorPasswordRepeat">Passwords do not match.</span>
-              </div>
             </div>
-          </div>
+            <div class="Error-text">
+                <span id="errorPasswordRepeat">Passwords do not match.</span>
+            </div>
+            </div>
+        </div>
         <!-- TODO OTHER ELEMENTS -->
-          <div class="Input-box isText">
+        <div class="Input-box isText">
             <label class="Input-label" id="linkForgot" for="flip" tabindex="4">Login?</label>
-          </div>
-          <div class="Button-box isButton isDisable" id="btnExists">
+        </div>
+        <div class="Button-box isButton isDisable" id="btnExists">
             <input class="Reset-button" value='RESET PASSWORD' tabindex="5" />
-          </div>
-          <div class="Button-box isButton isDisable" id="btnReset">
+        </div>
+        <div class="Button-box isButton isDisable" id="btnReset">
             <input class="Reset-button" value='RESET PASSWORD' tabindex="6" />
-          </div>
-      </div>
+        </div>
     </div>
-  </form>
+    </div>
+</form>
 </div>
 
 <script defer src="/scripts/login.js" type="text/javascript"></script>

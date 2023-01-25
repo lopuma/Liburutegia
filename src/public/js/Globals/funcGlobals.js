@@ -1,13 +1,13 @@
 //TODO ✅ CEROS POR DELANTE DEL ID 
     function fillZeros(id) {
         let num = id.toString();
-        let large = 10;
+        let large = 5;
         for (let i = 0; i < (large - num.length); i++) {
             num = "0" + num
         }
         return num
     }
-//TODO ✅ REMOVE CEROS POR DELANTE
+    //TODO ✅ REMOVE CEROS POR DELANTE
     function removeZeros(id) {
         return id.toString().replace(/^0+/, "");
     }
@@ -86,7 +86,6 @@
                     }
                     else {
                         await reloadDataBooks();
-                        window.location.href = "";
                     }
                 } catch (error) { }
             });
@@ -485,8 +484,7 @@ async function deliverBook(bookID, bookingID) {
             confirmButtonText: 'Yes',
             denyButtonText: `Don't review`,
             cancelButtonText: 'Cancel'
-        }).then((result) => {
-            console.log({ _PARTNERID });
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 $("#deliverPartnerID").val(_PARTNERID);
                 $("#bookID").val(idBook);
@@ -510,7 +508,12 @@ async function deliverBook(bookID, bookingID) {
                 try {
                     inforActive(_PARTNERID);
                 } catch (error) { }
-                location.reload(true);
+                try {
+                    if (_STATEBOOKINGS) {
+                        await reloadDataBookings();
+                        // location.reload(true);
+                    }
+                } catch (error) { }
             }
         })
     } catch (error) {

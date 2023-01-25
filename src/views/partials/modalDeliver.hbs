@@ -23,7 +23,11 @@
                         <input class="Widget-input" type="radio" value="1" name="rate" id="rate-1">
                         <label for="rate-1" class="Widget-label fas fa-star"></label>
                         <div class="Star-header"></div>
+
                         <form class="Star-form Form" action="#" id="formDeliver" name="formDeliver">
+                            {{!-- BUTTO DISABLE ENTER --}}
+                                <button type="submit" disabled hidden aria-hidden="true"></button>
+                            {{!-- ------------------- --}}
                             <input type="text" class="form-control" id="deliverPartnerID"
                                 tabindex="0" hidden>
                             <input type="text" class="form-control" id="bookID"
@@ -38,6 +42,7 @@
                                 <button type="submit" id="post" tabindex="4">REVIEW</button>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>
