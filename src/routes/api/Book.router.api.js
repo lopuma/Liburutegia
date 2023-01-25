@@ -37,9 +37,9 @@ routerBooks.post("/deliver/:idBook", existBooking, deliverBook);
 //routerBooks.post("/add", isAuthenticated, validate, addBook);
 routerBooks.post("/add", validate, addBook);
 
-    routerBooks.get("/delete/:idBook", isAuthenticated, deleteBook);
+    routerBooks.get("/delete/:idBook", deleteBook);
 
-    routerBooks.post("/update/:idBook", isAuthenticated, noExistBook, validate, putBook);
+    routerBooks.post("/update/:idBook", noExistBook, validate, putBook);
 
 //routerBooks.post("/frontPage", isAuthenticated, upload.single('coverImage'), existsCover, uploadFile);
 routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);

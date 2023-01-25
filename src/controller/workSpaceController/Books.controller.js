@@ -38,11 +38,12 @@ const booksController = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
-                const purchase = moment(results[1].purchase_date).format("MMMM Do, YYYY");
-                const update = moment(results[1].lastUpdate).format("MMMM Do, YYYY HH:mm A");
                 let book = "";
                 console.log("P1", results[1][0])
                 if (results[1][0].bookID === null) {
+                    const purchase = moment(results[3][0].purchase_date).format("MMMM Do, YYYY");
+                    const update = moment(results[3][0].lastUpdate).format("MMMM Do, YYYY HH:mm A");
+                    console.log("DATE P2 ", {purchase, update})
                     book = results[3].map(results => ({
                         ...results,
                         purchase_date: purchase,
@@ -50,6 +51,8 @@ const booksController = {
                     }));
                     console.log("P2", book);
                 } else {
+                    const purchase = moment(results[1][0].purchase_date).format("MMMM Do, YYYY");
+                    const update = moment(results[1][0].lastUpdate).format("MMMM Do, YYYY HH:mm A");
                     book = results[1].map(results => ({
                         ...results,
                         purchase_date: purchase,
