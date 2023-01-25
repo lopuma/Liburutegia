@@ -169,7 +169,7 @@ async function loadDataBookings(data) {
                             deliveredBook = `
                             <button id="btnDeliver" onClick="deliverBooking(${data.bookID},${data.bookingID}, ${data.partnerID})" class="btn btn-warning text-dark" title="Deliver Book"><i class="fa-regular fa-handshake"></i>  Deliver Book</button>
 
-                            <button id="btnDeliver" onClick=cancelReservation(` + data.bookID + `,` + data.bookingID + `) class="btn btn-danger text-light" title="Cancel Reservation"><i class="fa-solid fa-calendar-xmark"></i>  Cancel Reservation</button>`
+                            <button id="btnDeliver" onClick="cancelReservation(${data.bookID},${data.bookingID})" class="btn btn-danger text-light" title="Cancel Reservation"><i class="fa-solid fa-calendar-xmark"></i>  Cancel Reservation</button>`
                         } else { 
                             deliveredBook = "";
                         }
@@ -286,6 +286,52 @@ const reloadDataBookings = async () => {
 async function cancelReservation(idBook, idBooking) {
     const bookID = idBook;
     const bookingID = idBooking;
+    console.log({
+        bookID,
+        bookingID,
+    })
+    const urlCancel = `/api/bookings/cancel/${bookID}`;
+    Swal.fire({
+        title: 'Submit your reason why the reservation is canceled',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        showLoaderOnConfirm: true,
+        preConfirm: (cancelReason) => {
+            if(cancelReason === "") {
+                Swal.showValidationMessage(
+                    `Request failed: Reason is required`
+                )
+            } else {
+                //TODO AQIO EÑ FETCH
+                const data = {
+                    bookID,
+                    bookingID,
+                    cancelReason
+                }
+                return fetch(urlCancel, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {'Content-Type': 'application/json'
+                }
+                })
+                .then((response) => response.json())
+                .then((data) => console.log(data));
+            }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                console.log('Reservation', result);
+                Swal.fire({
+                title: `Cancelled reservation.`
+                });
+                await reloadDataBookings();
+            }
+        })
 }
 
 // TDDO DELIVER BOOK

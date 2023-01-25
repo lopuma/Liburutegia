@@ -159,7 +159,14 @@
     }
 }
 
-
+.swal2-input {
+    width: 90%;
+    height: 2.4375rem;
+    margin: 1em auto;
+    padding: 1em;
+    border: 1px solid #cacaca;
+    /* border-radius: 0; */
+}
 
 @media screen and (max-width: 550px) {
     .Workspace-fieldset {
