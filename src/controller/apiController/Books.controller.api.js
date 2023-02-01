@@ -122,7 +122,6 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                console.log("P4", results);
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Review added.... ]",

@@ -8,11 +8,14 @@ const indexController = {
             if (loggedIn) {
                 return res.status(200).redirect(userPath);
             }
-            req.session.loggedin = false;
-            req.session.roladmin = false;
-            req.session.ruta = "";
+           /* req.session.loggedin = false;
             req.session.username = "";
             req.session.usermail = "";
+            req.session.profile = "";
+            req.session.ruta = "";
+            req.session.rol = "";
+            req.session.roladmin = false;*/
+            console.log("RESEULTS loginRol -2- =>> ", req.session)
             res.status(200).render("index");
         } catch (error) {
             console.error(error);

@@ -1,5 +1,4 @@
 # TODO CREAR NETWORK
-#docker network create ntw-app
 version: '3.7'
 networks:
     ntk-app:
@@ -11,12 +10,13 @@ services:
         image: nginx:latest
         restart: always
         ports: 
-            - "80:80"
+            - ${NGINX_PORT}:${NGINX_PORT}
         depends_on:
             - application
         volumes:
             - ./nginx/templates:/etc/nginx/templates
         environment:
+            - NODE_PORT=${NODE_PORT}
             - NGINX_HOST=${NGINX_HOST}
             - NGINX_PORT=${NGINX_PORT}
             - NGINX_APP=${NGINX_APP}
@@ -26,11 +26,12 @@ services:
         container_name: application
         build: .
         ports:
-            - "3000:3000"
+            - ${NODE_PORT}:${NODE_PORT}
         depends_on:
             - "mysql"
         environment:
             - NODE_ENV=${NODE_ENV}
+            - NODE_PORT=${NODE_PORT}
             - MYSQL_HOST=${MYSQL_HOST}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -41,13 +42,20 @@ services:
             - ./src/public/img/covers:/app/src/public/img/covers
         networks:
             - ntk-app
+    redis-liburutegia:
+      container_name: redis-liburutegia
+      image: redis
+      ports: 
+          - ${REDIS_PORT}:6379
+      networks:
+          - ntk-app
     mysql:
         container_name: mysql
         build:
           context: ./data
         restart: always
         ports:
-            - "3306:3306"
+            - ${MYSQL_PORT}:${MYSQL_PORT}
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}

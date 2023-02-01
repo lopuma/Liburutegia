@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install npm@9.3.1 -g
+RUN npm install --save npm@latest -g
 
 RUN npm install
 
-RUN npm install uuid@latest -g
+RUN npm install --save uuid@latest -g
 
 RUN npm install pm2 -g
 

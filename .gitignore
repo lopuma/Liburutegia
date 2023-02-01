@@ -2,7 +2,7 @@ node_modules/
 mysql-data/
 .git/
 package-lock.json
-.env
+*.env
 env/.env
 .gitignore
 .dockerignore

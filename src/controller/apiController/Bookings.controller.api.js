@@ -200,7 +200,6 @@ const bookingController = {
     cancelBooking: async (req, res) => {
         try {
             const bookID = req.params.idBook || req.body.bookID;
-            console.log({bookID});
             const { bookingID, cancelReason } = req.body;
             const date = new Date();
             const deliver_date_review = moment(date).format("YYYY-MM-DD HH:mm:ss");
@@ -219,9 +218,6 @@ const bookingController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                console.log("RESULT 1 ", results[1]);
-                console.log("RESULT 2 ", results[2]);
-                console.log("RESULT 3 ", results[3]);
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Cancel booking....! ]",

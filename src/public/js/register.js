@@ -29,8 +29,6 @@ const expresiones = {
     fullname: /^[a-zA-ZÀ-ÿ\s]{4,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{5,20}$/, // 4 a 20 digitos.
     email: /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/,
-    //email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    //phone: /^\d{7,14}$/ // 7 a 14 numeros.
 };
 
 const textError = {
@@ -71,7 +69,7 @@ async function responseRegister(data) {
             title: 'Success',
             text: data.messageSuccess,
             backdrop: '#2C3333',
-            timer: 5000,
+            timer: 2000,
             showCancelButton: false,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#474E68',
@@ -92,7 +90,7 @@ async function responseRegister(data) {
             title: 'Oops...',
             text: data.messageError,
             backdrop: '#2C3333',
-            timer: 5000,
+            timer: 2000,
             showCancelButton: false,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#474E68',
@@ -225,7 +223,7 @@ async function correctForms(e) {
         const data = {
             email: inputEmailNew.value.trim(),
             username: inputUsername.value.toUpperCase().trim(),
-            fullname: inputFullName.value.trim(),
+            fullname: capitalizeWords(inputFullName.value.trim()),
             rol: document.getElementById("rol").value,
             pass: inputPassNew.value.trim()
         };

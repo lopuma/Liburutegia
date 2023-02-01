@@ -5,40 +5,51 @@ const exphbs = require('express-handlebars');
 const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const MySqlStore = require('express-mysql-session')(session)
 const cors = require('cors');
+const configCors = require('./configCors');
 const config = require('./config');
+let RedisStore = require("connect-redis")(session)
 
-// 1 - Iniciar express
+// Redis
+const REDIS_PORT = config.REDIS_PORT;
+const REDIS_HOST = config.REDIS_HOST;
+const { createClient } = require('redis');
+
+let redisClient = createClient({
+    legacyMode: true,
+    socket: {
+        host: REDIS_HOST,
+        port: REDIS_PORT
+    },
+});
+redisClient.connect().catch(console.error);
+
+// APP EXPRESS
 const app = express();
+app.set('trust proxy', 1);
 
 // 2 - Usamos Cors
 app.use(cors(
-	config.application.cors.server
+	configCors.application.cors.server
 ));
 
-//3 - Invocamos a dotenv
-if (process.env.NODE_ENV !== 'production'){
-	require('dotenv').config({
-		path: path.resolve(__dirname, '../env/.env')
-	});
-}
-
 // 4 - Configuraciones
-const PORT = process.env.PORT || 3000;
-const { database } = require('../database/keys.js');
+console.info(`NODE_ENV = ${config.NODE_ENV}`);
+const PORT = process.env.NODE_PORT || 3000;
 
 // 5 - Morgan para mostrar datos de peticiones
 app.use(morgan('dev'));
 
 // 6 - Crear una SSESSION
 app.use(session({
-	//cookie: { maxAge: 60000 },
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true,
-	//store: new MySqlStore(database),
-	//maxAge: 8 * 60 * 60 * 1000
+    key: "connectionUsers",
+    secret: 'secret',
+	resave: false,
+	saveUninitialized: false,
+    store: new RedisStore({ client: redisClient }),
+	cookie: {
+        expires: 5 * 60 * 1000 // 8 * 60 * 60 * 1000 => 8 horas
+    }
 }));
 
 // 7 - Usar mensajes de sistemas y enviar al cliente
@@ -53,14 +64,12 @@ app.use((req, res, next) => {
 	res.locals.errorMessage = req.flash("errorMessage");
 	res.locals.errorUser = req.flash("errorUser");
 	res.locals.errorPassword = req.flash("errorPassword");
-	//res.locals.errorEmailReset = req.flash('errorEmailReset');
-	//res.locals.success = req.session.success;
 	next();
 });
 
 // 9 - Capturar los datos de formularios.
-app.use(express.urlencoded({ extended: true })); // aceptar datos del formulario (extended : false), solo acepta text
-app.use(express.json()); // recibir JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(bodyParser.json());
 
 // 10 - Recursos Publicos
@@ -79,8 +88,7 @@ app.engine('.hbs', exphbs.engine({
 	layoutsDir: path.join(app.get('views'), 'layouts'),
 	partialsDir: path.join(app.get('views'), 'partials'),
 	extname: '.hbs',
-	//helpers: require('./lib/handlebars') // EJECUTAR FUNCIONES
-}))
+}));
 app.set('view engine', '.hbs'); 
 
 // 12 - ROUTERS VIEWS
@@ -89,7 +97,6 @@ app.use('/profile', require('./routes/profile/ProfileRouter'));
 app.use('/workspace', require('./routes/workspace/WorkspaceRouter'));
 app.use("/workspace/partners", require("./routes/workspace/Partners.router"));
 app.use("/workspace/books", require("./routes/workspace/Books.router"));
-//app.use("/workspace/partners", require("./routes/workspace/Partners.router"));
 
 // 12.1 - ROUTERS API
 app.use('/api/books',    require( './routes/api/Book.router.api'    ))
@@ -110,5 +117,5 @@ app.use(function(req, res){
 
 // 13 - Starting the server
 app.listen(PORT, () => {
-	console.log(`Server is in port , ${PORT}`, `http://127.0.0.1:${PORT}`);
+	console.info(`The Server is connected on the PORT: ${PORT}`, `http://127.0.0.1:${PORT}`);
 });

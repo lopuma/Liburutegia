@@ -39,17 +39,14 @@ const booksController = {
                         });
                 }
                 let book = "";
-                console.log("P1", results[1][0])
                 if (results[1][0].bookID === null) {
                     const purchase = moment(results[3][0].purchase_date).format("MMMM Do, YYYY");
                     const update = moment(results[3][0].lastUpdate).format("MMMM Do, YYYY HH:mm A");
-                    console.log("DATE P2 ", {purchase, update})
                     book = results[3].map(results => ({
                         ...results,
                         purchase_date: purchase,
                         lastUpdate: update
                     }));
-                    console.log("P2", book);
                 } else {
                     const purchase = moment(results[1][0].purchase_date).format("MMMM Do, YYYY");
                     const update = moment(results[1][0].lastUpdate).format("MMMM Do, YYYY HH:mm A");
@@ -58,10 +55,8 @@ const booksController = {
                         purchase_date: purchase,
                         lastUpdate: update
                     }));
-                    console.log("P3", book);
                 }
                 const deliver = results[2];
-                console.log({book, deliver})
                 res.status(200).render("workspace/books/infoBook", {
                     loggedIn,
                     rolAdmin,
