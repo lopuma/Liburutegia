@@ -20,5 +20,5 @@ compose*
 .git/
 scriptAutomatizacion/
 env/
-.env
+*.env
 .env/.env

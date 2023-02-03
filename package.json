@@ -1,7 +1,7 @@
 {
   "name": "liburutegia-sanmiguel",
   "version": "1.0.0",
-  "description": "APP para la reservas / gestion de libros",
+  "description": "APP for reservations - book management",
   "author": "Jose Alvaro <lopumacp@hotmail.com>",
   "license": "MIT",
   "main": "app.js",
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "export NODE_ENV=development && nodemon src/app.js",
-    "prod": "export NODE_ENV=production && nodemon src/app.js"
+    "prod": "export NODE_ENV=production && pm2-runtime src/app.js"
   },
   "keywords": [
     "nodejs",
@@ -37,7 +37,6 @@
     "mysql": "^2.18.1",
     "redis": "^4.6.4",
     "sharp": "^0.31.3",
-    "timeago": "^1.6.7",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

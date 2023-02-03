@@ -119,6 +119,7 @@
     async function correctFormsBook(e) {
         e.preventDefault();
         if (field.purchaseDate &&
+            field.numReference &&
             field.ISBN &&
             field.title &&
             field.author &&
@@ -192,6 +193,7 @@
                     purchaseDate = moment(datos.purchase_date).format("YYYY-MM-DD");
                     inputPurchaseDate.value = purchaseDate;
                 }
+                inputNumReference.value = datos.numReference;
                 inputBookID.value = datos.bookID;
                 inputISBN.value = datos.isbn;
                 inputTitle.value = datos.title;

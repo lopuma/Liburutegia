@@ -222,6 +222,7 @@ const bookController = {
                 });
             }
             const {
+                numReference,
                 title,
                 author,
                 isbn,
@@ -236,6 +237,7 @@ const bookController = {
             const lastUpdate = moment(date).format("YYYY-MM-DD HH:mm:ss");
             const fechaCompra = purchase_date ? purchase_date : null;
             const bookDataUpdate = [{
+                numReference,
                 title,
                 author,
                 isbn,
@@ -282,6 +284,7 @@ const bookController = {
             }
             const bookID = req.params.idBook;
             const {
+                numReference,
                 title,
                 author,
                 isbn,
@@ -297,6 +300,7 @@ const bookController = {
             const sqlUpdateBook = `UPDATE books SET ? WHERE bookID = ${bookID}`;
             const fechaCompra = purchase_date ? purchase_date : null;
             const bookDataUpdate = [{
+                numReference,
                 title,
                 author,
                 isbn,

@@ -15,12 +15,25 @@
         </div>
     </div>
     <div class="New-boxes">
+        <!-- TODO NUM REFERENCE -->
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-key"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input"  type="text" id="numReference" tabindex="1" placeholder=" " autocomplete="valorNoValido">
+                    <label class="Animation-label" for="numReference">Num reference</label>
+                </div>
+            </div>
+        </div>
+        <div class="Input-box isInvisible"></div>
+    </div>
+    <div class="New-boxes">
         <!-- TODO PURCHASE DATE -->
         <div class="Input-box">
             <div class="Box">
                 <i class="fa-solid fa-calendar-days"></i>
                 <div class="Box-animation Animation Creation-date" id="purchaseDate">
-                    <input class="Animation-input" type="date" id="pPurchaseDate" tabindex="1">
+                    <input class="Animation-input" type="date" id="pPurchaseDate" tabindex="2">
                     <label class="Animation-label" for="date">Purchase  Date</label>
                 </div>
             </div>
@@ -33,7 +46,7 @@
                     <input class="Animation-input" name="inputISBN"
                         id="inputISBN" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="2" >
+                        tabindex="3" >
                     <label class="Animation-label" for="inputISBN">ISBN</label>
                 </div>
             </div>
@@ -48,7 +61,7 @@
                     <input class="Animation-input" name="inputTitle" id="inputTitle"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        required="required" tabindex="3">
+                        required="required" tabindex="4">
                     <label class="Animation-label" for="inputTitle">Title *</label>
                     <label class="Animation-info" for="inputTitle" id="infoTitle"><i
                             class="fa-solid fa-circle-info"></i></label>
@@ -71,7 +84,7 @@
                     <input class="Animation-input" name="inputAuthor"
                         id="inputAuthor" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="4" required>
+                        tabindex="5" required>
                     <label class="Animation-label" for="inputAuthor">Author *</label>
                     <label class="Animation-info" for="inputAuthor"
                         id="infoAuthor"><i class="fa-solid fa-circle-info"></i></label>
@@ -97,7 +110,7 @@
                     <input class="Animation-input" name="inputCollection" id="inputCollection"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="5">
+                        tabindex="6">
                     <label class="Animation-label" for="inputCollection">Collection</label>
                 </div>
             </div>
@@ -110,7 +123,7 @@
                     <input class="Animation-input" name="inputEditorial"
                         id="inputEditorial" type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="6" >
+                        tabindex="7" >
                     <label class="Animation-label" for="inputEditorial">Editorial</label>
                 </div>
             </div>
@@ -125,7 +138,7 @@
                     <input class="Animation-input" name="inputLanguage" id="inputLanguage"
                         type="text"
                         placeholder=" " autocomplete="valorNoValido"
-                        tabindex="7">
+                        tabindex="8">
                     <label class="Animation-label" for="inputLanguage">Edition language</label>
                 </div>
             </div>
@@ -141,7 +154,7 @@
             <div class="Box">
                 <i class="Box-i fa-solid fa-tags"></i>
                 <div class="Box-animation Animation" id="addSelect">
-                    <select class="Animation-input isSelect" id="selectCategory" name="selectCategory"  size="2" tabindex="8">
+                    <select class="Animation-input isSelect" id="selectCategory" name="selectCategory"  size="2" tabindex="9">
                         <option></option>
                     </select>
                     <label class="Animation-label" for="selectCategory">Select or add category</label>
@@ -155,7 +168,7 @@
             <div class="Box isTextarea-box">
                 <i class="Box-i fa-solid fa-message"></i>
                 <div class="Box-animation Animation">
-                    <textarea class="Animation-input isTextarea-input" name="inputObservation" id="inputObservation" tabindex="9" rows="4" cols="50" maxlength="800"></textarea>
+                    <textarea class="Animation-input isTextarea-input" name="inputObservation" id="inputObservation" tabindex="10" rows="4" cols="50" maxlength="800"></textarea>
                     <label class="Animation-label" for="inputObservation">Observation</label>
                 </div>
             </div>
@@ -168,6 +181,7 @@
     const closeInfos    = document.querySelectorAll( ".Animation-closeInfo"  );
     const fieldErrs     = document.querySelectorAll( ".fieldErr"             );
     const fieldErrTexts = document.querySelectorAll( ".fieldErrText"         );
+    const inputNumReference =  document.getElementById("numReference");
     const inputBookID =  document.getElementById("bookID");
     const inputPurchaseDate =  document.getElementById("pPurchaseDate");
     const inputISBN =  document.getElementById("inputISBN");
@@ -180,6 +194,7 @@
     const inputObservation = document.getElementById("inputObservation");
     
     const field = {
+        numReference: true,
         purchaseDate: true,
         ISBN: true,
         title: false,
@@ -304,6 +319,7 @@
         const bookID = inputBookID.value;
         const data = await {
             bookID,
+            numReference: inputNumReference.value,
             purchase_date: inputPurchaseDate.value,
             isbn: capitalizeFirstLetter(inputISBN.value.trim()),
             title: capitalizeFirstLetter(inputTitle.value.trim()),

@@ -48,7 +48,7 @@ app.use(session({
 	saveUninitialized: false,
     store: new RedisStore({ client: redisClient }),
 	cookie: {
-        expires: 5 * 60 * 1000 // 8 * 60 * 60 * 1000 => 8 horas
+        expires: 4 * 60 * 60 * 1000 // =>> 4 horas
     }
 }));
 

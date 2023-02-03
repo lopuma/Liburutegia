@@ -33,10 +33,13 @@ let opcion = "";
             autoWidth: false,
             columns: [
                 {
-                    data: null, "searchable": false,
+                    data: null, "searchable": true,
                     render: (data) => {
                         return (fillZeros(data.bookID));
                     }
+                },
+                {
+                    data: 'numReference'
                 },
                 {
                     data: "title",
@@ -140,7 +143,7 @@ let opcion = "";
                             titleAttr: 'Export CSV',
                             className: "buttonCsv",
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                             },
                             title: 'Liburutegia SAN MIGUEL: BOOKS',
                         },
@@ -151,7 +154,7 @@ let opcion = "";
                             titleAttr: 'Export Excel',
                             className: "buttonExcel",
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                             },
                             title: 'Liburutegia SAN MIGUEL: BOOKS',
                         },
@@ -164,7 +167,7 @@ let opcion = "";
                             titleAttr: 'Export PDF',
                             className: "buttonPdf",
                             exportOptions: {
-                                columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                             },
                             title: 'Liburutegia SAN MIGUEL: BOOKS',
                             customize: function (doc) {
@@ -183,7 +186,7 @@ let opcion = "";
                             titleAttr: 'Print',
                             className: "buttonPrint",
                             exportOptions: {
-                                columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                             },
                             title: 'Liburutegia SAN MIGUEL: BOOKS',
                         }
