@@ -11,8 +11,9 @@
   },
   "scripts": {
     "dev": "export NODE_ENV=development && nodemon src/app.js",
-    "prod": "export NODE_ENV=production && MYSQL_PASSWORD && pm2-runtime src/app.js",
-    "start": "export NODE_ENV=production && node src/app.js"
+    "prod": "export NODE_ENV=production && pm2-runtime src/app.js",
+    "start": "export NODE_ENV=production && node src/app.js",
+    "prueba": "export NODE_ENV=development && node src/app.js"
   },
   "keywords": [
     "nodejs",
