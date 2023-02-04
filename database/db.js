@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const { database } = require('../database/keys.js');
 console.log("Database ", database)
 const connection = mysql.createConnection('mysql://root:wNv0RgxOXeBzpyeFMnY9@containers-us-west-197.railway.app:6284/railway');
