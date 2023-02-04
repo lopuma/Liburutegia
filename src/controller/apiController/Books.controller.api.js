@@ -24,7 +24,7 @@ const bookController = {
         try {
             const bookID = req.params.idBook;
             const sqlSelect = "SELECT * FROM books WHERE bookID = ?";
-            await connection.query(sqlSelect, [bookID], (err, results) => {
+            connection.query(sqlSelect, [bookID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -53,7 +53,7 @@ const bookController = {
     // TODO ✅ SHOW ALL BOOKS
     getBooks: async (_req, res) => {
         try {
-            await connection.query("SELECT * FROM books", (err, results) => {
+            connection.query("SELECT * FROM books", (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -85,7 +85,7 @@ const bookController = {
         try {
             const bookID = req.params.idBook;
             const sqlSelectBook = `SELECT * FROM books WHERE bookID = ?`;
-            await connection.query(sqlSelectBook, [bookID], (err, results) => {
+            connection.query(sqlSelectBook, [bookID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -110,7 +110,7 @@ const bookController = {
                     reserved=0 WHERE bookID=${bookID}`,
         `UPDATE bookings SET delivered=1 WHERE bookingID=${bookingID}`,
         `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner, reviewOn) VALUES (${bookID}, ${bookingID}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${bookingID}), ${reviewOn})`];
-        await connection.query(
+        connection.query(
             sql.join(";"),
             (err, results) => {
                 if (err) {
@@ -135,7 +135,7 @@ const bookController = {
         try {
             const { idBook } = req.body;
             const sqlSelect = "SELECT * FROM coverBooks WHERE bookID = ?";
-            await connection.query(sqlSelect, [idBook], async (err, results) => {
+            connection.query(sqlSelect, [idBook], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -146,7 +146,7 @@ const bookController = {
                     });
                 }
                 if (results.length === 1) {
-                    const nameCover = await saveImageServer(req, res);
+                    const nameCover = saveImageServer(req, res);
                     const coverID = results[0].coverID;
                     const bookID = idBook;
                     //TODO ELIMINAR IMAGEN ANTERIOR
@@ -163,7 +163,7 @@ const bookController = {
                     }
                     //TODO ATUALIZA LA IMAGEN AL EXISTOR UN REGISTRO EN LA BD.
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
-                    await connection.query(sqlUpdateCover, { bookID, nameCover }, (_err, _results) => {
+                    connection.query(sqlUpdateCover, { bookID, nameCover }, (_err, _results) => {
                         return res.status(200).send({
                             success: true,
                             exists: true,
@@ -185,7 +185,7 @@ const bookController = {
     uploadFile: async (req, res) => {
         try {
             const { idBook } = req.body;
-            const nameCover = await saveImageServer(req, res);
+            const nameCover = saveImageServer(req, res);
             const sqlInsertCover = "INSERT INTO coverBooks SET ?";
             connection.query(sqlInsertCover, { bookID: idBook, nameCover }, (err, _results) => {
                 if (err) {
@@ -250,7 +250,7 @@ const bookController = {
                 lastUpdate
             }]; 
             sqlInsertBooks = "INSERT INTO books SET ?";
-            await connection.query(sqlInsertBooks, bookDataUpdate, (err, results) => { 
+            connection.query(sqlInsertBooks, bookDataUpdate, (err, results) => { 
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -312,7 +312,7 @@ const bookController = {
                 observation,
                 lastUpdate
             }]; 
-            await connection.query(sqlUpdateBook, bookDataUpdate, (err, results) => {
+            connection.query(sqlUpdateBook, bookDataUpdate, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -338,7 +338,7 @@ const bookController = {
         try {
             const bookID = req.params.idBook;
             const sqlSelect = "SELECT title FROM books WHERE bookID=?";
-            await connection.query(sqlSelect, [bookID], async (err, results) => {
+            connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -358,7 +358,7 @@ const bookController = {
                 }
                 const title = results[0].title;
                 const sqlDelete = "DELETE FROM books WHERE bookID=?";
-                await connection.query(sqlDelete, [bookID], (err, _results) => {
+                connection.query(sqlDelete, [bookID], (err, _results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -384,7 +384,7 @@ const bookController = {
     infoReviews: async (req, res) => {
         try {
             const bookID = req.params.idBook;
-            const selectReviews = "SELECT v.score, v.deliver_date_review as dateReview, v.review, fullnamePartner AS fullName, reviewOn FROM votes v WHERE v.bookID=?"; await connection.query(selectReviews, [bookID], (err, results) => {
+            const selectReviews = "SELECT v.score, v.deliver_date_review as dateReview, v.review, fullnamePartner AS fullName, reviewOn FROM votes v WHERE v.bookID=?"; connection.query(selectReviews, [bookID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
