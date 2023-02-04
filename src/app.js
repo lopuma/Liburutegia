@@ -35,7 +35,7 @@ app.use(cors(
 
 // 4 - Configuraciones
 console.info(`NODE_ENV = ${config.NODE_ENV}`);
-const PORT = process.env.PORT || 3000;
+const PORT = config.PORT;
 
 // 5 - Morgan para mostrar datos de peticiones
 app.use(morgan('dev'));

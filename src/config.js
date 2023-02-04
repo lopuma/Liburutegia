@@ -10,6 +10,7 @@ module.exports = {
     REDIS_HOST: process.env.REDIS_HOST || '127.0.0.1',
     NODE_ENV: process.env.NODE_ENV || 'production',
     NODE_PORT: process.env.NODE_PORT || 3000,
+    PORT: process.env.PORT || 3000,
     MYSQL_HOST: process.env.MYSQL_HOST || '127.0.0.1',
     MYSQL_USER: process.env.MYSQL_USER || 'root',
     MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
