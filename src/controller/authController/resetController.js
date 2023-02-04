@@ -9,7 +9,7 @@ const routerReset = {
     try {
       const { emailReset } = req.body;
       const sql = "SELECT * FROM users WHERE email = ?";
-      await connection.query(sql, [emailReset], async (err, results) => {
+      connection.query(sql, [emailReset], async (err, results) => {
         if (err) {
           console.error("[ DB ]", err.sqlMessage);
           return res
@@ -53,7 +53,7 @@ const routerReset = {
       if (passReset !== undefined) {
         let passwordHash = await bscryptjs.hash(passReset, 8);
         const sql = `UPDATE users set pass="${passwordHash}" WHERE email = ?`;
-        await connection.query(sql, emailReset, (err) => {
+        connection.query(sql, emailReset, (err) => {
           if (err) {
             console.error("[ DB ]", err.sqlMessage);
             return res
