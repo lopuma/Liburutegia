@@ -1,4 +1,4 @@
-FROM node:18-alpine3.15
+FROM lopuma/liburutegia:1.5
 
 WORKDIR /app
 
@@ -12,6 +12,6 @@ RUN npm install --save uuid@latest -g
 
 RUN npm install pm2 -g
 
-EXPOSE ${NODE_PORT}
+EXPOSE 3000
 
 CMD ["npm", "run", "prod"]
