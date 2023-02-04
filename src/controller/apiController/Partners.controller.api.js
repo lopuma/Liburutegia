@@ -38,7 +38,7 @@ const partnerController = {
         try {
             const sqlSelect = "SELECT * FROM partners WHERE dni = ?";
             const dni = req.body.dni;
-            await connection.query(sqlSelect, [dni], (err, results) => {
+            connection.query(sqlSelect, [dni], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -77,7 +77,7 @@ const partnerController = {
                 next();
             } else {
                 const sqlSelect = "SELECT * FROM partners WHERE partnerID = ?";
-                await connection.query(sqlSelect, [partnerID], (err, results) => {
+                connection.query(sqlSelect, [partnerID], (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -106,7 +106,7 @@ const partnerController = {
     getPartners: async (req, res) => {
         try {
             const sqlSelect = "SELECT * FROM partners";
-            await connection.query(sqlSelect, (err, results) => {
+            connection.query(sqlSelect, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -136,7 +136,7 @@ const partnerController = {
         try {
             const partnerID = req.params.idPartner;
             const sqlSelect = "SELECT * FROM partners WHERE partnerID=?";
-            await connection.query(sqlSelect, [partnerID], (err, results) => {
+            connection.query(sqlSelect, [partnerID], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -157,7 +157,7 @@ const partnerController = {
         try {
             const idPartner = req.params.idPartner;
             const sqlPartner = "SELECT * FROM partners WHERE partnerID = ?";
-            await connection.query(sqlPartner, [idPartner], async (err, results) => {
+            connection.query(sqlPartner, [idPartner], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -169,7 +169,7 @@ const partnerController = {
                 const sqlBookin =
                     `SELECT p.partnerID, p.dni, p.name, bk.bookingID, bk.bookID, b.isbn, b.title, b.author, b.reserved, date_format(bk.reserveDate, "%Y-%m-%d") as reserveDate, v.bookingID bookingID_review, v.score, v.review, v.deliver_date_review FROM partners p LEFT OUTER JOIN bookings bk ON p.dni=bk.partnerDNI INNER JOIN books b ON bk.bookID=b.bookID LEFT OUTER JOIN votes v ON bk.bookingID=v.bookingID WHERE p.dni = ?`;
                 const dni = results[0].dni;
-                await connection.query(sqlBookin, [dni], async (err, results) => {
+                connection.query(sqlBookin, [dni], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -266,7 +266,7 @@ const partnerController = {
                 await addNewPartner(updatedDataAddPartner);
             } else {
                 const sqlInsertFamily = "INSERT INTO familys SET ?";
-                await connection.query(
+                connection.query(
                     sqlInsertFamily,
                     {
                         familyDni: dni,
@@ -297,7 +297,7 @@ const partnerController = {
 
         async function addNewPartner(addPartner) {
             const sqlInsert = "INSERT INTO partners SET ?";
-            await connection.query(sqlInsert, addPartner, (err, results) => {
+            connection.query(sqlInsert, addPartner, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -321,7 +321,7 @@ const partnerController = {
             var dniFamily = "";
             // Obtiene el dni del partner a ELIMINAR
             const sqlDniPartner = `SELECT dni FROM partners WHERE partnerID = ${partnerID}`;
-            await connection.query(sqlDniPartner, async (err, results) => {
+            connection.query(sqlDniPartner, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -333,7 +333,7 @@ const partnerController = {
                 dniPartner = results[0].dni;
                 //Obtiene el dni de los familiares que tenia asignado
                 const sqlDniFamily = 'SELECT f.familyDni as familyDni FROM familys f INNER JOIN partners p ON p.dni=f.partnerDni WHERE p.dni=?';
-                await connection.query(sqlDniFamily, dniPartner, async (err, results) => {
+                connection.query(sqlDniFamily, dniPartner, async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -357,7 +357,7 @@ const partnerController = {
                             };
                             if (results.length === 0){
                                 const sqlActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
-                                await connection.query(sqlActiveFamily, dniFamily, (err, results) => {
+                                connection.query(sqlActiveFamily, dniFamily, (err, results) => {
                                     if (err) {
                                         console.error("[ DB ]", err.sqlMessage);
                                         return res.status(400).send({
@@ -376,7 +376,7 @@ const partnerController = {
                         let dataFamilys = results;                        
                         dataFamilys.forEach(async (element) => {
                             const sqlExistFamily = "SELECT * FROM familys WHERE familyDni=?";
-                            await connection.query(sqlExistFamily, element.familyDni, async (err, results) => {
+                            connection.query(sqlExistFamily, element.familyDni, async (err, results) => {
                                 if (err) {
                                     console.error("[ DB ]", err.sqlMessage);
                                     return res.status(400).send({
@@ -387,7 +387,7 @@ const partnerController = {
                                 };
                                 if (results.length === 0){
                                     const sqlActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
-                                    await connection.query(sqlActiveFamily, element.familyDni, (err, results) => {
+                                    connection.query(sqlActiveFamily, element.familyDni, (err, results) => {
                                         if (err) {
                                             console.error("[ DB ]", err.sqlMessage);
                                             return res.status(400).send({
@@ -403,7 +403,7 @@ const partnerController = {
                     };
                 });
                 const sqlDeletePartner = `DELETE FROM partners WHERE partnerID = ${partnerID}`;
-                await connection.query(sqlDeletePartner, async (err, results) => {
+                connection.query(sqlDeletePartner, async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -479,7 +479,7 @@ const partnerController = {
                 }));
                 if (updatedDataAddPartner[0].activeFamily === 0) {
                     const sqlDeleteFamily = " DELETE FROM familys WHERE familyDni=? AND partnerDni=?";
-                    await connection.query(sqlDeleteFamily, [dni, partnerDniFamily], async (err, results) => {
+                    connection.query(sqlDeleteFamily, [dni, partnerDniFamily], async (err, results) => {
                         if (err) {
                             console.error("[ DB ]", err.sqlMessage);
                             return res.status(400).send({
@@ -489,7 +489,7 @@ const partnerController = {
                             });
                         }
                         const sqlOtherFamily = "SELECT * FROM familys WHERE familyDni=?";
-                        await connection.query(sqlOtherFamily, dni, async (err, results) => {
+                        connection.query(sqlOtherFamily, dni, async (err, results) => {
                             if (err) {
                                 console.error("[ DB ]", err.sqlMessage);
                                 return res.status(400).send({
@@ -500,7 +500,7 @@ const partnerController = {
                             }
                             if (results.length !== 0) {
                                 const sqlActiveFamily = "UPDATE partners SET activeFamily=1 WHERE dni=?";
-                                await connection.query(sqlActiveFamily, dni, (err, results) => {
+                                connection.query(sqlActiveFamily, dni, (err, results) => {
                                     if (err) {
                                         console.error("[ DB ]", err.sqlMessage);
                                         return res.status(400).send({
@@ -514,7 +514,7 @@ const partnerController = {
                         });
                     });
                 }
-                await connection.query(sqlUpdate, updatedDataAddPartner, (err, results) => {
+                connection.query(sqlUpdate, updatedDataAddPartner, (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -530,7 +530,7 @@ const partnerController = {
                 });
             } else {
                 const sqlExistsFamily = "SELECT * from familys WHERE familyDni=? AND partnerDni=?";
-                await connection.query(
+                connection.query(
                     sqlExistsFamily, [dni, partnerDniFamily], async (err, exists) => {
                         if (err) {
                             console.error("[ DB ]", err.sqlMessage);
@@ -542,7 +542,7 @@ const partnerController = {
                         }
                         if (exists.length === 0) {
                             const sqlInsertFamily = "INSERT INTO familys SET ?";
-                            await connection.query(
+                            connection.query(
                                 sqlInsertFamily,
                                 {
                                     familyDni: dni,
@@ -565,7 +565,7 @@ const partnerController = {
                             ...data,
                             activeFamily: 1
                         }));
-                        await connection.query(sqlUpdate, updatedDataPartner, (err, results) => {
+                        connection.query(sqlUpdate, updatedDataPartner, (err, results) => {
                             if (err) {
                                 console.error("[ DB ?]", err.sqlMessage);
                                 return res.status(400).send({
