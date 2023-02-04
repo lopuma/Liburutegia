@@ -17,10 +17,11 @@ const { createClient } = require('redis');
 
 let redisClient = createClient({
     legacyMode: true,
-    socket: {
+    url: 'redis://default:D7zKj55p8RkyzcNSvyFN@containers-us-west-46.railway.app:6515',
+    /*socket: {
         host: REDIS_HOST,
         port: REDIS_PORT
-    },
+    },*/
 });
 redisClient.connect().catch(console.error);
 
