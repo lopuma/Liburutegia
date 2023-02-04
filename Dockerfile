@@ -14,4 +14,4 @@ RUN npm install pm2 -g
 
 EXPOSE 3000
 
-CMD ["npm", "run", "prod"]
+CMD ["npm", "run", "start"]
