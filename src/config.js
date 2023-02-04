@@ -18,6 +18,6 @@ module.exports = {
     MYSQL_DATABASE: process.env.MYSQL_DATABASE || 'sanmiguel',
     MYSQL_PORT: process.env.MYSQL_PORT || 3306,
     NGINX_HOST: process.env.NGINX_HOST || 'liburutegia-sanmiguel.com,www.liburutegia-sanmiguel.com',
-    NGINX_PORT: process.env.NGINX_PORT || 8080,
+    NGINX_PORT: process.env.NGINX_PORT || 80,
     NGINX_APP: process.env.NGINX_APP || 'LiburutegiaSanMiguel'
 }
