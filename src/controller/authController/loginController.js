@@ -60,7 +60,7 @@ const loginController = {
             }
             if (email || pass) {
                 const sqlSelect = "SELECT * FROM users WHERE email = ?";
-                await connection.query(sqlSelect, [email], async (err, results) => {
+                connection.query(sqlSelect, [email], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res
