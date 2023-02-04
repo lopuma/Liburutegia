@@ -12,6 +12,6 @@ RUN npm install --save uuid@latest -g
 
 RUN npm install pm2 -g
 
-EXPOSE 3000
+EXPOSE ${NODE_PORT}
 
 CMD ["npm", "run", "prod"]
