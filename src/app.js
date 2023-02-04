@@ -17,7 +17,7 @@ const { createClient } = require('redis');
 
 let redisClient = createClient({
     legacyMode: true,
-    url: 'redis://default:D7zKj55p8RkyzcNSvyFN@containers-us-west-46.railway.app:6515',
+    url: 'redis://default:zJIlKmknMte7KQeRERkk@containers-us-west-46.railway.app:6445',
     /*socket: {
         host: REDIS_HOST,
         port: REDIS_PORT
