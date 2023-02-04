@@ -1,4 +1,4 @@
-FROM lopuma/liburutegia:1.5
+FROM node:lastes
 
 WORKDIR /app
 
@@ -14,4 +14,4 @@ RUN npm install pm2 -g
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "prod"]
