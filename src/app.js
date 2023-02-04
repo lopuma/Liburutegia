@@ -22,9 +22,13 @@ let redisClient = createClient({
         host: REDIS_HOST,
         port: REDIS_PORT
     },*/
+    host: REDIS_HOST,
+    port: REDIS_PORT,
 });
 redisClient.connect().catch(console.error);
-
+redisClient.on('connect', function() {
+  console.log('Connected!');
+});
 // APP EXPRESS
 const app = express();
 app.set('trust proxy', 1);
