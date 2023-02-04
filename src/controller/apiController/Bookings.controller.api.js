@@ -11,7 +11,7 @@ const bookingController = {
             const bookingID = req.params.idBooking || req.body.bookingID;
             const bookID = req.params.idBook || req.body.bookID;
             const sqlSelect = `SELECT * FROM votes WHERE bookingID = ${bookingID}`;
-            await connection.query(sqlSelect, (err, results) => {
+            connection.query(sqlSelect, (err, results) => {
                 if (err) {
                     console.error("[ DB - ]", err.sqlMessage);
                     return res.status(400).send({
@@ -40,7 +40,7 @@ const bookingController = {
         try {
             const bookingID = req.params.idBooking || req.body.bookingID;
             const sqlSelect = "SELECT * FROM bookings WHERE bookingID = ?";
-            await connection.query(sqlSelect, bookingID, (err, results) => {
+            connection.query(sqlSelect, bookingID, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -70,7 +70,7 @@ const bookingController = {
     getBookings: async (req, res) => {
         try {
             const sqlSelect = `select bk.bookingID, bk.bookID, b.title as title, bk.partnerDni, CONCAT(p.lastname, ", ", p.name) as fullname, p.partnerID, bk.reserveDate, bk.delivered, bk.cancelReserved, bk.cancelReason, v.score, v.review, v.deliver_date_review, v.reviewOn from bookings bk INNER JOIN partners p ON p.dni=bk.partnerDNI INNER JOIN books b ON b.bookID=bk.bookID LEFT JOIN votes v ON v.bookingID=bk.bookingID`;
-            await connection.query(sqlSelect, (err, results) => {
+            connection.query(sqlSelect, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -102,7 +102,7 @@ const bookingController = {
         try {
             const bookingID = req.params.idBooking;
             const sql = "SELECT * FROM bookings WHERE bookingID=?"
-            await connection.query(sql, [bookingID], function (err, results) {
+            connection.query(sql, [bookingID], function (err, results) {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -125,7 +125,7 @@ const bookingController = {
             const bookID = req.params.idBook;
             const { title, partnerID, partnerDni, reserveDate } = req.body;
             const selectReserve = `SELECT b.reserved as reserved, b.title as title, bk.partnerDNI as dni, CONCAT(p.lastname,", ", p.name) as fullname FROM books b INNER JOIN bookings bk ON bk.bookID=b.bookID INNER JOIN partners p on p.dni=bk.partnerDNI WHERE b.bookID = ${bookID} and bk.delivered=0`;
-            await connection.query(selectReserve, async (err, results) => {
+            connection.query(selectReserve, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -171,7 +171,7 @@ const bookingController = {
                         partnerDni,
                         reserveDate,
                     };
-                    await connection.query(insertBooking.join(";"), dataReserve, (err, results) => {
+                    connection.query(insertBooking.join(";"), dataReserve, (err, results) => {
                         if (err) {
                             console.error("[ DB ]", err.sqlMessage);
                             return res.status(400).send({
@@ -208,7 +208,7 @@ const bookingController = {
                 `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner, reviewOn) VALUES (${bookID}, ${bookingID}, 0, "", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${bookingID}), 0)`,
                 `UPDATE bookings SET delivered=1, cancelReserved=1, cancelReason =? WHERE bookingID=${bookingID}`
             ];
-            await connection.query(cancelBooking.join(";"), cancelReason, async (err, results) => {
+            connection.query(cancelBooking.join(";"), cancelReason, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
