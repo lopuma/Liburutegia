@@ -61,7 +61,7 @@ const workSpaceController = {
             const rolAdmin = req.session.roladmin;
             
             sqlSelect = "SELECT * FROM users";
-            await connection.query(sqlSelect, async (err, results) => {
+            connection.query(sqlSelect, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res
