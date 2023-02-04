@@ -15,7 +15,7 @@ const REDIS_PORT = config.REDIS_PORT;
 const REDIS_HOST = config.REDIS_HOST;
 const { createClient } = require('redis');
 
-let redisClient = createClient({
+/*let redisClient = createClient({
     legacyMode: true,
     socket: {
         host: REDIS_HOST,
@@ -23,7 +23,7 @@ let redisClient = createClient({
     },
 });
 redisClient.connect().catch(console.error);
-
+*/
 // APP EXPRESS
 const app = express();
 app.set('trust proxy', 1);
@@ -35,7 +35,7 @@ app.use(cors(
 
 // 4 - Configuraciones
 console.info(`NODE_ENV = ${config.NODE_ENV}`);
-const PORT = process.env.NODE_PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // 5 - Morgan para mostrar datos de peticiones
 app.use(morgan('dev'));
@@ -46,7 +46,7 @@ app.use(session({
     secret: 'secret',
 	resave: false,
 	saveUninitialized: false,
-    store: new RedisStore({ client: redisClient }),
+    //store: new RedisStore({ client: redisClient }),
 	cookie: {
         expires: 4 * 60 * 60 * 1000 // =>> 4 horas
     }
