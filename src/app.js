@@ -15,7 +15,7 @@ const REDIS_PORT = config.REDIS_PORT;
 const REDIS_HOST = config.REDIS_HOST;
 const { createClient } = require('redis');
 
-/*let redisClient = createClient({
+let redisClient = createClient({
     legacyMode: true,
     socket: {
         host: REDIS_HOST,
@@ -23,7 +23,7 @@ const { createClient } = require('redis');
     },
 });
 redisClient.connect().catch(console.error);
-*/
+
 // APP EXPRESS
 const app = express();
 app.set('trust proxy', 1);
@@ -47,7 +47,7 @@ app.use(session({
     secret: 'secret',
 	resave: false,
 	saveUninitialized: false,
-    //store: new RedisStore({ client: redisClient }),
+    store: new RedisStore({ client: redisClient }),
 	cookie: {
         expires: 4 * 60 * 60 * 1000 // =>> 4 horas
     }
