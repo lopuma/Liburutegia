@@ -8,7 +8,7 @@ const configCors = {
         cors: {
             server: [
                 {
-                    origin: `127.0.0.1:${NODE_PORT}`,
+                    origin: `0.0.0.0:${PORT}`,
                     credentials: true
                 }
             ]
