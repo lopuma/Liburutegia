@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 const { database } = require('../database/keys.js');
 console.log("Database ", database)
-const connection = mysql.createConnection('mysql://root:wNv0RgxOXeBzpyeFMnY9@containers-us-west-197.railway.app:6284/railway');
+const connection = mysql.createConnection('mysql://root:JmDNPu5FzQl31VtLOEgR@containers-us-west-170.railway.app:5914/railway');
 connection.on('error', function(err) {
   console.log("[mysql error]",err);
 });
