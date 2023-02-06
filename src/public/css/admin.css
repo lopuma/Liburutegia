@@ -302,7 +302,7 @@
 
     .Cards-data {
         position: relative;
-        width: 300px;
+        /* width: 300px; */
         height: 150px;
         border-radius: 10px;
         transition-property: height, box-shadow;
