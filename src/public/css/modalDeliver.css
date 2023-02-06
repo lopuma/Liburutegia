@@ -228,5 +228,7 @@
     .Form-textarea {
         padding: 1.5em 0 0 0;
     }
-
+    .Deliver-modal {
+        max-width: 90% !important;
+    }
 }
