@@ -1,15 +1,15 @@
 {{> modalDeliver}}
 
-<div class="Dashboard" id="stateBookings" style="margin-top: 2em">
-    {{!-- <a class="Dashboard-a" href="/workspace/books/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Booking</a> --}}
-    <div class="Dashboard-row">
+<div class="Dashboard" id="stateBookings" style="margin-top: 2em;">
+    <a class="Dashboard-a" href="#" hidden><i class="Dashboard-i fa-solid fa-user-plus"></i>New Booking</a>
+    <div class="Dashboard-row" style="margin-top: 2em;">
         <!-- TODO LOADING -->
         <div id="spinner">
             {{> loading}}
         </div>
 
         <!-- TODO TABLE BOOKINGS -->
-        <table id="tableBookings" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%" style="margin-top: 3em">
+        <table id="tableBookings" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%" style="margin-top: 3em;">
             <thead class="Dashboard-head">
                 <tr>
                     <th>BOOKING ID</th>
