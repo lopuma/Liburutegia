@@ -34,6 +34,7 @@ let opcion = "";
             columns: [
                 {
                     data: null, "searchable": true,
+                    "targets": data.bookID,
                     render: (data) => {
                         return (fillZeros(data.bookID));
                     }

@@ -11,8 +11,7 @@ module.exports = {
         port: config.MYSQL_PORT,
         user: config.MYSQL_USER,
         password: config.MYSQL_PASSWORD,
-        database: config.MYSQL_DATABASE,
-        protocol: 'TCP'
+        database: config.MYSQL_DATABASE
     }
 };
 

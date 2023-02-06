@@ -6,7 +6,7 @@ const familyController = {
         const dni = req.params.dniPartner;
         try {
             const sqlSelect = " SELECT p.dni as partnerDni FROM familys f LEFT JOIN partners p ON f.partnerDNI=p.dni WHERE f.familyDni=?";
-            await connection.query(sqlSelect, dni, (err, results) => {
+            connection.query(sqlSelect, dni, (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -41,7 +41,7 @@ const familyController = {
             const familyID = req.params.idFamily;
             const { familyDni, partnerDni } = req.body;
             const sqlUnbind = "DELETE FROM familys WHERE familyDni=? AND partnerDni=?";
-            await connection.query(sqlUnbind, [ partnerDni, familyDni ], async (err, results) => {
+            connection.query(sqlUnbind, [ partnerDni, familyDni ], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -51,7 +51,7 @@ const familyController = {
                     });
                 }
                 const sqlExists = "SELECT * FROM familys WHERE familyDni = ?";
-                await connection.query(sqlExists, partnerDni, async (err, results) => {
+                connection.query(sqlExists, partnerDni, async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -62,7 +62,7 @@ const familyController = {
                     }
                     if (results.length === 0) {
                         const sqlUpdateActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
-                        await connection.query(sqlUpdateActiveFamily, partnerDni, (err, results) => {
+                        connection.query(sqlUpdateActiveFamily, partnerDni, (err, results) => {
                             if (err) {
                                 console.error("[ DB ]", err.sqlMessage);
                                 return res.status(400).send({

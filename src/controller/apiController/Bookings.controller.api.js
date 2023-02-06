@@ -162,31 +162,30 @@ const bookingController = {
                             errorMessage: `The member's DNI : ${partnerDni} does not exist in the database`
                         });
                     }
-                    const insertBooking = [
-                        `UPDATE books SET reserved=if(reserved = 0, 1, 1) WHERE bookID=${bookID}`,
-                        "INSERT INTO bookings SET ?"
-                    ];
                     const dataReserve = {
                         bookID,
                         partnerDni,
                         reserveDate,
                     };
-                    connection.query(insertBooking.join(";"), dataReserve, (err, results) => {
-                        if (err) {
-                            console.error("[ DB ]", err.sqlMessage);
-                            return res.status(400).send({
-                                success: false,
-                                messageErrBD: err,
-                                swalTitle: "Error BD",
-                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    const sqlReserveBook = `UPDATE books SET reserved=1 WHERE bookID='${bookID}'; INSERT INTO bookings SET ?`;
+                    connection.query(sqlReserveBook, dataReserve, (err, results) => {
+                        try {
+                            if (err) {
+                                console.error("[ DB ]", err.sqlMessage);
+                                return res.status(400).send({
+                                    success: false,
+                                    messageErrBD: err,
+                                    swalTitle: "Error BD",
+                                    errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                                });
+                            }
+                            res.status(201).send({
+                                success: true,
+                                swalTitle: "Reserve Book added...",
+                                messageSuccess: `Successfully reserved the Book with ID: ${bookID}, it has been created with Booking ID: ${results[1].insertId}, for the partner with Dni: ${partnerDni}
+                                `
                             });
-                        }
-                        res.status(201).send({
-                            success: true,
-                            swalTitle: "Reserve Book added...",
-                            messageSuccess: `Successfully reserved the Book with ID: ${bookID}, it has been created with Booking ID: ${results[1].insertId}, for the partner with Dni: ${partnerDni}
-                            `
-                        });
+                        } catch (error) { }
                     });
                 });
             });
@@ -196,7 +195,7 @@ const bookingController = {
             res.status(500).redirect("/");
         }
     },
-    // DELETE BOOKINGS
+    //TODO ✅ DELETE BOOKINGS
     cancelBooking: async (req, res) => {
         try {
             const bookID = req.params.idBook || req.body.bookID;

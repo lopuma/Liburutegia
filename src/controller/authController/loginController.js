@@ -86,13 +86,11 @@ const loginController = {
                     }
                     //TODO LLAMADA ASIGNACION DE ROL Y RUTA
                     await loginController.asigneRol(req, res, results[0].rol);
-                    console.log("RESEULTS =>>", results);
                     //TODO SI TODO ES OK, SE REDIRIGE A SU RUTA
                     req.session.loggedin = true;
                     req.session.username = results[0].username;
                     req.session.usermail = results[0].email;
                     req.session.profile = results;
-                    console.log("RESEULTS loginRol =>>", req.session, `VISITAS ${req.session.visits}`);
                     res.status(200).render("forms/login", {
                         success: true,
                         alert: true,

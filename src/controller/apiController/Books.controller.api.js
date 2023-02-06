@@ -146,10 +146,9 @@ const bookController = {
                     });
                 }
                 if (results.length === 1) {
-                    const nameCover = saveImageServer(req, res);
+                    const nameCover = await saveImageServer(req, res);
                     const coverID = results[0].coverID;
                     const bookID = idBook;
-                    //TODO ELIMINAR IMAGEN ANTERIOR
                     try {
                         const nameColverOld = results[0].nameCover;
                         const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
@@ -185,7 +184,7 @@ const bookController = {
     uploadFile: async (req, res) => {
         try {
             const { idBook } = req.body;
-            const nameCover = saveImageServer(req, res);
+            const nameCover = await saveImageServer(req, res);
             const sqlInsertCover = "INSERT INTO coverBooks SET ?";
             connection.query(sqlInsertCover, { bookID: idBook, nameCover }, (err, _results) => {
                 if (err) {

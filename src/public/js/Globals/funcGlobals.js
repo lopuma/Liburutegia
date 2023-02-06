@@ -368,22 +368,30 @@
         $("#selectDniReserve").html("");
         document.getElementById("reservePartnerID").value = "";
         const partners = data;
-        partners.forEach(partner => {
-            const option = document.createElement("option");
-            option.value = partner.partnerID;
-            option.text = partner.dni;
-            document.getElementById("selectDniReserve").add(option);
-        })
-        if (partners.length <= 1) {
-            const sel = document.getElementById("selectDniReserve");
-            const opt = sel[0];
-            $("#selectDniReserve").val(opt.value);
-            document.getElementById("reservePartnerID").value = fillZeros(opt.value);
-            //return true;
+        if(partners.data !== null){
+            partners.forEach(partner => {
+                const option = document.createElement("option");
+                option.value = partner.partnerID;
+                option.text = partner.dni;
+                document.getElementById("selectDniReserve").add(option);
+            })
+            if (partners.length <= 1) {
+                const sel = document.getElementById("selectDniReserve");
+                const opt = sel[0];
+                $("#selectDniReserve").val(opt.value);
+                document.getElementById("reservePartnerID").value = fillZeros(opt.value);
+                //return true;
+            }
+            $(".selectDniReserve").select2({
+                placeholder: "Select DNI Partner",
+            });
+        } else {
+            window.alert(partners.messageNotFound);
+            document.getElementById('validationReserveDni').classList.add('isActive');
+            document.getElementById('inputReservePartnerID').setAttribute('data-error', "");
+            document.getElementById('inputReservePartnerDni').setAttribute('data-error', "");
+            document.getElementById('errorReserveDni').innerHTML = "[ Error ] : Don't exists partners register in the BD, please add new partner, for reserve BOOKS.";
         }
-        $(".selectDniReserve").select2({
-            placeholder: "Select DNI Partner",
-        });
     }
 // TODO LOAD TITLE
     async function loadTitle(data) {

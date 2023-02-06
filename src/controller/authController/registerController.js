@@ -33,7 +33,7 @@ const routerRegister = {
             const _ss = 0;
             let passwordHash = await bscryptjs.hash(pass.trim(), 8);
             const sql = "SELECT * FROM users WHERE email = ?";
-            await connection.query(sql, [email], async (err, results) => {
+            connection.query(sql, [email], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res
@@ -46,7 +46,7 @@ const routerRegister = {
                 }
                 if (results.length === 0) {
                     sqlInsert = "INSERT INTO users SET ?";
-                    await connection.query(
+                    connection.query(
                         sqlInsert,
                         {
                             email: email.trim(),

@@ -26,7 +26,7 @@ const partnersController = {
             const rolAdmin = req.session.roladmin;
             const sqlPartner = "SELECT * FROM partners WHERE partnerID = ?";
             const sqlFamily = "SELECT p.partnerID as partnerID, p.dni as partnerDni, p.name as partnerName, p.lastname as partnerLastname, p.date as partnerRecordDate, f.familyDni as familyDni FROM familys f LEFT JOIN partners p ON f.partnerDNI=p.dni WHERE f.familyDni=?";
-            await connection.query(sqlPartner, [partnerID], async (err, results) => {
+            connection.query(sqlPartner, [partnerID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res
@@ -47,7 +47,7 @@ const partnersController = {
                     updateDate: updateDatePartner
                 }));
                 const dni = results[0].dni;
-                await connection.query(sqlFamily, [dni], async (err, results) => {
+                connection.query(sqlFamily, [dni], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res

@@ -3,7 +3,6 @@ const config = require('./config');
 const NODE_PORT = config.NODE_PORT;
 const PORT = config.PORT;
 
-console.log("CORS PORT ", NODE_PORT)
 const configCors = {
     application: {
         cors: {

@@ -11,23 +11,15 @@ const config = require('./config');
 let RedisStore = require("connect-redis")(session)
 
 // Redis
-const REDIS_PORT = config.REDIS_PORT;
-const REDIS_HOST = config.REDIS_HOST;
 const { createClient } = require('redis');
 
 let redisClient = createClient({
     legacyMode: true,
-    url: 'redis://default:zJIlKmknMte7KQeRERkk@containers-us-west-46.railway.app:6445',
-    /*socket: {
-        host: REDIS_HOST,
-        port: REDIS_PORT
-    },*/
-    host: REDIS_HOST,
-    port: REDIS_PORT,
+    url: `redis://${config.REDIS_USER}:${config.REDIS_PASSWORD}@${config.REDIS_SHOST}:${config.REDIS_PORT}`
 });
 redisClient.connect().catch(console.error);
 redisClient.on('connect', function() {
-  console.log('Connected!');
+    console.log(`The Redis is connected on the PORT: ${config.REDIS_PORT}`);
 });
 // APP EXPRESS
 const app = express();
@@ -41,8 +33,6 @@ app.use(cors(
 // 4 - Configuraciones
 console.info(`NODE_ENV = ${config.NODE_ENV}`);
 const PORT = config.PORT;
-
-console.log("ME DEBE CARGAR ESTOS DATOS ", config)
 
 // 5 - Morgan para mostrar datos de peticiones
 app.use(morgan('dev'));

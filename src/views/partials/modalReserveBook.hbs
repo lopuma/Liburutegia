@@ -42,7 +42,7 @@
                         </div>
                         <div class="New-boxes">
                             <!-- TODO PARTNER ID -->
-                            <div class="Input-box">
+                            <div class="Input-box" id="inputReservePartnerID">
                                 <div class="Box">
                                     <i class="Box-i fa-solid fa-boxes-stacked"></i>
                                     <div class="Box-animation Animation">
@@ -65,11 +65,17 @@
                                         <label class="Animation-label" for="selectDniReserve">Dni *</label>
                                     </div>
                                 </div>
+                                <div class="Input-error Error fieldErr" id="validationReserveDni">
+                                    <div class="Error-text">
+                                        <span id="errorReserveDni" class="fieldErrText">Dni cannot be
+                                            empty.</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="New-boxes">
                             <!-- TODO FECHA RESERVA -->
-                            <div class="Input-box">
+                            <div class="Input-box" id="inputReservePartnerDni">
                                 <div class="Box">
                                     <i class="fa-solid fa-calendar-days"></i>
                                     <div class="Box-animation Animation">
@@ -115,11 +121,11 @@
 
 // TODO RESPUESTA DEL SERVIDOR 
 
-    async function responseReserve(data) {
+    async function responseReserve(data, idBook) {
+        const bookID = idBook || null;
         const success = data.success;
         const title = data.swalTitle;
         const message = data.messageSuccess || data.errorMessage;
-        console.log("DATA RESPONSE MODAL RESERVED ",{data})
         if (success) {
             Swal.fire({
                 title: title || "Success....!",
@@ -135,12 +141,13 @@
                     }
                 } catch (error) { }
                 try {
-                    if(_STATEBOOK) { 
+                    if(_STATEBOOK) {
+                        window.location.href = "" + `#reserved_bookID_${bookID}`;
+                        await ClosePopup("#modalReserveBook"); 
                         await reloadDataBooks();
-                        window.location.href = "" + "#";
                     }
                 } catch (error) { }
-                await ClosePopup("#modalReserveBook");
+                
             });
         } else {
             Swal.fire({
@@ -196,6 +203,7 @@
             partnerDni,
             reserveDate,
         }
+        let idBook = data.bookID;
         const urlAddReserve = `/api/bookings/add/${bookID}`
         fetch(urlAddReserve, {
             method: "POST",
@@ -207,7 +215,7 @@
         })
             .then((response) => response.json())
             .then(async (data) => {
-                await responseReserve(data);
+                await responseReserve(data, idBook);
             })
             .catch((error) => console.error(error));
     }

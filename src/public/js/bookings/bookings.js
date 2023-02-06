@@ -286,10 +286,6 @@ const reloadDataBookings = async () => {
 async function cancelReservation(idBook, idBooking) {
     const bookID = idBook;
     const bookingID = idBooking;
-    console.log({
-        bookID,
-        bookingID,
-    })
     const urlCancel = `/api/bookings/cancel/${bookID}`;
     Swal.fire({
         title: 'Submit your reason why the reservation is canceled',
@@ -325,7 +321,6 @@ async function cancelReservation(idBook, idBooking) {
         allowOutsideClick: () => !Swal.isLoading()
         }).then(async (result) => {
             if (result.isConfirmed) {
-                console.log('Reservation', result);
                 Swal.fire({
                 title: `Cancelled reservation.`
                 });

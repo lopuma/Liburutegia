@@ -12,7 +12,7 @@ ENV MYSQL_USER=$MYSQL_USER
 ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
 ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
 
-ADD sanmiguel.sql /etc/mysql/sanmiguel.sql
+ADD *.sql /etc/mysql/sanmiguel.sql
 
 RUN sed -i 's/MYSQL_DATABASE/'$MYSQL_DATABASE'/g' /etc/mysql/sanmiguel.sql
 RUN cp /etc/mysql/sanmiguel.sql /docker-entrypoint-initdb.d
