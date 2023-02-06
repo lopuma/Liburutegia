@@ -6,7 +6,7 @@ dotenv.config({
 });
 
 module.exports = {
-    REDIS_USER: process.env.REDIS_USER || default,
+    REDIS_USER: process.env.REDIS_USER || 'default',
     REDIS_PASSWORD: process.env.REDIS_PASSWORD,
     REDIS_PORT: process.env.REDIS_PORT || 6379,
     REDIS_HOST: process.env.REDIS_HOST || '127.0.0.1',
