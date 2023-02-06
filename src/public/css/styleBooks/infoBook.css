@@ -151,6 +151,7 @@
     margin: 0 1em;
     font-size: 1.7em;
     color: #faab3c;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.7));
 }
 
 .Title-h1 {
@@ -495,7 +496,7 @@ h2.linea span {
     }
 
     .Information {
-        margin-bottom: 2em;
+        padding: 0 .5em;
     }
 
 }
@@ -503,14 +504,13 @@ h2.linea span {
 @media screen and (max-width: 550px) {
 
     .Review {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-        gap: 1em
+        display: block;
+        width: 100%
     }
 
     .Info-contenedor {
-        width: 95%;
-        padding: .5em 0;
+        width: 90%;
+        padding: 0;
     }
 
     .Info-header {
@@ -530,10 +530,14 @@ h2.linea span {
         left: 25%;
     }
 
+    .Info-cover {
+        background-color: #C7511F;
+    }
+
 }
 
 @media only screen and (max-width: 1350px) {
     .Info-header {
-        padding: 0 1em 0 0;
+        padding: 0;
     }
 }

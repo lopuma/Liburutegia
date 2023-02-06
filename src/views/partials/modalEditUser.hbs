@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="/style/editModal.css">
+<link rel="stylesheet" href="/style/newForm.css">
+
+<!--TODO Modal para CRUD-->
+<div class="modal fade" role="dialog" aria-labelledby="modalEditBookLabel" aria-hidden="true" style="padding-right:0" id="modalEditUser" name="modalEditUser">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="Modal-header" style="background-color: var(--Background-Color-forms-book); color: var(--Color-forms-book)">
+                <h1 class="Modal-title" id="modalEditBookLabel" >EDIT USER</h1>
+            </div>
+            <div class="New">
+                <form class="New-form" id="formEditUser" name="formEditUser">
+                    <button type="submit" aria-hidden="true"></button>
+                    <div class="New-content">
+                        <div class="New-boxes">
+                            <!-- TODO USER ID -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-solid fa-key"></i>
+                                    <div class="Box-animation Animation">
+                                        <input class="Animation-input"  type="text" id="userID" name="userID"
+                                        tabindex="0" 
+                                        placeholder=" "
+                                        readonly required>
+                                        <label class="Animation-label" for="userID">User ID *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Input-box isInvisible">
+                            </div>
+                        </div>
+                        <div class="New-boxes">
+                            <!-- TODO USERNAME -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-solid fa-boxes-stacked"></i>
+                                    <div class="Box-animation Animation">
+                                        <input class="Animation-input" name="inputUserName" id="inputUserName"
+                                            type="text"
+                                            placeholder=" " autocomplete="valorNoValido"
+                                            tabindex="1" required>
+                                        <label class="Animation-label" for="inputUserName">Username *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- TODO EMAIL -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-solid fa-boxes-stacked"></i>
+                                    <div class="Box-animation Animation">
+                                        <input class="Animation-input" name="inputUserEmail" id="inputUserEmail"
+                                            type="email"
+                                            placeholder=" " autocomplete="valorNoValido"
+                                            tabindex="2" required>
+                                        <label class="Animation-label" for="inputUserEmail">Email *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="New-boxes">
+                            <!-- TODO FULLNAME -->
+                            <div class="Input-box">
+                                <div class="Box">
+                                    <i class="Box-i fa-solid fa-boxes-stacked"></i>
+                                    <div class="Box-animation Animation">
+                                        <input class="Animation-input" name="inputUserFullname" id="inputUserFullname"
+                                            type="text"
+                                            placeholder=" " autocomplete="valorNoValido"
+                                            tabindex="3" required>
+                                        <label class="Animation-label" for="inputUserFullname">Fullname *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Input-box isInvisible"></div>
+                        </div>
+                    </div>
+                    <div class="Input-button">
+                        <button type="button" class="Button-cancel"
+                            data-dismiss="modal" tabindex="4" onclick="closeModalEditUser()">Cancel</button>
+                        <input class="Button-accept" id="btnEditUser" type="submit"
+                            value='Save' tabindex="5"></input>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script defer>
+
+    const btnEditUser = document.getElementById('btnEditUser');
+
+    async function closeModalEditUser() {
+        $('#modalEditUser').modal('hide');
+        document.getElementById('formEditUser').reset();
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById("formEditUser").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const data = {
+                id: inputUserID.value,
+                username: inputUserName.value.toUpperCase(),
+                email: inputUserEmail.value,
+                fullname: capitalizeWords(inputUserFullname.value)
+            }
+            const urlUpdatedUser = `/api/users/update/${data.id}`;
+            fetch(urlUpdatedUser, {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    const title = data.swalTitle;
+                    const message = data.messageSuccess || data.errorMessage;
+                    const icon =  data.success ? "success" : "error";
+                    Swal.fire({
+                        icon: icon,
+                        title: title || 'Oops...',
+                        timer: 2000,
+                        text: message,
+                    })
+                        .then((response) => {
+                            $('#modalEditUser').modal("toggle");
+                            location.reload('true');
+                        });
+                    return;
+                });
+        });
+    });
+
+</script>

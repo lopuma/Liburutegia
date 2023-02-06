@@ -1,64 +1,157 @@
 <link rel="stylesheet" href="/style/admin.css">
 
-    <div id="spinner" class="spinnerUser">
-        {{> loading}}
-    </div>
-    <div class="Cards">
-        {{#each users}}
-            <div class="Cards-data" id='{{this.id}}'>
-                
-                <div class="imgBx">
-                    {{!-- <img src=".../../../../resources/img/user.png"> --}}
-                    <div class="card-head"><span>00000{{this.id}}</span></div>
-                </div>
-                
-                <div class="Cards-content">
-                    <div class="Cards-details">
-                        <h2>{{this.username}}<br><span>{{this.rol}}</span></h2>
-                        
-                        <div class="data">
-                            <h3>Lastname: </h3><span>{{this.fullname}}</span>
-                        </div>
-                        
-                        <div class="data">
-                            <h3>Email: </h3><span>{{this.email}}</span>
-                        </div>
-                        
-                        <div class="Cards-actionBtn" id="card-button{{this.id}}">
-                            <div class="Cards-actionBtn-main" id="actionBtn">
-                                <button class="btnCardEdit" id="btnCardEdit" value="{{this.id}}" onclick="editUser(this)"
-                                    title="Edit User" style="--i:#56CCF2; --j:#2F80ED">
-                                    <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
-                                    <span class="title">Edit</span>
-                                </button>
-                                <button class="btnCardDelete" id="btnCardDelete" value="{{this.id}}"
-                                    onclick="deleteUser(this)" title="Delete User" style="--i:#D9534F; --j:#F32424">
-                                    <span class="icon"><i class="fa-solid fa-user-minus"></i></span>
-                                    <span class="title">Delete</span>
-                                </button>
-                                <button class="btnCardReset" id="btnCardReset" value="{{this.id}}" onclick="resetUser(this)"
-                                    title="Reset password User" style="--i:#FF9966; --j:#FF5E62">
-                                    <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
-                                    <span class="title">Reset Password</span>
-                                </button>
-                            </div>
-                        </div>
+{{> modalEditUser }}
 
-                    </div>
-                </div>
-            
+<div id="spinner" class="spinnerUser">
+    {{> loading}}
+</div>
+<div class="Cards">
+    {{#each users}}
+        <div class="Cards-data" id='{{this.id}}' data-card="cardUser">
+            <div class="imgBx" id='{{this.id}}'>
+                <a class="Card-head">0000{{this.id}}</a>
             </div>
-        {{/each}}
-    </div>
+            <div class="Cards-content">
+                <div class="Cards-details">
+                    <h2>{{this.username}}<br><span>{{this.rol}}</span></h2>
+                    <div class="data">
+                        <h3>Lastname: </h3><span>{{this.fullname}}</span>
+                    </div>
+                    <div class="data">
+                        <h3>Email: </h3><span>{{this.email}}</span>
+                    </div>
+                    <div class="Cards-actionBtn" id="card-button{{this.id}}">
+                        <div class="Cards-actionBtn-main" id="actionBtn">
+                            <button class="btnCardEdit" id="btnCardEdit" value="{{this.id}}" onclick="editUser(this)"
+                                title="Edit User" style="--i:#56CCF2; --j:#2F80ED">
+                                <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
+                                <span class="title">Edit</span>
+                            </button>
+                            <button class="btnCardDelete" id="btnCardDelete" value="{{this.id}}"
+                                onclick="deleteUser(this)" title="Delete User" style="--i:#D9534F; --j:#F32424">
+                                <span class="icon"><i class="fa-solid fa-user-minus"></i></span>
+                                <span class="title">Delete</span>
+                            </button>
+                            <button class="btnCardReset" id="btnCardReset" value="{{this.id}}" onclick="resetUser(this)"
+                                title="Reset password User" style="--i:#FF9966; --j:#FF5E62">
+                                <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
+                                <span class="title">Reset Password</span>
+                            </button>
+                        </div>
+                    </div>
 
-<script>
+                </div>
+            </div>
+        
+        </div>
+    {{/each}}
+</div>
+
+
+<script src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
+
+<script defer>
     const spinner = document.getElementById("spinner");
-    //TODO CLOSE LOADING
-    setTimeout(() => {
-        loadData();
-    }, "1600");
+    const cards = document.querySelectorAll('.Cards-data');
+    const cardHead = document.querySelectorAll('.Card-head');
+
+    console.log("card", cards)
+    setTimeout(async () => {
+        await loadData();
+        spinner.style.display = "none";
+    }, "500");
     async function loadData() {
         document.querySelector(".Cards").classList.add("isVisible");
-        spinner.style.display = "none";
     }
+
+//TODO AL CARGAR LAS LIBRERIAS
+window.addEventListener('DOMContentLoaded', function() {
+    const imgBox = document.querySelectorAll('.imgBx');
+
+    imgBox.forEach((box, i) => {
+        let randomColor = generarNuevoColor();
+        let textColor = tinycolor.mostReadable(randomColor, ["black", "white"]).toHexString();
+        box.style.backgroundColor = randomColor;
+        box.style.color = textColor;
+        imgBox[i].addEventListener('click', () => {
+            console.log("click", imgBox[i].id);
+        });
+    });
+});
+    const inputUserID = document.getElementById('userID');
+    const inputUserName = document.getElementById('inputUserName');
+    const inputUserEmail = document.getElementById('inputUserEmail');
+    const inputUserFullname = document.getElementById('inputUserFullname');
+    
+    async function extractUser(idUser) {
+        const userID = idUser;
+        try {
+            fetch(`/api/users/${userID}`)
+                .then((response) => response.json())
+                .then((data) =>  {
+                    const title = data.swalTitle;
+                    const message = data.messageSuccess || data.errorMessage;
+                    const icon =  data.success ? "success" : "error";
+                    if(data.success === false) {
+                        document.getElementById('formEditUser').reset();
+                        Swal.fire({
+                            icon: icon,
+                            title: title || 'Oops...',
+                            timer: 2000,
+                            text: message,
+                        })
+                            .then((response) => {
+                                $('#modalEditUser').modal("toggle");
+                                location.reload('true');
+                            });
+                        return;
+                    }
+                    inputUserName.value = data.data.username
+                    inputUserEmail.value = data.data.email;
+                    inputUserFullname.value = data.data.fullname;
+                    console.log("user", data);
+                });
+        } catch (e) { }
+    }
+
+    async function editUser(card) {
+        const userID = card.value.toString();
+        $('#modalEditUser').modal("toggle");
+        console.log("user", userID);
+        inputUserID.value = userID;
+        await extractUser(userID);
+        inputUserName.focus();
+    }
+
+    async function deleteUser(card) { 
+        const userID = card.value.toString();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then(async (result) => {
+            if (result.isConfirmed) {
+                await fetch(`/api/users/delete/${userID}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const title = data.swalTitle;
+                        const message = data.messageSuccess || data.errorMessage;
+                        const icon =  data.success ? "success" : "error";
+                        Swal.fire({
+                            icon: icon,
+                            title: title || 'Oops...',
+                            text: message,
+                            timer: 2000,
+                        }).then((response) => {
+                            location.reload(true);
+                        });
+                    });
+            }
+        });
+    }
+
 </script>
