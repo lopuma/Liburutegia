@@ -15,7 +15,7 @@ const { createClient } = require('redis');
 
 let redisClient = createClient({
     legacyMode: true,
-    url: `redis://${config.REDIS_USER}:${config.REDIS_PASSWORD}@${config.REDIS_SHOST}:${config.REDIS_PORT}`
+    url: `redis://${config.REDIS_USER}:${config.REDIS_PASSWORD}@${config.REDIS_HOST}:${config.REDIS_PORT}`
 });
 redisClient.connect().catch(console.error);
 redisClient.on('connect', function() {
