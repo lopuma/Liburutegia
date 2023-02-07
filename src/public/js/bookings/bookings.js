@@ -50,6 +50,7 @@ async function loadDataBookings(data) {
                     );
                 }
             },
+            { data: "isbn" },
             {
                 data: null,
                 render: (data) => {
@@ -67,6 +68,7 @@ async function loadDataBookings(data) {
                     );
                 }
             },
+
             {
                 data: "reserveDate", "searchable": false,
                 render: (data) => {
