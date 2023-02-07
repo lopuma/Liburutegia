@@ -31,7 +31,7 @@ app.use(cors(
 ));
 
 // 4 - Configuraciones
-console.info(`NODE_ENV = ${config.NODE_ENV}`);
+console.info(`The display is in (${config.NODE_ENV})`);
 const PORT = config.PORT;
 
 // 5 - Morgan para mostrar datos de peticiones

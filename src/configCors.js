@@ -1,6 +1,5 @@
 const config = require('./config');
 
-const NODE_PORT = config.NODE_PORT;
 const PORT = config.PORT;
 
 const configCors = {

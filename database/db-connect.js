@@ -1,5 +1,5 @@
 const mysql = require("mysql2");
-const { database } = require('../database/keys.js');
+const { database } = require('./db-keys.js');
 const connection = mysql.createConnection(database);
 
 connection.connect(err => {

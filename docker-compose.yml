@@ -16,7 +16,7 @@ services:
         volumes:
             - ./nginx/templates:/etc/nginx/templates
         environment:
-            - NODE_PORT=${NODE_PORT}
+            - PORT=${PORT}
             - NGINX_HOST=${NGINX_HOST}
             - NGINX_PORT=${NGINX_PORT}
             - NGINX_APP=${NGINX_APP}
@@ -26,12 +26,14 @@ services:
         container_name: application
         build: .
         ports:
-            - ${NODE_PORT}:${NODE_PORT}
+            - ${PORT}:${PORT}
         depends_on:
             - "mysql"
         environment:
             - NODE_ENV=${NODE_ENV}
-            - NODE_PORT=${NODE_PORT}
+            - PORT=${PORT}
+            - REDIS_PORT=${REDIS_PORT}
+            - REDIS_HOST=${REDIS_HOST}
             - MYSQL_HOST=${MYSQL_HOST}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -52,7 +54,7 @@ services:
     mysql:
         container_name: mysql
         build:
-          context: ./data
+          context: ./containers/mysql
         restart: always
         ports:
             - ${MYSQL_PORT}:${MYSQL_PORT}

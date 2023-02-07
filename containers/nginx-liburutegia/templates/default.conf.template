@@ -1,8 +1,6 @@
 upstream application {
-    server application:${NODE_PORT};
+    server application:${PORT};
 }
-
-#proxy_cache_path /var keys_zone=cache1:1000m;
 
 server {
         listen ${NGINX_PORT};
