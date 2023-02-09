@@ -2,11 +2,11 @@
 <link rel="stylesheet" href="/style/newForm.css">
 
 <!--TODO Modal para CRUD-->
-<div class="modal fade" role="dialog" aria-labelledby="modalEditBookLabel" aria-hidden="true" style="padding-right:0" id="modalEditUser" name="modalEditUser">
+<div class="modal fade" role="dialog" aria-labelledby="modalEditUserLabel" aria-hidden="true" style="padding-right:0" id="modalEditUser" name="modalEditUser">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="Modal-header" style="background-color: var(--Background-Color-forms-book); color: var(--Color-forms-book)">
-                <h1 class="Modal-title" id="modalEditBookLabel" >EDIT USER</h1>
+            <div class="Modal-header" style="background-color: var(--Background-Color-forms-user); color: var(--Color-forms-user)">
+                <h1 class="Modal-title" id="modalEditUserLabel" >EDIT USER</h1>
             </div>
             <div class="New">
                 <form class="New-form" id="formEditUser" name="formEditUser">
@@ -90,7 +90,7 @@
 
     const btnEditUser = document.getElementById('btnEditUser');
 
-    async function closeModalEditUser() {
+    function closeModalEditUser() {
         $('#modalEditUser').modal('hide');
         document.getElementById('formEditUser').reset();
     }

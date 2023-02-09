@@ -57,9 +57,6 @@
 </form>
     <!-- TODO SUPER -->
 <form class="Reset" id="formReset">
-    {{!-- BUTTO DISABLE ENTER --}}
-    {{!-- <button type="submit" disabled hidden aria-hidden="true"></button> --}}
-    {{!-- ------------------- --}}
     <div class="Reset-content">
     <div class="Reset-title">Reset Your Password</div>
     <div class="Input-boxes">
@@ -82,16 +79,14 @@
                 <span id="errorEmailReset">The field cannot be empty.</span>
             </div>
         </div>
-        <!---- SUPER ONLY EXISTS ACCOUNT -->
         <div class="Input-exists" id="inputsExists">
-            <!---- TODO PASSWORD NEW -->
             <div class="Input-box Box">
             <i id="icon-logo" class="Box-i fa-solid fa-key"></i>
             <div class="Box-animation Animation">
                 <input class="Animation-input" id="inputPasswordNew" name="inputPasswordNew" type="password" tabindex="2" placeholder=" " autocomplete="off">
                 <label class="Animation-label" for="inputPasswordNew">New Password *</label>
             </div>
-            <i id="btnEyePasswordNew" class="Box-i fa-solid fa-eye"></i>
+            <i id="btnEyePasswordNew" class="fa-solid fa-eye"></i>
             </div>
             <div class="Input-error Error" id="validationPasswordNew">
             <div class="Error-icon" >

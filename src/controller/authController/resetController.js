@@ -23,6 +23,9 @@ const routerReset = {
                 if (results.length === 0) {
                     req.session.exists = false;
                     return res.status(300).send({
+                        success: false,
+                        swalTitle: "User not exists",
+                        errorMessage: "Your account could not be found in Liburutegia.",
                         messageEmailReset:
                             "Your account could not be found in Liburutegia.",
                         exists: req.session.exists,
@@ -65,8 +68,11 @@ const routerReset = {
                             });
                     }
                     res.status(200).send({
+                        swalTitle : "Change Password Success....",
                         successValidation: "Password has been changed successfully",
+                        messageSuccess: "Password has been changed successfully",
                         exists: req.session.exists,
+                        success: true,
                         inputs: false
                     });
                 });

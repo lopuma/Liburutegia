@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/style/admin.css">
 
 {{> modalEditUser }}
+{{> modalResetPassword }}
 
 <div id="spinner" class="spinnerUser">
     {{> loading}}
@@ -32,7 +33,7 @@
                                 <span class="icon"><i class="fa-solid fa-user-minus"></i></span>
                                 <span class="title">Delete</span>
                             </button>
-                            <button class="btnCardReset" id="btnCardReset" value="{{this.id}}" onclick="resetUser(this)"
+                            <button class="btnCardReset" id="btnCardReset" value="{{this.id}}" onclick="resetPassUser(this)"
                                 title="Reset password User" style="--i:#FF9966; --j:#FF5E62">
                                 <span class="icon"><i class="fa-solid fa-unlock-keyhole"></i></span>
                                 <span class="title">Reset Password</span>
@@ -82,6 +83,9 @@ window.addEventListener('DOMContentLoaded', function() {
     const inputUserName = document.getElementById('inputUserName');
     const inputUserEmail = document.getElementById('inputUserEmail');
     const inputUserFullname = document.getElementById('inputUserFullname');
+    const inputEmailReset = document.getElementById('inputEmailReset');
+    const inputPasswordReset = document.getElementById('inputPasswordReset');
+    const inputPasswordRepeatReset = document.getElementById('inputPasswordRepeatReset');
     
     async function extractUser(idUser) {
         const userID = idUser;
@@ -109,18 +113,17 @@ window.addEventListener('DOMContentLoaded', function() {
                     inputUserName.value = data.data.username
                     inputUserEmail.value = data.data.email;
                     inputUserFullname.value = data.data.fullname;
-                    console.log("user", data);
+                    $('#modalEditUser').modal("toggle");
+                    inputUserName.focus();
                 });
         } catch (e) { }
     }
 
     async function editUser(card) {
         const userID = card.value.toString();
-        $('#modalEditUser').modal("toggle");
         console.log("user", userID);
         inputUserID.value = userID;
         await extractUser(userID);
-        inputUserName.focus();
     }
 
     async function deleteUser(card) { 
@@ -152,6 +155,48 @@ window.addEventListener('DOMContentLoaded', function() {
                     });
             }
         });
+    }
+
+
+    async function extractDataUser(idUser) {
+        const userID = idUser;
+        try {
+            fetch(`/api/users/${userID}`)
+                .then((response) => response.json())
+                .then((data) =>  {
+                    const title = data.swalTitle;
+                    const message = data.messageSuccess || data.errorMessage;
+                    const icon =  data.success ? "success" : "error";
+                    if(data.success === false) {
+                        document.getElementById('formEditUser').reset();
+                        Swal.fire({
+                            icon: icon,
+                            title: title || 'Oops...',
+                            timer: 2000,
+                            text: message,
+                        })
+                            .then((response) => {
+                                $('#modalEditUser').modal("toggle");
+                                location.reload('true');
+                            });
+                        return;
+                    }
+                    dataUser = {
+                        username: data.data.username,
+                        email: data.data.email,
+                        fullname: data.data.fullname
+                    }
+                    inputEmailReset.value = dataUser.email;
+                    $('#modalResetPassword').modal("toggle");
+                    inputPasswordReset.focus();
+                });
+        } catch (e) { }
+    }
+
+
+    async function resetPassUser(card) {
+        const userID = card.value.toString();
+        await extractDataUser(userID);
     }
 
 </script>

@@ -14,7 +14,7 @@ services:
         depends_on:
             - application
         volumes:
-            - ./nginx/templates:/etc/nginx/templates
+            - ./containers/nginx-liburutegia/templates:/etc/nginx/templates
         environment:
             - PORT=${PORT}
             - NGINX_HOST=${NGINX_HOST}
