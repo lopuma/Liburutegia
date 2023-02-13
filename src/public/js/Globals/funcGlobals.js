@@ -241,7 +241,6 @@
                 infoReviewError();
             });
         } catch (error) { }
-
         try {
             document.getElementById(closeInfo).addEventListener("click", () => {
                 activesInfos[inputField] = false;

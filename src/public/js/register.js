@@ -74,12 +74,6 @@ async function responseRegister(data) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#474E68',
             confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
         }).then(() => {
             formRegister.reset();
             inputEmailNew.focus();
@@ -95,12 +89,6 @@ async function responseRegister(data) {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#474E68',
             confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
         }).then(() => {
             inputEmailNew.focus();
             inputEmailNew.select();

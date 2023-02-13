@@ -31,12 +31,6 @@ var _PARTNERID = "";
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, unlink it!',
-            showClass: {
-                popup: "animate__animated animate__fadeInDown"
-            },
-            hideClass: {
-                popup: "animate__animated animate__fadeOutUp"
-            }
         }).then(async (result) => {
             if (result.isConfirmed) {
                 await fetch(urlDesvincular, {

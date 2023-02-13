@@ -5,6 +5,7 @@ node_modules/
 scriptAutomatizacion/
 .dockerignore
 .env
+*.example
 .gitignore
 docker-compose.yml
 Dockerfile

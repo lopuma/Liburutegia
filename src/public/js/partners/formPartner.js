@@ -9,6 +9,7 @@ var chageName = false;
 var chageLastname = false;
 let optionForm = "";
 var checkedNew = false;
+duplicateISBN = false;
 
 const field = {
     dni: false,
@@ -292,12 +293,6 @@ const fieldChange = {
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#474E68",
                 confirmButtonText: "OK",
-                showClass: {
-                    popup: "animate__animated animate__fadeInDown"
-                },
-                hideClass: {
-                    popup: "animate__animated animate__fadeOutUp"
-                }
             }).then(async () => {
                 $("#selectDni").html("");
                 try {
@@ -332,12 +327,6 @@ const fieldChange = {
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#474E68",
                 confirmButtonText: "OK",
-                showClass: {
-                    popup: "animate__animated animate__fadeInDown"
-                },
-                hideClass: {
-                    popup: "animate__animated animate__fadeOutUp"
-                }
             }).then(() => {
                 inputDni.focus();
                 inputDni.select();
