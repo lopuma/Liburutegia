@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM mysql:latest
 
 RUN chown -R mysql:root /var/lib/mysql/
 
@@ -13,6 +13,7 @@ ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
 ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
 
 ADD *.sql /etc/mysql/sanmiguel.sql
-
+VOLUME /var/lib/mysql
 RUN sed -i 's/MYSQL_DATABASE/'$MYSQL_DATABASE'/g' /etc/mysql/sanmiguel.sql
 RUN cp /etc/mysql/sanmiguel.sql /docker-entrypoint-initdb.d
+EXPOSE 3306 33060

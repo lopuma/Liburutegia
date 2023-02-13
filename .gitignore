@@ -9,3 +9,4 @@ env/.env
 .git
 .vscode
 src/*.env
+*.code-workspace
