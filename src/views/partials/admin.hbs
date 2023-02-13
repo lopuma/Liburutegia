@@ -55,8 +55,6 @@
     const spinner = document.getElementById("spinner");
     const cards = document.querySelectorAll('.Cards-data');
     const cardHead = document.querySelectorAll('.Card-head');
-
-    console.log("card", cards)
     setTimeout(async () => {
         await loadData();
         spinner.style.display = "none";
@@ -75,7 +73,7 @@ window.addEventListener('DOMContentLoaded', function() {
         box.style.backgroundColor = randomColor;
         box.style.color = textColor;
         imgBox[i].addEventListener('click', () => {
-            console.log("click", imgBox[i].id);
+            console.info("click", imgBox[i].id);
         });
     });
 });
@@ -121,7 +119,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
     async function editUser(card) {
         const userID = card.value.toString();
-        console.log("user", userID);
         inputUserID.value = userID;
         await extractUser(userID);
     }

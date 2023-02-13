@@ -7,7 +7,8 @@
         }
         return num
     }
-    //TODO ✅ REMOVE CEROS POR DELANTE
+
+//TODO ✅ REMOVE CEROS POR DELANTE
     function removeZeros(id) {
         return id.toString().replace(/^0+/, "");
     }
@@ -51,7 +52,6 @@
     }
 
     const globalDeleteBook = async (idBook) => {
-        window.location.href = "" + `#delete_book?${idBook}`;
         Swal.fire({
             title: "Are you sure?",
             text: "Are you sure you want to delete the BOOK!",
@@ -65,7 +65,7 @@
             if (result.isConfirmed) {
                 await apiBookDelete(idBook);
             }
-        }) 
+        })
     }
 
 // TODO ✅ RESPUESTA AL ELIMINAR BOOK
@@ -112,6 +112,12 @@
         } else if (!field.author) {
             document.getElementById("inputAuthor").focus();
             document.getElementById("inputAuthor").select();
+        } else if (!field.ISBN) {
+            document.getElementById("inputISBN").focus();
+            document.getElementById("inputISBN").select();
+            inputISBN.classList.add("isError");
+            document.getElementById("infoISBN").classList.add("isVisible");
+            field["ISBN"] = false;
         }
         Swal.fire('There are items required your attention.');
     }
@@ -155,8 +161,8 @@
                 });
             })
             .catch(() =>
-            window.alert(
-                "There is no record in Catehory Book"
+                window.alert(
+                    "There is no record in Catehory Book"
                 ));
         try {
             valueCategory.forEach(element => {
@@ -164,7 +170,7 @@
                 option.value = element;
                 option.text = element;
                 inputType.add(option);
-                
+
             });
             try {
                 if (_STATEEDITBOOK || _STATEBOOK) {
@@ -184,7 +190,6 @@
 // TODO ✅ FUNCT EDIT BOOK
     async function globalEditBook(idBook) {
         const bookID = idBook;
-        window.location.href = ""+`#edit_book?${bookID}`;
         const urlDataEdit = `/api/books/${bookID}`;
         await fetch(urlDataEdit)
             .then(response => response.json())
@@ -217,14 +222,15 @@
         info,
         closeInfo
     ) {
-        if (!expresion.test(input.value.trim())) {
-            input.classList.add("isError");
-            document.getElementById(info).classList.add("isVisible");
-            field[inputField] = false;
-        } else {
-            inputsCorrectValidate(errorDivValidation, errorInputText, input, info, closeInfo, inputField);
+        if(duplicateISBN !== true) {
+            if (!expresion.test(input.value.trim())) {
+                input.classList.add("isError");
+                document.getElementById(info).classList.add("isVisible");
+                field[inputField] = false;
+            } else {
+                inputsCorrectValidate(errorDivValidation, errorInputText, input, info, closeInfo, inputField);
+            }
         }
-        // MENSAJES
         try {
             document.getElementById(info).addEventListener("click", () => {
                 activesInfos[inputField] = true;
@@ -232,7 +238,6 @@
                 document.getElementById(closeInfo).classList.add("isVisible");
                 document.getElementById(errorDivValidation).classList.add("isActive");
                 document.getElementById(errorInputText).innerHTML = textError;
-                // LLAMADA ABRIR LOS MENSAJES
                 infoReviewError();
             });
         } catch (error) { }
@@ -244,7 +249,6 @@
                 document.getElementById(closeInfo).classList.remove("isVisible");
                 document.getElementById(errorDivValidation).classList.remove("isActive");
                 document.getElementById(errorInputText).innerHTML = "";
-                // LLAMADA A CERRAR LOS MENSAJES
                 closeReviewError();
             });
         } catch (error) { };
@@ -285,6 +289,13 @@
             if (activesInfos["title"] === false && activesInfos["author"] === false) {
                 document.getElementById("inputBoxTitle").removeAttribute("data-error");
                 document.getElementById("inputBoxAuthor").removeAttribute("data-error");
+            }
+        } catch (error) { }
+        try {
+            if (activesInfos["ISBN"] === false && activesInfos["purchaseDate"] === false) {
+                document.getElementById("inputBoxISBN").removeAttribute("data-error");
+                document.getElementById("inputBoxPurchaseDate").removeAttribute("data-error");
+                duplicateISBN = false;
             }
         } catch (error) { }
         try {
@@ -340,6 +351,13 @@
                 document.getElementById("inputBoxLandline").setAttribute("data-error", "");
             }
         } catch (error) { }
+        try {
+            if (activesInfos["ISBN"] === true && activesInfos["purchaseDate"] === true || activesInfos["ISBN"] === true && activesInfos["purchaseDate"] === false) {
+                document.getElementById("inputBoxISBN").setAttribute("data-error", "");
+                document.getElementById("inputBoxPurchaseDate").setAttribute("data-error", "");
+                duplicateISBN = true;
+            }
+        } catch (error) { }
     }
 
 //TODO ✅ FUNCION QUE VALIDA LOS INPUTS HAYA O NO DATOS
@@ -369,7 +387,7 @@
         $("#selectDniReserve").html("");
         document.getElementById("reservePartnerID").value = "";
         const partners = data;
-        if(partners.data !== null){
+        if (partners.data !== null) {
             partners.forEach(partner => {
                 const option = document.createElement("option");
                 option.value = partner.partnerID;
@@ -394,6 +412,7 @@
             document.getElementById('errorReserveDni').innerHTML = "[ Error ] : Don't exists partners register in the BD, please add new partner, for reserve BOOKS.";
         }
     }
+
 // TODO LOAD TITLE
     async function loadTitle(data) {
         $("#reserveSelectTitle").html("");
@@ -407,7 +426,7 @@
                 document.getElementById("reserveSelectTitle").add(option);
             }
         })
-        if (books.length <= 1) { 
+        if (books.length <= 1) {
             const sel = document.getElementById("reserveSelectTitle");
             const opt = sel[0];
             $("#reserveSelectTitle").val(opt.value);
@@ -424,7 +443,7 @@
         const bookTitle = titleBook;
         const partnerID = idPartner;
         const partnerDni = dniPartner;
-        if (bookID !== null && bookTitle !== null) { 
+        if (bookID !== null && bookTitle !== null) {
             const data = [{
                 bookID,
                 title: bookTitle,
@@ -469,77 +488,93 @@
         const bookTitle = titleBook;
         const partnerID = idPartner;
         const partnerDni = dniPartner;
-        window.location.href = ""+`#reserve_book?${bookID}`;
         await extractDataFormReserve(bookID, bookTitle, partnerID, partnerDni);
         document.getElementById("reserveDate").value = moment(new Date()).format("YYYY-MM-DD");
     }
 
 // DELIVER
 // TODO ✅ ENTEGA DEL LIBRO
-async function deliverBook(bookID, bookingID) {
-    try {
-        const idBook = bookID;
-        const idBooking = bookingID;
-        //_PARTNERID = partnerID;
-        const urlDeliver = `/api/books/deliver/${idBook}`;
-        let dateActual = new Date();
-        dateActual = moment(dateActual).format("YYYY-MM-DD HH:mm");
-        Swal.fire({
-            title: 'Deliver',
-            text: `Do you want to add a review, for the book : ${idBook} ?`,
-            icon: 'warning',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#474E68',
-            confirmButtonText: 'Yes',
-            denyButtonText: `Don't review`,
-            cancelButtonText: 'Cancel'
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                $("#deliverPartnerID").val(_PARTNERID);
-                $("#bookID").val(idBook);
-                $("#bookingID").val(idBooking);
-                $('#modalStar').modal('show');
-            } else if (result.isDenied) {
-                const data = {
-                    bookingID: idBooking,
-                    score: 0,
-                    review: null,
-                    deliver_date_review: dateActual,
-                    reviewOn: 0
+    async function deliverBook(bookID, bookingID) {
+        try {
+            const idBook = bookID;
+            const idBooking = bookingID;
+            //_PARTNERID = partnerID;
+            const urlDeliver = `/api/books/deliver/${idBook}`;
+            let dateActual = new Date();
+            dateActual = moment(dateActual).format("YYYY-MM-DD HH:mm");
+            Swal.fire({
+                title: 'Deliver',
+                text: `Do you want to add a review, for the book : ${idBook} ?`,
+                icon: 'warning',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#474E68',
+                confirmButtonText: 'Yes',
+                denyButtonText: `Don't review`,
+                cancelButtonText: 'Cancel'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    $("#deliverPartnerID").val(_PARTNERID);
+                    $("#bookID").val(idBook);
+                    $("#bookingID").val(idBooking);
+                    $('#modalStar').modal('show');
+                } else if (result.isDenied) {
+                    const data = {
+                        bookingID: idBooking,
+                        score: 0,
+                        review: null,
+                        deliver_date_review: dateActual,
+                        reviewOn: 0
+                    }
+                    fetch(urlDeliver, {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-Type": "application/json; charset=UTF-8"
+                        }
+                    })
+                        .then(response => response.json())
+                        .then((data) => {
+                            try {
+                                inforActive(_PARTNERID);
+                            } catch (error) { }
+                            try {
+                                if (_STATEBOOKINGS) {
+                                    reloadDataBookings();
+                                }
+                            } catch (error) { }
+                        });
                 }
-                fetch(urlDeliver, {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json; charset=UTF-8"
-                    }
-                })
-                try {
-                    inforActive(_PARTNERID);
-                } catch (error) { }
-                try {
-                    if (_STATEBOOKINGS) {
-                        await reloadDataBookings();
-                        // location.reload(true);
-                    }
-                } catch (error) { }
+            })
+        } catch (error) {
+            console.error(":error ", error)
+        }
+    }
+
+    function generarNuevoColor() {
+        var simbolos, color;
+        simbolos = "0123456789ABCDEF";
+        color = "#";
+
+        for (var i = 0; i < 6; i++) {
+            color = color + simbolos[Math.floor(Math.random() * 16)];
+        }
+
+        return color;
+    }
+
+    function removeParam(parameter, url) {
+        var urlparts = url.split('?');
+        if (urlparts.length >= 2) {
+            var prefix = encodeURIComponent(parameter) + '=';
+            var pars = urlparts[1].split(/[&;]/g);
+            for (var i = pars.length; i-- > 0;) {
+                if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                    pars.splice(i, 1);
+                }
             }
-        })
-    } catch (error) {
-        console.error(":error ", error)
+            return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+        }
+        return url;
     }
-}
-
-function generarNuevoColor(){
-    var simbolos, color;
-    simbolos = "0123456789ABCDEF";
-    color = "#";
-
-    for(var i = 0; i < 6; i++){
-        color = color + simbolos[Math.floor(Math.random() * 16)];
-    }
-
-    return color;
-}

@@ -13,6 +13,7 @@ const {
     uploadFile,
     putBook,
     infoReviews,
+    getISBN,
     validate
 } = require('../../controller/apiController/Books.controller.api');
 
@@ -45,5 +46,7 @@ routerBooks.post("/add", validate, addBook);
 routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
 
     routerBooks.get("/info/reviews/:idBook", infoReviews);
+
+    routerBooks.get("/isbn/:isbn", getISBN);
 
 module.exports = routerBooks;

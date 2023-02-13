@@ -77,13 +77,7 @@ const contador              = document.getElementById( 'contador'           );
                 title: title || "Success....!",
                 showConfirmButton: true,
                 text: menssage,
-                timer: 4000,
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
+                timer: 1500,
             }).then(async () => { 
                 try {
                     await inforActive(valuePartnerID);
@@ -102,7 +96,7 @@ const contador              = document.getElementById( 'contador'           );
         } else if (success === false) {
             Swal.fire({
                 icon: 'error',
-                timer: 2000,
+                timer: 1500,
                 title: title  || "Oops....!",
                 text: menssage,
             }).then(async () => { 

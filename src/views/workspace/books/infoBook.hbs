@@ -267,7 +267,27 @@
     const btnUpload = document.getElementById('btnUpload');
     const coverImage = document.getElementById('coverImage');
     const bookCoverID = document.getElementById('bookCoverID');
-
+    
+    // TODO OPCION PARA EDITAR AUTOMATICAMENTE
+    /*
+    const valores = window.location.search.replace('?','')
+    const urlParams = new URLSearchParams(valores);
+    let _GLOBALEDITBOOK = urlParams.get('globaledit');
+    */
+    /*
+    if(_GLOBALEDITBOOK){
+        document.addEventListener("DOMContentLoaded", async () => {
+            await globalEditBook('2171');
+            $('#modalEditBook').modal('show');
+        });
+    }
+    */
+    /*
+    const url = window.location.href;
+    const newUrl = removeParam('globaledit', url);
+    window.location.replace(newUrl);
+    */
+    // TODO ------------------------------------
 
 //TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA BOOK
     try {
@@ -316,6 +336,7 @@
         const bookID = idBook;
         await globalEditBook(bookID);
     }
+    
 
 // TODO ✅ RESERVAR LIBRO
     async function reserveBook(bookID, bookTitle){

@@ -142,7 +142,6 @@
                 } catch (error) { }
                 try {
                     if(_STATEBOOK) {
-                        window.location.href = "" + `#reserved_bookID_${bookID}`;
                         await ClosePopup("#modalReserveBook"); 
                         await reloadDataBooks();
                     }

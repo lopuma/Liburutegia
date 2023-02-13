@@ -378,11 +378,23 @@
 }
 
 div[data-error] {
-    /* background-color: chartreuse; */
     height: auto;
     min-height: 10em;
     margin: 0;
 }
+
+.Links {
+    color: #007185;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.Links:hover {
+    cursor: pointer;
+    color: #C7511F;
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 950px) {
 
     .New-form{

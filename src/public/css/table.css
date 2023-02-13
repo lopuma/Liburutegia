@@ -292,11 +292,26 @@ div.dt-button-collection .active:hover {
 .Links {
     color: #007185;
     font-size: 1em;
+    border-radius:3px;
+    padding:0 2px;
 }
 
 .Links:hover {
     cursor: pointer;
     color: #C7511F;
+    text-decoration: underline;
+}
+
+.Linked {
+    color: #001253;
+    font-size: 1em;
+    border-radius:3px;
+    padding:0 2px;
+}
+
+.Linked:hover {
+    cursor: pointer;
+    color: #820000;
     text-decoration: underline;
 }
 

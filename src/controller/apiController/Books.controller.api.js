@@ -17,33 +17,44 @@ const bookController = {
             .trim()
             .not()
             .isEmpty()
-            .withMessage("This field `Author` is required")
+            .withMessage("This field `Author` is required"),
+        body("isbn")
+            .trim()
+            .not()
+            .isEmpty()
+            .withMessage("This field `ISBN` is required")
     ],
     // TODO ✅ NO EXISTE ID BOOKS
     noExistBook: async (req, res, next) => {
         try {
             const bookID = req.params.idBook;
-            const sqlSelect = "SELECT * FROM books WHERE bookID = ?";
-            connection.query(sqlSelect, [bookID], (err, results) => {
-                if (err) {
-                    console.error("[ DB ]", err.sqlMessage);
-                    return res.status(400).send({
-                        success: false,
-                        messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
-                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
-                    });
-                }
-                if (results.length === 0) {
-                    return res.status(403).send({
-                        success: false,
-                        exists: false,
-                        swalTitle: "[ Error  not found ]",
-                        errorMessage: `[ ERROR ], The BOOK with ID : ${bookID} does not exist`
-                    });
-                } else {
-                    next();
-                }
+            if(bookID !== 'isbn') {
+                const sqlSelect = "SELECT * FROM books WHERE bookID = ?";
+                connection.query(sqlSelect, [bookID], (err, results) => {
+                    if (err) {
+                        console.error("[ DB ]", err.sqlMessage);
+                        return res.status(400).send({
+                            success: false,
+                            messageErrBD: err,
+                            swalTitle: "[ Error BD ]",
+                            errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                        });
+                    }
+                    if (results.length === 0) {
+                        return res.status(403).send({
+                            success: false,
+                            exists: false,
+                            swalTitle: "[ Error  not found ]",
+                            errorMessage: `[ ERROR ], The BOOK with ID : ${bookID} does not exist`
+                        });
+                    } else {
+                        next();
+                    }
+                });
+            return;
+            } 
+            res.status(200).send({
+                success: false
             });
         } catch (error) {
             console.error(error);
@@ -216,8 +227,8 @@ const bookController = {
             if (!errors.isEmpty()) {
                 return res.status(300).send({
                     success: false,
-                    swalTitle: "[ Error validation ]",
-                    errorMessage: errors.array()
+                    swalTitle: "[ Error validations ]",
+                    msgValidation: errors.array()
                 });
             }
             const {
@@ -278,7 +289,7 @@ const bookController = {
                 return res.status(300).send({
                     success: false,
                     swalTitle: "[ Error Validation ]",
-                    errorMessage: errors.array()
+                    msgValidation: errors.array()
                 });
             }
             const bookID = req.params.idBook;
@@ -408,6 +419,38 @@ const bookController = {
                     swalTitle: "[ Success.... ]",
                     messageSuccess: "Success",
                     data
+                });
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
+    getISBN: (req, res) => {
+        try {
+            const isbn = req.params.isbn;
+            const sqlExistsISBN = "SELECT * FROM books WHERE isbn=?";
+            connection.query(sqlExistsISBN, isbn, (err, results) => {   
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
+                }
+                if(results.length === 1){
+                    const data = results;
+                    return res.status(200).send({
+                        success: true,
+                        swalTitle: "[ Exists.... ]",
+                        successMessage: "The ISBN already exists",
+                        data,
+                    });
+                }
+                res.status(200).send({
+                    success: false
                 });
             });
         } catch (error) {

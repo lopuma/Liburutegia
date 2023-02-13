@@ -2,56 +2,56 @@
 <link rel="stylesheet" href="/style/newForm.css">
 
 <!--TODO Modal para CRUD-->
-<div class="modal fade" role="dialog" aria-labelledby="modalEditBookLabel" aria-hidden="true" style="padding-right:0" id="modalEditBook" name="modalEditBook">
-  
-  <div class="modal-dialog" role="document">
-    
-    <div class="modal-content">
-      
-      <div class="Modal-header" style="background-color: var(--Background-Color-forms-book); color: var(--Color-forms-book)">
-        <h1 class="Modal-title" id="modalEditBookLabel">EDIT BOOK</h1>
-      </div>
+<div class="modal fade" role="dialog" aria-labelledby="modalEditBookLabel" aria-hidden="true" style="padding-right:0"
+    id="modalEditBook" name="modalEditBook">
 
-      <div class="New">
-        <form class="New-form" id="formEditBook" name="formEditBook">
-            {{!-- BUTTO DISABLE ENTER --}}
-                <button type="submit" disabled hidden aria-hidden="true"></button>
-            {{!-- ------------------- --}}
-          {{> formBook}}
-          
-          <div class="Input-button">
-              <button type="button" class="Button-cancel"
-                  data-dismiss="modal" tabindex="10" id="btnCancelEditBook">Cancel</button>
-              <input class="Button-accept" id="btnUpdateBook" type="submit"
-                  value='UPDATE' tabindex="11"></input>
-          </div>
-        
-        </form>
-      </div>
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+
+            <div class="Modal-header"
+                style="background-color: var(--Background-Color-forms-book); color: var(--Color-forms-book)">
+                <h1 class="Modal-title" id="modalEditBookLabel">EDIT BOOK</h1>
+            </div>
+
+            <div class="New">
+                <form class="New-form" id="formEditBook" name="formEditBook">
+                    <button type="submit" disabled hidden aria-hidden="true"></button>
+                    {{> formBook}}
+
+                    <div class="Input-button">
+                        <button type="button" class="Button-cancel" data-dismiss="modal" tabindex="10"
+                            id="btnCancelEditBook" onclick="closeModalEditBook()">Cancel</button>
+                        <input class="Button-accept" id="btnUpdateBook" type="submit" value='UPDATE'
+                            tabindex="11"></input>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script type="text/javascript" defer>
-    const formEditBook = document.getElementById  ( "formEditBook"        );
-    const inputsEditBook      = document.querySelectorAll( "#formEditBook input" );
+    const formEditBook = document.getElementById("formEditBook");
+    const inputsEditBook = document.querySelectorAll("#formEditBook input");
     field.title = true;
     field.author = true;
 
-//TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA PARTNER
+    //TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA PARTNER
     try {
         if ($('#modalEditBook').val() === '') { // 
             _STATEEDITBOOK = true;
         }
     } catch (error) { }
-// TODO ✅ EVENTO AL ENVIAR ACTUALIZAR
+    // TODO ✅ EVENTO AL ENVIAR ACTUALIZAR
     try {
         document.addEventListener("DOMContentLoaded", function () {
             formEditBook.addEventListener("submit", correctFormsBook);
         });
     } catch (error) { }
 
-//TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
+    //TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
     try {
         inputsEditBook.forEach((input, i) => {
             input.addEventListener("blur", validateFormBook);
@@ -63,5 +63,10 @@
             });
         });
     } catch (error) { }
+
+    function closeModalEditBook() {
+        $('#modalEditBook').modal('hide');
+        document.getElementById('formEditBook').reset();
+    }
 
 </script>
