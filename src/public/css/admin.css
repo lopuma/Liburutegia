@@ -1,7 +1,7 @@
 @charset "UTF-8";
 .Cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(18.75em, 25em));
     gap: 2em;
     padding: 1em;
     margin: 5em 2em;
