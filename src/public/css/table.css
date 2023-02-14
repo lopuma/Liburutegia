@@ -405,6 +405,19 @@ div.dt-button-collection .active:hover {
     .grid-x>.small-6 {
         width: 100%;
     }
+
+    .badge {
+        margin: .5em;
+    }
+
+    .dtr-data {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn {
+        margin: .5em;
+    }
 }
 
 table.dataTable.stripe>tbody>tr.odd.selected>*,

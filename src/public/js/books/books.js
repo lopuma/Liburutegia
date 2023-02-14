@@ -33,7 +33,7 @@ let opcion = "";
             autoWidth: false,
             columns: [
                 {
-                    data: null, "searchable": true,
+                    data: null,
                     "targets": data.bookID,
                     render: (data) => {
                         return (fillZeros(data.bookID));
@@ -195,6 +195,7 @@ let opcion = "";
                 },
             ],
         });
+        $('#tableBook_filter input').focus();
     };
 
 //TODO ✅ FETCH RELOAD DATA BOOKS

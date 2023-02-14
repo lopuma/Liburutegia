@@ -69,7 +69,7 @@ let opcion = "";
     })();
 
 //TODO ✅ LOAD PARTNER
-async function loadData(data) {
+    async function loadData(data) {
         dataTablePartners = $("#tablePartner").DataTable({
             data: data,
             deferRender: true,
@@ -228,6 +228,7 @@ async function loadData(data) {
                 },
             ],
         });
+        $('#tablePartner_filter input').focus();
     }
 
 //TODO ✅ INFO PARTNER

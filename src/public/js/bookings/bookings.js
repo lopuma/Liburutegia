@@ -276,6 +276,7 @@ const spinner = document.getElementById("spinner");
                 },
             ],
         });
+        $('#tableBookings_filter input').focus();
     };
 
 //TODO ✅ FETCH RELOAD DATA BOOKINGS

@@ -70,28 +70,26 @@ var _PARTNERID = "";
 
 
 
-// INFORMATIONS
-    //TODO ✅ INFORMATION
+//TODO ✅ INFORMATION
     async function infor(partnerID) {
         _PARTNERID = partnerID;
         idPartner = partnerID;
         indice = 1;
     }
 
-// INFO ACTIVE
 // TODO ✅ RESERVAS ACTIVAS
     async function reloadDataActive(idPartner) {
-    const urlActive = `/api/partners/info/${idPartner}`;
-    const data = await fetch(urlActive)
-        .then((response) => response.json())
-        .then((datos) => datos);
-    if (indice === 2) {
-        await obtenerPartner(data);
-        spinnerActive.style.display = "none";
-    } else {
-        await obtenerHistory(data);
-        spinnerHistory.style.display = "none";
-    }
+        const urlActive = `/api/partners/info/${idPartner}`;
+        const data = await fetch(urlActive)
+            .then((response) => response.json())
+            .then((datos) => datos);
+        if (indice === 2) {
+            await obtenerPartner(data);
+            spinnerActive.style.display = "none";
+        } else {
+            await obtenerHistory(data);
+            spinnerHistory.style.display = "none";
+        }
     }
     async function inforActive(partnerID) {
         _PARTNERID = partnerID;
@@ -276,6 +274,7 @@ var _PARTNERID = "";
                 },
             ],
         });
+        $('#tablePartnerActive_filter input').focus();
     }
 
 // INFO HISTORY
@@ -474,6 +473,7 @@ var _PARTNERID = "";
                 },
             ],
         });
+        $('#tablePartnerHistory_filter input').focus();
     }
 
 // ACTIVAR BUTTON / SLIDER
