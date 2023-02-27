@@ -43,13 +43,29 @@ mysql> FLUSH PRIVILEGES;
 mysql> exit;
 ```
 
-  > Asignamos password a la BD
+  > Asignamos password al usuario ROOT, para conexiones locales.
   
  ```
 mysql -u root
 mysql> USE mysql;
-mysql>  ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
+mysql>  ALTER USER 'root'@'%' IDENTIFIED BY 'password';
 mysql> FLUSH PRIVILEGES;
+mysql> exit;
+```
+
+  > Creamos un usuario si asi fuera necesario para conexiones remotas o APP.
+  
+ ```
+mysql> CREATE USER 'lopuma'@'%' IDENTIFIED BY 'password';
+mysql> GRANT ALL PRIVILEGES on *.* to 'lopuma'@'%';
+mysql> 
+mysql> FLUSH PRIVILEGES;
+mysql> SELECT host FROM mysql.user WHERE user="lopuma";
++------+
+| host |
++------+
+| %    |
++------+
 mysql> exit;
 ```
 
