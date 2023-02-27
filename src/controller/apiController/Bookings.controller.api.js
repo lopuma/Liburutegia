@@ -2,10 +2,10 @@ const { body, validationResult } = require("express-validator");
 const connection = require("../../../database/db-connect");
 const flash = require("connect-flash");
 const moment = require('moment');
+let _CACHEBOOKING = false;
+const redisClient = require("../../../redis/redis-connect");
 
 const bookingController = {
-
-    //TODO ✅ EXISTS BOOKINGS EN VOTES, ESTO CUANDO LA RESERVA SE HA ENTREGADO
     existBooking: async (req, res, next) => {
         try {
             const bookingID = req.params.idBooking || req.body.bookingID;
@@ -66,11 +66,33 @@ const bookingController = {
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ SHOW ALL BOOKINGS
+    redisBookings : async (req, res , next) => {
+        const _cacheBookings = _CACHEBOOKING;
+        if(_cacheBookings){
+            return await redisClient.get('bookings', async (err, reply) => {
+                if(reply) {
+                    const data = await JSON.parse(reply);
+                    return res.status(200).send(data);
+                } 
+                next();
+            });
+        }
+        next();
+    },
+    redisBooking: async (req, res, next) => {
+        const bookingID = req.params.idBooking || req.body.idBooking;
+        await redisClient.get(`booking${bookingID}`, (err, reply) => {
+            if(reply) {
+                const data = JSON.parse(reply);
+                return res.status(200).send(data);
+            }
+            next();
+        });
+    },
     getBookings: async (req, res) => {
         try {
             const sqlSelect = `select bk.bookingID, bk.bookID, b.title as title, b.isbn, bk.partnerDni, CONCAT(p.lastname, ", ", p.name) as fullname, p.partnerID, bk.reserveDate, bk.delivered, bk.cancelReserved, bk.cancelReason, v.score, v.review, v.deliver_date_review, v.reviewOn from bookings bk INNER JOIN partners p ON p.dni=bk.partnerDNI INNER JOIN books b ON b.bookID=bk.bookID LEFT JOIN votes v ON v.bookingID=bk.bookingID`;
-            connection.query(sqlSelect, (err, results) => {
+            connection.query(sqlSelect, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -90,19 +112,28 @@ const bookingController = {
                     });
                 }
                 let data = results;
-                res.status(200).send(data);
+                await redisClient.set("bookings", JSON.stringify(data), (err, reply) => {
+                    if (err) {
+                        _CACHEBOOKING = false;
+                        return console.error(err)
+                    }
+                    if(reply) 
+                    {   
+                        _CACHEBOOKING = true;
+                        res.status(200).send(data);
+                    }
+                });
             });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ SHOW ONLY BOOKINGS FOR ID
     getBooking: async (req, res) => {
         try {
             const bookingID = req.params.idBooking;
             const sql = "SELECT * FROM bookings WHERE bookingID=?"
-            connection.query(sql, [bookingID], function (err, results) {
+            connection.query(sql, [bookingID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -112,14 +143,18 @@ const bookingController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                return res.status(200).send(results[0]);
+                const data = results[0];
+                await redisClient.set(`booking${bookingID}`, JSON.stringify(data), 'NX', 'EX', 3600, (err, reply) => {
+                    if(reply) {
+                        return res.status(200).send(data);
+                    }
+                });
             });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ ADD BOOKINGS
     addBooking: async (req, res) => {
         try {
             const bookID = req.params.idBook;
@@ -168,7 +203,7 @@ const bookingController = {
                         reserveDate,
                     };
                     const sqlReserveBook = `UPDATE books SET reserved=1 WHERE bookID='${bookID}'; INSERT INTO bookings SET ?`;
-                    connection.query(sqlReserveBook, dataReserve, (err, results) => {
+                    connection.query(sqlReserveBook, dataReserve, async (err, results) => {
                         try {
                             if (err) {
                                 console.error("[ DB ]", err.sqlMessage);
@@ -179,6 +214,10 @@ const bookingController = {
                                     errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                                 });
                             }
+                            _CACHEBOOKING = false;
+                            await redisClient.del(`bookInfo${bookID}`);
+                            await redisClient.del('books');
+                            await redisClient.del('bookings');
                             res.status(201).send({
                                 success: true,
                                 swalTitle: "Reserve Book added...",
@@ -195,7 +234,6 @@ const bookingController = {
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ DELETE BOOKINGS
     cancelBooking: async (req, res) => {
         try {
             const bookID = req.params.idBook || req.body.bookID;
@@ -217,6 +255,7 @@ const bookingController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                await redisClient.del('bookings');
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Cancel booking....! ]",
@@ -228,7 +267,6 @@ const bookingController = {
             res.status(500).redirect("/");
         }
     },
-
 };
 
 module.exports = bookingController;

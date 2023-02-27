@@ -1,4 +1,3 @@
-//TODO ✅ CEROS POR DELANTE DEL ID 
     function fillZeros(id) {
         let num = id.toString();
         let large = 5;
@@ -7,13 +6,9 @@
         }
         return num
     }
-
-//TODO ✅ REMOVE CEROS POR DELANTE
     function removeZeros(id) {
         return id.toString().replace(/^0+/, "");
     }
-
-//TODO ✅ FUNCION PARA CAMBIAR LAS TILDES
     const accentNeutralise = function (data) {
         return !data ?
             '' :
@@ -28,20 +23,14 @@
                     .replace(/ç/g, 'c') :
                 data;
     };
-
-// TODO ✅ CAPITALIZAR PRIMERA LETRA 
     function capitalizeFirstLetter(string) {
         return [...string].slice(0, 1).map(c => c.toUpperCase()).concat([...string].slice(1)).join("")
     }
-
-// TODO ✅ CAPITALIZAR PRIMERA LETRA DE TODAS LA PAALABRAS
     function capitalizeWords(str) {
         return str.replace(/(^|\s)[a-zñ]/g, function (letter) {
             return letter.toUpperCase();
         });
     }
-
-// TODO ✅ FUNCT DELETE BOOK
     async function apiBookDelete(idBook) {
         const urlDelete = `/api/books/delete/${idBook}`;
         await fetch(urlDelete)
@@ -50,7 +39,6 @@
                 await responseDeleteBook(data);
             });
     }
-
     const globalDeleteBook = async (idBook) => {
         Swal.fire({
             title: "Are you sure?",
@@ -67,8 +55,6 @@
             }
         })
     }
-
-// TODO ✅ RESPUESTA AL ELIMINAR BOOK
     async function responseDeleteBook(data) {
         const message = data.messageSuccess || data.errorMessage;
         const title = data.swalTitle;
@@ -103,8 +89,6 @@
             }, 1000);
         }
     }
-
-// TODO ✅ ACTIVA EL FOCU DEL ELEMENTO QUE TIENE ERROR
     function focusElementBooks() {
         if (field.title === false) {
             document.getElementById("inputTitle").focus();
@@ -121,8 +105,6 @@
         }
         Swal.fire('There are items required your attention.');
     }
-
-// TODO ✅ CORRECT FORMS
     async function correctFormsBook(e) {
         e.preventDefault();
         if (field.purchaseDate &&
@@ -142,8 +124,6 @@
             focusElementBooks();
         }
     }
-
-// TODO OBTENER CATEGORIAS 
     async function obtenerCategories(_category) {
         const bookCategory = _category;
         const urlCategory = '/api/books/'
@@ -186,8 +166,6 @@
             } catch (error) { }
         } catch (error) { }
     }
-
-// TODO ✅ FUNCT EDIT BOOK
     async function globalEditBook(idBook) {
         const bookID = idBook;
         const urlDataEdit = `/api/books/${bookID}`;
@@ -210,8 +188,6 @@
                 inputObservation.value = datos.observation;
             });
     }
-
-//TODO ✅ VALIDAR FIELDS
     async function validateField(
         expresion,
         input,
@@ -253,8 +229,6 @@
         } catch (error) { };
         return true;
     }
-
-//TODO ✅ VALIDACIONES EXPRESSIONES
     async function fieldEmpty(
         expression, // EXPRESION DEL INPUT
         input, // EL IMPUT
@@ -281,8 +255,6 @@
         }
         return true;
     }
-
-//TODO ✅ CIERRA LOS MENSAJE SI TODO ES OK
     function closeReviewError() {
         try {
             if (activesInfos["title"] === false && activesInfos["author"] === false) {
@@ -310,8 +282,6 @@
             }
         } catch (error) { }
     }
-
-//TODO ✅ ABRE LOS MENSAJE SI TODO ES OK
     function infoReviewError() {
         try {
             if (activesInfos["title"] === true && activesInfos["author"] === true || activesInfos["title"] === true && activesInfos["author"] === false) {
@@ -358,8 +328,6 @@
             }
         } catch (error) { }
     }
-
-//TODO ✅ FUNCION QUE VALIDA LOS INPUTS HAYA O NO DATOS
     function inputsCorrectValidate(errorDivValidation, errorInputText, input, info, closeInfo, inputField) {
         document.getElementById(errorDivValidation).classList.remove("isActive");
         document.getElementById(errorInputText).innerHTML = "";
@@ -371,8 +339,6 @@
         closeReviewError();
         return true;
     }
-
-// TODO CIERRE DE MODAL
     async function ClosePopup(modal) {
         $(modal).modal('hide');
         $(modal).hide();
@@ -380,8 +346,6 @@
         document.querySelector(".Body").classList.remove('modal-open');
         document.querySelector(".Body").setAttribute("style", "");
     }
-
-// TODO LOAD DNI
     async function loadDni(data) {
         $("#selectDniReserve").html("");
         document.getElementById("reservePartnerID").value = "";
@@ -411,8 +375,6 @@
             document.getElementById('errorReserveDni').innerHTML = "[ Error ] : Don't exists partners register in the BD, please add new partner, for reserve BOOKS.";
         }
     }
-
-// TODO LOAD TITLE
     async function loadTitle(data) {
         $("#reserveSelectTitle").html("");
         document.getElementById("reserveBookID").value = "";
@@ -435,8 +397,6 @@
             placeholder: "Select BOOK Title",
         });
     }
-
-// TODO LOAD DNI PÀRTNER
     const extractDataFormReserve = async (idBook, titleBook, idPartner, dniPartner) => {
         const bookID = idBook;
         const bookTitle = titleBook;
@@ -480,8 +440,6 @@
             await loadDni(data)
         }
     }
-
-// TODO RESERVE BOOK 
     async function globalReserveBook(idBook, titleBook, idPartner, dniPartner) {
         const bookID = idBook;
         const bookTitle = titleBook;
@@ -490,9 +448,6 @@
         await extractDataFormReserve(bookID, bookTitle, partnerID, partnerDni);
         document.getElementById("reserveDate").value = moment(new Date()).format("YYYY-MM-DD");
     }
-
-// DELIVER
-// TODO ✅ ENTEGA DEL LIBRO
     async function deliverBook(bookID, bookingID) {
         try {
             const idBook = bookID;
@@ -550,7 +505,6 @@
             console.error(":error ", error)
         }
     }
-
     function generarNuevoColor() {
         var simbolos, color;
         simbolos = "0123456789ABCDEF";
@@ -562,7 +516,6 @@
 
         return color;
     }
-
     function removeParam(parameter, url) {
         var urlparts = url.split('?');
         if (urlparts.length >= 2) {

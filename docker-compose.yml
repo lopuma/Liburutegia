@@ -12,7 +12,8 @@ services:
         ports: 
             - ${NGINX_PORT}:${NGINX_PORT}
         depends_on:
-            - application
+            - app1
+            - app2
         volumes:
             - ./containers/nginx-liburutegia/templates:/etc/nginx/templates
         environment:
@@ -22,11 +23,33 @@ services:
             - NGINX_APP=${NGINX_APP}
         networks:
             - ntk-app
-    application:
-        container_name: application
+    app1:
+        container_name: app1
         build: .
         ports:
-            - ${PORT}:${PORT}
+            - ${APP1_PORT}:${PORT}
+        depends_on:
+            - "mysql"
+        environment:
+            - NODE_ENV=${NODE_ENV}
+            - PORT=${PORT}
+            - REDIS_PORT=${REDIS_PORT}
+            - REDIS_HOST=${REDIS_HOST}
+            - MYSQL_HOST=${MYSQL_HOST}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+        volumes:
+            - ./src:/app/src
+            - ./src/public/img/covers:/app/src/public/img/covers
+        networks:
+            - ntk-app
+    app2:
+        container_name: app2
+        build: .
+        ports:
+            - ${APP2_PORT}:${PORT}
         depends_on:
             - "mysql"
         environment:

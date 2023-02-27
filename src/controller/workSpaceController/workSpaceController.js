@@ -1,8 +1,49 @@
 const connection = require("../../../database/db-connect");
-
+const redisClient = require("../../../redis/redis-connect");
 const workSpaceController = {
-
-    // TODO ✅ REDIRIGE A LA VISTA DE BOOKS
+    redisUsers : async (req, res, next) => {
+        await redisClient.get('users', (err, reply) => {
+            if(reply) {
+                const userName = req.session.username;
+                const loggedIn = req.session.loggedin;
+                const rolAdmin = req.session.roladmin;
+                const users = JSON.parse(reply);
+                res.status(200).render("workspace/dashboard-admin", {
+                    loggedIn,
+                    userName,
+                    users,
+                    rolAdmin
+                });
+            } 
+            next();
+        });
+    },
+    redisUser: async (req, res, next) => {
+        const userID = req.params.idUser || req.body.idUser;
+        await redisClient.get('users', (err, reply) => {
+          if (reply) {
+            const data = JSON.parse(reply);
+            let foundUser = false;
+            data.forEach((element) => {
+              if (element.id === parseInt(userID)) {
+                foundUser = true;
+                const data = element;
+                res.status(200).send({
+                  success: true,
+                  swalTitle: "Succes...",
+                  messageSuccess: "User exists.",
+                  data
+                });
+              }
+            });
+            if (!foundUser) {
+              next();
+            }
+          } else {
+            next();
+          }
+        });
+      },
     getBooks: async (req, res) => {
         try {
             const userName = req.session.username;
@@ -18,8 +59,6 @@ const workSpaceController = {
             res.status(500).redirect("/");
         }
     },
-
-    // TODO ✅ REDIRIGE A LA VISTA DE BOOKINGS
     getBookings: async (req, res) => {
         try {
             const userName = req.session.username;
@@ -35,8 +74,6 @@ const workSpaceController = {
             res.status(500).redirect("/");
         }
     },
-
-    // TODO ✅ REDIRIGE A LA VISTA DE PARTNERS
     getPartners: async (req, res) => {
         try {
             const userName = req.session.username;
@@ -52,8 +89,6 @@ const workSpaceController = {
             res.status(500).redirect("/");
         }
     },
-
-    // TODO ✅ REDIRIGE A LA VISTA DE ADMIN
     getAdmin: async (req, res) => {
         try {
             const userName = req.session.username;
@@ -77,14 +112,17 @@ const workSpaceController = {
                     if (rolAdmin === false) {
                         return res.status(400).redirect("/");
                     }
-                    res
-                        .status(200)
-                        .render("workspace/dashboard-admin", {
-                            loggedIn,
-                            userName,
-                            users,
-                            rolAdmin
-                        });
+                    await redisClient.set('users', JSON.stringify(users), 'NX', 'EX', 14400, (err, reply) => {
+                        if(err) return console.error(err);
+                        if(reply) {
+                            res.status(200).render("workspace/dashboard-admin", {
+                                loggedIn,
+                                userName,
+                                users,
+                                rolAdmin
+                            });
+                        }
+                    });
                 } catch (error) {
                     console.error(error);
                     res.status(500).redirect("/");

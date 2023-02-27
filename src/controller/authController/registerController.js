@@ -1,11 +1,7 @@
 const connection = require("../../../database/db-connect");
-
 const bscryptjs = require("bcryptjs");
-
-const flash = require("connect-flash");
-
+const redisClient = require("../../../redis/redis-connect");
 const routerRegister = {
-    // TODO ✅ REDIRIGE A LA VISTA DE REGISTRO
     getRegister: async function (req, res) {
         try {
             const userName = req.session.username;
@@ -25,8 +21,6 @@ const routerRegister = {
             res.status(500).redirect("/");
         }
     },
-
-    // TODO ✅ AÑADE NUEVO USUARIO DE LIBURUTEGIA
     postRegister: async function (req, res) {
         try {
             const { email, username, fullname, rol, pass } = req.body;
@@ -56,7 +50,7 @@ const routerRegister = {
                             pass: passwordHash,
                             _ss
                         },
-                        err => {
+                        async (err) => {
                             if (err) {
                                 console.error("[ DB ]", err.sqlMessage);
                                 return res
@@ -67,6 +61,7 @@ const routerRegister = {
                                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                                     });
                             }
+                            await redisClient.del('users');
                             res.status(200).send({
                                 exists: false,
                                 inputs: false,

@@ -1,4 +1,5 @@
 const connection = require('../../../database/db-connect');
+const redisClient = require('../../../redis/redis-connect');
 
 const routerUser = {
 
@@ -37,7 +38,6 @@ const routerUser = {
         try {
             const userID = req.params.idUser || req.body.idUser;
             const sqlSelectUser = "SELECT * FROM users WHERE id = ?";
-    
             connection.query(sqlSelectUser, [userID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -67,7 +67,6 @@ const routerUser = {
             const userID = req.params.idUser || req.body.idUser;
             const sqlUpdatedUser = `UPDATE users SET ? WHERE id=${userID}`;
             const { username, email, fullname } = req.body;
-
             connection.query(sqlUpdatedUser, {username, email, fullname}, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -79,6 +78,7 @@ const routerUser = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
+                await redisClient.del('users');
                 res.status(200).send({
                     success: true,
                     swalTitle: "Updated...",
@@ -94,7 +94,7 @@ const routerUser = {
         try {
             const userID = req.params.idUser || req.body.idUser;
             const sqlDeleteUser = `DELETE FROM users WHERE id=${userID}`;
-            connection.query(sqlDeleteUser, (err, results) => {
+            connection.query(sqlDeleteUser, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res
@@ -105,6 +105,7 @@ const routerUser = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
+                await redisClient.del('users');
                 res.status(200).send({
                     success: true,
                     swalTitle: "Deleted...",

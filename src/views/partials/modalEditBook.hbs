@@ -37,21 +37,17 @@
     const inputsEditBook = document.querySelectorAll("#formEditBook input");
     field.title = true;
     field.author = true;
-
-    //TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA PARTNER
+    field.ISBN = true;
     try {
         if ($('#modalEditBook').val() === '') { // 
             _STATEEDITBOOK = true;
         }
     } catch (error) { }
-    // TODO ✅ EVENTO AL ENVIAR ACTUALIZAR
     try {
         document.addEventListener("DOMContentLoaded", function () {
             formEditBook.addEventListener("submit", correctFormsBook);
         });
     } catch (error) { }
-
-    //TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
     try {
         inputsEditBook.forEach((input, i) => {
             input.addEventListener("blur", validateFormBook);
@@ -63,10 +59,8 @@
             });
         });
     } catch (error) { }
-
     function closeModalEditBook() {
         $('#modalEditBook').modal('hide');
         document.getElementById('formEditBook').reset();
     }
-
 </script>

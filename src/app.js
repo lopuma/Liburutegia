@@ -9,18 +9,8 @@ const cors = require('cors');
 const configCors = require('./configCors');
 const config = require('./config');
 let RedisStore = require("connect-redis")(session)
+const redisClient = require('../redis/redis-connect')
 
-// Redis
-const { createClient } = require('redis');
-
-let redisClient = createClient({
-    legacyMode: true,
-    url: `redis://${config.REDIS_USER}:${config.REDIS_PASSWORD}@${config.REDIS_HOST}:${config.REDIS_PORT}`
-});
-redisClient.connect().catch(console.error);
-redisClient.on('connect', function() {
-    console.log(`The Redis is connected on the PORT: ${config.REDIS_PORT}`);
-});
 // APP EXPRESS
 const app = express();
 app.set('trust proxy', 1);
@@ -115,5 +105,5 @@ app.use(function(req, res){
 
 // 13 - Starting the server
 app.listen(PORT, () => {
-	console.info(`The Server is connected on the PORT: ${PORT}`, `http://127.0.0.1:${PORT}`);
+	console.info(`The Server is connected on the PORT: ${PORT}`, `http://0.0.0.0:${PORT}`);
 });

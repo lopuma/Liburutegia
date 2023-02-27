@@ -5,6 +5,8 @@ const {
 	getBooking,
 	addBooking,
 	cancelBooking,
+    redisBookings,
+    redisBooking
 } = require("../../controller/apiController/Bookings.controller.api");
 
 const {
@@ -17,15 +19,8 @@ const {
 
 
 const routerBookings = require("express").Router();
-
-	routerBookings.get("/", getBookings);
-
-	routerBookings.get("/:idBooking", noExistBooking, getBooking);
-    
-    //routerBookings.post("/add/:idBook", isAuthenticated, noExistBook, addBooking);
-    routerBookings.post("/add/:idBook", noExistBook, addBooking);
-
-    //routerBookings.post("/cancel/:idBooking", isAuthenticated, cancelBooking);
-    routerBookings.post("/cancel/:idBook", existBooking, noExistBook, noExistBooking, cancelBooking);
-
+	routerBookings.get("/", redisBookings, getBookings);
+	routerBookings.get("/:idBooking", redisBooking, noExistBooking, getBooking);
+    routerBookings.post("/add/:idBook", isAuthenticated, noExistBook, addBooking);
+    routerBookings.post("/cancel/:idBooking", isAuthenticated, cancelBooking);
 module.exports = routerBookings;

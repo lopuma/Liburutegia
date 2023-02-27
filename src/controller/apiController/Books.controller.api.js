@@ -1,4 +1,5 @@
 const connection = require("../../../database/db-connect");
+const redisClient = require("../../../redis/redis-connect");
 const sharp = require('sharp');
 const fs = require('fs')
 const path = require('path');
@@ -6,7 +7,6 @@ const moment = require('moment');
 const { body, validationResult } = require("express-validator");
 
 const bookController = {
-
     validate: [
         body("title")
             .trim()
@@ -24,7 +24,6 @@ const bookController = {
             .isEmpty()
             .withMessage("This field `ISBN` is required")
     ],
-    // TODO ✅ NO EXISTE ID BOOKS
     noExistBook: async (req, res, next) => {
         try {
             const bookID = req.params.idBook;
@@ -61,10 +60,91 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ SHOW ALL BOOKS
-    getBooks: async (_req, res) => {
+    redisBooks : async (req, res , next) => {
+        await redisClient.get('books', function(err, reply) {
+            if(reply) {
+                const data = JSON.parse(reply);
+                return res.status(200).send(data);
+            }
+            next();
+        });
+    },
+    redisBook : async (req, res , next) => {
+        const bookID = req.params.idBook || req.body.idBook;
+        await redisClient.get(`book${bookID}`, (err, reply) => {
+            if(reply) {
+                const data = JSON.parse(reply);
+                res.status(200).send(data);
+            }
+            next();
+        });
+    },
+    redisInfoBook : async (req, res, next) => {
         try {
-            connection.query("SELECT * FROM books", (err, results) => {
+            const bookID = req.params.idBook || req.body.idBook;
+            const loggedIn = req.session.loggedin;
+            const rolAdmin = req.session.roladmin;
+            let listInfo = []
+            await redisClient.get(`bookInfo${bookID}`, async (err, reply) => {
+            if(reply) {
+                const bookData = await JSON.parse(reply);
+                bookData.forEach(element => {
+                    element.forEach(list => {
+                        listInfo.push(list)
+                    })
+                });
+                const book = [listInfo[0]];
+                const deliver = [listInfo[1]];
+                return res.status(200).render("workspace/books/infoBook", {
+                    loggedIn,
+                    rolAdmin,
+                    book,
+                    deliver
+                });
+            }
+                next();
+            });
+        } catch (error) {
+            
+        }
+    },
+    redisInfoReview : async (req, res, next) => {
+        console.log(req.params.idBook);
+        const bookID = req.params.idBook || req.body.idBook;
+        await redisClient.get(`review${bookID}`, (err, reply) => {
+            if(reply) {
+                const data =  JSON.parse(reply);
+                return res.status(200).send({
+                    success: true,
+                    swalTitle: "[ Success.... ]",
+                    messageSuccess: "Success",
+                    data
+                });
+            }
+            next();
+        });
+    },
+    redisISBN : async (req, res, next) => {
+        console.log(req.params.idBook);
+    },
+    redisCover : async (req, res, next) => {
+        try {
+            const bookID = req.params.idBook || req.body.idBook;
+            await redisClient.get(`cover${bookID}`, (err, reply) => {
+                if(reply) {
+                    const book = JSON.parse(reply);
+                    res.status(200).send(book);
+                }
+                next();
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
+    getBooks: async (req, res) => {
+        try {
+            connection.query("SELECT * FROM books", async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -84,19 +164,21 @@ const bookController = {
                     });
                 }
                 let data = results;
-                res.status(200).send(data);
+                await redisClient.set("books", JSON.stringify(data), 'NX', 'EX', 7200, (err, reply) => {
+                    if (err) console.error(err)
+                    if(reply) res.status(200).send(data);
+                });
             });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ SHOW ONLY BOOKS FOR ID
     getBook: async (req, res) => {
         try {
-            const bookID = req.params.idBook;
+            const bookID = req.params.idBook || req.body.idBook;
             const sqlSelectBook = `SELECT * FROM books WHERE bookID = ?`;
-            connection.query(sqlSelectBook, [bookID], (err, results) => {
+            connection.query(sqlSelectBook, [bookID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -106,16 +188,19 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                return res.status(200).send(results[0]);
+                const data = results[0];
+                await redisClient.set(`book${bookID}`, JSON.stringify(data), 'NX', 'EX', 3600, (err, reply) => {
+                    if(err) return console.error(err);
+                    if(reply) res.status(200).send(data);
+                });
             });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ ENTREGA BOOK
     deliverBook: async (req, res) => {
-        const bookID = req.params.idBook;
+        const bookID = req.params.idBook || req.body.idBook;
         const { bookingID, score, review, deliver_date_review, reviewOn } = req.body;
         const sql = [`UPDATE books SET 
                     reserved=0 WHERE bookID=${bookID}`,
@@ -123,9 +208,9 @@ const bookController = {
         `INSERT INTO votes (bookID, bookingID, score, review, deliver_date_review, fullnamePartner, reviewOn) VALUES (${bookID}, ${bookingID}, ${score}, "${review}", "${deliver_date_review}", (SELECT CONCAT(p.lastname, ', ', p.name) AS fullName FROM bookings bk RIGHT JOIN partners p ON p.dni=bk.partnerDNI WHERE bookingID=${bookingID}), ${reviewOn})`];
         connection.query(
             sql.join(";"),
-            (err, results) => {
+            async (err, results) => {
                 if (err) {
-                    console.error("[ DB 1 ]", err.sqlMessage);
+                    console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
@@ -133,6 +218,9 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                await redisClient.del(`bookInfo${bookID}`);
+                await redisClient.del('books');
+                await redisClient.del(`review${bookID}`);
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Review added.... ]",
@@ -141,7 +229,6 @@ const bookController = {
             }
         );
     },
-    // TODO ✅ SI EXISTE LA IMAGEN
     existsCover: async (req, res, next) => {
         try {
             const { idBook } = req.body;
@@ -173,7 +260,8 @@ const bookController = {
                     }
                     //TODO ATUALIZA LA IMAGEN AL EXISTOR UN REGISTRO EN LA BD.
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
-                    connection.query(sqlUpdateCover, { bookID, nameCover }, (_err, _results) => {
+                    connection.query(sqlUpdateCover, { bookID, nameCover }, async (_err, _results) => {
+                        await redisClient.del(`cover${bookID}`);
                         return res.status(200).send({
                             success: true,
                             exists: true,
@@ -191,13 +279,12 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ SUBIR IMAGEN
     uploadFile: async (req, res) => {
         try {
             const { idBook } = req.body;
             const nameCover = await saveImageServer(req, res);
             const sqlInsertCover = "INSERT INTO coverBooks SET ?";
-            connection.query(sqlInsertCover, { bookID: idBook, nameCover }, (err, _results) => {
+            connection.query(sqlInsertCover, { bookID: idBook, nameCover }, async (err, _results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -207,6 +294,7 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                await redisClient.del(`cover${bookID}`);
                 return res.status(200).send({
                     success: true,
                     exists: false,
@@ -220,7 +308,6 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ ADD NEW BOOK
     addBook: async (req, res) => { 
         try {
             const errors = validationResult(req);
@@ -260,7 +347,7 @@ const bookController = {
                 lastUpdate
             }]; 
             sqlInsertBooks = "INSERT INTO books SET ?";
-            connection.query(sqlInsertBooks, bookDataUpdate, (err, results) => { 
+            connection.query(sqlInsertBooks, bookDataUpdate, async (err, results) => { 
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -270,6 +357,7 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                await redisClient.del('books');
                 res.status(200).send({
                     success: true,
                     swalTitle: "Book added...",
@@ -281,7 +369,6 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ ACTUALIZAR BOOK
     putBook: async (req, res) => {
         try {
             const errors = validationResult(req);
@@ -322,7 +409,7 @@ const bookController = {
                 observation,
                 lastUpdate
             }]; 
-            connection.query(sqlUpdateBook, bookDataUpdate, (err, results) => {
+            connection.query(sqlUpdateBook, bookDataUpdate, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -332,6 +419,9 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
+                await redisClient.del(`book${bookID}`);
+                await redisClient.del(`bookInfo${bookID}`);
+                await redisClient.del('books');
                 res.status(200).send({
                     success: true,
                     swalTitle: "Book updated...",
@@ -343,7 +433,6 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ DELETE BOOK
     deleteBook: async (req, res) => {
         try {
             const bookID = req.params.idBook;
@@ -359,6 +448,7 @@ const bookController = {
                     });
                 }
                 if (results.length === 0) {
+                    await redisClient.del(`books`);
                     return res.status(403).send({
                         success: false,
                         exists: false,
@@ -368,7 +458,7 @@ const bookController = {
                 }
                 const title = results[0].title;
                 const sqlDelete = "DELETE FROM books WHERE bookID=?";
-                connection.query(sqlDelete, [bookID], (err, _results) => {
+                connection.query(sqlDelete, [bookID], async (err, _results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -378,6 +468,7 @@ const bookController = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                     }
+                    await redisClient.del(`books`);
                     res.status(200).send({
                         success: true,
                         swalTitle: "[ Book deleted... ]",
@@ -390,11 +481,10 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ INFO REVIEW
     infoReviews: async (req, res) => {
         try {
-            const bookID = req.params.idBook;
-            const selectReviews = "SELECT v.score, v.deliver_date_review as dateReview, v.review, fullnamePartner AS fullName, reviewOn FROM votes v WHERE v.bookID=?"; connection.query(selectReviews, [bookID], (err, results) => {
+            const bookID = req.params.idBook || req.body.idBook;
+            const selectReviews = "SELECT v.score, v.deliver_date_review as dateReview, v.review, fullnamePartner AS fullName, reviewOn FROM votes v WHERE v.bookID=?"; connection.query(selectReviews, [bookID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -413,12 +503,16 @@ const bookController = {
                     });
                 }
                 const data = results;
-                
-                res.status(200).send({
-                    success: true,
-                    swalTitle: "[ Success.... ]",
-                    messageSuccess: "Success",
-                    data
+                await redisClient.set(`review${bookID}`, JSON.stringify(data), 'NX', 'EX', 3600, (err, reply) =>{
+                    if(err) return console.error(err);
+                    if(reply) {
+                        return res.status(200).send({
+                            success: true,
+                            swalTitle: "[ Success.... ]",
+                            messageSuccess: "Success",
+                            data
+                        });
+                    }
                 });
             });
         } catch (error) {
@@ -462,7 +556,6 @@ const bookController = {
 
 module.exports = bookController;
 
-// TODO ✅ GENERAR NOMBRE DEL COVER
     function generateCoverRand(length, type) {
         switch (type) {
             case 'num':
@@ -489,7 +582,6 @@ module.exports = bookController;
         return randNameCover;
     }
 
-// TODO ✅ GUARDAR COVER
     async function saveImageServer(req, res) {
         try {
             const file = req.file;
