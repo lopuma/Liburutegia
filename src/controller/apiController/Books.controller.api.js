@@ -124,9 +124,6 @@ const bookController = {
             next();
         });
     },
-    redisISBN : async (req, res, next) => {
-        console.log(req.params.idBook);
-    },
     redisCover : async (req, res, next) => {
         try {
             const bookID = req.params.idBook || req.body.idBook;
@@ -218,9 +215,18 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                await redisClient.del(`bookInfo${bookID}`);
-                await redisClient.del('books');
-                await redisClient.del(`review${bookID}`);
+                try {
+                    await redisClient.del(`bookInfo${bookID}`);
+                } catch (error) { }
+                try {
+                    await redisClient.del('books');
+                } catch (error) { }
+                try {
+                    await redisClient.del(`review${bookID}`);
+                } catch (error) { }
+                try {
+                    await redisClient.del(`bookings`);
+                } catch (error) { }
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Review added.... ]",
@@ -249,6 +255,7 @@ const bookController = {
                     const bookID = idBook;
                     try {
                         const nameColverOld = results[0].nameCover;
+                        console.log(nameColverOld, "COVER OLD")
                         const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
                         if (fs.existsSync(`${pathCoverBooks}/${nameColverOld}`)) {
                             fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
@@ -258,10 +265,11 @@ const bookController = {
                         console.error(error);
                         res.status(500).redirect("/");
                     }
-                    //TODO ATUALIZA LA IMAGEN AL EXISTOR UN REGISTRO EN LA BD.
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
                     connection.query(sqlUpdateCover, { bookID, nameCover }, async (_err, _results) => {
-                        await redisClient.del(`cover${bookID}`);
+                        try {
+                            await redisClient.del(`cover${bookID}`);
+                        } catch (error) { }
                         return res.status(200).send({
                             success: true,
                             exists: true,
@@ -294,7 +302,12 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                await redisClient.del(`cover${bookID}`);
+                try {
+                    await redisClient.del(`cover${bookID}`);
+                } catch (error) {
+                    console.error(error);
+                    res.status(500).redirect("/");
+                }
                 return res.status(200).send({
                     success: true,
                     exists: false,
@@ -357,7 +370,9 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                await redisClient.del('books');
+                try {
+                    await redisClient.del('books');
+                } catch (error) { }
                 res.status(200).send({
                     success: true,
                     swalTitle: "Book added...",
@@ -419,9 +434,15 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                await redisClient.del(`book${bookID}`);
-                await redisClient.del(`bookInfo${bookID}`);
-                await redisClient.del('books');
+                try {
+                    await redisClient.del(`book${bookID}`);
+                } catch (error) { }
+                try {
+                    await redisClient.del(`bookInfo${bookID}`);
+                } catch (error) { }
+                try {
+                    await redisClient.del('books');
+                } catch (error) { }
                 res.status(200).send({
                     success: true,
                     swalTitle: "Book updated...",
@@ -448,7 +469,9 @@ const bookController = {
                     });
                 }
                 if (results.length === 0) {
-                    await redisClient.del(`books`);
+                    try {
+                        await redisClient.del(`books`);
+                    } catch (error) { }
                     return res.status(403).send({
                         success: false,
                         exists: false,
@@ -468,7 +491,9 @@ const bookController = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                     }
-                    await redisClient.del(`books`);
+                    try {
+                        await redisClient.del(`books`);
+                    } catch (error) { }
                     res.status(200).send({
                         success: true,
                         swalTitle: "[ Book deleted... ]",
@@ -565,7 +590,6 @@ module.exports = bookController;
                 characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 break;
             case 'rand':
-                //FOR ↓
                 break;
             default:
                 characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -590,9 +614,14 @@ module.exports = bookController;
                 background: '#fff'
             });
             const nameCover = generateCoverRand(15);
+            console.log("NAME COVER : =>> ", nameCover);
             const resizeImageBuffer = await proccessImage.toBuffer();
+            console.log("PATH COVER =>> ", __dirname);
             const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
-            fs.writeFileSync(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer);
+            fs.writeFile(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer, err => {
+                if(err) return console.error(err)
+                console.log("Saved!")
+            });
             return nameCover + '.png';
         } catch (error) {
             console.error(error);

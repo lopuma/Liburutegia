@@ -61,7 +61,9 @@ const routerRegister = {
                                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                                     });
                             }
-                            await redisClient.del('users');
+                            try {
+                                await redisClient.del('users');
+                            } catch (error) { }
                             res.status(200).send({
                                 exists: false,
                                 inputs: false,

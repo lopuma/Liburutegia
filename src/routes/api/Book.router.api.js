@@ -16,8 +16,7 @@ const {
     validate,
     redisBooks,
     redisBook,
-    redisInfoReview,
-    redisISBN
+    redisInfoReview
 } = require('../../controller/apiController/Books.controller.api');
 const {
     isAuthenticated
@@ -34,5 +33,5 @@ const routerBooks = require('express').Router();
     routerBooks.post("/update/:idBook", noExistBook, validate, putBook);
     routerBooks.post("/frontPage", isAuthenticated, upload.single('coverImage'), existsCover, uploadFile);
     routerBooks.get("/info/reviews/:idBook", redisInfoReview, infoReviews);
-    routerBooks.get("/isbn/:isbn", redisISBN, getISBN);
+    routerBooks.get("/isbn/:isbn", getISBN);
 module.exports = routerBooks;

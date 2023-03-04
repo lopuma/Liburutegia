@@ -78,7 +78,9 @@ const routerUser = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
-                await redisClient.del('users');
+                try {
+                    await redisClient.del('users');
+                } catch (error) { }
                 res.status(200).send({
                     success: true,
                     swalTitle: "Updated...",
@@ -105,7 +107,9 @@ const routerUser = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
-                await redisClient.del('users');
+                try {
+                    await redisClient.del('users');
+                } catch (error) { }
                 res.status(200).send({
                     success: true,
                     swalTitle: "Deleted...",

@@ -1,10 +1,7 @@
-const { body, validationResult } = require("express-validator");
 const connection = require("../../../database/db-connect");
-const flash = require("connect-flash");
 const moment = require('moment');
 let _CACHEBOOKING = false;
 const redisClient = require("../../../redis/redis-connect");
-
 const bookingController = {
     existBooking: async (req, res, next) => {
         try {
@@ -215,9 +212,15 @@ const bookingController = {
                                 });
                             }
                             _CACHEBOOKING = false;
-                            await redisClient.del(`bookInfo${bookID}`);
-                            await redisClient.del('books');
-                            await redisClient.del('bookings');
+                            try {
+                                await redisClient.del('bookings');
+                            } catch (error) { }
+                            try {
+                                await redisClient.del(`bookInfo${bookID}`);
+                            } catch (error) { }
+                            try {
+                                await redisClient.del('books');
+                            } catch (error) { }
                             res.status(201).send({
                                 success: true,
                                 swalTitle: "Reserve Book added...",
@@ -255,7 +258,9 @@ const bookingController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                await redisClient.del('bookings');
+                try {
+                    await redisClient.del('bookings');
+                } catch (error) { }
                 res.status(200).send({
                     success: true,
                     swalTitle: "[ Cancel booking....! ]",
@@ -268,7 +273,6 @@ const bookingController = {
         }
     },
 };
-
 module.exports = bookingController;
 
 

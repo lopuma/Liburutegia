@@ -3,7 +3,6 @@ const connection = require("../../../database/db-connect");
 const flash = require("connect-flash");
 
 const partnerController = {
-    //TODO ✅ VALIDATIONS
     validate: [
         body("dni")
             .trim()
@@ -33,7 +32,6 @@ const partnerController = {
                 "The Last Name field It must have from 4 to 40 digits and can contain letters, accents and spaces, it cannot contain special characters or numbers."
             )
     ],
-    //TODO ✅ EXISTS DNI PARTNERS
     existPartner: async (req, res, next) => {
         try {
             const sqlSelect = "SELECT * FROM partners WHERE dni = ?";
@@ -63,7 +61,6 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ NO EXISTE ID PARTNERS
     noExistPartner: async (req, res, next) => {
         try {
             const partnerID = req.params.idPartner;
@@ -102,7 +99,6 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ SHOW ALL PARTNERS
     getPartners: async (req, res) => {
         try {
             const sqlSelect = "SELECT * FROM partners";
@@ -131,7 +127,6 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ SHOW ONLY PARTNERS FOR ID
     getPartner: async (req, res) => {
         try {
             const partnerID = req.params.idPartner;
@@ -152,7 +147,6 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    //TODO ✅ INFO DE RESERVAS ACTIVAS
     infoPartner: async (req, res) => {
         try {
             const idPartner = req.params.idPartner;
@@ -197,7 +191,6 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ ADD PARTNERS
     addPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
@@ -313,7 +306,6 @@ const partnerController = {
             });
         }
     },
-    // TODO ✅ DELETE PARTNERS
     deletePartner: async (req, res) => {
         try {
             const partnerID = req.params.idPartner;
@@ -423,7 +415,6 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
-    // TODO ✅ UDATE PARTNERS FOR ID
     putPartner: async (req, res) => {
         try {
             const errors = validationResult(req);
