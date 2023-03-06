@@ -2,6 +2,7 @@ const connection = require("../../../database/db-connect");
 const redisClient = require("../../../redis/redis-connect")
 
 const moment = require('moment');
+const { data } = require("jquery");
 let _CACHEBOOK =  false;
 
 const booksController = {
@@ -25,7 +26,7 @@ const booksController = {
             const bookID = req.params.idBook || req.body.idBook;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            const sqlSelect = ["SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", "SELECT b.*, FORMAT(AVG(v.score), 2) AS rating, COUNT(v.score) AS numVotes, SUM(v.score) AS totalScore, v.reviewOn FROM votes v LEFT JOIN books b ON b.bookID=v.bookID WHERE b.bookID=? AND v.reviewOn>0", `SELECT p.partnerID AS partnerID, p.dni AS partnerDni, b.reserved as reserved FROM books b INNER JOIN bookings bk ON bk.bookID = b.bookID INNER JOIN partners p ON p.dni = bk.partnerDni WHERE b.bookID=${bookID} AND bk.delivered=0`,`SELECT b.* FROM books b WHERE b.bookID=${bookID}`];
+            const sqlSelect = ["SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", "SELECT b.*, FORMAT(AVG(v.score), 2) AS rating, COUNT(v.score) AS numVotes, SUM(v.score) AS totalScore, v.reviewOn FROM votes v LEFT JOIN books b ON b.bookID=v.bookID WHERE b.bookID=? AND v.reviewOn>0", `SELECT p.partnerID AS partnerID, p.dni AS partnerDni, b.reserved as reserved FROM books b INNER JOIN bookings bk ON bk.bookID = b.bookID INNER JOIN partners p ON p.dni = bk.partnerDni WHERE b.bookID=${bookID} AND bk.delivered=0`,`SELECT b.* FROM books b WHERE b.bookID=${bookID}`, `SELECT cb.nameCover as cover FROM books b LEFT JOIN coverBooks cb ON cb.bookID=b.bookID WHERE b.bookID = ${bookID}`];
             connection.query(sqlSelect.join(";"), [bookID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -37,11 +38,11 @@ const booksController = {
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                 }
-                let book = "";
+                let bookData = "";
                 if (results[1][0].bookID === null) {
                     const purchase = moment(results[3][0].purchase_date).format("MMMM Do, YYYY");
                     const update = moment(results[3][0].lastUpdate).format("MMMM Do, YYYY HH:mm A");
-                    book = results[3].map(results => ({
+                    bookData = results[3].map(results => ({
                         ...results,
                         purchase_date: purchase,
                         lastUpdate: update
@@ -49,22 +50,31 @@ const booksController = {
                 } else {
                     const purchase = moment(results[1][0].purchase_date).format("MMMM Do, YYYY");
                     const update = moment(results[1][0].lastUpdate).format("MMMM Do, YYYY HH:mm A");
-                    book = results[1].map(results => ({
+                    bookData = results[1].map(results => ({
                         ...results,
                         purchase_date: purchase,
                         lastUpdate: update
                     }));
                 }
-                const deliver = results[2];
-                const dataInfoBook = [book, deliver];
-                await redisClient.set(`bookInfo${bookID}`, JSON.stringify(dataInfoBook), 'NX', 'EX', 3600, (err, reply) => {
+                const deliverData = {
+                    activeDelivery: results[2][0]
+                };
+                const nameCover = results[4];
+                const coverData = [{
+                    nameCover: nameCover[0].cover
+                }]
+                const dataInfoBook = [ bookData, deliverData, coverData ];
+                console.log("DATA INFO BOOK => ", dataInfoBook)
+                await redisClient.set(`bookInfo${bookID}`, JSON.stringify(dataInfoBook), (err, reply) => {
                     if(err) return console.error(err);
                     if(reply) {
-                        return res.status(200).render("workspace/books/infoBook", {
+                        redisClient.expire(`bookInfo${bookID}`, 3600);
+                        res.status(200).render("workspace/books/infoBook", {
                             loggedIn,
                             rolAdmin,
-                            book,
-                            deliver
+                            bookData,
+                            deliverData,
+                            coverData
                         });
                     }
                 });
@@ -74,7 +84,7 @@ const booksController = {
             res.status(500).redirect("/");
         }
     },
-    getInfoCover: async (req, res) => {
+    /*getInfoCover: async (req, res) => {
         try {
             const bookID = req.params.idBook;
             const sqlSelect = " SELECT cb.nameCover as cover FROM books b LEFT JOIN coverBooks cb ON cb.bookID=b.bookID WHERE b.bookID = ?";
@@ -99,6 +109,6 @@ const booksController = {
             console.error(error);
             res.status(500).redirect("/");
         }
-    }
+    }*/
 };
 module.exports = booksController;

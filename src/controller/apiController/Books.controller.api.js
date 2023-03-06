@@ -87,19 +87,20 @@ const bookController = {
             let listInfo = []
             await redisClient.get(`bookInfo${bookID}`, async (err, reply) => {
             if(reply) {
-                const bookData = await JSON.parse(reply);
-                bookData.forEach(element => {
-                    element.forEach(list => {
-                        listInfo.push(list)
-                    })
+                const data = await JSON.parse(reply);
+                data.forEach(element => {
+                    listInfo.push(element);
                 });
-                const book = [listInfo[0]];
-                const deliver = [listInfo[1]];
+                const bookData = [listInfo[0][0]];
+                const deliverData = [listInfo[1]];
+                const coverData = [listInfo[2][0]];
+                console.log(" ---> ENVIADO REDIS =>> ", bookData, deliverData, coverData)
                 return res.status(200).render("workspace/books/infoBook", {
                     loggedIn,
                     rolAdmin,
-                    book,
-                    deliver
+                    bookData,
+                    deliverData,
+                    coverData
                 });
             }
                 next();
@@ -109,7 +110,6 @@ const bookController = {
         }
     },
     redisInfoReview : async (req, res, next) => {
-        console.log(req.params.idBook);
         const bookID = req.params.idBook || req.body.idBook;
         await redisClient.get(`review${bookID}`, (err, reply) => {
             if(reply) {
@@ -237,9 +237,9 @@ const bookController = {
     },
     existsCover: async (req, res, next) => {
         try {
-            const { idBook } = req.body;
+            const bookID = req.body.idBook || req.params.idBook;
             const sqlSelect = "SELECT * FROM coverBooks WHERE bookID = ?";
-            connection.query(sqlSelect, [idBook], async (err, results) => {
+            connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -252,14 +252,12 @@ const bookController = {
                 if (results.length === 1) {
                     const nameCover = await saveImageServer(req, res);
                     const coverID = results[0].coverID;
-                    const bookID = idBook;
                     try {
                         const nameColverOld = results[0].nameCover;
-                        console.log(nameColverOld, "COVER OLD")
                         const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
                         if (fs.existsSync(`${pathCoverBooks}/${nameColverOld}`)) {
                             fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
-                            console.info(`Imagen actualizada, y se ha elimninado la anterior imagen ${nameColverOld}, del libro ${idBook}.`);
+                            console.info(`Imagen actualizada, y se ha elimninado la anterior imagen ${nameColverOld}, del libro ${bookID}.`);
                         }
                     } catch (error) {
                         console.error(error);
@@ -268,7 +266,7 @@ const bookController = {
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
                     connection.query(sqlUpdateCover, { bookID, nameCover }, async (_err, _results) => {
                         try {
-                            await redisClient.del(`cover${bookID}`);
+                            await redisClient.del(`bookInfo${bookID}`);
                         } catch (error) { }
                         return res.status(200).send({
                             success: true,
@@ -289,10 +287,10 @@ const bookController = {
     },
     uploadFile: async (req, res) => {
         try {
-            const { idBook } = req.body;
+            const bookID = req.body.idBook || req.params.idBook;
             const nameCover = await saveImageServer(req, res);
             const sqlInsertCover = "INSERT INTO coverBooks SET ?";
-            connection.query(sqlInsertCover, { bookID: idBook, nameCover }, async (err, _results) => {
+            connection.query(sqlInsertCover, { bookID, nameCover }, async (err, _results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -303,11 +301,8 @@ const bookController = {
                     });
                 }
                 try {
-                    await redisClient.del(`cover${bookID}`);
-                } catch (error) {
-                    console.error(error);
-                    res.status(500).redirect("/");
-                }
+                    await redisClient.del(`bookInfo${bookID}`);
+                } catch (error) { }
                 return res.status(200).send({
                     success: true,
                     exists: false,
@@ -614,13 +609,10 @@ module.exports = bookController;
                 background: '#fff'
             });
             const nameCover = generateCoverRand(15);
-            console.log("NAME COVER : =>> ", nameCover);
             const resizeImageBuffer = await proccessImage.toBuffer();
-            console.log("PATH COVER =>> ", __dirname);
             const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
             fs.writeFile(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer, err => {
                 if(err) return console.error(err)
-                console.log("Saved!")
             });
             return nameCover + '.png';
         } catch (error) {
