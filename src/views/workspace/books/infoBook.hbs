@@ -386,7 +386,7 @@
         const bookID = idBook;
         await globalDeleteBook(bookID);
     }
-    (async ( ) => {
+    /*(async ( ) => {
         const bookID = _BOOKID;
         const urlReviews = `/api/books/info/reviews/${bookID}` 
         fetch(urlReviews, {
@@ -397,7 +397,7 @@
         })
             .then((response) => response.json())
             .then((data) => createCardReview(data));
-    }) ( )
+    }) ( )*/
     async function createCardReview(data){
         try {
             if(data.success) {
