@@ -4,8 +4,16 @@ const sharp = require('sharp');
 const fs = require('fs')
 const path = require('path');
 const moment = require('moment');
+const config = require('../../config');
 const { body, validationResult } = require("express-validator");
-
+const Minio = require('minio');
+const minioClient = new Minio.Client({
+  endPoint: config.MINIO_HOST,
+  port: 9000,
+  useSSL: false,
+  accessKey: config.MINIO_ROOT_USER,
+  secretKey: config.MINIO_ROOT_PASSWORD
+});
 const bookController = {
     validate: [
         body("title")
@@ -26,7 +34,8 @@ const bookController = {
     ],
     noExistBook: async (req, res, next) => {
         try {
-            const bookID = req.params.idBook;
+            const bookID = req.params.idBook || req.body.idBook;
+            console.log("BOOK 2 =>> ", bookID);
             if(bookID !== 'isbn') {
                 const sqlSelect = "SELECT * FROM books WHERE bookID = ?";
                 connection.query(sqlSelect, [bookID], (err, results) => {
@@ -82,26 +91,27 @@ const bookController = {
     redisInfoBook : async (req, res, next) => {
         try {
             const bookID = req.params.idBook || req.body.idBook;
+            console.log("BOOK 1 =>> ", bookID);
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
             let listInfo = []
             await redisClient.get(`bookInfo${bookID}`, async (err, reply) => {
-            if(reply) {
-                const bookData = await JSON.parse(reply);
-                bookData.forEach(element => {
-                    element.forEach(list => {
-                        listInfo.push(list)
-                    })
-                });
-                const book = [listInfo[0]];
-                const deliver = [listInfo[1]];
-                return res.status(200).render("workspace/books/infoBook", {
-                    loggedIn,
-                    rolAdmin,
-                    book,
-                    deliver
-                });
-            }
+                if(reply) {
+                    const bookData = await JSON.parse(reply);
+                    bookData.forEach(element => {
+                        element.forEach(list => {
+                            listInfo.push(list)
+                        })
+                    });
+                    const book = [listInfo[0]];
+                    const deliver = [listInfo[1]];
+                    return res.status(200).render("workspace/books/infoBook", {
+                        loggedIn,
+                        rolAdmin,
+                        book,
+                        deliver
+                    });
+                }
                 next();
             });
         } catch (error) {
@@ -109,7 +119,6 @@ const bookController = {
         }
     },
     redisInfoReview : async (req, res, next) => {
-        console.log(req.params.idBook);
         const bookID = req.params.idBook || req.body.idBook;
         await redisClient.get(`review${bookID}`, (err, reply) => {
             if(reply) {
@@ -126,14 +135,46 @@ const bookController = {
     },
     redisCover : async (req, res, next) => {
         try {
-            const bookID = req.params.idBook || req.body.idBook;
-            await redisClient.get(`cover${bookID}`, (err, reply) => {
+            /*const bookID = req.params.idBook || req.body.idBook;
+            console.log("REDIS COVER =>> ", bookID)
+            await redisClient.hGetAll(`cover${bookID}`, (err, reply) => {
+                console.log("GET REDIS COVER =>> ", {reply})
                 if(reply) {
-                    const book = JSON.parse(reply);
-                    res.status(200).send(book);
+                    const coverData = {
+                        nameCover : reply.nameCover,
+                        urlCover: reply.urlCover
+                    }
+                    res.status(200).send(coverData);
                 }
+                //next();
+            });*/
+            const bookID = req.params.idBook || req.body.idBook;
+            await redisClient.hVals(`cover${bookID}`, (err, reply) => {
+                const coverData = {
+                    nameCover : reply[1],
+                    urlCover: reply[0]
+                };
+                if(Object.keys(reply).length !== 0){
+                    return res.status(200).send(coverData)
+                }
+                console.log("SALE")
                 next();
             });
+            /*await redisClient.hGetAll(`cover${bookID}`, (err, reply) => {
+                if (err) {
+                    console.error(err);
+                    next(err);
+                } else if (!reply) {
+                    console.log(`Object with key cover${bookID} not found in Redis`);
+                    next(bookID);
+                } else {
+                    const coverData = {
+                        nameCover: reply.nameCover,
+                        urlCover: reply.urlCover,
+                    };
+                    res.status(200).send(coverData);
+                }
+            });*/
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
@@ -255,7 +296,6 @@ const bookController = {
                     const bookID = idBook;
                     try {
                         const nameColverOld = results[0].nameCover;
-                        console.log(nameColverOld, "COVER OLD")
                         const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
                         if (fs.existsSync(`${pathCoverBooks}/${nameColverOld}`)) {
                             fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
@@ -289,10 +329,10 @@ const bookController = {
     },
     uploadFile: async (req, res) => {
         try {
-            const { idBook } = req.body;
+            const bookID = req.body.idBook || req.params.idBook;
             const nameCover = await saveImageServer(req, res);
             const sqlInsertCover = "INSERT INTO coverBooks SET ?";
-            connection.query(sqlInsertCover, { bookID: idBook, nameCover }, async (err, _results) => {
+            connection.query(sqlInsertCover, { bookID, nameCover }, async (err, _results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -605,24 +645,32 @@ module.exports = bookController;
         }
         return randNameCover;
     }
-
     async function saveImageServer(req, res) {
         try {
             const file = req.file;
+            const bucketName = 'mi-bucket';
+            const contentType = 'image/png';
             const proccessImage = sharp(file.buffer).resize(200, 322, {
                 fit: 'cover',
                 background: '#fff'
             });
             const nameCover = generateCoverRand(15);
-            console.log("NAME COVER : =>> ", nameCover);
+            const objectName = nameCover+'.png';
             const resizeImageBuffer = await proccessImage.toBuffer();
-            console.log("PATH COVER =>> ", __dirname);
-            const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
-            fs.writeFile(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer, err => {
-                if(err) return console.error(err)
-                console.log("Saved!")
+           // const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
+            await minioClient.putObject(bucketName, objectName, resizeImageBuffer, contentType, function(err, etag) {
+                if (err) {
+                  console.error(err);
+                  return res.status(500).send('No se pudo subir la imagen');
+                }
+                console.info(`La imagen ${objectName} se ha subido con éxito`);
+                //return res.status(200).send('Imagen subida con éxito');
+                /*fs.writeFile(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer, err => {
+                    if(err) return console.error(err)
+                    console.log("Saved!")
+                });*/
             });
-            return nameCover + '.png';
+            return objectName;
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");

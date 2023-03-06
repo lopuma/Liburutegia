@@ -16,10 +16,41 @@
             <div class="Cover-upload Upload" >
                 <form name="formUpload" id="formUpload">
                     <button type="submit" disabled hidden aria-hidden="true"></button>
+                    <div id="imgOther"></div>
                     <div class="Upload-group" id="imgBox">
-                        <input type="file" class="Upload-file" name="coverImage" accept="image/*" id="coverImage" onchange="loadFile(event)">
+                        <input type="file" class="Upload-file" name="coverImage" accept="image/*" id="coverImage">
                         <label for="coverImage" class="Upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></label>
                     </div>
+                    {{#each coverData}}
+                        <h1>NAME COVER : {{this.nameCover}}</h1>
+                        <h1>URL : {{this.urlCover}}</h1>
+                        {{#if this.nameCover}}
+                            <script>
+                                const urlCover = `${{this.urlCover}}`;
+                                const nameCover = `${{this.nameCover}}`;
+                                console.log("-------- ", nameCover, urlCover)
+                                if(nameCover !== null) {
+                                    /*const urlBook = `/workspace/books/infoCover/${_BOOKID}?param1=${nameCover}`
+                                    fetch(urlBook)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if(data.nameCover !== null && data.urlCover !== null) {
+                                                document.getElementById('imgBox').style.backgroundImage = `url(${data.urlCover})`;
+                                            } else {
+                                                document.getElementById('imgBox').style.backgroundImage = `url(/img/covers/default-image.png)`;
+                                            }
+                                        })*/
+                                        document.getElementById('imgBox').style.backgroundImage = `url(${urlCover})`;
+                                } else {
+                                    document.getElementById('imgBox').style.backgroundImage = `url(/img/covers/default-image.png)`;
+                                }
+                            </script>
+                        {{else}}
+                            <script>
+                                document.getElementById('imgBox').style.backgroundImage = `url(/img/covers/default-image.png)`;
+                            </script>
+                        {{/if}}
+                    {{/each}}
                     <label class="Upload-success" id="successUpload"></label>
                     <div class="New-boxes" id="newBoxesID" hidden>
                         <div class="Input-box">
@@ -288,21 +319,18 @@
         const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
         return starPercentageRounded;
     }
-
-    // TODO ✅ AÑADIR TOTAL SCORE AL LIBRO
     try{
         document.getElementById('totalScore').style.width = obtenerPorcentaje(_RATING);
     } catch (error) { }
-
-//TODO ✅ ASIGNAR COVER AL LIBRO
-    try{ 
+    /*try{ 
+        console.log("BOOD LLLL ", _BOOKID)
         const urlBook = `/workspace/books/infoCover/${_BOOKID}`
         fetch(urlBook)
-            .then((resp) => resp.json())
+            .then((response) => response.json())
             .then(function(data) {
-                let nameCover = data[0].cover;
-                if(nameCover !== null) {
-                    imgBox.style.backgroundImage = `url(/img/covers/${nameCover})`;
+                console.log("DATA RECIBE =>> ", data)
+                if(data.nameCover !== null && data.urlCover !== null || data.nameCover !== undefined && data.urlCover !== undefined) {
+                    imgBox.style.backgroundImage = `url(${data.urlCover})`;
                 } else {
                     imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
                 }
@@ -310,28 +338,20 @@
             .catch(function(error) {
                 console.error(error);
             });
-
         var loadFile = (event) => {
             imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
         };
-    } catch (error) { }
-
-// TODO ✅ EDITAR LIBRO
+    } catch (error) { }*/
     async function _editBook(idBook) {
         opcion = 'edit';
         const bookID = idBook;
         await globalEditBook(bookID);
     }
-    
-
-// TODO ✅ RESERVAR LIBRO
     async function reserveBook(bookID, bookTitle){
         const idBook= bookID;
         const titleBook= bookTitle;
         await globalReserveBook(idBook, titleBook, null, null);
     }
-
-// TODO ✅ UPLOAD COVER
     async function uploadCover() {
         const formData = new FormData();
         if(coverImage.value !== "" || coverImage.files[0] !== undefined) {
@@ -361,14 +381,11 @@
             }, 5000);
         }
     }
-// TODO ✅ ELIMNAR LIBRO
     async function deleteBook(idBook){
         opcion = 'delete';
         const bookID = idBook;
         await globalDeleteBook(bookID);
     }
-
-    // TODO ✅ FUNCION AUTOEJECUTABLE PARA EXTRAER LOS REVIEWS
     (async ( ) => {
         const bookID = _BOOKID;
         const urlReviews = `/api/books/info/reviews/${bookID}` 
@@ -381,8 +398,6 @@
             .then((response) => response.json())
             .then((data) => createCardReview(data));
     }) ( )
-
-    //TODO CREATED CARD REVIEW
     async function createCardReview(data){
         try {
             if(data.success) {
@@ -447,5 +462,4 @@
             }
         } catch (error) { }
     }
-
 </script>

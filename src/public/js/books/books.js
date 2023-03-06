@@ -241,5 +241,6 @@ let opcion = "";
 //TODO ✅ INFO
     async function infoBook(bookID) {
         const idBook = bookID;
+        console.log("BOOK QUE SE ABRE ", idBook)
         window.location = `/workspace/books/info/${idBook}`;
     }

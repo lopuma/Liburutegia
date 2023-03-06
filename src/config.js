@@ -22,5 +22,8 @@ module.exports = {
     MYSQL_PORT: process.env.MYSQL_PORT || 3306,
     NGINX_HOST: process.env.NGINX_HOST || 'liburutegia-sanmiguel.com,www.liburutegia-sanmiguel.com',
     NGINX_PORT: process.env.NGINX_PORT || 80,
-    NGINX_APP: process.env.NGINX_APP || 'LiburutegiaSanMiguel'
+    NGINX_APP: process.env.NGINX_APP || 'LiburutegiaSanMiguel',
+    MINIO_HOST: process.env.MINIO_HOST || 'localhost',
+    MINIO_ROOT_USER: process.env.MINIO_USER,
+    MINIO_ROOT_PASSWORD: process.env.MINIO_PASSWORD,
 }
