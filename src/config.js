@@ -1,11 +1,8 @@
 const dotenv = require('dotenv');
 const path = require('path');
-
-console.log(__dirname+'/'+process.env.NODE_ENV + '.env');
 dotenv.config({
     path: path.resolve(__dirname+'/'+process.env.NODE_ENV + '.env')
 });
-
 module.exports = {
     REDIS_USER: process.env.REDIS_USER || 'default',
     REDIS_PASSWORD: process.env.REDIS_PASSWORD,
@@ -22,5 +19,10 @@ module.exports = {
     MYSQL_PORT: process.env.MYSQL_PORT || 3306,
     NGINX_HOST: process.env.NGINX_HOST || 'liburutegia-sanmiguel.com,www.liburutegia-sanmiguel.com',
     NGINX_PORT: process.env.NGINX_PORT || 80,
-    NGINX_APP: process.env.NGINX_APP || 'LiburutegiaSanMiguel'
+    NGINX_APP: process.env.NGINX_APP || 'LiburutegiaSanMiguel',
+    MINIO_HOST: process.env.MINIO_HOST || 'localhost',
+    MINIO_PORT: process.env.MINIO_PORT || 9090,
+    MINIO_ROOT_USER: process.env.MINIO_USER,
+    MINIO_ROOT_PASSWORD: process.env.MINIO_PASSWORD,
+    MINIO_BUCKET: process.env.MINIO_BUCKET || 'mi-bucket'
 }

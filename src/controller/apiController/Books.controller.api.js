@@ -1,11 +1,12 @@
 const connection = require("../../../database/db-connect");
 const redisClient = require("../../../redis/redis-connect");
+const minioClient = require("../../../minio/minio-connect");
+const config = require('../../config');
 const sharp = require('sharp');
 const fs = require('fs')
 const path = require('path');
 const moment = require('moment');
 const { body, validationResult } = require("express-validator");
-
 const bookController = {
     validate: [
         body("title")
@@ -93,14 +94,14 @@ const bookController = {
                 });
                 const bookData = [listInfo[0][0]];
                 const deliverData = [listInfo[1]];
-                const coverData = [listInfo[2][0]];
-                console.log(" ---> ENVIADO REDIS =>> ", bookData, deliverData, coverData)
+                const dataCover = [listInfo[2][0]];
+                console.log("ENVIO DESDE REDIS")
                 return res.status(200).render("workspace/books/infoBook", {
                     loggedIn,
                     rolAdmin,
                     bookData,
                     deliverData,
-                    coverData
+                    dataCover
                 });
             }
                 next();
@@ -123,21 +124,6 @@ const bookController = {
             }
             next();
         });
-    },
-    redisCover : async (req, res, next) => {
-        try {
-            const bookID = req.params.idBook || req.body.idBook;
-            await redisClient.get(`cover${bookID}`, (err, reply) => {
-                if(reply) {
-                    const book = JSON.parse(reply);
-                    res.status(200).send(book);
-                }
-                next();
-            });
-        } catch (error) {
-            console.error(error);
-            res.status(500).redirect("/");
-        }
     },
     getBooks: async (req, res) => {
         try {
@@ -238,6 +224,7 @@ const bookController = {
     existsCover: async (req, res, next) => {
         try {
             const bookID = req.body.idBook || req.params.idBook;
+            const bucketName = config.MINIO_BUCKET; 
             const sqlSelect = "SELECT * FROM coverBooks WHERE bookID = ?";
             connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
@@ -250,19 +237,12 @@ const bookController = {
                     });
                 }
                 if (results.length === 1) {
-                    const nameCover = await saveImageServer(req, res);
+                    const { objectName: nameCover, urlCover } = await saveImageServer(req, res);
                     const coverID = results[0].coverID;
                     try {
                         const nameColverOld = results[0].nameCover;
-                        const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
-                        if (fs.existsSync(`${pathCoverBooks}/${nameColverOld}`)) {
-                            fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
-                            console.info(`Imagen actualizada, y se ha elimninado la anterior imagen ${nameColverOld}, del libro ${bookID}.`);
-                        }
-                    } catch (error) {
-                        console.error(error);
-                        res.status(500).redirect("/");
-                    }
+                        await minioClient.removeObject(bucketName, nameColverOld);
+                    } catch (error) { }
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
                     connection.query(sqlUpdateCover, { bookID, nameCover }, async (_err, _results) => {
                         try {
@@ -272,6 +252,7 @@ const bookController = {
                             success: true,
                             exists: true,
                             nameCover,
+                            urlCover,
                             swalTitle: "[ Cover update.... ]",
                             messageSuccess: `Cover updated successfully.`
                         });
@@ -288,7 +269,7 @@ const bookController = {
     uploadFile: async (req, res) => {
         try {
             const bookID = req.body.idBook || req.params.idBook;
-            const nameCover = await saveImageServer(req, res);
+            const { objectName: nameCover, urlCover } = await saveImageServer(req, res);
             const sqlInsertCover = "INSERT INTO coverBooks SET ?";
             connection.query(sqlInsertCover, { bookID, nameCover }, async (err, _results) => {
                 if (err) {
@@ -307,6 +288,7 @@ const bookController = {
                     success: true,
                     exists: false,
                     nameCover,
+                    urlCover,
                     swalTitle: "[ Cover added.... ]",
                     messageSuccess: `Cover added successfully.`
                 });
@@ -523,9 +505,10 @@ const bookController = {
                     });
                 }
                 const data = results;
-                await redisClient.set(`review${bookID}`, JSON.stringify(data), 'NX', 'EX', 3600, (err, reply) =>{
+                await redisClient.set(`review${bookID}`, JSON.stringify(data), async (err, reply) =>{
                     if(err) return console.error(err);
                     if(reply) {
+                        await redisClient.expire(`review${bookID}`, 3600)
                         return res.status(200).send({
                             success: true,
                             swalTitle: "[ Success.... ]",
@@ -575,48 +558,67 @@ const bookController = {
 };
 
 module.exports = bookController;
-
-    function generateCoverRand(length, type) {
-        switch (type) {
-            case 'num':
-                characters = "0123456789";
-                break;
-            case 'alf':
-                characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                break;
-            case 'rand':
-                break;
-            default:
-                characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                break;
-        }
-        var randNameCover = "";
-        for (i = 0; i < length; i++) {
-            if (type == 'rand') {
-                randNameCover += String.fromCharCode((Math.floor((Math.random() * 100)) % 94) + 33);
-            } else {
-                randNameCover += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-        }
-        return randNameCover;
+function generateCoverRand(length, type) {
+    switch (type) {
+        case 'num':
+            characters = "0123456789";
+            break;
+        case 'alf':
+            characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            break;
+        case 'rand':
+            break;
+        default:
+            characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            break;
     }
-
-    async function saveImageServer(req, res) {
-        try {
-            const file = req.file;
-            const proccessImage = sharp(file.buffer).resize(200, 322, {
-                fit: 'cover',
-                background: '#fff'
-            });
-            const nameCover = generateCoverRand(15);
-            const resizeImageBuffer = await proccessImage.toBuffer();
-            const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
-            fs.writeFile(`${pathCoverBooks}/${nameCover}.png`, resizeImageBuffer, err => {
-                if(err) return console.error(err)
-            });
-            return nameCover + '.png';
-        } catch (error) {
-            console.error(error);
-            res.status(500).redirect("/");
+    var randNameCover = "";
+    for (i = 0; i < length; i++) {
+        if (type == 'rand') {
+            randNameCover += String.fromCharCode((Math.floor((Math.random() * 100)) % 94) + 33);
+        } else {
+            randNameCover += characters.charAt(Math.floor(Math.random() * characters.length));
         }
     }
+    return randNameCover;
+}
+async function saveImageServer(req, res) {
+    try {
+        const file = req.file;
+        const bucketName = config.MINIO_BUCKET;
+        const contentType = 'image/png';
+        const proccessImage = sharp(file.buffer).resize(200, 322, {
+            fit: 'cover',
+            background: '#fff'
+        });
+        const objectName = generateCoverRand(15) + '.png';
+        const resizeImageBuffer = await proccessImage.toBuffer();
+        const putObjectPromise = new Promise((resolve, reject) => {
+            minioClient.putObject(bucketName, objectName, resizeImageBuffer, contentType, (err, etag) => {
+                if (err) {
+                    console.error(err);
+                    reject('Could not upload image');
+                } else {
+                    resolve(etag);
+                }
+            });
+        });
+        const presignedUrlPromise = new Promise((resolve, reject) => {
+            const expirationTime = 5 * 24 * 60 * 60;
+            minioClient.presignedGetObject(bucketName, objectName, expirationTime, (err, url) => {
+                if (err) {
+                    console.err(err);
+                    reject('Could not get URL');
+                } else {
+                    resolve(encodeURIComponent(url));
+                }
+            });
+        });
+        const [etag, urlCover] = await Promise.all([putObjectPromise, presignedUrlPromise]);
+        console.info(`Image ${objectName} has been uploaded successfully`);
+        return { objectName, urlCover };
+    } catch (error) {
+        console.error(error);
+        res.status(500).redirect("/");
+    }
+}

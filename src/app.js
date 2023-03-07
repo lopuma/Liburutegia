@@ -10,6 +10,7 @@ const configCors = require('./configCors');
 const config = require('./config');
 let RedisStore = require("connect-redis")(session)
 const redisClient = require('../redis/redis-connect')
+const minioClient = require('../minio/minio-connect')
 
 // APP EXPRESS
 const app = express();
@@ -23,6 +24,26 @@ app.use(cors(
 // 4 - Configuraciones
 console.info(`The display is in (${config.NODE_ENV})`);
 const PORT = config.PORT;
+async function createBucket(bucketName) {
+    minioClient.bucketExists(bucketName, function(err, exists) {
+      if (err) {
+        return console.log('Error al comprobar si el bucket existe', err)
+      }
+      if (exists) {
+        console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.MINIO_BUCKET} it already exists`);
+      } else {
+        minioClient.makeBucket(bucketName, function(err) {
+          if (err) {
+            console.log('Error al crear el bucket', err)
+          } else {
+            console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.MINIO_BUCKET} successfully created`);
+
+          }
+        })
+      }
+    })
+  }
+createBucket(config.MINIO_BUCKET);
 
 // 5 - Morgan para mostrar datos de peticiones
 app.use(morgan('dev'));

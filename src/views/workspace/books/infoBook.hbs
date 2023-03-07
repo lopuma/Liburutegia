@@ -20,12 +20,12 @@
                         <input type="file" class="Upload-file" name="coverImage" accept="image/*" id="coverImage" onchange="loadFile(event)">
                         <label for="coverImage" class="Upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></label>
                     </div>
-                    {{#each coverData}}
+                    {{#each dataCover}}
                         <script defer>
                             let nameCover = `{{this.nameCover}}`;
-                            console.log("nameCover ", nameCover)
-                            if(nameCover !== null) {
-                                imgBox.style.backgroundImage = `url(/img/covers/${nameCover})`;
+                            let urlCover = decodeURIComponent(`{{this.urlCover}}`);
+                            if(nameCover) {
+                                imgBox.style.backgroundImage = `url(${urlCover})`;
                             } else {
                                 imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
                             }
@@ -286,68 +286,32 @@
     const btnUpload = document.getElementById('btnUpload');
     const coverImage = document.getElementById('coverImage');
     const bookCoverID = document.getElementById('bookCoverID');
-    
     try {
         if ($('#stateInfoBook').val() === '') { // 
             _STATEINFOBOOK = true;
         }
     } catch (error) { }
-
-    // TODO ✅ FUNCTION PARA MOSTRAR EL PORCENTAJE DE ESTRELLAS
     function obtenerPorcentaje(_RATING_) {
         const starPercentage = _RATING_ / 5 * 100;
         const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
         return starPercentageRounded;
     }
-
-    // TODO ✅ AÑADIR TOTAL SCORE AL LIBRO
     try{
         document.getElementById('totalScore').style.width = obtenerPorcentaje(_RATING);
     } catch (error) { }
-
-    let loadFile = (event) => {
+    var loadFile = (event) => {
         imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
     };
-
-/*
-    //TODO ✅ ASIGNAR COVER AL LIBRO
-    try{ 
-        const urlBook = `/workspace/books/infoCover/${_BOOKID}`
-        fetch(urlBook)
-            .then((resp) => resp.json())
-            .then(function(data) {
-                let nameCover = data[0].cover;
-                if(nameCover !== null) {
-                    imgBox.style.backgroundImage = `url(/img/covers/${nameCover})`;
-                } else {
-                    imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
-                }
-            })
-            .catch(function(error) {
-                console.error(error);
-            });
-
-        var loadFile = (event) => {
-            imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
-        };
-    } catch (error) { }
-*/
-// TODO ✅ EDITAR LIBRO
     async function _editBook(idBook) {
         opcion = 'edit';
         const bookID = idBook;
         await globalEditBook(bookID);
     }
-    
-
-// TODO ✅ RESERVAR LIBRO
     async function reserveBook(bookID, bookTitle){
         const idBook= bookID;
         const titleBook= bookTitle;
         await globalReserveBook(idBook, titleBook, null, null);
     }
-
-// TODO ✅ UPLOAD COVER
     async function uploadCover() {
         const formData = new FormData();
         if(coverImage.value !== "" || coverImage.files[0] !== undefined) {
@@ -361,7 +325,7 @@
                 .then((data) => {
                     document.getElementById('successUpload').classList.add("isEnable");
                     document.getElementById('successUpload').innerHTML = data.messageSuccess;
-                    imgBox.style.backgroundImage = `url(/img/covers/${data.nameCover})`;
+                    imgBox.style.backgroundImage = `url(${decodeURIComponent(data.urlCover)})`;
                 });
             setTimeout(() => {
                 document.getElementById('successUpload').classList.remove("isEnable");
@@ -377,15 +341,12 @@
             }, 5000);
         }
     }
-// TODO ✅ ELIMNAR LIBRO
     async function deleteBook(idBook){
         opcion = 'delete';
         const bookID = idBook;
         await globalDeleteBook(bookID);
     }
-
-    // TODO ✅ FUNCION AUTOEJECUTABLE PARA EXTRAER LOS REVIEWS
-    /*(async ( ) => {
+    (async ( ) => {
         const bookID = _BOOKID;
         const urlReviews = `/api/books/info/reviews/${bookID}` 
         fetch(urlReviews, {
@@ -396,9 +357,7 @@
         })
             .then((response) => response.json())
             .then((data) => createCardReview(data));
-    }) ( )*/
-
-    //TODO CREATED CARD REVIEW
+    }) ( )
     async function createCardReview(data){
         try {
             if(data.success) {
@@ -463,5 +422,4 @@
             }
         } catch (error) { }
     }
-
 </script>
