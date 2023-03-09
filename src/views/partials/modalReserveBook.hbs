@@ -1,6 +1,3 @@
-{{!-- <link rel="stylesheet" href="/style/newForm.css"> --}}
-
-<!--TODO Modal para CRUD-->
 <div class="modal fade" role="dialog" aria-labelledby="modalReserveBookLabel" aria-hidden="true" style="padding-right:0" id="modalReserveBook" name="modalReserveBook">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -98,11 +95,9 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript" defer>
     const formReserveBook = document.getElementById  ( "formReserveBook"        );
     const inputsBook      = document.querySelectorAll( "#formReserveBook input" );
-
     function loadPartnerID() {
         const selectDniReserve = document.getElementById("selectDniReserve");
         const inputPartnerID = document.getElementById("reservePartnerID");
@@ -110,7 +105,6 @@
         const opcionSeleccionada = selectDniReserve.options[index];
         inputPartnerID.value = fillZeros(opcionSeleccionada.value);
     }
-
     function loadBookID() {
         const reserveSelectTitle = document.getElementById("reserveSelectTitle");
         const inputBookID = document.getElementById("reserveBookID");
@@ -118,9 +112,6 @@
         const opcionSeleccionada = reserveSelectTitle.options[index];
         inputBookID.value = fillZeros(opcionSeleccionada.value);
     }
-
-// TODO RESPUESTA DEL SERVIDOR 
-
     async function responseReserve(data, idBook) {
         const bookID = idBook || null;
         const success = data.success;
@@ -181,8 +172,6 @@
                 });
         }
     }
-
-// TODO ✅ CORRECT FORMS
     async function correctFormsReserveBook(e) {
         e.preventDefault();
         const indexTitle = document.getElementById("reserveSelectTitle").selectedIndex;
@@ -218,12 +207,9 @@
             })
             .catch((error) => console.error(error));
     }
-
-// TODO ✅ EVENTO AL ENVIAR FORMULARIO
     try {
         document.addEventListener("DOMContentLoaded", function () {
             formReserveBook.addEventListener("submit", correctFormsReserveBook);
         });
     } catch (error) { }
-
 </script>

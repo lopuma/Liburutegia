@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/style/messages.css">
-<!-- TODO VALIDACION DE DATOS ERRONEOS -->
 {{#if errorValidation}}
   <div class="Login-notifications isEnable" role="alert" id="alert2">
     <div class="Notification-headers Alert">
@@ -18,8 +17,6 @@
     </div>
   </div>
 {{/if}}
-
-<!-- TODO EMAIL LOGIN -->
 {{#if errorUser}}
   <div class="Input-error Error isActive" id="validationEmail">
     <div class="Error-icon" >
@@ -36,8 +33,6 @@
     inputEmailLogin.classList.add("isError");
   </script>
 {{/if}}
-
-<!-- TODO PASSWORD LOGIN -->
 {{#if errorPassword}}
   <div class="Input-error Error isActive" id="validationPassword">
     <div class="Error-icon" >

@@ -1,14 +1,10 @@
 {{> modalDeliver}}
-
 <div class="Dashboard" id="stateBookings" style="margin-top: 7em;">
     <a class="Dashboard-a" href="#" hidden><i class="Dashboard-i fa-solid fa-user-plus"></i>New Booking</a>
     <div class="Dashboard-row">
-        <!-- TODO LOADING -->
         <div id="spinner">
             {{> loading}}
         </div>
-
-        <!-- TODO TABLE BOOKINGS -->
         <table id="tableBookings" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
             <thead class="Dashboard-head">
                 <tr>
@@ -45,7 +41,5 @@
         </table>  
     </div> 
 </div>    
-
 <script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
-
 <script defer src="/scripts/bookings/bookings.js"></script>

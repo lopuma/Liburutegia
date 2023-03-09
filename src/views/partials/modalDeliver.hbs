@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/style/modalDeliver.css">
-
 <div class="modal fade" id="modalStar" tabindex="-1" role="dialog" aria-labelledby="modalStar" aria-hidden="true">
     <div class="modal-dialog Deliver-modal" role="document">
         <div class="modal-content">
@@ -23,11 +22,8 @@
                         <input class="Widget-input" type="radio" value="1" name="rate" id="rate-1">
                         <label for="rate-1" class="Widget-label fas fa-star"></label>
                         <div class="Star-header"></div>
-
                         <form class="Star-form Form" action="#" id="formDeliver" name="formDeliver">
-                            {{!-- BUTTO DISABLE ENTER --}}
-                                <button type="submit" disabled hidden aria-hidden="true"></button>
-                            {{!-- ------------------- --}}
+                            <button type="submit" disabled hidden aria-hidden="true"></button>
                             <input type="text" class="form-control" id="deliverPartnerID"
                                 tabindex="0" hidden>
                             <input type="text" class="form-control" id="bookID"
@@ -52,6 +48,5 @@
         </div>
     </div>
 </div>
-
 <script defer src="/scripts/partners/modalDeliver.js" type="text/javascript"></script>
 

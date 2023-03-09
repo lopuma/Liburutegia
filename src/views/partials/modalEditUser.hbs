@@ -1,8 +1,4 @@
-<link rel="stylesheet" href="/style/editModal.css">
-<link rel="stylesheet" href="/style/newForm.css">
-
-<!--TODO Modal para CRUD-->
-<div class="modal fade" role="dialog" aria-labelledby="modalEditUserLabel" aria-hidden="true" style="padding-right:0" id="modalEditUser" name="modalEditUser">
+<div class="modal fade" role="dialog" aria-labelledby="modalEditUserLabel" aria-hidden="true"      style="padding-right:0" id="modalEditUser" name="modalEditUser">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="Modal-header" style="background-color: var(--Background-Color-forms-user); color: var(--Color-forms-user)">
@@ -85,16 +81,12 @@
         </div>
     </div>
 </div>
-
 <script defer>
-
     const btnEditUser = document.getElementById('btnEditUser');
-
     function closeModalEditUser() {
         $('#modalEditUser').modal('hide');
         document.getElementById('formEditUser').reset();
     }
-
     document.addEventListener("DOMContentLoaded", function(event) {
         document.getElementById("formEditUser").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -129,5 +121,4 @@
                 });
         });
     });
-
 </script>

@@ -1,7 +1,7 @@
 upstream frontend {
     least_conn; #Menos conexiones
-    server app1:$APP1_PORT;
-    server app2:$APP2_PORT;
+    server app1:${APP1_PORT};
+    server app2:${APP2_PORT};
 }
 
 server {
@@ -25,7 +25,6 @@ server {
             proxy_pass http://frontend ;
         }
         location /api/books/frontPage {
-            #proxy_pass http://frontend/api/books/frontPage ;
             client_max_body_size 20M;
         }
 }

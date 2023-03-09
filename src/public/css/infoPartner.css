@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("table.css");
+@import url("table.min.css");
 @import url('star.css');
 .Info-contenedor {
     margin: var(--Margin-top-forms) auto;

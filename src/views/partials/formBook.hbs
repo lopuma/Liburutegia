@@ -1,9 +1,6 @@
-<link rel="stylesheet" href="/style/newForm.css">
-
+<link rel="stylesheet" href="/style/newForm.min.css">
 <div class="New-content">
-
     <div class="New-boxes">
-        <!-- TODO BOOK ID -->
         <div class="Input-box" hidden>
             <div class="Box">
                 <i class="Box-i fa-solid fa-key"></i>
@@ -15,7 +12,6 @@
         </div>
     </div>
     <div class="New-boxes">
-        <!-- TODO NUM REFERENCE -->
         <div class="Input-box">
             <div class="Box">
                 <i class="Box-i fa-solid fa-key"></i>
@@ -28,7 +24,6 @@
         <div class="Input-box isInvisible"></div>
     </div>
     <div class="New-boxes">
-        <!-- TODO PURCHASE DATE -->
         <div class="Input-box" id="inputBoxPurchaseDate">
             <div class="Box">
                 <i class="fa-solid fa-calendar-days"></i>
@@ -38,7 +33,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO ISBN -->
         <div class="Input-box" id="inputBoxISBN">
             <div class="Box">
                 <i class="Box-i fa-solid fa-qrcode"></i>
@@ -63,7 +57,6 @@
         </div>
     </div>
     <div class="New-boxes">
-        <!-- TODO Title -->
         <div class="Input-box Input-boxError" id="inputBoxTitle">
             <div class="Box">
                 <i class="Box-i fa-solid fa-book"></i>
@@ -86,7 +79,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO AUTHOR -->
         <div class="Input-box Input-boxError" id="inputBoxAuthor">
             <div class="Box">
                 <i class="Box-i fa-solid fa-user-secret"></i>
@@ -112,7 +104,6 @@
         </div>
     </div>
     <div class="New-boxes">
-        <!-- TODO Collection -->
         <div class="Input-box" id="inputBoxCollection">
             <div class="Box">
                 <i class="Box-i fa-solid fa-boxes-stacked"></i>
@@ -125,7 +116,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO Editorial -->
         <div class="Input-box" id="inputBoxEditorial">
             <div class="Box">
                 <i class="Box-i fa-regular fa-newspaper"></i>
@@ -140,7 +130,6 @@
         </div>
     </div>
     <div class="New-boxes">
-        <!-- TODO Language -->
         <div class="Input-box" id="inputBoxLanguage">
             <div class="Box">
                 <i class="Box-i fa-solid fa-language"></i>
@@ -159,7 +148,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO Type -->
         <div class="Input-box" id="inputBoxType">
             <div class="Box">
                 <i class="Box-i fa-solid fa-tags"></i>
@@ -173,7 +161,6 @@
         </div>
     </div>
     <div class="New-boxes isTextarea-boxes">
-        <!-- TODO Observaciones -->
         <div class="Input-box isTextarea" id="inputBoxObservation">
             <div class="Box isTextarea-box">
                 <i class="Box-i fa-solid fa-message"></i>
@@ -185,7 +172,6 @@
         </div>
     </div>
 </div>
-
 <script defer type="text/javascript">
     const infos         = document.querySelectorAll( ".Animation-info"       );
     const closeInfos    = document.querySelectorAll( ".Animation-closeInfo"  );
@@ -203,7 +189,6 @@
     const inputType =  document.getElementById("selectCategory");
     const inputObservation = document.getElementById("inputObservation");
     let dataExistsISBN = "";
-
     const field = {
         numReference: true,
         purchaseDate: true,
@@ -216,22 +201,18 @@
         category: true,
         observation: true,
     };
-
     const activesInfos = {
         title: false,
         author: false,
         ISBN: false,
         purchaseDate: false,
     }
-    
     const expresiones = {
         title: /^.{2,}$/,
         author: /^.{4,}$/,
         ISBN: /^\S+$/
     };
-
     let duplicateISBN = false;
-
     const textError = {
         title:
             "[ ERROR ] : The Title field cannot be empty.",
@@ -241,7 +222,6 @@
             `[ ERROR ] : The ISBN already exists:  <span class="Links" onclick="showExistsISBN()">show</span>`,
             
     };
-
     async function showExistsISBN() {
         const title = dataExistsISBN.swalTitle;
         const message = dataExistsISBN.successMessage || dataExistsISBN.errorMessage;
@@ -266,14 +246,12 @@
             }
             })
     }
-    // TODO ✅ CARGA LAS FUNCIONES DE SELECT2
     (async function loadSelectTags() {
         await $(".isSelect").select2({
             tags: true,
             placeholder: "Select or add category",
         });
     })();
-
     async function existsISBN(target) {
         const isbn = target.value.trim();
         const urlExistsIsbn = `/api/books/isbn/${isbn}`;
@@ -307,15 +285,11 @@
                 }
             })
     }
-
-    //TODO TABULAR para BUSCAR EL ISBN
     inputISBN.addEventListener("keydown", function(event) {
         if (event.keyCode === 9) {
             existsISBN(event.target)
         }
     });
-
-// TODO ✅ VALIDACIONES INPUTS PARTNERS
     const validateFormBook = async e => {
         switch (e.target.name) {
             case "inputTitle":
@@ -329,8 +303,6 @@
                 break;
             }
     };
-
-// TODO ✅ RESET FORMS BOOKS
     const resetFormsBook = async (e) => {
         try {
             document.getElementById("formEditBook").reset();
@@ -347,8 +319,6 @@
         }catch (error){ }
         
     }
-
-// TODO ✅ RESPONSE DATA SUCCESS
     const responseData = async (data) =>  {
         try{
             msgValidation = data.msgValidation[0].msg;
@@ -385,8 +355,6 @@
         }
 
     };
-
-// TODO OBTENER VALOR DE OPTION 
     function getValueOption(opt) {
         const value = opt;
         if (value === undefined) { 
@@ -395,8 +363,6 @@
             return value.value;
         }
     }
-
-// TODO ✅ OBTENER DATOS DEL FORMULARIO
     async function dataBook() {
         const index = await inputType.selectedIndex;
         const opt = inputType[index];
@@ -461,6 +427,4 @@
             }
         } catch (err) { }
     }
-
-
 </script>

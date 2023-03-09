@@ -1,9 +1,6 @@
 <link href="/style/styleBooks/infoBook.css" rel="stylesheet" />
-
 {{> modalEditBook}}
 {{> modalReserveBook}}
-
-
 <div class="Info-contenedor" id="stateInfoBook">
     {{#each bookData}}
         <script>
@@ -216,7 +213,7 @@
                             <span class="Update-span">Review:</span>
                         </div>
                         <div class="Total-b">
-                            <a href="#customerReviews"><span class="Review-span">{{this.numVotes}} Overall Ratings</span></a>
+                            <a href="#customerReviews"><span class="Review-span">{{#if this.numVotes}}{{this.numVotes}} Overall Ratings{{else}}0 Overall Ratings{{/if}}</span></a>
                         </div>
                     </div>
                     {{#unless this.reserved}}
@@ -274,9 +271,7 @@
         <div class="Container-review" id="containerReview"></div>
     </div>
 </div>
-
 <script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
-
 <script defer type="text/javascript">
     const imgBox = document.getElementById('imgBox');
     const btnEditBook = document.getElementById('btnEditBook');

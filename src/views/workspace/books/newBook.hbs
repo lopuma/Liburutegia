@@ -1,12 +1,9 @@
 <link rel="stylesheet" href="/style/new.css">
-
 <div class="New" id="stateNewBook">
     <div class="New-title">
         <h1 class="New-h1">Add New Book</h1>
     </div>
     <div class="New-flag"></div>
-
-    <!-- TODO FORMULARIO DE AÑADIR NUEVO Book -->
     <form class="New-form" id="formAddBook" name"formAddBook">
         <button type="submit" disabled hidden aria-hidden="true"></button>
             {{> formBook }}
@@ -16,42 +13,28 @@
             <input class="Button-accept" id="btnNewBook" type="submit"
                 value='ACCEPT' tabindex="10" />
         </div>
-
     </form>
-
 </div>
-
 <script src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
-
 <script defer>
     const formAddBook = document.getElementById  ( "formAddBook"        );
     const inputsBook      = document.querySelectorAll( "#formAddBook input" );
-
-//TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA NEW BOOK
     try {
         if ($('#stateNewBook').val() === '') { // 
             _STATENEWBOOK = true;
         }
     } catch (error) { }
-
-//TODO ADD CATEGORIAS
     (async () => {
         await obtenerCategories(null);
     })();
-
-// TODO ✅ CERRAR VENTANA
     function cerrar() {
         window.location.href = "/workspace/books"
     }
-
-// TODO ✅ EVENTO AL ENVIAR FORMULARIO
     try {
         document.addEventListener("DOMContentLoaded", function () {
             formAddBook.addEventListener("submit", correctFormsBook);
         });
     } catch (error) { }
-
-//TODO ✅ RECORRER TODO LOS INPUTS DEL FORMULARIO
     try {
         inputsBook.forEach((input, i) => {
             inputsBook.forEach((input, i) => {
@@ -65,5 +48,4 @@
             });
         });
     } catch (error) { }
-
 </script>

@@ -95,7 +95,6 @@ const bookController = {
                 const bookData = [listInfo[0][0]];
                 const deliverData = [listInfo[1]];
                 const dataCover = [listInfo[2][0]];
-                console.log("ENVIO DESDE REDIS")
                 return res.status(200).render("workspace/books/infoBook", {
                     loggedIn,
                     rolAdmin,
@@ -586,20 +585,19 @@ async function saveImageServer(req, res) {
     try {
         const file = req.file;
         const bucketName = config.MINIO_BUCKET;
-        const contentType = 'image/png';
         const proccessImage = sharp(file.buffer).resize(200, 322, {
             fit: 'cover',
             background: '#fff'
         });
-        const objectName = generateCoverRand(15) + '.png';
         const resizeImageBuffer = await proccessImage.toBuffer();
+        const objectName = generateCoverRand(15) + '.png';
         const putObjectPromise = new Promise((resolve, reject) => {
-            minioClient.putObject(bucketName, objectName, resizeImageBuffer, contentType, (err, etag) => {
+            minioClient.putObject(bucketName, objectName, resizeImageBuffer, (err, stat) => {
                 if (err) {
                     console.error(err);
                     reject('Could not upload image');
                 } else {
-                    resolve(etag);
+                    resolve(stat);
                 }
             });
         });
@@ -607,14 +605,14 @@ async function saveImageServer(req, res) {
             const expirationTime = 5 * 24 * 60 * 60;
             minioClient.presignedGetObject(bucketName, objectName, expirationTime, (err, url) => {
                 if (err) {
-                    console.err(err);
+                    console.error(err);
                     reject('Could not get URL');
                 } else {
                     resolve(encodeURIComponent(url));
                 }
             });
         });
-        const [etag, urlCover] = await Promise.all([putObjectPromise, presignedUrlPromise]);
+        const [stat, urlCover] = await Promise.all([putObjectPromise, presignedUrlPromise]);
         console.info(`Image ${objectName} has been uploaded successfully`);
         return { objectName, urlCover };
     } catch (error) {

@@ -1,13 +1,10 @@
-<link rel="stylesheet" href="/style/newForm.css">
-
+<link rel="stylesheet" href="/style/newForm.min.css">
 <div class="New-family Family" id="Family">
-
     <div class="Family-check">
         <input class="Family-checkbox" type="checkbox" id="dniCheck"
             name="dniCheck">
         <label class="Family-label" id="labelDniCheck">Is it a relative?</label>
     </div>
-
     <div class="Family-links" id="familyLink">
         <label>DNI associated with a family member.</label>
         <select class="js-example-basic-single" id="selectDni" name="selectDni" onChange="selectChange()" style="width:100%" size="5">
@@ -15,11 +12,8 @@
     </div>
 
 </div>
-
-<!-- TODO CONTENIDO DEL FORMULARIO DE PARTNER -->
 <div class="New-content">
     <div class="New-boxes" id="newBoxesID" hidden>
-        <!-- TODO PARTNER ID -->
         <div class="Input-box" hidden>
             <div class="Box">
                 <i class="Box-i fa-solid fa-key"></i>
@@ -33,7 +27,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO FECHA CREACION -->
         <div class="Input-box">
             <div class="Box">
                 <i class="fa-solid fa-calendar-days"></i>
@@ -45,7 +38,6 @@
         <div class="Input-box isInvisible"></div>
     </div>
     <div class="New-boxes">
-        <!-- TODO DNI -->
         <div class="Input-box" id="inputBoxDni">
             <div class="Box">
                 <i class="Box-i fa-regular fa-address-card"></i>
@@ -68,7 +60,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO SCANNER -->
         <div class="Input-box" id="inputBoxScanner">
             <div class="Box">
                 <i class="Box-i fa-solid fa-qrcode"></i>
@@ -88,7 +79,6 @@
         </div>
     </div>
     <div class="New-boxes">
-        <!-- TODO NAME -->
         <div class="Input-box " id="inputBoxName">
             <div class="Box">
                 <i class="Box-i fa-solid fa-user"></i>
@@ -111,7 +101,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO LASTNAME -->
         <div class="Input-box " id="inputBoxLastname">
             <div class="Box">
                 <i class="Box-i fa-solid fa-user"></i>
@@ -137,7 +126,6 @@
         </div>
     </div>
     <div class="New-boxes">
-        <!-- TODO DIRECTION -->
         <div class="Input-box">
             <div class="Box">
                 <i class="Box-i fa-solid fa-location-dot"></i>
@@ -161,7 +149,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO POPULATION -->
         <div class="Input-box">
             <div class="Box">
                 <i class="Box-i fa-solid fa-location-arrow"></i>
@@ -187,7 +174,6 @@
         </div>
     </div>
     <div class="New-boxes">
-        <!-- TODO PHONE (MOBILE) -->
         <div class="Input-box" id="inputBoxMobile">
             <div class="Box">
                 <i class="Box-i fa-solid fa-mobile-screen-button"></i>
@@ -211,7 +197,6 @@
                 </div>
             </div>
         </div>
-        <!-- TODO PHONE (LANDLINE) -->
         <div class="Input-box" id="inputBoxLandline">
             <div class="Box">
                 <i class="Box-i fa-solid fa-phone-flip"></i>
@@ -238,7 +223,6 @@
         </div>
     </div>
     <div class="New-boxes ">
-        <!-- TODO EMAIL -->
         <div class="Input-box " id="inputBoxEmail">
             <div class="Box">
                 <i class="Box-i fa-regular fa-address-card"></i>
@@ -264,9 +248,6 @@
         <div class="Input-box isInvisible"></div>
     </div>
 </div>
-
 <script defer src="/scripts/Globals/funcGlobals.js"></script>
-
 <script defer src="/scripts/partners/partners.js"></script>
-
 <script defer src="/scripts/partners/formPartner.js"></script>

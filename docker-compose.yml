@@ -1,12 +1,16 @@
 # TODO CREAR NETWORK
 version: '3.7'
 networks:
-    ntk-app:
-        driver: bridge
-        name: ntk-app
+  ntk-app:
+      driver: bridge
+      name: ntk-app
+      ipam:
+        config:
+          - subnet: 10.5.0.0/16
+      x-gateway: 10.5.0.1
 services:
-    liburutegia-nginx:
-        container_name: liburutegia-nginx
+    nginx-liburutegia:
+        container_name: nginx-liburutegia
         image: nginx:latest
         restart: always
         ports: 
@@ -21,6 +25,8 @@ services:
             - NGINX_HOST=${NGINX_HOST}
             - NGINX_PORT=${NGINX_PORT}
             - NGINX_APP=${NGINX_APP}
+            - APP1_PORT=${APP1_PORT}
+            - APP2_PORT=${APP2_PORT}
         networks:
             - ntk-app
     app1:
@@ -29,7 +35,8 @@ services:
         ports:
             - ${APP1_PORT}:${PORT}
         depends_on:
-            - "mysql"
+            - "mysql-liburutegia"
+            - "minio-liburutegia"
         environment:
             - NODE_ENV=${NODE_ENV}
             - PORT=${PORT}
@@ -41,42 +48,77 @@ services:
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MINIO_BUCKET=${MINIO_BUCKET}
+            - MINIO_HOST=${MINIO_HOST}
+            - MINIO_PORT=${MINIO_PORT}
+            - MINIO_USER=${MINIO_USER}
+            - MINIO_PASSWORD=${MINIO_PASSWORD}
+            - URL_PREFIX=/app1
         volumes:
             - ./src:/app/src
-            - ~/img/covers:/app/src/public/img/covers
         networks:
-            - ntk-app
+          ntk-app:
+            ipv4_address: 10.5.0.5
     app2:
         container_name: app2
         build: .
         ports:
             - ${APP2_PORT}:${PORT}
         depends_on:
-            - "mysql"
+            - "mysql-liburutegia"
+            - "minio-liburutegia"
         environment:
             - NODE_ENV=${NODE_ENV}
             - PORT=${PORT}
             - REDIS_PORT=${REDIS_PORT}
             - REDIS_HOST=${REDIS_HOST}
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
             - MYSQL_HOST=${MYSQL_HOST}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MINIO_BUCKET=${MINIO_BUCKET}
+            - MINIO_HOST=${MINIO_HOST}
+            - MINIO_PORT=${MINIO_PORT}
+            - MINIO_USER=${MINIO_USER}
+            - MINIO_PASSWORD=${MINIO_PASSWORD}
+            - URL_PREFIX=/login
         volumes:
             - ./src:/app/src
-            - ./src/public/img/covers:/app/src/public/img/covers
         networks:
-            - ntk-app
+          ntk-app:
+            ipv4_address: 10.5.0.6
     redis-liburutegia:
       container_name: redis-liburutegia
       image: redis
-      ports: 
-          - ${REDIS_PORT}:6379
+      ports:
+        - "${REDIS_PORT}:6379"
+      volumes:
+        - ./redis.conf:/usr/local/etc/redis/redis.conf
+      command: redis-server /usr/local/etc/redis/redis.conf
+      environment:
+        - REDIS_PORT=${REDIS_PORT}
+        - REDIS_HOST=${REDIS_HOST}
+        - REDIS_PASSWORD=${REDIS_PASSWORD}
       networks:
-          - ntk-app
-    mysql:
-        container_name: mysql
+        - ntk-app
+    redis-commander:
+      container_name: redis-commander
+      image: rediscommander/redis-commander
+      ports:
+        - "8081:8081"
+      environment:
+        - REDIS_HOST=${REDIS_HOST}
+        - REDIS_PORT=${REDIS_PORT}
+        - REDIS_PASSWORD=${REDIS_PASSWORD}
+        - REDIS_DB_INDEX=0
+      volumes:
+        - redis-commander-config:/usr/local/lib/node_modules/redis-commander/config:rw
+      networks:
+        - ntk-app
+    mysql-liburutegia:
+        container_name: mysql-liburutegia
         build:
           context: ./containers/mysql
         restart: always
@@ -87,8 +129,22 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         volumes:
-            - ./mysql-data:/var/lib/mysql
+            - ~/application/mysql-data:/var/lib/mysql
         networks:
-            ntk-app:
-              aliases:
-                - "mysql"
+            - ntk-app
+    minio-liburutegia:
+      container_name: minio-liburutegia
+      image: quay.io/minio/minio:latest
+      ports: 
+          - 9000:9000
+          - 9090:9090
+      environment:
+          - MINIO_ROOT_USER=${MINIO_USER}
+          - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD}
+      volumes:
+            - ~/application/minio/data:/data
+      command: ["server", "/data", "--console-address", ":9090"]
+      networks:
+          - ntk-app
+volumes:
+  redis-commander-config:

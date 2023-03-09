@@ -1,8 +1,10 @@
 /* IMPORT CSS STYLE */
 @charset "UTF-8";
-@import url("customs.css");
-@import url("_reset.css");
-@import url("navbar.css");
-@import url("main.css");
-@import url("sidemenu.css");
-@import url("footer.css");
+@import url("customs.min.css");
+@import url("_reset.min.css");
+@import url("navbar.min.css");
+@import url("main.min.css");
+@import url("sidemenu.min.css");
+@import url("footer.min.css");
+@import url("editModal.min.css");
+@import url("newForm.min.css");
