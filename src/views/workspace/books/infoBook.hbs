@@ -5,10 +5,10 @@
 
 
 <div class="Info-contenedor" id="stateInfoBook">
-    {{#each book}}
+    {{#each bookData}}
         <script>
-            var _BOOKID = {{this.bookID}};
-            var _RATING = {{#if this.rating}}{{this.rating}}{{else}}0{{/if}};
+            let _BOOKID = {{this.bookID}};
+            let _RATING = {{#if this.rating}}{{this.rating}}{{else}}0{{/if}};
         </script>
     {{/each}}
     <div class="Info-header">
@@ -20,12 +20,23 @@
                         <input type="file" class="Upload-file" name="coverImage" accept="image/*" id="coverImage" onchange="loadFile(event)">
                         <label for="coverImage" class="Upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></label>
                     </div>
+                    {{#each dataCover}}
+                        <script defer>
+                            let nameCover = `{{this.nameCover}}`;
+                            let urlCover = decodeURIComponent(`{{this.urlCover}}`);
+                            if(nameCover) {
+                                imgBox.style.backgroundImage = `url(${urlCover})`;
+                            } else {
+                                imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
+                            }
+                        </script>
+                    {{/each}}
                     <label class="Upload-success" id="successUpload"></label>
                     <div class="New-boxes" id="newBoxesID" hidden>
                         <div class="Input-box">
                             <div class="Box-animation Animation">
                                 <div class="Box">
-                                    {{#each book}}
+                                    {{#each bookData}}
                                         <input type="text" class="Animation-input form-control" id="bookCoverID" name="idBook" value={{this.bookID}} required>
                                     {{/each}}
                                 </div>
@@ -39,7 +50,7 @@
             </div>
         </div>
         <div class="Contents-information Information">
-            {{#each book}}
+            {{#each bookData}}
                 <div class="Information-title Title">
                     <i class="Title-i fa-solid fa-book-open"></i>
                     <h1 class="Title-h1">
@@ -181,7 +192,7 @@
         </div>
         <div class="Contents-totalReview Review">
             <div class="Review-header">
-                {{#each book}}
+                {{#each bookData}}
                     <h3>   CUSTOMER REVIEWS   </h3>
                     <div class="Review-star">
                         <div class="stars-outer">
@@ -220,8 +231,8 @@
                         </div>
                     {{/unless}}
                 {{/each}}
-                {{#if deliver}}
-                    {{#each deliver}}
+                {{#if deliverData}}
+                    {{#each deliverData}}
                         <div class="Review-reserved">
                             {{#if this.reserved}}
                                 <div class="Review-avaliable">
@@ -243,7 +254,7 @@
                 {{/if}}
             </div>
             <div class="Review-actions">
-                {{#each book}}
+                {{#each bookData}}
                     <h3>   ACTIONS   </h3>
                     <button id="btnEditBook" onClick=_editBook({{this.bookID}}) type="button" class="Action-btn btn btn-outline-info" title="Edit Book" data-toggle="modal" data-target="#modalEditBook" href="#edit"><i class="fa-regular fa-pen-to-square"></i> Edit Information</button>
                     {{#unless this.reserved}}
@@ -295,26 +306,9 @@
     } catch (error) { }
 
 //TODO ✅ ASIGNAR COVER AL LIBRO
-    try{ 
-        const urlBook = `/workspace/books/infoCover/${_BOOKID}`
-        fetch(urlBook)
-            .then((resp) => resp.json())
-            .then(function(data) {
-                let nameCover = data[0].cover;
-                if(nameCover !== null) {
-                    imgBox.style.backgroundImage = `url(/img/covers/${nameCover})`;
-                } else {
-                    imgBox.style.backgroundImage = `url(/img/covers/default-image.png)`;
-                }
-            })
-            .catch(function(error) {
-                console.error(error);
-            });
-
-        var loadFile = (event) => {
-            imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
-        };
-    } catch (error) { }
+    let loadFile = (event) => {
+        imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
+    };
 
 // TODO ✅ EDITAR LIBRO
     async function _editBook(idBook) {
@@ -343,9 +337,10 @@
             })
                 .then((response) =>  response.json())
                 .then((data) => {
+                    console.log("DATA UPDATE COVER =>> ", data)
                     document.getElementById('successUpload').classList.add("isEnable");
                     document.getElementById('successUpload').innerHTML = data.messageSuccess;
-                    imgBox.style.backgroundImage = `url(/img/covers/${data.nameCover})`;
+                    imgBox.style.backgroundImage = `url(${decodeURIComponent(data.urlCover)})`;
                 });
             setTimeout(() => {
                 document.getElementById('successUpload').classList.remove("isEnable");
@@ -354,7 +349,7 @@
             
         } else {
             document.getElementById('successUpload').classList.add("isEnableError");
-            document.getElementById('successUpload').innerHTML = "No se ha selecionado, ninguna portada";
+            document.getElementById('successUpload').innerHTML = "No cover has been selected";
             setTimeout(() => {
                 document.getElementById('successUpload').classList.remove("isEnableError");
                 document.getElementById('successUpload').innerHTML = "";
