@@ -16,3 +16,4 @@ src/*.env
 src/development.env
 src/production.env
 .git
+redis.conf

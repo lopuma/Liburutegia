@@ -57,8 +57,7 @@ services:
         volumes:
             - ./src:/app/src
         networks:
-          ntk-app:
-            ipv4_address: 10.5.0.5
+          - ntk-app
     app2:
         container_name: app2
         build: .
@@ -87,15 +86,14 @@ services:
         volumes:
             - ./src:/app/src
         networks:
-          ntk-app:
-            ipv4_address: 10.5.0.6
+          - ntk-app
     redis-liburutegia:
       container_name: redis-liburutegia
       image: redis
       ports:
         - "${REDIS_PORT}:6379"
       volumes:
-        - ./redis.conf:/usr/local/etc/redis/redis.conf
+        - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
       command: redis-server /usr/local/etc/redis/redis.conf
       environment:
         - REDIS_PORT=${REDIS_PORT}
