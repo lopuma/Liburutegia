@@ -1,5 +1,4 @@
 const config = require('../src/config');
-
 module.exports = {
     minioDatabase: {
         endPoint: config.MINIO_HOST,

@@ -31,7 +31,7 @@ const routerBooks = require('express').Router();
     routerBooks.post("/add", isAuthenticated, validate, addBook);
     routerBooks.get("/delete/:idBook", deleteBook);
     routerBooks.post("/update/:idBook", noExistBook, validate, putBook);
-    routerBooks.post("/frontPage", isAuthenticated, upload.single('coverImage'), existsCover, uploadFile);
+    routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
     routerBooks.get("/info/reviews/:idBook", redisInfoReview, infoReviews);
     routerBooks.get("/isbn/:isbn", getISBN);
 module.exports = routerBooks;

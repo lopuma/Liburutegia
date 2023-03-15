@@ -7,6 +7,7 @@ const fs = require('fs')
 const path = require('path');
 const moment = require('moment');
 const { body, validationResult } = require("express-validator");
+const { url } = require("inspector");
 const bookController = {
     validate: [
         body("title")
@@ -94,7 +95,6 @@ const bookController = {
                 });
                 const bookData = [listInfo[0][0]];
                 const deliverData = [listInfo[1]];
-                console.log("DELIVER DATA BOO ", deliverData)
                 const dataCover = [listInfo[2][0]];
                 return res.status(200).render("workspace/books/infoBook", {
                     loggedIn,

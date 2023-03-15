@@ -1,13 +1,9 @@
 # TODO CREAR NETWORK
 version: '3.7'
 networks:
-  ntk-app:
-      driver: bridge
-      name: ntk-app
-      ipam:
-        config:
-          - subnet: 10.5.0.0/16
-      x-gateway: 10.5.0.1
+    ntk-app:
+        driver: bridge
+        name: ntk-app
 services:
     nginx-liburutegia:
         container_name: nginx-liburutegia
@@ -16,8 +12,7 @@ services:
         ports: 
             - ${NGINX_PORT}:${NGINX_PORT}
         depends_on:
-            - app1
-            - app2
+            - app-liburutegia
         volumes:
             - ./containers/nginx-liburutegia/templates:/etc/nginx/templates
         environment:
@@ -29,8 +24,8 @@ services:
             - APP2_PORT=${APP2_PORT}
         networks:
             - ntk-app
-    app1:
-        container_name: app1
+    app-liburutegia:
+        container_name: app-liburutegia
         build: .
         ports:
             - ${APP1_PORT}:${PORT}
@@ -54,35 +49,6 @@ services:
             - MINIO_USER=${MINIO_USER}
             - MINIO_PASSWORD=${MINIO_PASSWORD}
             - URL_PREFIX=/app1
-        volumes:
-            - ./src:/app/src
-        networks:
-          - ntk-app
-    app2:
-        container_name: app2
-        build: .
-        ports:
-            - ${APP2_PORT}:${PORT}
-        depends_on:
-            - "mysql-liburutegia"
-            - "minio-liburutegia"
-        environment:
-            - NODE_ENV=${NODE_ENV}
-            - PORT=${PORT}
-            - REDIS_PORT=${REDIS_PORT}
-            - REDIS_HOST=${REDIS_HOST}
-            - REDIS_PASSWORD=${REDIS_PASSWORD}
-            - MYSQL_HOST=${MYSQL_HOST}
-            - MYSQL_USER=${MYSQL_USER}
-            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-            - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
-            - MYSQL_DATABASE=${MYSQL_DATABASE}
-            - MINIO_BUCKET=${MINIO_BUCKET}
-            - MINIO_HOST=${MINIO_HOST}
-            - MINIO_PORT=${MINIO_PORT}
-            - MINIO_USER=${MINIO_USER}
-            - MINIO_PASSWORD=${MINIO_PASSWORD}
-            - URL_PREFIX=/login
         volumes:
             - ./src:/app/src
         networks:
@@ -137,6 +103,7 @@ services:
           - 9000:9000
           - 9090:9090
       environment:
+          - MINIO_HOST=${MINIO_HOST}
           - MINIO_ROOT_USER=${MINIO_USER}
           - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD}
       volumes:

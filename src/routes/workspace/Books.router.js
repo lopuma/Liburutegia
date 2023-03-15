@@ -6,5 +6,5 @@ const {
 const { getNew, getInfo } = require("../../controller/workSpaceController/Books.controller")
 const routerBooks = require("express").Router();
     routerBooks.get("/new", isAuthenticated, getNew);
-    routerBooks.get("/info/:idBook", isAuthenticated, redisInfoBook, noExistBook, getInfo);
+    routerBooks.get("/info/:idBook", redisInfoBook, noExistBook, getInfo);
 module.exports = routerBooks;
