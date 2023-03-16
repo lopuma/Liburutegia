@@ -7,7 +7,12 @@ const fs = require('fs')
 const path = require('path');
 const moment = require('moment');
 const { body, validationResult } = require("express-validator");
+<<<<<<< HEAD
 const { url } = require("inspector");
+=======
+const { Console } = require("console");
+
+>>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
 const bookController = {
     validate: [
         body("title")
@@ -94,7 +99,11 @@ const bookController = {
                     listInfo.push(element);
                 });
                 const bookData = [listInfo[0][0]];
+<<<<<<< HEAD
                 const deliverData = [listInfo[1]];
+=======
+                const deliverData = listInfo[1];
+>>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
                 const dataCover = [listInfo[2][0]];
                 return res.status(200).render("workspace/books/infoBook", {
                     loggedIn,
@@ -224,7 +233,10 @@ const bookController = {
     existsCover: async (req, res, next) => {
         try {
             const bookID = req.body.idBook || req.params.idBook;
+<<<<<<< HEAD
             const bucketName = config.MINIO_BUCKET; 
+=======
+>>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
             const sqlSelect = "SELECT * FROM coverBooks WHERE bookID = ?";
             connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
@@ -238,10 +250,23 @@ const bookController = {
                 }
                 if (results.length === 1) {
                     const { objectName: nameCover, urlCover } = await saveImageServer(req, res);
+<<<<<<< HEAD
                     const coverID = results[0].coverID;
                     try {
                         const nameColverOld = results[0].nameCover;
                         await minioClient.removeObject(bucketName, nameColverOld);
+=======
+                    console.log("DATA QUE SE ENVIA URL COVER =>> ", { nameCover, urlCover })
+                    const coverID = results[0].coverID;
+                    try {
+                        const nameColverOld = results[0].nameCover;
+                        const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
+                        console.log("PATH OLD COVER =>> ", pathCoverBooks);
+                        if (fs.existsSync(`${pathCoverBooks}/${nameColverOld}`)) {
+                            fs.unlinkSync(`${pathCoverBooks}/${nameColverOld}`);
+                            console.info(`Updated image, and the previous image has been removed ${nameColverOld}, of book ID ${bookID}.`);
+                        }
+>>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
                     } catch (error) { }
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
                     connection.query(sqlUpdateCover, { bookID, nameCover }, async (_err, _results) => {
@@ -269,7 +294,11 @@ const bookController = {
     uploadFile: async (req, res) => {
         try {
             const bookID = req.body.idBook || req.params.idBook;
+<<<<<<< HEAD
             const { objectName: nameCover, urlCover } = await saveImageServer(req, res);
+=======
+            const nameCover = await saveImageServer(req, res);
+>>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
             const sqlInsertCover = "INSERT INTO coverBooks SET ?";
             connection.query(sqlInsertCover, { bookID, nameCover }, async (err, _results) => {
                 if (err) {
@@ -601,6 +630,7 @@ async function saveImageServer(req, res) {
                     resolve(stat);
                 }
             });
+<<<<<<< HEAD
         });
         const presignedUrlPromise = new Promise((resolve, reject) => {
             const expirationTime = 5 * 24 * 60 * 60;
@@ -619,5 +649,28 @@ async function saveImageServer(req, res) {
     } catch (error) {
         console.error(error);
         res.status(500).redirect("/");
+=======
+            const resizeImageBuffer = await proccessImage.toBuffer();
+            const objectName = generateCoverRand(15) + '.png';
+            const pathCoverBooks = path.join(__dirname, '../../public/img/covers');
+            console.log("PATH NEW COVER =>> ", pathCoverBooks,"/",objectName);
+
+            const urlCover = await new Promise((resolve, reject) => {
+                fs.writeFile(`${pathCoverBooks}/${objectName}`, resizeImageBuffer, err => {
+                    if(err) {
+                        reject(err);
+                    } else {
+                        resolve(`/img/covers/${objectName}`);
+                    }
+                });
+            });
+
+            console.log("URL COVER QUE RETURN ", urlCover)
+            return { objectName, urlCover };
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+>>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
     }
 }
