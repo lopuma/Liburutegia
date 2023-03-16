@@ -1,0 +1,23 @@
+name: Build and push Docker image
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: liburutegia:latest
+          build-args: |
+            ARG1=value1
+            ARG2=value2
