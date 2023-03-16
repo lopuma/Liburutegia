@@ -27,14 +27,14 @@ const PORT = config.PORT;
 async function createBucket(bucketName) {
     minioClient.bucketExists(bucketName, function(err, exists) {
       if (err) {
-        return console.log('Failed to check if bucket exists ', err)
+        return console.error('Failed to check if bucket exists ', err)
       }
       if (exists) {
         console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.MINIO_BUCKET} it already exists`);
       } else {
         minioClient.makeBucket(bucketName, function(err) {
           if (err) {
-            console.log('Failed to create bucket', err)
+            console.error('Failed to create bucket', err)
           } else {
             console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.MINIO_BUCKET} successfully created`);
 

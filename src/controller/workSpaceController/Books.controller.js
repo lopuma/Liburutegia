@@ -58,7 +58,6 @@ const booksController = {
                 const deliverData = {
                     activeDelivery: results[2][0]
                 };
-                console.log("DELIVER DATA TEST => ", deliverData)
                 const nameCover = results[4];
                 const objectName = nameCover[0].cover;
                 let dataCover;

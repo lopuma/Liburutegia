@@ -1,19 +1,13 @@
 upstream backend {
-    #least_conn; #Menos conexiones
     server app-liburutegia:${PORT};
 }
-
 server {
         listen ${NGINX_PORT};
         listen [::]:${NGINX_PORT};
 
-        root /var/www/html;
-        index index.html index.htm index.nginx-debian.html;
-
         server_name ${NGINX_HOST};
         access_log  /var/log/nginx/${NGINX_APP}.access.log;
         error_log  /var/log/nginx/${NGINX_APP}.error.log;
-
 
         location / {
             proxy_set_header X-Forwarded-Server $host;
@@ -23,9 +17,7 @@ server {
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_pass http://backend ;
         }
-#        location /api/books/frontPage {
-#            client_max_body_size 20M;
-#        }
+
         location /api/books/frontPage {
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header Host $host;

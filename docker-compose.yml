@@ -12,7 +12,7 @@ services:
         ports: 
             - ${NGINX_PORT}:${NGINX_PORT}
         depends_on:
-            - app-liburutegia
+            - application
         volumes:
             - ./containers/nginx-liburutegia/templates:/etc/nginx/templates
         environment:
@@ -24,8 +24,8 @@ services:
             - APP2_PORT=${APP2_PORT}
         networks:
             - ntk-app
-    app-liburutegia:
-        container_name: app-liburutegia
+    application:
+        container_name: application
         build: .
         ports:
             - ${APP1_PORT}:${PORT}
@@ -35,20 +35,19 @@ services:
         environment:
             - NODE_ENV=${NODE_ENV}
             - PORT=${PORT}
-            - REDIS_PORT=${REDIS_PORT}
-            - REDIS_HOST=${REDIS_HOST}
-            - REDIS_PASSWORD=${REDIS_PASSWORD}
             - MYSQL_HOST=${MYSQL_HOST}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - REDIS_PORT=${REDIS_PORT}
+            - REDIS_HOST=${REDIS_HOST}
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
             - MINIO_BUCKET=${MINIO_BUCKET}
             - MINIO_HOST=${MINIO_HOST}
             - MINIO_PORT=${MINIO_PORT}
             - MINIO_USER=${MINIO_USER}
             - MINIO_PASSWORD=${MINIO_PASSWORD}
-            - URL_PREFIX=/app1
         volumes:
             - ./src:/app/src
         networks:
