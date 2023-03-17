@@ -21,7 +21,7 @@ let opcion = "";
             },
             stateSave: true,
             responsive: true,
-            order: [[9, "desc"]],
+            order: [[0, "desc"]],
             lengthMenu: [[5, 10, 15, 25, 50, -1], [5, 10, 15, 25, 50, 'ALL']],
             pageLength: 15,
             select: true,

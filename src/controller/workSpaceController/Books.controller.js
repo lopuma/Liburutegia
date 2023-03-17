@@ -1,14 +1,8 @@
 const connection = require("../../../database/db-connect");
-<<<<<<< HEAD
 const redisClient = require("../../../redis/redis-connect");
 const minioClient = require("../../../minio/minio-connect");
 const config = require("../../config")
 const moment = require('moment');
-=======
-const redisClient = require("../../../redis/redis-connect")
-const moment = require('moment');
-
->>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
 const booksController = {
     getNew: async (req, res) => {
         try {
@@ -30,10 +24,7 @@ const booksController = {
             const bookID = req.params.idBook || req.body.idBook;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-<<<<<<< HEAD
             const bucketName = config.MINIO_BUCKET;
-=======
->>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
             const sqlSelect = ["SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", "SELECT b.*, FORMAT(AVG(v.score), 2) AS rating, COUNT(v.score) AS numVotes, SUM(v.score) AS totalScore, v.reviewOn FROM votes v LEFT JOIN books b ON b.bookID=v.bookID WHERE b.bookID=? AND v.reviewOn>0", `SELECT p.partnerID AS partnerID, p.dni AS partnerDni, b.reserved as reserved FROM books b INNER JOIN bookings bk ON bk.bookID = b.bookID INNER JOIN partners p ON p.dni = bk.partnerDni WHERE b.bookID=${bookID} AND bk.delivered=0`,`SELECT b.* FROM books b WHERE b.bookID=${bookID}`, `SELECT cb.nameCover as cover FROM books b LEFT JOIN coverBooks cb ON cb.bookID=b.bookID WHERE b.bookID = ${bookID}`];
             connection.query(sqlSelect.join(";"), [bookID], async (err, results) => {
                 if (err) {
@@ -70,7 +61,6 @@ const booksController = {
                 const nameCover = results[4];
                 const objectName = nameCover[0].cover;
                 let dataCover;
-<<<<<<< HEAD
                 if(objectName){
                     minioClient.statObject(bucketName, objectName, async (err, stat) => {
                         if(stat !== undefined){
@@ -106,36 +96,12 @@ const booksController = {
                             }
                         });
                         
-=======
-                if(objectName) {
-                    dataCover = [{
-                        nameCover: objectName,
-                        urlCover: encodeURIComponent(`/img/covers/${objectName}`)
-                    }];
-                    const dataInfoBook = [ bookData, deliverData, dataCover ];
-                    await redisClient.set(`bookInfo${bookID}`, JSON.stringify(dataInfoBook), (err, reply) => {
-                        if(err) return console.error(err);
-                        if(reply) {
-                            redisClient.expire(`bookInfo${bookID}`, 3600);
-                            return res.status(200).render("workspace/books/infoBook", {
-                                loggedIn,
-                                rolAdmin,
-                                bookData,
-                                deliverData,
-                                dataCover
-                            });
-                        }
->>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
                     });
                 } else {
                     const dataCover = [{
                         nameCover: null,
                         urlCover: null
-<<<<<<< HEAD
                       }];
-=======
-                    }];
->>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
                     const dataInfoBook = [ bookData, deliverData, dataCover ];
                     await redisClient.set(`bookInfo${bookID}`, JSON.stringify(dataInfoBook), (err, reply) => {
                         if(err) return console.error(err);

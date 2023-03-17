@@ -294,19 +294,9 @@
     try{
         document.getElementById('totalScore').style.width = obtenerPorcentaje(_RATING);
     } catch (error) { }
-<<<<<<< HEAD
     var loadFile = (event) => {
         imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
     };
-=======
-
-//TODO ✅ ASIGNAR COVER AL LIBRO
-    let loadFile = (event) => {
-        imgBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
-    };
-
-// TODO ✅ EDITAR LIBRO
->>>>>>> a6f191eef55de77ea70f306909d7cf5ff54b04fb
     async function _editBook(idBook) {
         opcion = 'edit';
         const bookID = idBook;
@@ -328,7 +318,6 @@
             })
                 .then((response) =>  response.json())
                 .then((data) => {
-                    console.log("DATA UPDATE COVER =>> ", data)
                     document.getElementById('successUpload').classList.add("isEnable");
                     document.getElementById('successUpload').innerHTML = data.messageSuccess;
                     imgBox.style.backgroundImage = `url(${decodeURIComponent(data.urlCover)})`;
