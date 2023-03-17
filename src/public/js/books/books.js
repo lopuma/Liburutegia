@@ -1,9 +1,4 @@
 let opcion = "";
-//let _STATEBOOK = false;
-//let _STATENEWBOOK = false;
-//let _STATEEDITBOOK = false;
-//let _STATEINFOBOOK = false;
-
 //TODO ✅ ACTIVAR CHECK SI ESTA ACTIVA VENTANA BOOK
     try {
         if ($('#stateBooks').val() === '') { // 
@@ -126,7 +121,6 @@ let opcion = "";
                     text: 'Export Data',
                     autoClose: true,
                     buttons: [
-                        //TODO COPY
                         {
                             extend: 'copy',
                             text: '<i class="fa fa-files-o"></i> Copy',
@@ -137,7 +131,6 @@ let opcion = "";
                             },
                             title: 'Liburutegia SAN MIGUEL: BOOKS',
                         },
-                        //TODO CSV
                         {
                             extend: 'csv',
                             text: '<i class="fa-solid fa-file-csv"></i> CSV',
