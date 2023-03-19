@@ -1,4 +1,4 @@
-const connection = require("../../../database/db-connect");
+const connection = require("../../../connections/database/db-connect");
 const bscryptjs = require("bcryptjs");
 const flash = require('connect-flash');
 

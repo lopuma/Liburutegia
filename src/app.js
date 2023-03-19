@@ -9,41 +9,61 @@ const cors = require('cors');
 const configCors = require('./configCors');
 const config = require('./config');
 let RedisStore = require("connect-redis")(session)
-const redisClient = require('../redis/redis-connect')
-const minioClient = require('../minio/minio-connect')
-
+const redisClient = require('../connections/redis/redis-connect')
+const driveClient = require('../connections/minio/drive-connect');
 // APP EXPRESS
 const app = express();
 app.set('trust proxy', 1);
 
 // 2 - Usamos Cors
 app.use(cors(
-	configCors.application.cors.server
+    configCors.application.cors.server
 ));
 
 // 4 - Configuraciones
 console.info(`The display is in (${config.NODE_ENV})`);
 const PORT = config.PORT;
-async function createBucket(bucketName) {
-    minioClient.bucketExists(bucketName, function(err, exists) {
-      if (err) {
-        return console.error('Failed to check if bucket exists ', err)
-      }
-      if (exists) {
-        console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.MINIO_BUCKET} it already exists`);
-      } else {
-        minioClient.makeBucket(bucketName, function(err) {
-          if (err) {
-            console.error('Failed to create bucket', err)
-          } else {
-            console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.MINIO_BUCKET} successfully created`);
+if (config.FILESYSTEM_DRIVER === 'minio') {
+    async function createBucket(bucketName) {
+        driveClient.bucketExists(bucketName, function (err, exists) {
+            if (err) {
+                return console.error('Failed to check if bucket exists ', err)
+            }
+            if (exists) {
+                console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.BUCKET_NAME} it already exists`);
+            } else {
+                driveClient.makeBucket(bucketName, function (err) {
+                    if (err) {
+                        console.error('Failed to create bucket', err)
+                    } else {
+                        console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.BUCKET_NAME} successfully created`);
 
-          }
+                    }
+                })
+            }
         })
-      }
-    })
-  }
-createBucket(config.MINIO_BUCKET);
+    }
+    createBucket(config.BUCKET_NAME);
+} else {
+    const { ListBucketsCommand, HeadBucketCommand, CreateBucketCommand } = require("@aws-sdk/client-s3");
+    async function createBucket(bucketName) {
+        try {
+            // Verificar si el bucket existe
+            await driveClient.send(new HeadBucketCommand({ Bucket: bucketName }));
+            // Si el bucket existe, listar los buckets
+            const data = await driveClient.send(new ListBucketsCommand({}));
+            console.log(`The AWS S3 is connected, Buckets ${JSON.stringify(data.Buckets)} already exist`);
+        } catch (err) {
+            try {
+                await driveClient.send(new CreateBucketCommand({ Bucket: bucketName }));
+                console.log(`The AWS S3 is connected,Bucket ${bucketName} successfully created.`);
+            } catch (err) {
+                console.error(`Failed to create bucket ${bucketName}: `, err);
+            }
+        }
+    }
+    createBucket(config.BUCKET_NAME);
+}
 
 // 5 - Morgan para mostrar datos de peticiones
 app.use(morgan('dev'));
@@ -52,10 +72,10 @@ app.use(morgan('dev'));
 app.use(session({
     key: "connectionUsers",
     secret: 'secret',
-	resave: false,
-	saveUninitialized: false,
+    resave: false,
+    saveUninitialized: false,
     store: new RedisStore({ client: redisClient }),
-	cookie: {
+    cookie: {
         expires: 4 * 60 * 60 * 1000 // =>> 4 horas
     }
 }));
@@ -65,14 +85,14 @@ app.use(flash());
 
 // / 8 - Global Variables - MILDEWER
 app.use((req, res, next) => {
-	res.locals.messageSuccess = req.flash('messageSuccess');
-	res.locals.messageUpdate = req.flash('messageUpdate');
-	res.locals.messageDelete = req.flash('messageDelete');
-	res.locals.errorValidation = req.flash('errorValidation');
-	res.locals.errorMessage = req.flash("errorMessage");
-	res.locals.errorUser = req.flash("errorUser");
-	res.locals.errorPassword = req.flash("errorPassword");
-	next();
+    res.locals.messageSuccess = req.flash('messageSuccess');
+    res.locals.messageUpdate = req.flash('messageUpdate');
+    res.locals.messageDelete = req.flash('messageDelete');
+    res.locals.errorValidation = req.flash('errorValidation');
+    res.locals.errorMessage = req.flash("errorMessage");
+    res.locals.errorUser = req.flash("errorUser");
+    res.locals.errorPassword = req.flash("errorPassword");
+    next();
 });
 
 // 9 - Capturar los datos de formularios.
@@ -81,7 +101,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 // 10 - Recursos Publicos
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/public', express.static(__dirname + '/public'));
 app.use('/style', express.static(__dirname + '/public/css'));
 app.use('/image', express.static(__dirname + '/public/img'));
@@ -92,12 +112,12 @@ app.use('/DataTables', express.static(__dirname + '/public/lib/DataTables'));
 app.set('views', path.join(__dirname, 'views'));
 
 app.engine('.hbs', exphbs.engine({
-	defaultLayout: 'main',
-	layoutsDir: path.join(app.get('views'), 'layouts'),
-	partialsDir: path.join(app.get('views'), 'partials'),
-	extname: '.hbs',
+    defaultLayout: 'main',
+    layoutsDir: path.join(app.get('views'), 'layouts'),
+    partialsDir: path.join(app.get('views'), 'partials'),
+    extname: '.hbs',
 }));
-app.set('view engine', '.hbs'); 
+app.set('view engine', '.hbs');
 
 // 12 - ROUTERS VIEWS
 app.use('/', require('./routes/IndexRouter')); // PAGINA PRICIPAL
@@ -107,24 +127,24 @@ app.use("/workspace/partners", require("./routes/workspace/Partners.router"));
 app.use("/workspace/books", require("./routes/workspace/Books.router"));
 
 // 12.1 - ROUTERS API
-app.use('/api/books',    require( './routes/api/Book.router.api'    ))
-app.use('/api/bookings', require( './routes/api/Booking.router.api' ))
+app.use('/api/books', require('./routes/api/Book.router.api'))
+app.use('/api/bookings', require('./routes/api/Booking.router.api'))
 app.use("/api/partners", require("./routes/api/Partner.router.api"));
 app.use("/api/familys", require("./routes/api/Family.router.api"));
 app.use("/api/users", require("./routes/api/Users.router.api"));
 
 // 12.2 - ROUTES AUTH
-app.use('/login',    require( './routes/authentication/LoginRouter'    ))
-app.use('/logout',   require( './routes/authentication/LogoutRouter'   ))
-app.use('/reset',    require( './routes/authentication/ResetRouter'    ))
-app.use('/register', require( './routes/authentication/RegisterRouter' ))
+app.use('/login', require('./routes/authentication/LoginRouter'))
+app.use('/logout', require('./routes/authentication/LogoutRouter'))
+app.use('/reset', require('./routes/authentication/ResetRouter'))
+app.use('/register', require('./routes/authentication/RegisterRouter'))
 
 // 12.3 RUTAS QUE NO EXISTE
-app.use(function(req, res){
-	res.render('error_page/404')
+app.use(function (req, res) {
+    res.render('error_page/404')
 })
 
 // 13 - Starting the server
 app.listen(PORT, () => {
-	console.info(`The Server is connected on the PORT: ${PORT}`, `http://0.0.0.0:${PORT}`);
+    console.info(`The Server is connected on the PORT: ${PORT}`, `http://0.0.0.0:${PORT}`);
 });

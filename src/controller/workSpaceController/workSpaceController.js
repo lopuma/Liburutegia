@@ -1,5 +1,5 @@
-const connection = require("../../../database/db-connect");
-const redisClient = require("../../../redis/redis-connect");
+const connection = require("../../../connections/database/db-connect");
+const redisClient = require("../../../connections/redis/redis-connect");
 const workSpaceController = {
     redisUsers : async (req, res, next) => {
         await redisClient.get('users', (err, reply) => {

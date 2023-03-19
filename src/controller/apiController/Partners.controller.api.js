@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const connection = require("../../../database/db-connect");
+const connection = require("../../../connections/database/db-connect");
 const flash = require("connect-flash");
 const partnerController = {
     validate: [

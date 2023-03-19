@@ -1,6 +1,6 @@
-const connection = require("../../../database/db-connect");
-const redisClient = require("../../../redis/redis-connect");
-const minioClient = require("../../../minio/minio-connect");
+const connection = require("../../../connections/database/db-connect");
+const redisClient = require("../../../connections/redis/redis-connect");
+const minioClient = require("../../../connections/minio/drive-connect");
 const config = require('../../config');
 const sharp = require('sharp');
 const fs = require('fs')
@@ -223,7 +223,7 @@ const bookController = {
     existsCover: async (req, res, next) => {
         try {
             const bookID = req.body.idBook || req.params.idBook;
-            const bucketName = config.MINIO_BUCKET; 
+            const bucketName = config.BUCKET_NAME; 
             const sqlSelect = "SELECT * FROM coverBooks WHERE bookID = ?";
             connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
@@ -584,7 +584,7 @@ function generateCoverRand(length, type) {
 async function saveImageServer(req, res) {
     try {
         const file = req.file;
-        const bucketName = config.MINIO_BUCKET;
+        const bucketName = config.BUCKET_NAME;
         const proccessImage = sharp(file.buffer).resize(200, 322, {
             fit: 'cover',
             background: '#fff'

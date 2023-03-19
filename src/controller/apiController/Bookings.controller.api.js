@@ -1,7 +1,7 @@
-const connection = require("../../../database/db-connect");
+const connection = require("../../../connections/database/db-connect");
 const moment = require('moment');
 let _CACHEBOOKING = false;
-const redisClient = require("../../../redis/redis-connect");
+const redisClient = require("../../../connections/redis/redis-connect");
 const bookingController = {
     existBooking: async (req, res, next) => {
         try {

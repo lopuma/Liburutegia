@@ -20,9 +20,15 @@ module.exports = {
     NGINX_HOST: process.env.NGINX_HOST || 'liburutegia-sanmiguel.com,www.liburutegia-sanmiguel.com',
     NGINX_PORT: process.env.NGINX_PORT || 80,
     NGINX_APP: process.env.NGINX_APP || 'LiburutegiaSanMiguel',
+    FILESYSTEM_DRIVER: process.env.FILESYSTEM_DRIVER,
     MINIO_HOST: process.env.MINIO_HOST || 'localhost',
     MINIO_PORT: process.env.MINIO_PORT || 9000,
     MINIO_ROOT_USER: process.env.MINIO_USER,
     MINIO_ROOT_PASSWORD: process.env.MINIO_PASSWORD,
-    MINIO_BUCKET: process.env.MINIO_BUCKET || 'mi-bucket'
+    BUCKET_NAME: process.env.BUCKET_NAME || 'mi-bucket',
+    USE_SSL: process.env.USE_SSL || 'true',
+    API_VERSION: process.env.API_VERSION || '2006-03-01',
+    AWS_REGION: process.env.AWS_REGION,
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
 }

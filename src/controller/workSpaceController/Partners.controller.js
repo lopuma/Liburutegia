@@ -1,5 +1,5 @@
 const moment = require('moment');
-const connection = require("../../../database/db-connect");
+const connection = require("../../../connections/database/db-connect");
 
 const partnersController = {
 

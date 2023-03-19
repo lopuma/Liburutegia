@@ -1,6 +1,6 @@
 const { createClient } = require('redis');
 const { redisDatabase } = require('./redis-keys');
-const config = require('../src/config');
+const config = require('../../src/config');
 const redisClient = createClient(
     redisDatabase
     );

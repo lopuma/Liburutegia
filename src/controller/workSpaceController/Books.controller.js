@@ -1,6 +1,6 @@
-const connection = require("../../../database/db-connect");
-const redisClient = require("../../../redis/redis-connect");
-const minioClient = require("../../../minio/minio-connect");
+const connection = require("../../../connections/database/db-connect");
+const redisClient = require("../../../connections/redis/redis-connect");
+const minioClient = require("../../../connections/minio/drive-connect");
 const config = require("../../config")
 const moment = require('moment');
 const booksController = {
@@ -24,7 +24,7 @@ const booksController = {
             const bookID = req.params.idBook || req.body.idBook;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
-            const bucketName = config.MINIO_BUCKET;
+            const bucketName = config.BUCKET_NAME;
             const sqlSelect = ["SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))", "SELECT b.*, FORMAT(AVG(v.score), 2) AS rating, COUNT(v.score) AS numVotes, SUM(v.score) AS totalScore, v.reviewOn FROM votes v LEFT JOIN books b ON b.bookID=v.bookID WHERE b.bookID=? AND v.reviewOn>0", `SELECT p.partnerID AS partnerID, p.dni AS partnerDni, b.reserved as reserved FROM books b INNER JOIN bookings bk ON bk.bookID = b.bookID INNER JOIN partners p ON p.dni = bk.partnerDni WHERE b.bookID=${bookID} AND bk.delivered=0`,`SELECT b.* FROM books b WHERE b.bookID=${bookID}`, `SELECT cb.nameCover as cover FROM books b LEFT JOIN coverBooks cb ON cb.bookID=b.bookID WHERE b.bookID = ${bookID}`];
             connection.query(sqlSelect.join(";"), [bookID], async (err, results) => {
                 if (err) {

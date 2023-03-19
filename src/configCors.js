@@ -6,7 +6,11 @@ const CORS_ALLOWED_ORIGINS = [
   `${NGINX_HOST}`,
   `${NGINX_HOST}:${PORT}`,
   `http://localhost:${PORT}`,
+  `http://127.0.0.1:${PORT}`,
+  `http://0.0.0.0:${PORT}`,
+  `127.0.0.1:${PORT}`,
   `0.0.0.0:${PORT}`,
+  `localhost:${PORT}`,
   `http://www.liburutegia-sanmiguel.com:${PORT}`,
   'http://www.liburutegia-sanmiguel.com',
 ];

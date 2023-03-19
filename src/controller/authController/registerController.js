@@ -1,6 +1,6 @@
-const connection = require("../../../database/db-connect");
+const connection = require("../../../connections/database/db-connect");
 const bscryptjs = require("bcryptjs");
-const redisClient = require("../../../redis/redis-connect");
+const redisClient = require("../../../connections/redis/redis-connect");
 const routerRegister = {
     getRegister: async function (req, res) {
         try {
