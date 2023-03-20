@@ -34,9 +34,7 @@ services:
               NODE_ENV: ${NODE_ENV}
               PORT: ${PORT}
               MYSQL_HOST: ${MYSQL_HOST}
-              MYSQL_USER: ${MYSQL_USER}
               MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-              MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
               MYSQL_DATABASE: ${MYSQL_DATABASE}
               REDIS_PORT: ${REDIS_PORT}
               REDIS_HOST: ${REDIS_HOST}
@@ -89,9 +87,7 @@ services:
             - "${MYSQL_PORT}:3306"
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
         volumes:
             - ~/Application/mysql-data:/var/lib/mysql
         networks:
