@@ -1,6 +1,6 @@
 # Liburudenda
 
-APP para el control de libro de la sociedad : ' San Miguel'
+APP para el control de libro :books:	
 
 ![This is an image](https://github.com/lopuma/Liburudenda/blob/master/src/public/img/APPLiburutegia.png)
 
