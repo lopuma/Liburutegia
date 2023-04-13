@@ -10,7 +10,7 @@ const configCors = require('./configCors');
 const config = require('./config');
 let RedisStore = require("connect-redis")(session)
 const redisClient = require('../connections/redis/redis-connect')
-const driveClient = require('../connections/minio/drive-connect');
+const { driveClient, disks } = require('../connections/minio/drive-connect');
 // APP EXPRESS
 const app = express();
 app.set('trust proxy', 1);
@@ -23,47 +23,56 @@ app.use(cors(
 // 4 - Configuraciones
 console.info(`The display is in (${config.NODE_ENV})`);
 const PORT = config.PORT;
-if (config.FILESYSTEM_DRIVER === 'minio') {
-    async function createBucket(bucketName) {
+
+// Connect minio
+async function createBucket(bucketName) {
+    if (disks === 'minio') {
         driveClient.bucketExists(bucketName, function (err, exists) {
             if (err) {
                 return console.error('Failed to check if bucket exists ', err)
             }
             if (exists) {
-                console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.BUCKET_NAME} it already exists`);
+                console.info(`The Minio is connected on: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${bucketName} it already exists`);
             } else {
                 driveClient.makeBucket(bucketName, function (err) {
                     if (err) {
                         console.error('Failed to create bucket', err)
                     } else {
-                        console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${config.BUCKET_NAME} successfully created`);
+                        console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${bucketName} successfully created`);
 
                     }
                 })
             }
         })
-    }
-    createBucket(config.BUCKET_NAME);
-} else {
-    const { ListBucketsCommand, HeadBucketCommand, CreateBucketCommand } = require("@aws-sdk/client-s3");
-    async function createBucket(bucketName) {
+    } else if (disks === 'aws') {
+        const { S3Client, ListBucketsCommand, HeadBucketCommand, CreateBucketCommand } = require("@aws-sdk/client-s3");
+        const s3Client = new S3Client({
+            region: config.AWS_REGION,
+            credentials: {
+                accessKeyId: config.AWS_ACCESS_KEY_ID,
+                secretAccessKey: config.AWS_SECRET_ACCESS_KEY
+            }
+        });
         try {
             // Verificar si el bucket existe
-            await driveClient.send(new HeadBucketCommand({ Bucket: bucketName }));
+            await s3Client.send(new HeadBucketCommand({ Bucket: bucketName }));
             // Si el bucket existe, listar los buckets
-            const data = await driveClient.send(new ListBucketsCommand({}));
-            console.log(`The AWS S3 is connected, Buckets ${JSON.stringify(data.Buckets)} already exist`);
+            const data = await s3Client.send(new ListBucketsCommand({}));
+            console.info(`The AWS S3 is connected, Buckets ${JSON.stringify(data.Buckets)} already exist`);
         } catch (err) {
             try {
-                await driveClient.send(new CreateBucketCommand({ Bucket: bucketName }));
-                console.log(`The AWS S3 is connected,Bucket ${bucketName} successfully created.`);
+                await s3Client.send(new CreateBucketCommand({ Bucket: bucketName }));
+                console.info(`The AWS S3 is connected,Bucket ${bucketName} successfully created.`);
             } catch (err) {
                 console.error(`Failed to create bucket ${bucketName}: `, err);
             }
         }
+    } else {
+        console.info("DRIVER =>", disks);
     }
-    createBucket(config.BUCKET_NAME);
 }
+
+createBucket(config.BUCKET_NAME);
 
 // 5 - Morgan para mostrar datos de peticiones
 app.use(morgan('dev'));

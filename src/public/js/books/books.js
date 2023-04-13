@@ -194,7 +194,7 @@ let opcion = "";
 //TODO ✅ FETCH RELOAD DATA BOOKS
     const reloadDataBooks = async () => {
         if (_STATEBOOK) {
-            const urlLoad = "/api/books/";
+            const urlLoad = "/workspace/books/books";
             const data = await fetch(urlLoad)
                 .then((response) => response.json())
                 .then((datos) => datos);

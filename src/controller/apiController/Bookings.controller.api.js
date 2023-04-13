@@ -109,12 +109,13 @@ const bookingController = {
                     });
                 }
                 let data = results;
-                await redisClient.set("bookings", JSON.stringify(data), (err, reply) => {
+                await redisClient.set("bookings", JSON.stringify(data), async (err, reply) => {
                     if (err) {
                         _CACHEBOOKING = false;
                         return console.error(err)
                     }
                     if(reply) 
+                    await redisClient.expire(`bookings`, 3600)
                     {   
                         _CACHEBOOKING = true;
                         res.status(200).send(data);
@@ -141,8 +142,9 @@ const bookingController = {
                     });
                 }
                 const data = results[0];
-                await redisClient.set(`booking${bookingID}`, JSON.stringify(data), 'NX', 'EX', 3600, (err, reply) => {
+                await redisClient.set(`booking${bookingID}`, JSON.stringify(data), async (err, reply) => {
                     if(reply) {
+                        await redisClient.expire(`booking${bookingID}`, 3600)
                         return res.status(200).send(data);
                     }
                 });

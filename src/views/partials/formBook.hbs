@@ -222,30 +222,38 @@
             `[ ERROR ] : The ISBN already exists:  <span class="Links" onclick="showExistsISBN()">show</span>`,
             
     };
-    async function showExistsISBN() {
-        const title = dataExistsISBN.swalTitle;
-        const message = dataExistsISBN.successMessage || dataExistsISBN.errorMessage;
-        const dataBook = dataExistsISBN.data;
-        Swal.fire({
-            position: 'top-end',
-            title: title || 'Are you sure?',
-            html: `<div style="font-size: .8em; font-family: 'Roboto', sans-serif;">
-                <span style="font-weight: 600">BOOK ID: </span>${dataBook[0].bookID}
-                <br>
-                <span style="font-weight: 600">TITLE: </span>${dataBook[0].title}
-            </div>`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: `View it's book!`
-            }).then(async (result) => {
-            if (result.isConfirmed) {
-                const bookID = dataBook[0].bookID;
-                window.open(`/workspace/books/info/${bookID}`, '_blank');
-            }
-            })
+async function showExistsISBN() {
+    const title = dataExistsISBN.swalTitle;
+    const message = dataExistsISBN.successMessage || dataExistsISBN.errorMessage;
+    const dataBook = dataExistsISBN.data;
+
+    let html = '';
+    for (let i = 0; i < dataBook.length; i++) {
+        html += `<div style="font-size: .8em; font-family: 'Roboto', sans-serif; display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <div>
+                <span style="font-weight: 600">BOOK ID: </span>${dataBook[i].bookID}
+                <span style="font-weight: 600">TITLE: </span>${dataBook[i].title}
+            </div>
+            <div>
+                <a href="/workspace/books/info/${dataBook[i].bookID}" target="_blank" style="font-weight: bold; text-decoration: none; border-bottom: 1px solid #000; " class="Links">VIEW</a>
+            </div>
+        </div>`;
     }
+
+    Swal.fire({
+        width: '50rem',
+        position: 'top-end',
+        title: title || 'Are you sure?',
+        html: html,
+        icon: 'warning',
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonColor: '#d33',
+        focusCancel: true
+    })
+}
+
+
     (async function loadSelectTags() {
         await $(".isSelect").select2({
             tags: true,
@@ -272,7 +280,7 @@
                     field["ISBN"] = false;
                 } else {
                     dataExistsISBN = "";
-                    duplicateISBN = false;                   
+                    duplicateISBN = false;      
                     document.getElementById("inputBoxISBN").removeAttribute("data-error");
                     document.getElementById("inputBoxPurchaseDate").removeAttribute("data-error");
                     document.getElementById('validationISBN').classList.remove("isActive");

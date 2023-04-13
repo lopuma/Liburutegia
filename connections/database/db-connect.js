@@ -10,7 +10,7 @@ connection.connect(err => {
         }
         console.error(err);
     } else {
-        console.info(`The DataBase is connected on the PORT: ${database.port}`);
+        console.info(`The DataBase is connected on ${database.host} the PORT: ${database.port}`);
     }
 });
 

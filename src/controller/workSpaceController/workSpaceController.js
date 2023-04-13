@@ -112,9 +112,10 @@ const workSpaceController = {
                     if (rolAdmin === false) {
                         return res.status(400).redirect("/");
                     }
-                    await redisClient.set('users', JSON.stringify(users), 'NX', 'EX', 14400, (err, reply) => {
+                    await redisClient.set('users', JSON.stringify(users), async (err, reply) => {
                         if(err) return console.error(err);
                         if(reply) {
+                            await redisClient.expire(`users`, 14400)
                             res.status(200).render("workspace/dashboard-admin", {
                                 loggedIn,
                                 userName,

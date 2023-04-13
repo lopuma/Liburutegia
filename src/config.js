@@ -7,6 +7,7 @@ module.exports = {
     REDIS_USER: process.env.REDIS_USER || 'default',
     REDIS_PASSWORD: process.env.REDIS_PASSWORD,
     REDIS_PORT: process.env.REDIS_PORT || 6379,
+    REDIS_COMMANDER_PORT: process.env.REDIS_COMMANDER_PORT || 8081,
     REDIS_HOST: process.env.REDIS_HOST || '127.0.0.1',
     NODE_ENV: process.env.NODE_ENV || 'production',
     NODE_PORT: process.env.PORT || 3000,

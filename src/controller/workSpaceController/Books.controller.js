@@ -123,5 +123,37 @@ const booksController = {
             res.status(500).redirect("/");
         }
     },
+    getBooks: async (req, res) => {
+        try {
+            connection.query("SELECT * FROM books", async (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        swalTitle: "[ Error BD ]",
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
+                }
+                if (results.length === 0) {
+                    return res.status(200).send({
+                        success: false,
+                        swalTitle: "No found....!",
+                        errorMessage:
+                            "[ ERROR ], There are no data in the table books, Liburutegia.",
+                        data: null
+                    });
+                }
+                let data = results;
+                await redisClient.set("books", JSON.stringify(data), 'NX', 'EX', 7200, (err, reply) => {
+                    if (err) console.error(err)
+                    if(reply) res.status(200).send(data);
+                });
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
 };
 module.exports = booksController;

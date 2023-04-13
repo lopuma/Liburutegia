@@ -126,7 +126,67 @@ const bookController = {
     },
     getBooks: async (req, res) => {
         try {
-            connection.query("SELECT * FROM books", async (err, results) => {
+            const { id: bookID, isbn, author } = req.query;
+            if (Object.keys(req.query).some(key => !['id', 'isbn', 'author'].includes(key))) {
+                return res.status(400).send({
+                    success: false,
+                    messageErrBD: "Invalid parameters were provided, you can query with the following parameters [ 'id', 'author', 'isbn' ]",
+                    swalTitle: "[ Query error ]",
+                    errorMessage: "Invalid parameters were provided, you can query with the following parameters [ 'id', 'author', 'isbn' ]"
+                });
+            }
+
+            if (bookID !== undefined && bookID === '') {
+                return res.status(400).send({
+                  success: false,
+                  messageErrBD: "Parameter 'id' does not have a valid value",
+                  swalTitle: "[ Query error ]",
+                  errorMessage: "Parameter 'id' does not have a valid value",
+                });
+              }
+          
+              // Verificar si el parámetro 'isbn' está presente y tiene un valor válido
+              if (isbn !== undefined && isbn === '') {
+                return res.status(400).send({
+                  success: false,
+                  messageErrBD: "Parameter 'isbn' does not have a valid value",
+                  swalTitle: "[ Query error ]",
+                  errorMessage: "Parameter 'isbn' does not have a valid value",
+                });
+              }
+          
+              // Verificar si el parámetro 'author' está presente y tiene un valor válido
+              if (author !== undefined && author === '') {
+                return res.status(400).send({
+                  success: false,
+                  messageErrBD: "Parameter 'author' does not have a valid value",
+                  swalTitle: "[ Query error ]",
+                  errorMessage: "Parameter 'author' does not have a valid value",
+                });
+              }
+    
+            let sqlSelectBook = `SELECT * FROM books`;
+            let query = [];
+    
+            if (bookID) {
+                if (isNaN(bookID)) {
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: "The 'id' parameter must be a number",
+                        swalTitle: "[ Parameter error ]",
+                        errorMessage: "The 'id' parameter must be a number",
+                    });
+                }
+                sqlSelectBook = `SELECT * FROM sanmiguel.books WHERE bookID = ?`;
+                query = [bookID];
+            } else if (author) {
+                sqlSelectBook = "SELECT * FROM sanmiguel.books WHERE author LIKE ?";
+                query = `%${author}%`;
+            } else if (isbn) {
+                sqlSelectBook = "SELECT * FROM sanmiguel.books WHERE isbn LIKE ?";
+                query = `%${isbn}%`;
+            }
+            connection.query(sqlSelectBook, query, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -136,26 +196,22 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                if (results.length === 0) {
-                    return res.status(200).send({
+                const data = results;
+                if (data.length === 0) {
+                    return res.status(404).send({
                         success: false,
-                        swalTitle: "No found....!",
-                        errorMessage:
-                            "[ ERROR ], There are no data in the table books, Liburutegia.",
-                        data: null
+                        messageErrBD: "No books found with the provided parameters",
+                        swalTitle: "[ Query error ]",
+                        errorMessage: "No books found with the provided parameters"
                     });
                 }
-                let data = results;
-                await redisClient.set("books", JSON.stringify(data), 'NX', 'EX', 7200, (err, reply) => {
-                    if (err) console.error(err)
-                    if(reply) res.status(200).send(data);
-                });
+                return res.status(200).send(data);
             });
         } catch (error) {
             console.error(error);
             res.status(500).redirect("/");
         }
-    },
+    },    
     getBook: async (req, res) => {
         try {
             const bookID = req.params.idBook || req.body.idBook;
@@ -171,7 +227,8 @@ const bookController = {
                     });
                 }
                 const data = results[0];
-                await redisClient.set(`book${bookID}`, JSON.stringify(data), 'NX', 'EX', 3600, (err, reply) => {
+                await redisClient.set(`book${bookID}`, JSON.stringify(data), async (err, reply) => {
+                    await redisClient.expire(`book${bookID}`, 3600)
                     if(err) return console.error(err);
                     if(reply) res.status(200).send(data);
                 });
@@ -525,8 +582,9 @@ const bookController = {
     getISBN: (req, res) => {
         try {
             const isbn = req.params.isbn;
-            const sqlExistsISBN = "SELECT * FROM books WHERE isbn=?";
-            connection.query(sqlExistsISBN, isbn, (err, results) => {   
+            const sqlExistsISBN = "SELECT * FROM sanmiguel.books WHERE isbn LIKE ?";
+            const query = `%${isbn}%`;
+            connection.query(sqlExistsISBN, [query], (err, results) => {   
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -545,9 +603,20 @@ const bookController = {
                         data,
                     });
                 }
-                res.status(200).send({
-                    success: false
-                });
+                if(results.length >= 1){
+                    const data = results;
+                    return res.status(200).send({
+                        success: true,
+                        swalTitle: "[ Exists.... ]",
+                        successMessage: "The ISBN already exists",
+                        data,
+                    });
+                }
+                if(results.length === 0){
+                    res.status(200).send({
+                        success: false,
+                    });
+                }
             });
         } catch (error) {
             console.error(error);

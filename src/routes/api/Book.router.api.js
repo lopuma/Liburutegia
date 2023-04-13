@@ -25,13 +25,13 @@ const {
 	existBooking
 } = require("../../controller/apiController/Bookings.controller.api");
 const routerBooks = require('express').Router();
-    routerBooks.get("/", redisBooks, getBooks);
+    routerBooks.get("/",getBooks);
     routerBooks.get("/:idBook", redisBook, noExistBook, getBook);
     routerBooks.post("/deliver/:idBook", isAuthenticated, existBooking, deliverBook);   
     routerBooks.post("/add", isAuthenticated, validate, addBook);
-    routerBooks.get("/delete/:idBook", deleteBook);
-    routerBooks.post("/update/:idBook", noExistBook, validate, putBook);
-    routerBooks.post("/frontPage", upload.single('coverImage'), existsCover, uploadFile);
+    routerBooks.get("/delete/:idBook", isAuthenticated, deleteBook);
+    routerBooks.post("/update/:idBook", isAuthenticated, noExistBook, validate, putBook);
+    routerBooks.post("/frontPage", isAuthenticated, upload.single('coverImage'), existsCover, uploadFile);
     routerBooks.get("/info/reviews/:idBook", redisInfoReview, infoReviews);
     routerBooks.get("/isbn/:isbn", getISBN);
 module.exports = routerBooks;
