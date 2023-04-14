@@ -10,7 +10,7 @@ const {
 
 const routerFamilys = require("express").Router();
 
-    routerFamilys.get("/:dniPartner", getFamily);
+    routerFamilys.get("/:dniPartner", isAuthenticated, getFamily);
 
     routerFamilys.post("/unlink/:idFamily", isAuthenticated, desFamily);
 

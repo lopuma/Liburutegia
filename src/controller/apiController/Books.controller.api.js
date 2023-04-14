@@ -1,6 +1,6 @@
 const connection = require("../../../connections/database/db-connect");
 const redisClient = require("../../../connections/redis/redis-connect");
-const minioClient = require("../../../connections/minio/drive-connect");
+const { driveClient, disks } = require("../../../connections/minio/drive-connect");
 const config = require('../../config');
 const sharp = require('sharp');
 const fs = require('fs')
@@ -36,7 +36,7 @@ const bookController = {
                         return res.status(400).send({
                             success: false,
                             messageErrBD: err,
-                            swalTitle: "[ Error BD ]",
+                            swalTitle: "[ ERROR DB ]",
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                     }
@@ -126,16 +126,15 @@ const bookController = {
     },
     getBooks: async (req, res) => {
         try {
-            const { id: bookID, isbn, author } = req.query;
-            if (Object.keys(req.query).some(key => !['id', 'isbn', 'author'].includes(key))) {
+            const { id: bookID, isbn, author, title } = req.query;
+            if (Object.keys(req.query).some(key => !['id', 'isbn', 'author', 'title'].includes(key))) {
                 return res.status(400).send({
                     success: false,
-                    messageErrBD: "Invalid parameters were provided, you can query with the following parameters [ 'id', 'author', 'isbn' ]",
+                    messageErrBD: "Invalid parameters were provided, you can query with the following parameters [ 'id', 'author', 'isbn', 'title ]",
                     swalTitle: "[ Query error ]",
-                    errorMessage: "Invalid parameters were provided, you can query with the following parameters [ 'id', 'author', 'isbn' ]"
+                    errorMessage: "Invalid parameters were provided, you can query with the following parameters [ 'id', 'author', 'isbn', 'title' ]"
                 });
             }
-
             if (bookID !== undefined && bookID === '') {
                 return res.status(400).send({
                   success: false,
@@ -144,26 +143,33 @@ const bookController = {
                   errorMessage: "Parameter 'id' does not have a valid value",
                 });
               }
-          
-              // Verificar si el parámetro 'isbn' está presente y tiene un valor válido
-              if (isbn !== undefined && isbn === '') {
+            // Verificar si el parámetro 'isbn' está presente y tiene un valor válido
+            if (isbn !== undefined && isbn === '') {
+            return res.status(400).send({
+                success: false,
+                messageErrBD: "Parameter 'isbn' does not have a valid value",
+                swalTitle: "[ Query error ]",
+                errorMessage: "Parameter 'isbn' does not have a valid value",
+            });
+            }
+            // Verificar si el parámetro 'author' está presente y tiene un valor válido
+            if (author !== undefined && author === '') {
+            return res.status(400).send({
+                success: false,
+                messageErrBD: "Parameter 'author' does not have a valid value",
+                swalTitle: "[ Query error ]",
+                errorMessage: "Parameter 'author' does not have a valid value",
+            });
+            }
+            // Verificar si el parámetro 'title' está presente y tiene un valor válido
+            if (title !== undefined && title === '') {
                 return res.status(400).send({
-                  success: false,
-                  messageErrBD: "Parameter 'isbn' does not have a valid value",
-                  swalTitle: "[ Query error ]",
-                  errorMessage: "Parameter 'isbn' does not have a valid value",
+                    success: false,
+                    messageErrBD: "Parameter 'title' does not have a valid value",
+                    swalTitle: "[ Query error ]",
+                    errorMessage: "Parameter 'title' does not have a valid value",
                 });
-              }
-          
-              // Verificar si el parámetro 'author' está presente y tiene un valor válido
-              if (author !== undefined && author === '') {
-                return res.status(400).send({
-                  success: false,
-                  messageErrBD: "Parameter 'author' does not have a valid value",
-                  swalTitle: "[ Query error ]",
-                  errorMessage: "Parameter 'author' does not have a valid value",
-                });
-              }
+                }
     
             let sqlSelectBook = `SELECT * FROM books`;
             let query = [];
@@ -185,6 +191,9 @@ const bookController = {
             } else if (isbn) {
                 sqlSelectBook = "SELECT * FROM sanmiguel.books WHERE isbn LIKE ?";
                 query = `%${isbn}%`;
+            } else if (title) {
+                sqlSelectBook = "SELECT * FROM sanmiguel.books WHERE title LIKE ?";
+                query = `%${title}%`;
             }
             connection.query(sqlSelectBook, query, async (err, results) => {
                 if (err) {
@@ -192,7 +201,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -222,7 +231,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -253,7 +262,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -288,7 +297,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -297,7 +306,7 @@ const bookController = {
                     const coverID = results[0].coverID;
                     try {
                         const nameColverOld = results[0].nameCover;
-                        await minioClient.removeObject(bucketName, nameColverOld);
+                        await driveClient.removeObject(bucketName, nameColverOld);
                     } catch (error) { }
                     sqlUpdateCover = `UPDATE coverBooks SET ? WHERE coverID = ${coverID}`;
                     connection.query(sqlUpdateCover, { bookID, nameCover }, async (_err, _results) => {
@@ -333,7 +342,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -399,7 +408,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -463,7 +472,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -497,7 +506,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -520,7 +529,7 @@ const bookController = {
                         return res.status(400).send({
                             success: false,
                             messageErrBD: err,
-                            swalTitle: "[ Error BD ]",
+                            swalTitle: "[ ERROR DB ]",
                             errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                         });
                     }
@@ -548,7 +557,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -590,7 +599,7 @@ const bookController = {
                     return res.status(400).send({
                         success: false,
                         messageErrBD: err,
-                        swalTitle: "[ Error BD ]",
+                        swalTitle: "[ ERROR DB ]",
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
@@ -599,7 +608,7 @@ const bookController = {
                     return res.status(200).send({
                         success: true,
                         swalTitle: "[ Exists.... ]",
-                        successMessage: "The ISBN already exists",
+                        successMessage: "The ISBN exists, and is associated with the following book",
                         data,
                     });
                 }
@@ -608,7 +617,7 @@ const bookController = {
                     return res.status(200).send({
                         success: true,
                         swalTitle: "[ Exists.... ]",
-                        successMessage: "The ISBN already exists",
+                        successMessage: "The following books exist with the search parameter",
                         data,
                     });
                 }
@@ -626,6 +635,7 @@ const bookController = {
 };
 
 module.exports = bookController;
+
 function generateCoverRand(length, type) {
     switch (type) {
         case 'num':
@@ -661,7 +671,7 @@ async function saveImageServer(req, res) {
         const resizeImageBuffer = await proccessImage.toBuffer();
         const objectName = generateCoverRand(15) + '.png';
         const putObjectPromise = new Promise((resolve, reject) => {
-            minioClient.putObject(bucketName, objectName, resizeImageBuffer, (err, stat) => {
+            driveClient.putObject(bucketName, objectName, resizeImageBuffer, (err, stat) => {
                 if (err) {
                     console.error(err);
                     reject('Could not upload image');
@@ -672,7 +682,7 @@ async function saveImageServer(req, res) {
         });
         const presignedUrlPromise = new Promise((resolve, reject) => {
             const expirationTime = 5 * 24 * 60 * 60;
-            minioClient.presignedGetObject(bucketName, objectName, expirationTime, (err, url) => {
+            driveClient.presignedGetObject(bucketName, objectName, expirationTime, (err, url) => {
                 if (err) {
                     console.error(err);
                     reject('Could not get URL');

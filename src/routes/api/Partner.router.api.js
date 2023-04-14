@@ -17,11 +17,11 @@ const {
 // TODO 👌 
 const routerPartners = require("express").Router();
 
-    routerPartners.get("/", getPartners);
+    routerPartners.get("/", isAuthenticated, getPartners);
 
-    routerPartners.get("/:idPartner", noExistPartner, getPartner);
+    routerPartners.get("/:idPartner", isAuthenticated, noExistPartner, getPartner);
 
-    routerPartners.get("/info/:idPartner", noExistPartner, infoPartner);
+    routerPartners.get("/info/:idPartner", isAuthenticated, noExistPartner, infoPartner);
 
     routerPartners.post("/add/:idPartner", isAuthenticated, validate, existPartner, noExistPartner, addPartner);
 
@@ -32,13 +32,6 @@ const routerPartners = require("express").Router();
         deletePartner
     );
 
-/*    routerPartners.post(
-        "/update/:idPartner",
-        isAuthenticated,
-        noExistPartner,
-        validate,
-        putPartner
-    );*/
 routerPartners.post(
     "/update/:idPartner",
     noExistPartner,

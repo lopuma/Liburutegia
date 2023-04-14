@@ -19,8 +19,8 @@ const {
 
 
 const routerBookings = require("express").Router();
-	routerBookings.get("/", redisBookings, getBookings);
-	routerBookings.get("/:idBooking", redisBooking, noExistBooking, getBooking);
+	routerBookings.get("/", isAuthenticated, redisBookings, getBookings);
+	routerBookings.get("/:idBooking", isAuthenticated, redisBooking, noExistBooking, getBooking);
     routerBookings.post("/add/:idBook", isAuthenticated, noExistBook, addBooking);
     routerBookings.post("/cancel/:idBooking", isAuthenticated, cancelBooking);
 module.exports = routerBookings;

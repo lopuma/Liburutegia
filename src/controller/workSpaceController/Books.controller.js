@@ -1,6 +1,6 @@
 const connection = require("../../../connections/database/db-connect");
 const redisClient = require("../../../connections/redis/redis-connect");
-const minioClient = require("../../../connections/minio/drive-connect");
+const { driveClient, disks } = require("../../../connections/minio/drive-connect");
 const config = require("../../config")
 const moment = require('moment');
 const booksController = {
@@ -62,10 +62,10 @@ const booksController = {
                 const objectName = nameCover[0].cover;
                 let dataCover;
                 if(objectName){
-                    minioClient.statObject(bucketName, objectName, async (err, stat) => {
+                    driveClient.statObject(bucketName, objectName, async (err, stat) => {
                         if(stat !== undefined){
                             const expirationTime = 5 * 24 * 60 * 60;
-                            await minioClient.presignedGetObject(bucketName, objectName, expirationTime, (err, url) => {
+                            await driveClient.presignedGetObject(bucketName, objectName, expirationTime, (err, url) => {
                                 if (err) {
                                     console.err(err);
                                 } else {
