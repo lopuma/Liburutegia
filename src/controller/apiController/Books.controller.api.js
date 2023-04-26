@@ -499,6 +499,7 @@ const bookController = {
     deleteBook: async (req, res) => {
         try {
             const bookID = req.params.idBook;
+            const bucketName = config.BUCKET_NAME; 
             const sqlSelect = "SELECT title FROM books WHERE bookID=?";
             connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
@@ -522,8 +523,8 @@ const bookController = {
                     });
                 }
                 const title = results[0].title;
-                const sqlDelete = "DELETE FROM books WHERE bookID=?";
-                connection.query(sqlDelete, [bookID], async (err, _results) => {
+                const sqlSelectCovers = "SELECT * FROM coverBooks WHERE bookID=?";
+                connection.query(sqlSelectCovers, [bookID], async (err, results) => {
                     if (err) {
                         console.error("[ DB ]", err.sqlMessage);
                         return res.status(400).send({
@@ -534,14 +535,30 @@ const bookController = {
                         });
                     }
                     try {
-                        await redisClient.del(`books`);
+                        const nameColverOld = results[0].nameCover;
+                        await driveClient.removeObject(bucketName, nameColverOld);
                     } catch (error) { }
-                    res.status(200).send({
-                        success: true,
-                        swalTitle: "[ Book deleted... ]",
-                        messageSuccess: `The Book with ID: '${bookID}', TITLE : '${title}' has been successfully deleted`
+                    const sqlDelete = "DELETE FROM books WHERE bookID=?";
+                    connection.query(sqlDelete, [bookID], async (err, _results) => {
+                        if (err) {
+                            console.error("[ DB ]", err.sqlMessage);
+                            return res.status(400).send({
+                                success: false,
+                                messageErrBD: err,
+                                swalTitle: "[ ERROR DB ]",
+                                errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                            });
+                        }
+                        try {
+                            await redisClient.del(`books`);
+                        } catch (error) { }
+                        res.status(200).send({
+                            success: true,
+                            swalTitle: "[ Book deleted... ]",
+                            messageSuccess: `The Book with ID: '${bookID}', TITLE : '${title}' has been successfully deleted`
+                        });
                     });
-                });
+                })
             });
         } catch (error) {
             console.error(error);

@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM mysql:8.0.33
 
 RUN chown -R mysql:root /var/lib/mysql/
 
