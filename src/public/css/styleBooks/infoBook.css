@@ -490,7 +490,11 @@ h2.linea span {
     }
 
     .Review {
-        grid-template-columns: 2fr 1fr;
+        margin-top: 3em;
+        grid-template-columns: .7fr;
+        align-items: center;
+        justify-content: center;
+        width: auto;
         grid-template-rows: 1fr;
         gap: 1em
     }
@@ -504,8 +508,7 @@ h2.linea span {
 @media screen and (max-width: 550px) {
 
     .Review {
-        display: block;
-        width: 100%
+        grid-template-columns: auto;
     }
 
     .Info-contenedor {

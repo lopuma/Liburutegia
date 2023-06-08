@@ -27,9 +27,6 @@ services:
         restart: always
         ports:
             - "${PORT}:${PORT}"
-        depends_on:
-            - "mysql-liburutegia"
-            - "minio-liburutegia"
         environment:
               NODE_ENV: ${NODE_ENV}
               PORT: ${PORT}

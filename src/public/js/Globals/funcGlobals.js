@@ -516,6 +516,7 @@
 
         return color;
     }
+    
     function removeParam(parameter, url) {
         var urlparts = url.split('?');
         if (urlparts.length >= 2) {
