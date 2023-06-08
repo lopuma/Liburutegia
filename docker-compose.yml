@@ -28,19 +28,14 @@ services:
         ports:
             - "${PORT}:${PORT}"
         environment:
-              NODE_ENV: ${NODE_ENV}
-              PORT: ${PORT}
-              MYSQL_HOST: ${MYSQL_HOST}
+              MYSQL_HOST: mysql-liburutegia
+              REDIS_HOST: redis-liburutegia
               MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+              MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
               MYSQL_DATABASE: ${MYSQL_DATABASE}
-              REDIS_PORT: ${REDIS_PORT}
-              REDIS_HOST: ${REDIS_HOST}
               REDIS_PASSWORD: ${REDIS_PASSWORD}
-              FILESYSTEM_DRIVER: ${FILESYSTEM_DRIVER}
-              USE_SSL: ${USE_SSL}
+              MINIO_HOST: "${MINIO_HOST}"
               BUCKET_NAME: ${BUCKET_NAME}
-              MINIO_HOST: ${MINIO_HOST}
-              MINIO_PORT: ${MINIO_PORT}
               MINIO_USER: ${MINIO_USER}
               MINIO_PASSWORD: ${MINIO_PASSWORD}
         volumes:
@@ -52,9 +47,9 @@ services:
       image: redis
       restart: always
       ports:
-        - "${REDIS_PORT}:6379"
+        - "6379:6379"
       volumes:
-        - ~/Application/redis:/usr/local/etc/redis/:ro
+        - ~/Volumenes/redis:/usr/local/etc/redis/:ro
       command: redis-server /usr/local/etc/redis/redis.conf
       environment:
           REDIS_PASSWORD: ${REDIS_PASSWORD}
@@ -65,10 +60,9 @@ services:
       image: rediscommander/redis-commander
       restart: always
       ports:
-          - "${REDIS_COMMANDER_PORT}:8081"
+          - "8081:8081"
       environment:
-          REDIS_HOST: ${REDIS_HOST}
-          REDIS_PORT: ${REDIS_PORT}
+          REDIS_HOST: 'redis-liburutegia'
           REDIS_PASSWORD: ${REDIS_PASSWORD}
           REDIS_DB_INDEX: 0
       volumes:
@@ -82,12 +76,12 @@ services:
         command: --default-authentication-plugin=mysql_native_password
         restart: always
         ports:
-            - "${MYSQL_PORT}:3306"
+            - "3306:3306"
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
         volumes:
-            - ~/Application/mysql-data:/var/lib/mysql
+            - ~/Volumenes/mysql-data:/var/lib/mysql
         networks:
             - ntk-app
     minio-liburutegia:
@@ -95,47 +89,14 @@ services:
       image: minio/minio:latest
       restart: always
       ports: 
-          - "${MINIO_PORT}:9000"
-          - "${MINIO_CONSOLE_PORT}:9001"
+          - "9000:9000"
+          - "9001:9001"
       environment:
-            MINIO_HOST: ${MINIO_HOST}
             MINIO_ROOT_USER: ${MINIO_USER}
             MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
       volumes:
-            - ~/Application/minio/data:/data
+            - ~/Volumenes/minio/data:/data
       command: ["server", "/data", "--console-address", ":9001"]
-      networks:
-          - ntk-app
-    lbctl-liburutegia:
-      container_name: lbctl-liburutegia
-      build: /home/lopuma/Development/Projects/lbctl/.
-      restart: always
-      env_file:
-          - .env        
-      environment:
-          COVER_DIR: ${COVER_DIR}
-          WEBDRIVER_HOST: ${WEBDRIVER_HOST}
-          WEBDRIVER_PORT_CLI: ${WEBDRIVER_PORT_CLI}
-          WEBDRIVER_PORT_WEB: ${WEBDRIVER_PORT_WEB}
-          WEBDRIVER_STANDALONE: ${WEBDRIVER_STANDALONE}
-          MYSQL_HOST: ${MYSQL_HOST}
-          MYSQL_USER: ${MYSQL_USER}
-          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-          MYSQL_DATABASE: ${MYSQL_DATABASE}
-          MYSQL_PORT: ${MYSQL_PORT}
-          REDIS_PORT: ${REDIS_PORT}
-          REDIS_HOST: ${REDIS_HOST}
-          REDIS_PASSWORD: ${REDIS_PASSWORD}
-          REDIS_COMMANDER_PORT: ${REDIS_COMMANDER_PORT}
-          BUCKET_NAME: ${BUCKET_NAME}
-          USE_SSL: ${USE_SSL}
-          MINIO_HOST: ${MINIO_HOST}
-          MINIO_PORT: ${MINIO_PORT}
-          MINIO_USER: ${MINIO_USER}
-          MINIO_CONSOLE_PORT: ${MINIO_CONSOLE_PORT}
-          MINIO_PASSWORD: ${MINIO_PASSWORD}
-      volumes: 
-        - ${COVER_DIR}:/app/${BUCKET_NAME}
       networks:
           - ntk-app
 volumes:
