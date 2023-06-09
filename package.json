@@ -11,8 +11,8 @@
     },
     "scripts": {
         "dev": "export NODE_ENV=development && nodemon src/app.js",
-        "prod": "export NODE_ENV=production && pm2-runtime src/app.js",
-        "start": "export NODE_ENV=production &&  node src/app.js"
+        "prod": "pm2-runtime src/app.js",
+        "start": "pm2-runtime src/app.js"
     },
     "keywords": [
         "nodejs",
@@ -38,6 +38,7 @@
         "morgan": "^1.10.0",
         "multer": "^1.4.5-lts.1",
         "mysql2": "^3.1.0",
+        "pm2": "^5.3.0",
         "redis": "^4.6.4",
         "sharp": "^0.31.3"
     },

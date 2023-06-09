@@ -491,7 +491,7 @@ h2.linea span {
 
     .Review {
         margin-top: 3em;
-        grid-template-columns: .7fr;
+        grid-template-columns: .6fr;
         align-items: center;
         justify-content: center;
         width: auto;

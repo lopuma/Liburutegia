@@ -62,7 +62,7 @@ services:
       ports:
           - "8081:8081"
       environment:
-          REDIS_HOST: 'redis-liburutegia'
+          REDIS_HOST: redis-liburutegia
           REDIS_PASSWORD: ${REDIS_PASSWORD}
           REDIS_DB_INDEX: 0
       volumes:
@@ -79,7 +79,8 @@ services:
             - "3306:3306"
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         volumes:
             - ~/Volumenes/mysql-data:/var/lib/mysql
         networks:

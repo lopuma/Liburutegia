@@ -1,11 +1,16 @@
 const dotenv = require('dotenv');
 const path = require('path');
-console.log("1 => ", __dirname+'/'+process.env.NODE_ENV + '.env')
-console.log("2 => ", process.env.NODE_ENV + '.env')
-console.log("3 => ",'.env')
-dotenv.config({
-    path: path.resolve(process.env.NODE_ENV + '.env')
-});
+
+if(process.env.NODE_ENV === 'development') {
+    dotenv.config({
+        path: path.resolve(process.env.NODE_ENV + '.env')
+    });
+}   else {
+    dotenv.config({
+        path: path.resolve('.env')
+    });
+}
+
 module.exports = {
     REDIS_USER: process.env.REDIS_USER || 'default',
     REDIS_PASSWORD: process.env.REDIS_PASSWORD,

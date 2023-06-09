@@ -10,7 +10,7 @@ RUN npm install
 
 RUN npm install --save uuid@latest -g
 
-RUN npm install pm2 -g
+#RUN npm install pm2 -g
 
 EXPOSE 3000
 
