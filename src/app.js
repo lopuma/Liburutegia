@@ -1,4 +1,5 @@
 const express = require('express');
+const _log = require('./utils')
 const morgan = require('morgan');
 const path = require('path');
 const exphbs = require('express-handlebars');
@@ -21,7 +22,7 @@ app.use(cors(
 ));
 
 // 4 - Configuraciones
-console.info(`The display is in (${config.NODE_ENV})`);
+_log.debug(`The display is in (${config.NODE_ENV})`);
 const PORT = config.PORT;
 
 // Connect minio
@@ -32,13 +33,15 @@ async function createBucket(bucketName) {
                 return console.error('Failed to check if bucket exists ', err)
             }
             if (exists) {
-                console.info(`The Minio is connected on: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${bucketName} it already exists`);
+                _log.ready(`server Minio is connected on: http://${config.MINIO_HOST}:${config.MINIO_PORT}`)
+                _log.debug(`Bucket ${bucketName} it already exists`);
             } else {
                 driveClient.makeBucket(bucketName, function (err) {
                     if (err) {
                         console.error('Failed to create bucket', err)
                     } else {
-                        console.info(`The Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}, Bucket ${bucketName} successfully created`);
+                        _log.ready(`server Minio is connected on the PORT: http://${config.MINIO_HOST}:${config.MINIO_PORT}`);
+                        _log.debug(`Bucket ${bucketName} successfully created`);
 
                     }
                 })
@@ -58,11 +61,11 @@ async function createBucket(bucketName) {
             await s3Client.send(new HeadBucketCommand({ Bucket: bucketName }));
             // Si el bucket existe, listar los buckets
             const data = await s3Client.send(new ListBucketsCommand({}));
-            console.info(`The AWS S3 is connected, Buckets ${JSON.stringify(data.Buckets)} already exist`);
+            _log.ready(`The AWS S3 is connected, Buckets ${JSON.stringify(data.Buckets)} already exist`);
         } catch (err) {
             try {
                 await s3Client.send(new CreateBucketCommand({ Bucket: bucketName }));
-                console.info(`The AWS S3 is connected,Bucket ${bucketName} successfully created.`);
+                _log.ready(`The AWS S3 is connected,Bucket ${bucketName} successfully created.`);
             } catch (err) {
                 console.error(`Failed to create bucket ${bucketName}: `, err);
             }
@@ -153,7 +156,20 @@ app.use(function (req, res) {
     res.render('error_page/404')
 })
 
-// 13 - Starting the server
-app.listen(PORT, () => {
-    console.info(`The Server is connected on the PORT: ${PORT}`, `http://0.0.0.0:${PORT}`);
-});
+function startServer(port) {
+    app.listen(port, () => {
+      const host = '0.0.0.0'; // Cambia esto a tu hostname deseado si no es 0.0.0.0
+      const appUrl = `http://localhost:${port}`;
+  
+      _log.ready(` started server on ${host}:${port}, url: ${appUrl}`);
+    }).on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        _log.warn(`Port ${port} is in use, trying ${port + 1} instead.`);
+        startServer(port + 1);
+      } else {
+        console.error(err);
+      }
+    });
+  }
+  
+startServer(PORT);

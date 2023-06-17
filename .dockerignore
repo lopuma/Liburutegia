@@ -1,6 +1,5 @@
 .vscode
-containers/
-mysql-data/
+containers/mysql/
 node_modules/
 scriptAutomatizacion/
 .dockerignore
@@ -9,11 +8,15 @@ scriptAutomatizacion/
 .gitignore
 docker-compose.yml
 Dockerfile
-Liburudenda.code-workspace
+*.code-workspace
 package-lock.json
-README.md
 src/*.env
 src/development.env
 src/production.env
 .git
 redis.conf
+node_modules
+.DS_Store
+logs
+tests
+development.env

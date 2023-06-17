@@ -1,16 +1,17 @@
 const mysql = require("mysql2");
 const { database } = require('./db-keys.js');
 const connection = mysql.createConnection(database);
+const _log = require('../../src/utils');
 
 connection.connect(err => {
     if (err) {
         if (err.code === "ER_NOT_SUPPORTED_AUTH_MODE") {
-            console.console.console.error();("Database connection was refused");
+            _log.error("Database connection was refused");
             return;
         }
         console.error(err);
     } else {
-        console.info(`The DataBase is connected on ${database.host} the PORT: ${database.port}`);
+        _log.ready(`server DataBase is connected on ${database.host} the PORT: ${database.port}`);
     }
 });
 

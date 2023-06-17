@@ -10,3 +10,4 @@ env/.env
 .vscode
 src/*.env
 *.code-workspace
+development.env
