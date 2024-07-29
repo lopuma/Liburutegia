@@ -1,51 +1,57 @@
 {{> modalEditBook}}
+{{> modalNotify}}
 {{> modalReserveBook}}
 <div class="Dashboard" id="stateBooks">
   <a class="Dashboard-a" href="/workspace/books/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Book</a>
-  <div class="Dashboard-row">
-      <div id="spinnerBook">
-        {{> loading}}
-      </div>
-      <table class="Dashboard-table table table-bordered display wrap" cellspacing="0" width="100%" id="tableBook">
-        <thead  class="Dashboard-head">
-          <tr>
-            <th>BOOK ID</th>
-            <th>NUM REFERENCE</th>
-            <th>TITLE</th>
-            <th>AUTHOR</th>
-            <th>EDITORIAL</th>
-            <th>ISBN</th>
-            <th>TYPE</th>
-            <th>LANGUAGE</th>
-            <th>COLLECTION</th>
-            <th>PURCHASE DATE</th>
-            <th>LAST UPDATE</th>
-            <th>OBSERVATIONS</th>
-            <th>STATUS</th>
-            <th>ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody id="tbodyBooks">
-        </tbody>
-        <tfoot  class="Dashboard-foot">
-          <tr>
-            <th>BOOK ID</th>
-            <th>NUM REFERENCE</th>
-            <th>TITLE</th>
-            <th>AUTHOR</th>
-            <th>EDITORIAL</th>
-            <th>ISBN</th>
-            <th>TYPE</th>
-            <th>LANGUAGE</th>
-            <th>COLLECTION</th>
-            <th>PURCHASE DATE</th>
-            <th>LAST UPDATE</th>
-            <th>OBSERVATIONS</th>
-            <th>STATUS</th>
-            <th>ACTIONS</th>
-          </tr>
-        </tfoot>
-      </table>
+  <div class="Dashboard-row relative">
+    <div id="spinnerBook">
+      {{> loading}}
+    </div>
+    {{> comButtonClose
+    id="btnClearBooks"
+    className="absolute top-5 right-0 z-50 invisible"
+    }}
+
+    <table class="Dashboard-table table table-bordered display wrap" cellspacing="0" width="100%" id="tableBook">
+      <thead class="Dashboard-head">
+        <tr>
+          <th>BOOK ID</th>
+          <th>NUM REFERENCE</th>
+          <th>TITLE</th>
+          <th>AUTHOR</th>
+          <th>EDITORIAL</th>
+          <th>ISBN</th>
+          <th>TYPE</th>
+          <th>LANGUAGE</th>
+          <th>COLLECTION</th>
+          <th>PURCHASE DATE</th>
+          <th>LAST UPDATE</th>
+          <th>OBSERVATIONS</th>
+          <th>STATUS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody id="tbodyBooks">
+      </tbody>
+      <tfoot class="Dashboard-foot">
+        <tr>
+          <th>BOOK ID</th>
+          <th>NUM REFERENCE</th>
+          <th>TITLE</th>
+          <th>AUTHOR</th>
+          <th>EDITORIAL</th>
+          <th>ISBN</th>
+          <th>TYPE</th>
+          <th>LANGUAGE</th>
+          <th>COLLECTION</th>
+          <th>PURCHASE DATE</th>
+          <th>LAST UPDATE</th>
+          <th>OBSERVATIONS</th>
+          <th>STATUS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </div>
 <script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>

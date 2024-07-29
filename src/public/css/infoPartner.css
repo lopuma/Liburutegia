@@ -282,6 +282,11 @@
 .ColumnB button {
     margin: 0 0 0 .5em;
     border-radius: var(--Radius);
+    
+}
+
+.ColumnB button.isDelete {
+    background-color: #dc3545;    
 }
 
 .Column-h3 {

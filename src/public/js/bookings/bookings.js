@@ -277,6 +277,9 @@ const spinner = document.getElementById("spinner");
             ],
         });
         $('#tableBookings_filter input').focus();
+        $(document).ready(function() {
+            setupInputListener('tableBookings_filter', 'btnClearBookings');
+        });
     };
 
 //TODO ✅ FETCH RELOAD DATA BOOKINGS
@@ -342,11 +345,3 @@ const spinner = document.getElementById("spinner");
             })
     }
 
-// TDDO DELIVER BOOK
-    async function deliverBooking(idBook, idBooking, idPartner) {
-        const partnerID = idPartner;
-        try {
-            _PARTNERID = partnerID;
-        } catch (error) { }
-        await deliverBook(idBook, idBooking);
-    }

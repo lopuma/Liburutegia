@@ -7,6 +7,7 @@ const {
     deliverBook,
     addBook,
     noExistBook,
+    activeReservePartner,
     deleteBook,
     existsCover,
     uploadFile,
@@ -14,7 +15,6 @@ const {
     infoReviews,
     getISBN,
     validate,
-    redisBooks,
     redisBook,
     redisInfoReview
 } = require('../../controller/apiController/Books.controller.api');
@@ -29,6 +29,7 @@ const routerBooks = require('express').Router();
     routerBooks.get("/:idBook", redisBook, noExistBook, getBook);
     routerBooks.post("/deliver/:idBook", isAuthenticated, existBooking, deliverBook);   
     routerBooks.post("/add", isAuthenticated, validate, addBook);
+    routerBooks.get("/activeReservePartner/:isbn",isAuthenticated, activeReservePartner);
     routerBooks.get("/delete/:idBook", isAuthenticated, deleteBook);
     routerBooks.post("/update/:idBook", isAuthenticated, noExistBook, validate, putBook);
     routerBooks.post("/frontPage", isAuthenticated, upload.single('coverImage'), existsCover, uploadFile);

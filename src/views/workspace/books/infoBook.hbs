@@ -235,9 +235,7 @@
                             </div>
                         </div>
                     {{/unless}}
-                {{/each}}
-                {{#if deliverData}}
-                    {{#each deliverData}}
+                
                         <div class="Review-reserved">
                             {{#if this.reserved}}
                                 <div class="Review-avaliable">
@@ -256,7 +254,6 @@
                             {{/if}}
                         </div>
                     {{/each}}
-                {{/if}}
             </div>
             <div class="Review-actions">
                 {{#each bookData}}
@@ -265,7 +262,7 @@
                     {{#unless this.reserved}}
                         <button id="btnReserveBook" onClick="reserveBook({{this.bookID}}, '{{this.title}}')" class="Action-btn btn btn-secondary" title="Reserve a Book" data-toggle="modal" data-target="#modalReserveBook"><i class="fa-solid fa-calendar-days"></i> Reserve a Book</button>
                     {{/unless}}
-                    <button id="btnInfoDeleteBook" class="Action-btn isDelete btn btn-danger" onClick=deleteBook({{this.bookID}})  type="button">Delete</button>
+                    <button id="btnInfoDeleteBook" class="Action-btn isDelete btn btn-danger" onClick="deleteBook({{this.bookID}}, '{{this.isbn}}')"  type="button">Delete</button>
                 {{/each}}
             </div>
         </div>
@@ -344,10 +341,10 @@
             }, 2000);
         }
     }
-    async function deleteBook(idBook){
+    async function deleteBook(idBook, isbn){
         opcion = 'delete';
         const bookID = idBook;
-        await globalDeleteBook(bookID);
+        await globalDeleteBook(bookID, isbn);
     }
     (async ( ) => {
         const bookID = _BOOKID;

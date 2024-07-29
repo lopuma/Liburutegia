@@ -28,7 +28,7 @@ const bookController = {
     noExistBook: async (req, res, next) => {
         try {
             const bookID = req.params.idBook;
-            if(bookID !== 'isbn') {
+            if (bookID !== 'isbn') {
                 const sqlSelect = "SELECT * FROM books WHERE bookID = ?";
                 connection.query(sqlSelect, [bookID], (err, results) => {
                     if (err) {
@@ -51,8 +51,8 @@ const bookController = {
                         next();
                     }
                 });
-            return;
-            } 
+                return;
+            }
             res.status(200).send({
                 success: false
             });
@@ -61,59 +61,57 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    redisBooks : async (req, res , next) => {
-        await redisClient.get('books', function(err, reply) {
-            if(reply) {
+    redisBooks: async (req, res, next) => {
+        await redisClient.get('books', function (err, reply) {
+            if (reply) {
                 const data = JSON.parse(reply);
                 return res.status(200).send(data);
             }
             next();
         });
     },
-    redisBook : async (req, res , next) => {
+    redisBook: async (req, res, next) => {
         const bookID = req.params.idBook || req.body.idBook;
         await redisClient.get(`book${bookID}`, (err, reply) => {
-            if(reply) {
+            if (reply) {
                 const data = JSON.parse(reply);
                 res.status(200).send(data);
             }
             next();
         });
     },
-    redisInfoBook : async (req, res, next) => {
+    redisInfoBook: async (req, res, next) => {
         try {
             const bookID = req.params.idBook || req.body.idBook;
             const loggedIn = req.session.loggedin;
             const rolAdmin = req.session.roladmin;
             let listInfo = []
             await redisClient.get(`bookInfo${bookID}`, async (err, reply) => {
-            if(reply) {
-                const data = await JSON.parse(reply);
-                data.forEach(element => {
-                    listInfo.push(element);
-                });
-                const bookData = [listInfo[0][0]];
-                const deliverData = [listInfo[1]];
-                const dataCover = [listInfo[2][0]];
-                return res.status(200).render("workspace/books/infoBook", {
-                    loggedIn,
-                    rolAdmin,
-                    bookData,
-                    deliverData,
-                    dataCover
-                });
-            }
+                if (reply) {
+                    const data = await JSON.parse(reply);
+                    data.forEach(element => {
+                        listInfo.push(element);
+                    });
+                    const bookData = listInfo[0];
+                    const dataCover = listInfo[1];
+                    return res.status(200).render("workspace/books/infoBook", {
+                        loggedIn,
+                        rolAdmin,
+                        bookData,
+                        dataCover
+                    });
+                }
                 next();
             });
         } catch (error) {
-            
+
         }
     },
-    redisInfoReview : async (req, res, next) => {
+    redisInfoReview: async (req, res, next) => {
         const bookID = req.params.idBook || req.body.idBook;
         await redisClient.get(`review${bookID}`, (err, reply) => {
-            if(reply) {
-                const data =  JSON.parse(reply);
+            if (reply) {
+                const data = JSON.parse(reply);
                 return res.status(200).send({
                     success: true,
                     swalTitle: "[ Success.... ]",
@@ -137,29 +135,29 @@ const bookController = {
             }
             if (bookID !== undefined && bookID === '') {
                 return res.status(400).send({
-                  success: false,
-                  messageErrBD: "Parameter 'id' does not have a valid value",
-                  swalTitle: "[ Query error ]",
-                  errorMessage: "Parameter 'id' does not have a valid value",
+                    success: false,
+                    messageErrBD: "Parameter 'id' does not have a valid value",
+                    swalTitle: "[ Query error ]",
+                    errorMessage: "Parameter 'id' does not have a valid value",
                 });
-              }
+            }
             // Verificar si el parámetro 'isbn' está presente y tiene un valor válido
             if (isbn !== undefined && isbn === '') {
-            return res.status(400).send({
-                success: false,
-                messageErrBD: "Parameter 'isbn' does not have a valid value",
-                swalTitle: "[ Query error ]",
-                errorMessage: "Parameter 'isbn' does not have a valid value",
-            });
+                return res.status(400).send({
+                    success: false,
+                    messageErrBD: "Parameter 'isbn' does not have a valid value",
+                    swalTitle: "[ Query error ]",
+                    errorMessage: "Parameter 'isbn' does not have a valid value",
+                });
             }
             // Verificar si el parámetro 'author' está presente y tiene un valor válido
             if (author !== undefined && author === '') {
-            return res.status(400).send({
-                success: false,
-                messageErrBD: "Parameter 'author' does not have a valid value",
-                swalTitle: "[ Query error ]",
-                errorMessage: "Parameter 'author' does not have a valid value",
-            });
+                return res.status(400).send({
+                    success: false,
+                    messageErrBD: "Parameter 'author' does not have a valid value",
+                    swalTitle: "[ Query error ]",
+                    errorMessage: "Parameter 'author' does not have a valid value",
+                });
             }
             // Verificar si el parámetro 'title' está presente y tiene un valor válido
             if (title !== undefined && title === '') {
@@ -169,11 +167,11 @@ const bookController = {
                     swalTitle: "[ Query error ]",
                     errorMessage: "Parameter 'title' does not have a valid value",
                 });
-                }
-    
+            }
+
             let sqlSelectBook = `SELECT * FROM books`;
             let query = [];
-    
+
             if (bookID) {
                 if (isNaN(bookID)) {
                     return res.status(400).send({
@@ -220,7 +218,7 @@ const bookController = {
             console.error(error);
             res.status(500).redirect("/");
         }
-    },    
+    },
     getBook: async (req, res) => {
         try {
             const bookID = req.params.idBook || req.body.idBook;
@@ -238,8 +236,8 @@ const bookController = {
                 const data = results[0];
                 await redisClient.set(`book${bookID}`, JSON.stringify(data), async (err, reply) => {
                     await redisClient.expire(`book${bookID}`, 3600)
-                    if(err) return console.error(err);
-                    if(reply) res.status(200).send(data);
+                    if (err) return console.error(err);
+                    if (reply) res.status(200).send(data);
                 });
             });
         } catch (error) {
@@ -289,7 +287,7 @@ const bookController = {
     existsCover: async (req, res, next) => {
         try {
             const bookID = req.body.idBook || req.params.idBook;
-            const bucketName = config.BUCKET_NAME; 
+            const bucketName = config.BUCKET_NAME;
             const sqlSelect = "SELECT * FROM coverBooks WHERE bookID = ?";
             connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
@@ -363,7 +361,7 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
-    addBook: async (req, res) => { 
+    addBook: async (req, res) => {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -400,9 +398,9 @@ const bookController = {
                 collection,
                 observation,
                 lastUpdate
-            }]; 
+            }];
             sqlInsertBooks = "INSERT INTO books SET ?";
-            connection.query(sqlInsertBooks, bookDataUpdate, async (err, results) => { 
+            connection.query(sqlInsertBooks, bookDataUpdate, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -418,7 +416,7 @@ const bookController = {
                 res.status(200).send({
                     success: true,
                     swalTitle: "Book added...",
-                    messageSuccess: `The book data has been added correctly, with ID : ${results.insertId }`
+                    messageSuccess: `The book data has been added correctly, with ID : ${results.insertId}`
                 });
             });
         } catch (error) {
@@ -465,7 +463,7 @@ const bookController = {
                 collection,
                 observation,
                 lastUpdate
-            }]; 
+            }];
             connection.query(sqlUpdateBook, bookDataUpdate, async (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
@@ -496,10 +494,43 @@ const bookController = {
             res.status(500).redirect("/");
         }
     },
+    activeReservePartner: async (req, res) => {
+        try {
+            const isbn = req.params.isbn;
+            const sqlSelect = `SELECT b.*, p.dni as partnerDNI, p.partnerID as partnerID
+                FROM books b 
+                LEFT JOIN 
+                bookings bk ON bk.bookID=b.bookID AND bk.delivered = 0
+                LEFT JOIN 
+                partners p ON p.dni=bk.partnerDni
+                WHERE isbn=?;`;
+            connection.query(sqlSelect, [isbn], async (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
+                }
+                const reserved = results[0].reserved;
+                const partnerDNI = results[0].partnerDNI;
+                console.log({ results })
+                if (reserved === 1 && partnerDNI) {
+                    return res.status(200).send({ results });
+                } else {
+                    return res.status(200).send({ results: null });
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
     deleteBook: async (req, res) => {
         try {
             const bookID = req.params.idBook;
-            const bucketName = config.BUCKET_NAME; 
+            const bucketName = config.BUCKET_NAME;
             const sqlSelect = "SELECT title FROM books WHERE bookID=?";
             connection.query(sqlSelect, [bookID], async (err, results) => {
                 if (err) {
@@ -587,9 +618,9 @@ const bookController = {
                     });
                 }
                 const data = results;
-                await redisClient.set(`review${bookID}`, JSON.stringify(data), async (err, reply) =>{
-                    if(err) return console.error(err);
-                    if(reply) {
+                await redisClient.set(`review${bookID}`, JSON.stringify(data), async (err, reply) => {
+                    if (err) return console.error(err);
+                    if (reply) {
                         await redisClient.expire(`review${bookID}`, 3600)
                         return res.status(200).send({
                             success: true,
@@ -610,7 +641,7 @@ const bookController = {
             const isbn = req.params.isbn;
             const sqlExistsISBN = "SELECT * FROM sanmiguel.books WHERE isbn LIKE ?";
             const query = `%${isbn}%`;
-            connection.query(sqlExistsISBN, [query], (err, results) => {   
+            connection.query(sqlExistsISBN, [query], (err, results) => {
                 if (err) {
                     console.error("[ DB ]", err.sqlMessage);
                     return res.status(400).send({
@@ -620,7 +651,7 @@ const bookController = {
                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                     });
                 }
-                if(results.length === 1){
+                if (results.length === 1) {
                     const data = results;
                     return res.status(200).send({
                         success: true,
@@ -629,7 +660,7 @@ const bookController = {
                         data,
                     });
                 }
-                if(results.length >= 1){
+                if (results.length >= 1) {
                     const data = results;
                     return res.status(200).send({
                         success: true,
@@ -638,7 +669,7 @@ const bookController = {
                         data,
                     });
                 }
-                if(results.length === 0){
+                if (results.length === 0) {
                     res.status(200).send({
                         success: false,
                     });

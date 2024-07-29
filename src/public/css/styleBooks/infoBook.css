@@ -298,6 +298,7 @@ details[open] summary::before {
 }
 
 .Action-btn.isDelete {
+    background-color: #dc3545;
     position: absolute;
     margin: 1em auto;
     width: 75%;

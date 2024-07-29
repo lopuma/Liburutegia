@@ -1,0 +1,245 @@
+<link rel="stylesheet" href="/style/newForm.min.css">
+<div class="New-content">
+    <div class="New-boxes" style="padding: 0px" hidden>
+        <div class="Input-box">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-key"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" type="text" id="bookIDNT" tabindex="0" readonly value="null">
+                    <label class="Animation-label" for="bookIDNT">Your Book ID</label>
+                </div>
+            </div>
+        </div>
+        <div class="Input-box" id="inputnotifyPartnerID">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-boxes-stacked"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="notifyPartnerID" id="notifyPartnerID" type="text"
+                        placeholder=" " autocomplete="valorNoValido" tabindex="3" readonly required>
+                    <label class="Animation-label" for="notifyPartnerID">Partner ID *</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-wrap justify-center w-full">
+        <div class="bg-gray-100 text-gray-800 text-base font-medium inline-flex items-center px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500  flex">
+            <input type="text" id="inputBookISBNNT" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="" disabled hidden>
+            <i class="fa-solid fa-barcode me-1.5"></i>
+            <span id="spanbookISBNNT"></span>
+        </div>
+        <div class="bg-gray-100 text-gray-800 text-base font-medium inline-flex items-center px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+            <input type="text" id="inputBookTITLENT" aria-label="disabled input" class="mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="" disabled hidden>
+            <i class="fa-solid fa-book me-1.5"></i>
+            <span id="spanBookTITLENT"></span>
+        </div>
+
+    </div>
+
+    <div class="New-boxes">
+        <div class="Input-box">
+            <label>DNI associated with a PARTNER.</label>
+            <div class="Box">
+                <i class="Box-i fa-solid fa-boxes-stacked" style="margin-right: 15px"></i>
+                <select class="Box-animation Animation-input isSelect" id="selectDniNT" name="selectDniNT"
+                    onChange="selectChange()" style="width:100%" size="5">
+                </select>
+            </div>
+            <div class="Input-error Error fieldErr" id="validationReserveDni">
+                <div class="Error-text">
+                    <span id="errorReserveDniNT" class="fieldErrText">Dni cannot be
+                        empty.</span>
+                </div>
+            </div>
+        </div>
+        <div class="Box">
+            <i class="Box-i fa-solid fa-user"></i>
+            <div class="Box-animation Animation">
+                <input class="Animation-input" name="inputNameNT" id="inputNameNT" type="text" placeholder=" "
+                    autocomplete="valorNoValido" required="required" tabindex="3" readonly>
+                <label class="Animation-label" for="inputNameNT">Full Name</label>
+                <label class="Animation-info Animation-btnInfo" for="inputNameNT" id="infoNameNT"><i
+                        class="fa-solid fa-circle-info"></i></label>
+                <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputNameNT" id="closeInfoNameNT"><i
+                        class="fa-solid fa-circle-info"></i></label>
+            </div>
+        </div>
+    </div>
+    <p class="text-gray-500 dark:text-gray-400">Select notification method.</p>
+    <hr class="h-px bg-gray-400 border-0 dark:bg-gray-700">
+    <div class="New-boxes">
+        <div class="Input-box" id="inputBoxMobile">
+            <div class="Box">
+                <i class="Box-i fa-solid fa-mobile-screen-button"></i>
+                    {{> prefijos}}
+                <div class="Box-animation Animation" style="margin-left: 0%;">
+                    <input class="Animation-input ml-1" name="inputPhoneNT" id="inputPhoneNT" type="text" placeholder=" "
+                        autocomplete="valorNoValido" tabindex="7" minlength="20" maxlength="20"
+                        onkeydown="changeField(this, 'mobile')">
+                    <label class="Animation-label" for="inputPhoneNT">Phone
+                        (Mobile)</label>
+                    <label class="Animation-info Animation-btnInfo" for="inputPhoneNT" id="infoMobile"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputPhoneNT" id="closeInfoMobile"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                </div>
+                <div class="flex items-center mx-2">
+                    <input id="checkMobile" type="checkbox" value="mobile" class="w-4 h-4 m-0 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                </div>
+            </div>
+            <div class="Input-error Error divFieldErr" id="validationMobile">
+                <div class="Error-text">
+                    <span id="errorMobile" class="divFieldErrText">Mobile cannot
+                        be empty.</span>
+                </div>
+            </div>
+        </div>
+        <div class="Input-box " id="inputBoxEmail">
+            <div class="Box">
+                <i class="Box-i fa-regular fa-address-card"></i>
+                <div class="Box-animation Animation">
+                    <input class="Animation-input" name="inputEmailNT" id="inputEmailNT" type="email" placeholder=" "
+                        autocomplete="valorNoValido" tabindex="9" onkeydown="changeField(this, 'email')">
+                    <label class="Animation-label" for="inputEmailNT">Email</label>
+                    <label class="Animation-info Animation-btnInfo" for="inputEmailNT" id="infoEmailNT" onclick="activeCloseNT('infoEmailNT', 'closeInfoEmailNT', 'validationEmailNT', 'errorEmailNT', 'Email cannot be empty.')"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                    <label class="Animation-closeInfo Animation-btnCloseInfo" for="inputEmailNT" id="closeInfoEmailNT" onclick="activeInfoNT('infoEmailNT', 'closeInfoEmailNT', 'validationEmailNT', 'errorEmailNT', '')"><i
+                            class="fa-solid fa-circle-info"></i></label>
+                </div>
+                <div class="flex items-center px-2">
+                    <input id="checkEmail" type="checkbox" value="email" class="w-4 h-4 m-0 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                </div>
+            </div>
+            <div class="Input-error Error divFieldErr" id="validationEmailNT">
+                <div class="Error-text">
+                    <span id="errorEmailNT" class="divFieldErrText">Email cannot
+                        be empty.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script defer type="text/javascript">
+    const selectDniNT = document.getElementById("selectDniNT");
+    const inputBookIDNT = document.getElementById("bookIDNT");
+    const spanBookISBNNT = document.getElementById("spanBookISBNNT");
+    const inputBookISBNNT = document.getElementById("inputBookISBNNT");
+    const spanBookTITLENT = document.getElementById("spanBookTITLENT");
+    const inputBookTITLENT = document.getElementById("inputBookTITLENT");
+    const inputPartnerIDNT = document.getElementById("notifyPartnerID");
+    const inputPhoneNT = document.getElementById("inputPhoneNT");
+    const inputEmailNT = document.getElementById("inputEmailNT");
+    const inputNameNT = document.getElementById("inputNameNT");
+    const alertErrorNT = document.getElementById("toast-danger");
+    const checkMobile = document.getElementById("checkMobile");
+    const checkEmail = document.getElementById("checkEmail");
+    const errorReserveDniNT =  document.getAnimations("errorReserveDniNT");
+
+    async function listDni () {
+        const urlSelectDni = "/api/partners/";
+        await fetch(urlSelectDni, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+            .then(response => response.json())
+            .then(async data => await obtenerDni(data))
+            .catch(() =>
+                window.alert(
+                    "There is no record in partners, to associate."
+                )
+            );
+    }
+
+    async function obtenerDni(data) {
+        data.forEach(partner => {
+            let option = document.createElement("option");
+            option.value = partner.dni;
+            option.text = partner.dni;
+            selectDniNT.add(option);
+        });
+    }
+
+    async function limpiarNumeroTelefono(input) {
+        // Reemplazar comas por espacios vacíos
+        let limpio = input.replace(/,/g, '');
+
+        // Eliminar la cadena 'null' si existe
+        limpio = limpio.replace(/\bnull\b/g, 0);
+
+        return limpio;
+    }
+
+    function activeCloseNT(bntInfo, bntClose, divError, spanError, errorMessage) {
+        try {
+            const infoElement = document.getElementById(bntInfo);
+            const closeElement = document.getElementById(bntClose);
+            const errorDiv = document.getElementById(divError);
+            const errorSpan = document.getElementById(spanError);
+            // Verificar si los elementos existen en el DOM
+            if (infoElement && closeElement && errorDiv && errorSpan) {
+                infoElement.classList.remove("isVisible");
+                closeElement.classList.add("isVisible");
+                errorDiv.classList.add("isActive");
+                errorSpan.innerHTML = errorMessage;
+            } else {
+                console.error("Alguno de los elementos no existe en el DOM.");
+            }
+        } catch (error) {
+            console.error("Ha ocurrido un error:", error);
+        }
+    }
+
+    function activeInfoNT(bntInfo, bntClose, divError, spanError, errorMessage) {
+        try {
+            const infoElement = document.getElementById(bntInfo);
+            const closeElement = document.getElementById(bntClose);
+            const errorDiv = document.getElementById(divError);
+            const errorSpan = document.getElementById(spanError);
+
+            // Verificar si los elementos existen en el DOM
+            if (infoElement && closeElement && errorDiv && errorSpan) {
+                infoElement.classList.add("isVisible");
+                closeElement.classList.remove("isVisible");
+                errorDiv.classList.remove("isActive");
+                errorSpan.innerHTML = errorMessage;
+            } else {
+                console.error("Alguno de los elementos no existe en el DOM.");
+            }
+        } catch (error) {
+            console.error("Ha ocurrido un error:", error);
+        }
+    }
+
+    async function selectChange() {
+        const index = await selectDniNT.selectedIndex;
+        const optionSelectDni = document.getElementById("selectDniNT").options[index];
+        const dni = optionSelectDni.text;
+        const urlSelectDni = `/api/partners/dni/${dni}`;
+        try {
+            const response = await fetch(urlSelectDni, {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json; charset=utf-8"
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                inputPartnerIDNT.value = fillZeros(data.partnerID);
+                inputNameNT.value = `${data.lastname}, ${data.name}`
+                inputPhoneNT.value = await limpiarNumeroTelefono(`${data.phone1}`)
+                inputEmailNT.value = `${data.email}`
+                closeToast();
+            } else {
+                document.getElementById('formNotify').reset();
+                showToast('[ ERROR ] - The requested resource has not been found.');
+            }
+        } catch (error) {
+            window.alert("An error occurred while fetching data, please reload the page.");
+        }
+
+    };
+
+</script>

@@ -253,13 +253,6 @@ async function showExistsISBN() {
     })
 }
 
-
-    (async function loadSelectTags() {
-        await $(".isSelect").select2({
-            tags: true,
-            placeholder: "Select or add category",
-        });
-    })();
     async function existsISBN(target) {
         const isbn = target.value.trim();
         const urlExistsIsbn = `/api/books/isbn/${isbn}`;

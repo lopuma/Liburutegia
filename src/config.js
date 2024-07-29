@@ -1,11 +1,11 @@
 const dotenv = require('dotenv');
 const path = require('path');
 
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     dotenv.config({
         path: path.resolve(process.env.NODE_ENV + '.env')
     });
-}   else {
+} else {
     dotenv.config({
         path: path.resolve('.env')
     });
@@ -37,6 +37,6 @@ module.exports = {
     USE_SSL: process.env.USE_SSL || 'false',
     API_VERSION: process.env.API_VERSION || '2006-03-01',
     AWS_REGION: process.env.AWS_REGION || 'default',
-    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID  || 'default',
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || 'default',
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || 'default',
 }

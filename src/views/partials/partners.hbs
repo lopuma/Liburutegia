@@ -1,12 +1,18 @@
 {{>modalEditPartner}}
+{{> modalNoDeletePartners}}
+{{> modalDeliver}}
+
 <div class="Dashboard" id="statePartners">
   <a class="Dashboard-a" href="/workspace/partners/new"><i class="Dashboard-i fa-solid fa-user-plus"></i>New Partner</a>
-  <div class="Dashboard-row">
+  <div class="Dashboard-row relative">
     <div id="spinner">
       {{> loading}}
     </div>
-    <table class="Dashboard-table table table-bordered display wrap"
-      id="tablePartner" cellspacing="0" width="100%">
+    {{> comButtonClose
+      id="btnClearPartners"
+      className="absolute top-5 right-0 z-50 invisible"
+    }}
+    <table class="Dashboard-table table table-bordered display wrap" id="tablePartner" cellspacing="0" width="100%">
       <thead class="Dashboard-head">
         <tr>
           <th>PARTNER ID</th>

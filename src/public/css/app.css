@@ -1,5 +1,8 @@
 /* IMPORT CSS STYLE */
 @charset "UTF-8";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import url("customs.min.css");
 @import url("_reset.min.css");
 @import url("navbar.min.css");

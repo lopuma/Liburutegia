@@ -1,6 +1,12 @@
 const { body, validationResult } = require("express-validator");
 const connection = require("../../../connections/database/db-connect");
 const flash = require("connect-flash");
+const config = require("../../config")
+
+const { driveClient, disks } = require("../../../connections/minio/drive-connect");
+
+const bucketName = config.BUCKET_NAME;
+const expirationTime = 5 * 24 * 60 * 60;
 const partnerController = {
     validate: [
         body("dni")
@@ -146,6 +152,51 @@ const partnerController = {
             res.status(500).redirect("/");
         }
     },
+    activeReserve: async (req, res) => {
+        try {
+            const partnerDNI = req.params.dniPartner;
+            const sqlSelect = "SELECT bk.bookingID, b.*, c.nameCover, p.partnerID FROM bookings bk INNER JOIN books b ON bk.bookID=b.bookID INNER JOIN coverBooks c ON c.bookID=b.bookID INNER JOIN partners p ON p.dni=bk.partnerDni where bk.partnerDni=? and bk.delivered=0;";
+
+            connection.query(sqlSelect, [partnerDNI], (err, results) => {
+                if (err) {
+                    console.error("[ DB ]", err.sqlMessage);
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
+                    });
+                }
+                return res.status(200).send({ results });
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+
+    },
+    getPartnerDNI: async (req, res) => {
+        try {
+            const partnerDNI = req.params.dniPartner;
+            const sqlSelect = "SELECT * FROM partners WHERE dni=?";
+            connection.query(sqlSelect, [partnerDNI], (err, results) => {
+                if (err) {
+                    return res.status(400).send({
+                        success: false,
+                        messageErrBD: err,
+                        errorMessage: `[ ERROR DB ] ${err}`
+                    });
+                }
+                if(results.length >= 1) {
+                    res.status(200).send(results[0]);
+                } else {
+                    res.status(404).send(results[0]);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).redirect("/");
+        }
+    },
     infoPartner: async (req, res) => {
         try {
             const idPartner = req.params.idPartner;
@@ -178,7 +229,7 @@ const partnerController = {
                             errorMessage: `There is no data with that DNI: ${dni}, associated with the partner with id: ${idPartner}`
                         });
                     }
-                    const data = results; 
+                    const data = results;
                     res.status(200).send({
                         success: true,
                         data
@@ -346,7 +397,7 @@ const partnerController = {
                                     errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                                 });
                             };
-                            if (results.length === 0){
+                            if (results.length === 0) {
                                 const sqlActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
                                 connection.query(sqlActiveFamily, dniFamily, (err, results) => {
                                     if (err) {
@@ -364,7 +415,7 @@ const partnerController = {
                     //UPDATE ACTIVE FAMILY SI NO TIENE MAS RELACION
                     if (results.length >= 2) {
                         dniFamily = results[0].familyDni;
-                        let dataFamilys = results;                        
+                        let dataFamilys = results;
                         dataFamilys.forEach(async (element) => {
                             const sqlExistFamily = "SELECT * FROM familys WHERE familyDni=?";
                             connection.query(sqlExistFamily, element.familyDni, async (err, results) => {
@@ -376,7 +427,7 @@ const partnerController = {
                                         errorMessage: `[ ERROR DB ] ${err.sqlMessage}`
                                     });
                                 };
-                                if (results.length === 0){
+                                if (results.length === 0) {
                                     const sqlActiveFamily = "UPDATE partners SET activeFamily=0 WHERE dni=?";
                                     connection.query(sqlActiveFamily, element.familyDni, (err, results) => {
                                         if (err) {
@@ -439,7 +490,7 @@ const partnerController = {
             let phoneb = phone2 ? parseInt(phone2) : null;
 
             let activeFamily = 0;
-            
+
             let partnerDataUpdate = [{
                 dni,
                 scanner,
@@ -452,7 +503,7 @@ const partnerController = {
                 email,
                 date,
                 updateDate
-            }];            
+            }];
             if (
                 partnerDniFamily === null ||
                 partnerIDFamily === null ||

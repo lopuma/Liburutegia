@@ -1,11 +1,16 @@
 {{> modalDeliver}}
 <div class="Dashboard" id="stateBookings" style="margin-top: 7em;">
     <a class="Dashboard-a" href="#" hidden><i class="Dashboard-i fa-solid fa-user-plus"></i>New Booking</a>
-    <div class="Dashboard-row">
+    <div class="Dashboard-row relative">
         <div id="spinner">
             {{> loading}}
         </div>
-        <table id="tableBookings" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0" width="100%">
+        {{> comButtonClose
+        id="btnClearBookings"
+        className="absolute top-5 right-0 z-50 invisible"
+        }}
+        <table id="tableBookings" class="Dashboard-table table table-bordered  display nowrap" cellspacing="0"
+            width="100%">
             <thead class="Dashboard-head">
                 <tr>
                     <th>BOOKING ID</th>
@@ -23,7 +28,7 @@
             </thead>
             <tbody id="tbodyBookings">
             </tbody>
-            <tfoot  class="Dashboard-foot">
+            <tfoot class="Dashboard-foot">
                 <tr>
                     <th>BOOKING ID</th>
                     <th>BOOK ID</th>
@@ -38,8 +43,8 @@
                     <th>ACTIONS</th>
                 </tr>
             </tfoot>
-        </table>  
-    </div> 
-</div>    
+        </table>
+    </div>
+</div>
 <script defer src="/scripts/Globals/funcGlobals.js" type="text/javascript"></script>
 <script defer src="/scripts/bookings/bookings.js"></script>

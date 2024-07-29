@@ -1,47 +1,9 @@
 version: '3.7'
 networks:
-    ntk-app:
-        driver: bridge
-        name: ntk-app
+  ntk-app:
+    driver: bridge
+    name: ntk-app
 services:
-    nginx-liburutegia:
-        container_name: nginx-liburutegia
-        image: nginx:latest
-        restart: always
-        ports: 
-            - "${NGINX_PORT}:${NGINX_PORT}"
-        depends_on:
-            - app-liburutegia
-        volumes:
-            - ./containers/nginx-liburutegia/templates:/etc/nginx/templates
-        environment:
-              PORT: ${PORT}
-              NGINX_HOST: ${NGINX_HOST}
-              NGINX_PORT: ${NGINX_PORT}
-              NGINX_APP: ${NGINX_APP}
-        networks:
-            - ntk-app
-    app-liburutegia:
-        container_name: app-liburutegia
-        build: .
-        restart: always
-        ports:
-            - "${PORT}:${PORT}"
-        environment:
-              MYSQL_HOST: mysql-liburutegia
-              REDIS_HOST: redis-liburutegia
-              MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-              MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-              MYSQL_DATABASE: ${MYSQL_DATABASE}
-              REDIS_PASSWORD: ${REDIS_PASSWORD}
-              MINIO_HOST: "${MINIO_HOST}"
-              BUCKET_NAME: ${BUCKET_NAME}
-              MINIO_USER: ${MINIO_USER}
-              MINIO_PASSWORD: ${MINIO_PASSWORD}
-        volumes:
-            - ./src:/app/src
-        networks:
-          - ntk-app
     redis-liburutegia:
       container_name: redis-liburutegia
       image: redis
@@ -49,10 +11,10 @@ services:
       ports:
         - "6379:6379"
       volumes:
-        - ~/Volumenes/redis:/usr/local/etc/redis/:ro
+        - "~/dev/docker/containers/redis:/usr/local/etc/redis/:ro"
       command: redis-server /usr/local/etc/redis/redis.conf
       environment:
-          REDIS_PASSWORD: ${REDIS_PASSWORD}
+          REDIS_PASSWORD: Dopracau4000lopo
       networks:
         - ntk-app
     redis-commander:
@@ -60,10 +22,10 @@ services:
       image: rediscommander/redis-commander
       restart: always
       ports:
-          - "8081:8081"
+          - "8082:8081"
       environment:
           REDIS_HOST: redis-liburutegia
-          REDIS_PASSWORD: ${REDIS_PASSWORD}
+          REDIS_PASSWORD: Dopracau4000lopo
           REDIS_DB_INDEX: 0
       volumes:
         - redis-commander-config:/usr/local/lib/node_modules/redis-commander/config:rw
@@ -71,18 +33,17 @@ services:
         - ntk-app
     mysql-liburutegia:
         container_name: mysql-liburutegia
-        build:
-          context: ./containers/mysql
+        image: lopuma/db-liburutegia:latest
         command: --default-authentication-plugin=mysql_native_password
         restart: always
         ports:
             - "3306:3306"
         environment:
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: liburutegia
+            MYSQL_PASSWORD: Dopracau4000lopo
+            MYSQL_ROOT_PASSWORD: Dopracau4000lopo
         volumes:
-            - ~/Volumenes/mysql-data:/var/lib/mysql
+            - "~/dev/docker/containers/database/mysql/db-liburutegia:/var/lib/mysql"
         networks:
             - ntk-app
     minio-liburutegia:
@@ -93,10 +54,10 @@ services:
           - "9000:9000"
           - "9001:9001"
       environment:
-            MINIO_ROOT_USER: ${MINIO_USER}
-            MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+            MINIO_ROOT_USER: lopuma
+            MINIO_ROOT_PASSWORD: Dopracau4000lopo
       volumes:
-            - ~/Volumenes/minio/data:/data
+            - "~/dev/docker/containers/minio/data-liburutegia:/data"
       command: ["server", "/data", "--console-address", ":9001"]
       networks:
           - ntk-app
